@@ -1,0 +1,36 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "578cda35-443e-4355-b79b-18c641544797": {
+      "ProjectGuid": "578cda35-443e-4355-b79b-18c641544797",
+      "DisplayName": "ProductlineApp.WebUI",
+      "ColorIndex": 0
+    },
+    "8f09a21b-42bc-46ff-bd9d-3d9903483d70": {
+      "ProjectGuid": "8f09a21b-42bc-46ff-bd9d-3d9903483d70",
+      "DisplayName": "ProductlineApp.Application",
+      "ColorIndex": 1
+    },
+    "00ba2ee3-d48d-4ad8-9ddc-6932151f97c3": {
+      "ProjectGuid": "00ba2ee3-d48d-4ad8-9ddc-6932151f97c3",
+      "DisplayName": "ProductlineApp.Domain",
+      "ColorIndex": 2
+    },
+    "a05c55ad-6d65-451b-bb5c-224899c7315d": {
+      "ProjectGuid": "a05c55ad-6d65-451b-bb5c-224899c7315d",
+      "DisplayName": "ProductlineApp.Infrastructure",
+      "ColorIndex": 3
+    },
+    "dd1fe243-0967-4e6b-9cde-8be2f79886ee": {
+      "ProjectGuid": "dd1fe243-0967-4e6b-9cde-8be2f79886ee",
+      "DisplayName": "ProductlineApp.Shared",
+      "ColorIndex": 4
+    },
+    "0a565552-cefe-41b5-970e-60a4f6f33f5a": {
+      "ProjectGuid": "0a565552-cefe-41b5-970e-60a4f6f33f5a",
+      "DisplayName": "ProductlineApp.UnitTests",
+      "ColorIndex": 5
+    }
+  },
+  "NextColorIndex": 6
+}
