@@ -30,7 +30,22 @@
       "ProjectGuid": "0a565552-cefe-41b5-970e-60a4f6f33f5a",
       "DisplayName": "ProductlineApp.UnitTests",
       "ColorIndex": 5
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "67f16219-d386-44d4-a857-ccfef2d5ec5d": {
+      "ProjectGuid": "67f16219-d386-44d4-a857-ccfef2d5ec5d",
+      "DisplayName": "ProductlineApp.Infrastructure",
+      "ColorIndex": 6
+    },
+    "31a6a3ba-ea14-4209-a5a5-d661a76432e7": {
+      "ProjectGuid": "31a6a3ba-ea14-4209-a5a5-d661a76432e7",
+      "DisplayName": "ProductlineApp.WebUI",
+      "ColorIndex": 7
     }
   },
-  "NextColorIndex": 6
+  "NextColorIndex": 8
 }
