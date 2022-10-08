@@ -13,13 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.Domain", "Pr
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.Shared", "ProductlineApp.Shared\ProductlineApp.Shared.csproj", "{DD1FE243-0967-4E6B-9CDE-8BE2F79886EE}"
 EndProject
-Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Database", "Database\Database.sqlproj", "{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.UnitTests", "ProductlineApp.UnitTests\ProductlineApp.UnitTests.csproj", "{0A565552-CEFE-41B5-970E-60A4F6F33F5A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductlineApp.Infrastructure", "ProductlineApp.Infrastructure\ProductlineApp.Infrastructure.csproj", "{67F16219-D386-44D4-A857-CCFEF2D5EC5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.Infrastructure", "ProductlineApp.Infrastructure\ProductlineApp.Infrastructure.csproj", "{67F16219-D386-44D4-A857-CCFEF2D5EC5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductlineApp.WebUI", "ProductlineApp.WebUI\ProductlineApp.WebUI.csproj", "{31A6A3BA-EA14-4209-A5A5-D661A76432E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.WebUI", "ProductlineApp.WebUI\ProductlineApp.WebUI.csproj", "{31A6A3BA-EA14-4209-A5A5-D661A76432E7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,12 +37,6 @@ Global
 		{DD1FE243-0967-4E6B-9CDE-8BE2F79886EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD1FE243-0967-4E6B-9CDE-8BE2F79886EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DD1FE243-0967-4E6B-9CDE-8BE2F79886EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5E8A6B3F-A1F1-4389-9124-FC60461F6D5C}.Release|Any CPU.Deploy.0 = Release|Any CPU
 		{0A565552-CEFE-41B5-970E-60A4F6F33F5A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0A565552-CEFE-41B5-970E-60A4F6F33F5A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0A565552-CEFE-41B5-970E-60A4F6F33F5A}.Release|Any CPU.ActiveCfg = Release|Any CPU
