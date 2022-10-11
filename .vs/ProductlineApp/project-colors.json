@@ -45,7 +45,57 @@
       "ProjectGuid": "31a6a3ba-ea14-4209-a5a5-d661a76432e7",
       "DisplayName": "ProductlineApp.WebUI",
       "ColorIndex": 7
+    },
+    "2e4d2993-d935-45d1-b261-fb63d7bd62fa": {
+      "ProjectGuid": "2e4d2993-d935-45d1-b261-fb63d7bd62fa",
+      "DisplayName": "WebUI",
+      "ColorIndex": 8
+    },
+    "65777803-21c8-48d9-ba23-efc7fe7806ab": {
+      "ProjectGuid": "65777803-21c8-48d9-ba23-efc7fe7806ab",
+      "DisplayName": "ProductlineApp.WebUI",
+      "ColorIndex": 9
+    },
+    "724b05c2-66c8-4153-b1cd-0ce9bb406e18": {
+      "ProjectGuid": "724b05c2-66c8-4153-b1cd-0ce9bb406e18",
+      "DisplayName": "ProductlineApp.WebUI",
+      "ColorIndex": 10
+    },
+    "93e1feb6-5aae-4a3e-a8f5-eb9d44872991": {
+      "ProjectGuid": "93e1feb6-5aae-4a3e-a8f5-eb9d44872991",
+      "DisplayName": "ProductlineApp.WebAPI",
+      "ColorIndex": 11
+    },
+    "c812f7ac-7531-4be3-aced-721a05549987": {
+      "ProjectGuid": "c812f7ac-7531-4be3-aced-721a05549987",
+      "DisplayName": "Domain",
+      "ColorIndex": 12
+    },
+    "f020f81f-c3ba-4610-a893-66672c5d0c7a": {
+      "ProjectGuid": "f020f81f-c3ba-4610-a893-66672c5d0c7a",
+      "DisplayName": "ProductlineApp.Domain",
+      "ColorIndex": 13
+    },
+    "dd86cd47-4cd9-4552-8b7c-f5f10d015bc0": {
+      "ProjectGuid": "dd86cd47-4cd9-4552-8b7c-f5f10d015bc0",
+      "DisplayName": "ProductlineApp.Shared",
+      "ColorIndex": 14
+    },
+    "ffcdb81a-6be5-4196-bc0d-9e210c9e1910": {
+      "ProjectGuid": "ffcdb81a-6be5-4196-bc0d-9e210c9e1910",
+      "DisplayName": "ProductlineApp.Application",
+      "ColorIndex": 15
+    },
+    "1a9088c9-b031-4eab-a319-da60ce9f3f91": {
+      "ProjectGuid": "1a9088c9-b031-4eab-a319-da60ce9f3f91",
+      "DisplayName": "ProductlineApp.Infrastructure",
+      "ColorIndex": 0
+    },
+    "270b7d83-310e-4b31-bab0-f43ab7ebc08f": {
+      "ProjectGuid": "270b7d83-310e-4b31-bab0-f43ab7ebc08f",
+      "DisplayName": "ProductlineApp.UnitTests",
+      "ColorIndex": 1
     }
   },
-  "NextColorIndex": 8
+  "NextColorIndex": 2
 }
