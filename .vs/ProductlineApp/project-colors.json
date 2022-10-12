@@ -95,7 +95,12 @@
       "ProjectGuid": "270b7d83-310e-4b31-bab0-f43ab7ebc08f",
       "DisplayName": "ProductlineApp.UnitTests",
       "ColorIndex": 1
+    },
+    "9e3ba578-223a-4228-80aa-537b953ede91": {
+      "ProjectGuid": "9e3ba578-223a-4228-80aa-537b953ede91",
+      "DisplayName": "ProductlineApp.WebUI",
+      "ColorIndex": 2
     }
   },
-  "NextColorIndex": 2
+  "NextColorIndex": 3
 }
