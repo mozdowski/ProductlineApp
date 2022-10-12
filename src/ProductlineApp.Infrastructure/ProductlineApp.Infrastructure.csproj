@@ -1,9 +1,23 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ProductlineApp.Application\ProductlineApp.Application.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Common\" />
+    <Folder Include="Files\" />
+    <Folder Include="Identity\" />
+    <Folder Include="Persistance\Configurations\" />
+    <Folder Include="Persistance\Interceptors\" />
+    <Folder Include="Persistance\Migrations\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
 
 </Project>
