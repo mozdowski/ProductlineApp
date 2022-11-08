@@ -1,8 +1,8 @@
 ﻿namespace ProductlineApp.Domain.Enums
 {
-    public enum EProductStatus
+    public enum ProductStatus
     {
         ON_AUCTION,
-        OFF_AUCTION
+        OFF_AUCTION,
     }
 }

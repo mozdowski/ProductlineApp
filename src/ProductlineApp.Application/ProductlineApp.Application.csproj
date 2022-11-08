@@ -1,32 +1,41 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
+	<TargetFramework>net6.0</TargetFramework>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
+	<CodeAnalysisRuleSet>CSharpStyleguide.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ProductlineApp.Domain\ProductlineApp.Domain.csproj" />
+	<AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\Behaviours\" />
-    <Folder Include="Common\Exceptions\" />
-    <Folder Include="Common\Interfaces\" />
-    <Folder Include="Common\Mappings\" />
-    <Folder Include="Common\Models\" />
-    <Folder Include="Common\Security\" />
+	<ProjectReference Include="..\ProductlineApp.Domain\ProductlineApp.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
-    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
-    <PackageReference Include="SonarAnalyzer.CSharp" Version="8.46.0.54807">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
+	<Folder Include="Common\Behaviours\" />
+	<Folder Include="Common\Exceptions\" />
+	<Folder Include="Common\Interfaces\" />
+	<Folder Include="Common\Mappings\" />
+	<Folder Include="Common\Models\" />
+	<Folder Include="Common\Security\" />
+  </ItemGroup>
+
+  <ItemGroup>
+	<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
+	<PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.2.2" />
+	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	<PackageReference Include="SonarAnalyzer.CSharp" Version="8.46.0.54807">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
+	<PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
+	  <PrivateAssets>all</PrivateAssets>
+	  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+	</PackageReference>
   </ItemGroup>
 
 </Project>

@@ -1,6 +1,6 @@
 ﻿namespace ProductlineApp.Domain.Enums
 {
-    public enum EProductCategory
+    public enum ProductCategory
     {
         MOTOR,
         ELECTRONICS,
@@ -17,6 +17,6 @@
         MUSIC,
         HEALTH_AND_BEAUTY,
         BUSINESS_AND_INDUSTRIAL,
-        PET_SUPPLIES
+        PET_SUPPLIES,
     }
 }

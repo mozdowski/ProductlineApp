@@ -1,8 +1,8 @@
 ﻿namespace ProductlineApp.Domain.Enums
 {
-    public enum EOrderStatus
+    public enum OrderStatus
     {
         COMPLETED,
-        PENDING
+        PENDING,
     }
 }
