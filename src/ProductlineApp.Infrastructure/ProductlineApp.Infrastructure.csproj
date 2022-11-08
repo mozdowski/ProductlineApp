@@ -7,6 +7,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\ProductlineApp.Application\ProductlineApp.Application.csproj" />
   </ItemGroup>
 
@@ -22,6 +26,10 @@
 
   <ItemGroup>
     <PackageReference Include="SonarAnalyzer.CSharp" Version="8.46.0.54807">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="StyleCop.Analyzers.Unstable" Version="1.2.0.435">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
