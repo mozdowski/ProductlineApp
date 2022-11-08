@@ -1,8 +1,8 @@
 ﻿namespace ProductlineApp.Domain.Enums
 {
-    public enum EAuctionStatus
+    public enum AuctionStatus
     {
         OPEN,
-        CLOSED
+        CLOSED,
     }
 }

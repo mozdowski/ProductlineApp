@@ -15,9 +15,17 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.Infrastructu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.Shared", "src\ProductlineApp.Shared\ProductlineApp.Shared.csproj", "{29AFCC3B-876F-4E43-B6BF-6E1F904782A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProductlineApp.WebUI", "src\ProductlineApp.WebUI\ProductlineApp.WebUI.csproj", "{9E3BA578-223A-4228-80AA-537B953EDE91}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.WebUI", "src\ProductlineApp.WebUI\ProductlineApp.WebUI.csproj", "{9E3BA578-223A-4228-80AA-537B953EDE91}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProductlineApp.UnitTests", "tests\ProductlineApp.UnitTests\ProductlineApp.UnitTests.csproj", "{D5C52DD7-75CF-4367-83EB-DA212695A36D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution items", "solution items", "{19DFEF50-6869-4162-AC31-15756BA877B1}"
+	ProjectSection(SolutionItems) = preProject
+		stylecop.json = stylecop.json
+	EndProjectSection
+	ProjectSection(FolderGlobals) = preProject
+		C_5_4Users_4vasco_4Programming_4Inzynierka_4ProductlineApp_4stylecop_1json__JsonSchema = 
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
