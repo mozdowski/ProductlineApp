@@ -2,15 +2,15 @@
 
 namespace ProductlineApp.Domain.Entities;
 
-public class Seller : Person
+public class IndividualBuyer : Person
 {
-    public Seller(
+    public IndividualBuyer(
         Guid id,
         string firstName,
         string lastName,
         string email,
         DateTime dateOfBirth)
-    : base(id, firstName, lastName, email, dateOfBirth)
+        : base(id, firstName, lastName, email, dateOfBirth)
     {
     }
 }
