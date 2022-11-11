@@ -32,7 +32,17 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.container {
+  width: calc(100% - 104px);
+  float: right;
+}
+
+.container h1 {
+  text-align: center;
 }
