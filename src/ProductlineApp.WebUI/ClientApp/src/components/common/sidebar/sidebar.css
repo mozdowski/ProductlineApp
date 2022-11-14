@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap');
+
+:root {
+  --first-color: #5F47F1;
+  --first-color-light: #E5E5E5;
+  --white-color: #FFFFFF;
+  --logo-dot-color: #16E8B5;
+
+  --body-font: 'Poppins';
+  --logo-font: 'San';
+  --normal-font-size: 1rem;
+
+  --z-fixed: 1000;
+}
+
+.header__img {
+  display: grid;
+  margin-top: 66px;
+  margin-bottom: 66px;
+}
+
+.header__img .logo {
+  color: var(--white-color);
+  text-align: center;
+  font-family: 'Inter', sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.header__img .logo span {
+  color: var(--logo-dot-color);
+}
+
+.nav__link a {
+  text-decoration: none;
+  align-items: center;
+}
+
+.nav__link a .nav__name {
+  align-items: center;
+}
+
+img {
+  height: 22px;
+  width: 22px;
+  color: var(--first-color-light);
+}
+
+.sidebar {
+  height: 100%;
+  width: 104px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  background-color: var(--first-color);
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  transition: 0.25s;
+}
+
+.separator {
+  height: 1.5px;
+  background: var(--first-color-light);
+  width: 22px;
+  border-radius: 50px;
+  margin-bottom: 50px;
+}
+
+.nav__link {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  align-items: center;
+  position: relative;
+  color: var(--first-color-light);
+  margin-bottom: 50px;
+  transition: all 300ms ease-in-out;
+}
+
+.link {
+  display: grid;
+  grid-template-columns: max-content max-content max-content;
+  align-items: center;
+  position: relative;
+  color: var(--first-color-light);
+  transition: 300ms ease-out;
+}
+
+li:nth-child(8) {
+  position: absolute;
+  bottom: 0;
+  padding-bottom: 10px;
+}
+
+.active {
+  font-weight: 700;
+  transition: 0s;
+  filter: brightness(100);
+}
+
+.nav__link.active::before {
+  content: '';
+  height: 24px;
+  width: 6px;
+  background: var(--white-color);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  float: left;
+  margin-left: -41px;
+  transition: 1s ease;
+}
+
+.link:hover {
+  margin-left: 1rem;
+  color: var(--white-color);
+}
+
+.nav__link img {
+  margin-right: 42px;
+}
+
+.nav__link:hover {
+  color: var(--white-color);
+  filter: brightness(100);
+}
