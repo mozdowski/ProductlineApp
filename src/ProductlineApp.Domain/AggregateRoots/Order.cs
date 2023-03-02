@@ -4,7 +4,7 @@ using ProductlineApp.Domain.ValueObjects;
 
 namespace ProductlineApp.Domain.Entities;
 
-public class Order : Entity
+public class Order : AggregateRoot
 {
     public Order(
         Guid id,

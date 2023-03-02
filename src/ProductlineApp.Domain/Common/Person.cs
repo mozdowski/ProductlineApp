@@ -2,7 +2,7 @@
 
 namespace ProductlineApp.Domain.Common;
 
-public abstract class Person : Entity
+public abstract class Person : AggregateRoot
 {
     protected Person(
         Guid id,

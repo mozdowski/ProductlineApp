@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
 
 namespace ProductlineApp.Application
 {
@@ -6,8 +8,8 @@ namespace ProductlineApp.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            // mediatr
-            // automapper
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddMediatR(Assembly.GetExecutingAssembly());
 
             return services;
         }

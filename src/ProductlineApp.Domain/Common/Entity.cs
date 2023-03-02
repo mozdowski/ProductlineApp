@@ -2,9 +2,9 @@
 
 public abstract class Entity : AuditableEntity, IEquatable<Entity>
 {
-    protected Entity(Guid id)
+    protected Entity()
     {
-        this.Id = id;
+        this.Id = Guid.NewGuid();
     }
 
     public Guid Id { get; private init; }
