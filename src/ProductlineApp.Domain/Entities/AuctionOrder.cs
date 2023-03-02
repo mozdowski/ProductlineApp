@@ -3,7 +3,7 @@ using ProductlineApp.Domain.Exceptions;
 
 namespace ProductlineApp.Domain.Entities;
 
-public class AuctionOrder : Entity
+public class AuctionOrder : AggregateRoot
 {
     public AuctionOrder(
         Guid id,

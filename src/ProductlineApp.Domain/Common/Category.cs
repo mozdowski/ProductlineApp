@@ -2,24 +2,24 @@
 
 namespace ProductlineApp.Domain.Common;
 
-public class Category : Entity
+public class Category : AggregateRoot
 {
     public Category(
         Guid id,
         string name,
-        Category category)
+        Category? parent)
         : base(id)
     {
         this.Name = name;
-        this.Parent = category;
+        this.Parent = parent;
         this.Children = new HashSet<Category>();
     }
 
     public string Name { get; private set; }
 
-    public Category Parent { get; private set; }
+    public Category? Parent { get; private set; }
 
-    public IReadOnlyCollection<Category> Siblings
+    public IReadOnlyCollection<Category>? Siblings
     {
         get
         {

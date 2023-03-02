@@ -3,13 +3,14 @@ using ProductlineApp.Domain.Enums;
 
 namespace ProductlineApp.Domain.Entities;
 
-public class Auction : Entity
+public class Auction : AggregateRoot
 {
     private Marketplace _marketplace;
 
     public Auction(
         Guid id,
         Bid bid,
+        Seller owner,
         DateTime startDateTime,
         Category category,
         Marketplace marketplace,
@@ -22,6 +23,7 @@ public class Auction : Entity
         : base(id)
     {
         this.Bid = bid;
+        this.Owner = owner;
         this.StartDateTime = startDateTime;
         this.Category = category;
         this._marketplace = marketplace;
@@ -34,6 +36,8 @@ public class Auction : Entity
     }
 
     public Bid Bid { get; private set; }
+
+    public Seller Owner { get; private set; }
 
     public DateTime StartDateTime { get; private set; }
 
