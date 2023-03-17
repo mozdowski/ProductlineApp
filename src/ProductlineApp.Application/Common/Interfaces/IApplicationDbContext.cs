@@ -5,7 +5,7 @@ namespace ProductlineApp.Application.Common.Interfaces;
 
 public interface IApplicationDbContext
 {
-    AggregationRootDbSet<Seller> Sellers { get; }
+    AggregationRootDbSet<User> Sellers { get; }
 
     AggregationRootDbSet<Order> Orders { get; }
 

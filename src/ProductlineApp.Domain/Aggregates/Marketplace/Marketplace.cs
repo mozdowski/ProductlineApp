@@ -1,9 +1,10 @@
-﻿using ProductlineApp.Domain.Common;
+﻿using ProductlineApp.Domain.Aggregates.Marketplace.ValueObjects;
+using ProductlineApp.Domain.Common;
 using ProductlineApp.Domain.Exceptions;
 
-namespace ProductlineApp.Domain.Entities;
+namespace ProductlineApp.Domain.Aggregates.Marketplace;
 
-public class Marketplace : Entity
+public class Marketplace : Entity<MarketplaceId>
 {
     public Marketplace(
         Guid id,

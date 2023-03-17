@@ -1,20 +1,19 @@
-﻿using ProductlineApp.Domain.Common;
+﻿using ProductlineApp.Domain.Aggregates.Auction.ValueObjects;
+using ProductlineApp.Domain.Common;
 using ProductlineApp.Domain.Enums;
 
-namespace ProductlineApp.Domain.Entities;
+namespace ProductlineApp.Domain.Aggregates.Auction.Entities;
 
-public class Bid : Entity
+public class Bid : Entity<Bid>
 {
     public Bid(
-        Guid id,
-        Auction auction,
+        AuctionId auctionId,
         decimal startPrice,
         decimal currentPrice,
         decimal finalPrice,
         BidType type)
-        : base(id)
     {
-        this.Auction = auction;
+        this.AuctionId = auctionId;
         this.StartPrice = startPrice;
         this.CurrentPrice = currentPrice;
         this.FinalPrice = finalPrice;
@@ -22,7 +21,7 @@ public class Bid : Entity
         this.Type = type;
     }
 
-    public Auction Auction { get; private set; }
+    public AuctionId AuctionId { get; private set; }
 
     public decimal StartPrice { get; private set; }
 
@@ -33,6 +32,4 @@ public class Bid : Entity
     public BidState State { get; private set; }
 
     public BidType Type { get; private set; }
-
-    public ICollection<Buyer> BuyerList { get; private set; } = new HashSet<Buyer>();
 }

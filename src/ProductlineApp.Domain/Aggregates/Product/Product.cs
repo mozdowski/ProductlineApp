@@ -1,23 +1,25 @@
-﻿using ProductlineApp.Domain.Common;
+﻿using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
+using ProductlineApp.Domain.Aggregates.User;
+using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+using ProductlineApp.Domain.Common;
 using ProductlineApp.Domain.Enums;
 using ProductlineApp.Domain.ValueObjects;
 
 namespace ProductlineApp.Domain.Entities;
 
-public class Product : AggregateRoot
+public class Product : AggregateRoot<ProductId>
 {
     public Product(
-        string productId,
         string name,
         Category category,
         decimal price,
         int? quantity,
-        Image image,
-        string? brand,
+        Uri image,
+        Brand brand,
         string? description,
-        Seller owner)
+        UserId owner)
+        : base()
     {
-        this.ProductId = productId;
         this.Name = name;
         this.Category = category;
         this.Price = price;
@@ -29,7 +31,7 @@ public class Product : AggregateRoot
         this.Status = ProductStatus.OFF_AUCTION;
     }
 
-    public string ProductId { get; private set; }
+    public int ProductId { get; private set; }
 
     public string Name { get; private set; }
 
@@ -39,13 +41,13 @@ public class Product : AggregateRoot
 
     public int? Quantity { get; private set; }
 
-    public Image Image { get; private set; }
+    public Uri Image { get; private set; }
 
     public ProductStatus Status { get; private set; }
 
-    public string? Brand { get; private set; }
+    public Brand Brand { get; private set; }
 
     public string? Description { get; private set; }
 
-    public Seller Owner { get; private set; }
+    public UserId Owner { get; private set; }
 }
