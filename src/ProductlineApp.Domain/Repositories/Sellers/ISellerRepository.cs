@@ -4,7 +4,7 @@ namespace ProductlineApp.Domain.Repositories.Sellers;
 
 public interface ISellerRepository
 {
-    Task<Seller> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<User> GetByIdAsync(Guid id, CancellationToken cancellationToken);
 
-    void Add(Seller seller);
+    void Add(User seller);
 }

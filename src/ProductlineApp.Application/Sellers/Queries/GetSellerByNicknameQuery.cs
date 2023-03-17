@@ -6,9 +6,9 @@ namespace ProductlineApp.Application.Sellers.Queries;
 
 public class GetSellerByNicknameQuery
 {
-    public record Query(string Nickname) : IQuery<Seller>;
+    public record Query(string Nickname) : IQuery<User>;
 
-    public class Handler : IQueryHandler<Query, Seller>
+    public class Handler : IQueryHandler<Query, User>
     {
         private readonly IApplicationDbContext _context;
 
@@ -17,7 +17,7 @@ public class GetSellerByNicknameQuery
             this._context = context;
         }
 
-        public async Task<Seller> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<User> Handle(Query request, CancellationToken cancellationToken)
         {
             return await this._context.Sellers
                 .FirstAsync(

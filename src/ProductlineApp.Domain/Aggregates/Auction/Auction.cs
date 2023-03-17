@@ -1,32 +1,30 @@
-﻿using ProductlineApp.Domain.Common;
+﻿using ProductlineApp.Domain.Aggregates.Auction.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Marketplace.ValueObjects;
+using ProductlineApp.Domain.Common;
 using ProductlineApp.Domain.Enums;
 
-namespace ProductlineApp.Domain.Entities;
+namespace ProductlineApp.Domain.Aggregates.Auction;
 
-public class Auction : AggregateRoot
+public class Auction : AggregateRoot<AuctionId>
 {
-    private Marketplace _marketplace;
-
     public Auction(
-        Guid id,
-        Bid bid,
-        Seller owner,
+        BidId bidId,
+        User owner,
         DateTime startDateTime,
         Category category,
-        Marketplace marketplace,
+        MarketplaceId marketplaceId,
         int quantity,
         AuctionStatus auctionStatus,
         int secondsToExpire,
         DateTime endDateTime,
         bool isTemplate,
         bool isBidEnabled)
-        : base(id)
     {
-        this.Bid = bid;
+        this.BidId = bidId;
         this.Owner = owner;
         this.StartDateTime = startDateTime;
         this.Category = category;
-        this._marketplace = marketplace;
+        this.MarketplaceId = marketplaceId;
         this.Quantity = quantity;
         this.AuctionStatus = auctionStatus;
         this.SecondsToExpire = secondsToExpire;
@@ -35,27 +33,15 @@ public class Auction : AggregateRoot
         this.IsBidEnabled = isBidEnabled;
     }
 
-    public Bid Bid { get; private set; }
+    public BidId BidId { get; private set; }
 
-    public Seller Owner { get; private set; }
+    public User Owner { get; private set; }
 
     public DateTime StartDateTime { get; private set; }
 
     public Category Category { get; private set; }
 
-    public Marketplace Marketplace
-    {
-        get => this._marketplace;
-        set
-        {
-            this._marketplace = value;
-
-            if (!this._marketplace.Auctions.Contains(this))
-            {
-                this._marketplace.AddAuction(this);
-            }
-        }
-    }
+    public MarketplaceId MarketplaceId { get; }
 
     public int Quantity { get; private set; }
 
