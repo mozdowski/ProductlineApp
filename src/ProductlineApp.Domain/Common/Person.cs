@@ -2,15 +2,16 @@
 
 namespace ProductlineApp.Domain.Common;
 
-public abstract class Person : Entity
+public abstract class Person<TId> : AggregateRoot<TId>
+    where TId : notnull
 {
     protected Person(
-        Guid id,
+        TId id,
         string firstName,
         string lastName,
         string email,
         DateTime dateOfBirth)
-        : base(id)
+    : base(id)
     {
         this.FirstName = firstName;
         this.LastName = lastName;

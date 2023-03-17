@@ -1,25 +1,30 @@
 ﻿namespace ProductlineApp.Domain.Common;
 
-public abstract class Entity : AuditableEntity, IEquatable<Entity>
+public abstract class Entity<TId> : AuditableEntity, IEquatable<Entity<TId>>
+    where TId : notnull
 {
-    protected Entity(Guid id)
+    protected Entity(TId id)
     {
         this.Id = id;
     }
 
-    public Guid Id { get; private init; }
+    protected Entity()
+    {
+    }
 
-    public static bool operator ==(Entity? first, Entity? second)
+    public TId Id { get; private init; }
+
+    public static bool operator ==(Entity<TId>? first, Entity<TId>? second)
     {
         return first is not null && second is not null && first.Equals(second);
     }
 
-    public static bool operator !=(Entity? first, Entity? second)
+    public static bool operator !=(Entity<TId>? first, Entity<TId>? second)
     {
         return !(first == second);
     }
 
-    public bool Equals(Entity? other)
+    public bool Equals(Entity<TId>? other)
     {
         if (other is null)
         {
@@ -31,7 +36,7 @@ public abstract class Entity : AuditableEntity, IEquatable<Entity>
             return false;
         }
 
-        return other.Id == this.Id;
+        return this.Id.Equals(other.Id);
     }
 
     public override bool Equals(object? obj)
@@ -46,12 +51,12 @@ public abstract class Entity : AuditableEntity, IEquatable<Entity>
             return false;
         }
 
-        if (obj is not Entity entity)
+        if (obj is not Entity<TId> entity)
         {
             return false;
         }
 
-        return entity.Id == this.Id;
+        return this.Id.Equals(entity.Id);
     }
 
     public override int GetHashCode()
