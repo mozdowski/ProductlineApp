@@ -8,5 +8,9 @@ namespace ProductlineApp.Domain.ValueObjects
 {
     public class Image
     {
+        public static Image EmptyImage()
+        {
+            return new Image();
+        }
     }
 }

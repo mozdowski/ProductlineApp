@@ -100,7 +100,42 @@
       "ProjectGuid": "9e3ba578-223a-4228-80aa-537b953ede91",
       "DisplayName": "ProductlineApp.WebUI",
       "ColorIndex": 2
+    },
+    "89f8e5fb-c5a3-4194-bc32-3cdb1c39476f": {
+      "ProjectGuid": "89f8e5fb-c5a3-4194-bc32-3cdb1c39476f",
+      "DisplayName": "ProductlineApp.Infrastructure",
+      "ColorIndex": 3
+    },
+    "3f6f7c7e-b8ca-4a59-8c1c-326c9ed33966": {
+      "ProjectGuid": "3f6f7c7e-b8ca-4a59-8c1c-326c9ed33966",
+      "DisplayName": "ProductlineApp.Domain",
+      "ColorIndex": 4
+    },
+    "693e7ff6-ad77-46db-bc56-705ca5b82781": {
+      "ProjectGuid": "693e7ff6-ad77-46db-bc56-705ca5b82781",
+      "DisplayName": "ProductlineApp.Application",
+      "ColorIndex": 5
+    },
+    "29afcc3b-876f-4e43-b6bf-6e1f904782a2": {
+      "ProjectGuid": "29afcc3b-876f-4e43-b6bf-6e1f904782a2",
+      "DisplayName": "ProductlineApp.Shared",
+      "ColorIndex": 6
+    },
+    "d5c52dd7-75cf-4367-83eb-da212695a36d": {
+      "ProjectGuid": "d5c52dd7-75cf-4367-83eb-da212695a36d",
+      "DisplayName": "ProductlineApp.UnitTests",
+      "ColorIndex": 7
+    },
+    "20b02854-0883-495f-8ce8-7872cf8385ce": {
+      "ProjectGuid": "20b02854-0883-495f-8ce8-7872cf8385ce",
+      "DisplayName": "solution items",
+      "ColorIndex": 8
+    },
+    "19dfef50-6869-4162-ac31-15756ba877b1": {
+      "ProjectGuid": "19dfef50-6869-4162-ac31-15756ba877b1",
+      "DisplayName": "solution items",
+      "ColorIndex": 9
     }
   },
-  "NextColorIndex": 3
+  "NextColorIndex": 10
 }

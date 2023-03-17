@@ -9,19 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-	<Compile Remove="Common\AggregateRoot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-	<AdditionalFiles Include="Common\AggregateRoot.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
 	<AdditionalFiles Include="..\..\stylecop.json" Link="stylecop.json" />
   </ItemGroup>
 
   <ItemGroup>
+	<Folder Include="Aggregates\Auction\Enums\" />
+	<Folder Include="Entities\" />
 	<Folder Include="Events\" />
+	<Folder Include="ProductAggregate\" />
+	<Folder Include="Repositories\Orders\" />
   </ItemGroup>
 
   <ItemGroup>
