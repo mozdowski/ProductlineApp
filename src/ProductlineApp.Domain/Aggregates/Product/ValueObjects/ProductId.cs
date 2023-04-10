@@ -1,6 +1,6 @@
 ﻿namespace ProductlineApp.Domain.Aggregates.Product.ValueObjects
 {
-    public class ProductId
+    public record ProductId
     {
         private ProductId(Guid value)
         {

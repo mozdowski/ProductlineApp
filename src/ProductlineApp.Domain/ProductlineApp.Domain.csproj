@@ -13,11 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-	<Folder Include="Aggregates\Auction\Enums\" />
+	<Folder Include="Entities" />
 	<Folder Include="Entities\" />
-	<Folder Include="Events\" />
-	<Folder Include="ProductAggregate\" />
-	<Folder Include="Repositories\Orders\" />
+	<Folder Include="Exceptions" />
   </ItemGroup>
 
   <ItemGroup>

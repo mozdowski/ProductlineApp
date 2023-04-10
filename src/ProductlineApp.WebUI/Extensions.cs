@@ -1,4 +1,5 @@
-﻿using ProductlineApp.WebUI.Services.Products;
+﻿using ProductlineApp.Application.Common.Contexts;
+using ProductlineApp.WebUI.Services.Authorization;
 
 namespace ProductlineApp.WebUI
 {
@@ -6,7 +7,12 @@ namespace ProductlineApp.WebUI
     {
         public static IServiceCollection AddWebUI(this IServiceCollection services)
         {
-            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IAuthorizationManager, JwtAuthorizationManager>();
+            services.AddScoped<ICurrentUserContext>(sp =>
+            {
+                var authManager = sp.GetRequiredService<IAuthorizationManager>();
+                return (ICurrentUserContext)authManager;
+            });
 
             return services;
         }
