@@ -22,4 +22,8 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ProductlineApp.Domain\ProductlineApp.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

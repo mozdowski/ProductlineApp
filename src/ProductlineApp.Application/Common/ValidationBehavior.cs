@@ -5,7 +5,7 @@ using ProductlineApp.Application.Common.Interfaces;
 namespace ProductlineApp.Application.Common;
 
 public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : class, ICommand<TResponse>
+    where TRequest : class, IResultCommand<TResponse>, ICommand
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 

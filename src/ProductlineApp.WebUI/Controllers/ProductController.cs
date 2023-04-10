@@ -1,23 +1,32 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductlineApp.WebUI.Services.Products;
+using ProductlineApp.Application.Product.Queries;
+using ProductlineApp.WebUI.Services.Authorization;
 
 namespace ProductlineApp.WebUI.Controllers;
 
 [ApiController]
-[Route("products")]
+[Route("api/products")]
 public class ProductController : ControllerBase
 {
-    private readonly IProductService _productService;
+    private readonly IMediator _mediator;
+    private readonly IAuthorizationManager _authorizationManager;
 
-    public ProductController(IProductService productService)
+    public ProductController(
+        IMediator mediator,
+        IAuthorizationManager authorizationManager)
     {
-        this._productService = productService;
+        this._mediator = mediator;
+        this._authorizationManager = authorizationManager;
     }
 
     [HttpGet]
     [Route("/")]
-    public Task<IActionResult> GetListOfProducts()
+    public async Task<IActionResult> GetListOfProducts()
     {
+        var query = new GetAllUserProductsQuery.Query(this._authorizationManager.UserId);
+        var response = this._mediator.Send(query);
+        return this.Ok(response);
     }
 }
