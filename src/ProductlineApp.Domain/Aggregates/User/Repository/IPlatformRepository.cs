@@ -8,5 +8,5 @@ public interface IPlatformRepository : IRepository<Platform, PlatformId>
 {
     Task<Platform> GetByNameAsync(string name);
 
-    Task<PlatformId> GetIdByNameAsync(string name);
+    Task<PlatformId?> GetIdByNameAsync(string name);
 }

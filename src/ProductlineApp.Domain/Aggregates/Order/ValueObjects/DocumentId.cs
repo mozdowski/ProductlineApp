@@ -1,4 +1,4 @@
-namespace ProductlineApp.Domain.ValueObjects;
+namespace ProductlineApp.Domain.Aggregates.Order.ValueObjects;
 
 public record DocumentId
 {

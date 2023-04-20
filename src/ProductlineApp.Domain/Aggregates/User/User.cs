@@ -8,30 +8,42 @@ namespace ProductlineApp.Domain.Aggregates.User;
 
 public sealed class User : AggregateRoot<UserId>
 {
-    private readonly List<PlatformConnection> _platformConnections = new();
+    private List<PlatformConnection> _platformConnections = new();
 
     private User(
         UserId id,
         string username,
         string password,
+        string salt,
         string email)
         : base(id)
     {
         this.Username = username;
         this.Password = password;
+        this.Salt = salt;
         this.Email = email;
+    }
+
+    private User()
+    {
     }
 
     public string Username { get; private set; }
 
-    public string Password { get; set; }
+    public string Password { get; private set; }
+
+    public string Salt { get; private set; }
 
     [EmailAddress]
-    public string Email { get; }
+    public string Email { get; private init; }
 
-    public IReadOnlyList<PlatformConnection> PlatformConnections => this._platformConnections.AsReadOnly();
+    public IReadOnlyList<PlatformConnection> PlatformConnections
+    {
+        get => this._platformConnections.AsReadOnly();
+        private init => this._platformConnections = value.ToList();
+    }
 
-    public static User Create(string username, string password, string email)
+    public static User Create(string username, string password, string salt, string email)
     {
         if (string.IsNullOrWhiteSpace(email))
         {
@@ -48,10 +60,16 @@ public sealed class User : AggregateRoot<UserId>
             throw new ArgumentException("Password cannot be empty.", nameof(password));
         }
 
+        if (string.IsNullOrWhiteSpace(salt))
+        {
+            throw new ArgumentException("Salt cannot be empty.", nameof(password));
+        }
+
         return new User(
             UserId.CreateUnique(),
             username,
             password,
+            salt,
             email);
     }
 

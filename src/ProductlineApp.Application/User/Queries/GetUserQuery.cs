@@ -33,7 +33,7 @@ public class GetUserQuery
 
             if (user is null)
             {
-                throw new Exception("No such user");
+                throw new Exception($"User not found");
             }
 
             return user;

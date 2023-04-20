@@ -4,21 +4,21 @@ using ProductlineApp.Application.Common.Platforms.Allegro.Services;
 
 namespace ProductlineApp.WebUI.Controllers;
 
+// [Authorize]
 [ApiController]
 [Route("api/allegro")]
-[Authorize]
 public class AllegroController : ControllerBase
 {
-    private readonly IAllegroApiService _allegroApiService;
+    // private readonly IAllegroService _allegroApiService;
 
-    public AllegroController(
-        IAllegroApiService allegroApiService)
-    {
-        this._allegroApiService = allegroApiService;
-    }
+    // public AllegroController(
+    //     IAllegroService allegroApiService)
+    // {
+    //     this._allegroApiService = allegroApiService;
+    // }
 
     [HttpGet]
-    [Route("/productList")]
+    [Route("productList")]
     public async Task<IActionResult> GetProductList(string phrase)
     {
         return this.Ok();
