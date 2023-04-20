@@ -1,16 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ProductlineApp.Domain.Common.Abstractions;
 
 namespace ProductlineApp.Domain.ValueObjects
 {
-    public class Image
+    public sealed record Image : IFile
     {
-        public static Image EmptyImage()
+        public Image(string name, string url)
         {
-            return new Image();
+            if (!Uri.TryCreate(url, UriKind.Absolute, out var uri) || (uri.Scheme != Uri.UriSchemeHttp && uri.Scheme != Uri.UriSchemeHttps))
+                throw new ArgumentException("Invalid platform URL.", nameof(url));
+
+            this.Name = name;
+            this.Url = uri;
         }
+
+        public string Name { get; set; }
+
+        public Uri Url { get; set; }
     }
 }

@@ -1,17 +1,24 @@
 ﻿using FluentValidation;
 using MediatR;
-using ProductlineApp.Application.Common.Interfaces;
 
 namespace ProductlineApp.Application.Common;
 
-public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
-    where TRequest : class, ICommand<TResponse>
+public class ValidationBehavior<TRequest, TResponse> :
+    IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
+    where TResponse : notnull
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => this._validators = validators;
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators)
+    {
+        this._validators = validators;
+    }
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(
+        TRequest request,
+        RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         if (!this._validators.Any())
         {
@@ -20,15 +27,16 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
 
         var context = new ValidationContext<TRequest>(request);
 
-        var errors = this._validators
-            .Select(x => x.Validate(context))
-            .SelectMany(x => x.Errors)
-            .Where(x => x != null)
+        var validationResults = await Task.WhenAll(this._validators.Select(v => v.ValidateAsync(context, cancellationToken)));
+
+        var failures = validationResults
+            .SelectMany(r => r.Errors)
+            .Where(f => f != null)
             .ToList();
 
-        if (errors.Any())
+        if (failures.Count != 0)
         {
-            throw new ValidationException(errors);
+            throw new ValidationException(failures);
         }
 
         return await next();
