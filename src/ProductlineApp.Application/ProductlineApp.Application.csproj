@@ -13,19 +13,16 @@
 
   <ItemGroup>
 	<ProjectReference Include="..\ProductlineApp.Domain\ProductlineApp.Domain.csproj" />
+	<ProjectReference Include="..\ProductlineApp.Shared\ProductlineApp.Shared.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-	<Folder Include="Categories\Commands\" />
-	<Folder Include="Categories\Models\" />
-	<Folder Include="Common\Behaviours\" />
-	<Folder Include="Common\Exceptions\" />
-	<Folder Include="Common\Models\" />
-	<Folder Include="Orders\Commands\" />
-	<Folder Include="Orders\EventHandlers\" />
-	<Folder Include="Products\EventHandlers\" />
-	<Folder Include="Sellers\Commands\" />
-	<Folder Include="Sellers\Models\" />
+	<Folder Include="Common\ApiClients\Allegro" />
+	<Folder Include="Listing\Commands" />
+	<Folder Include="Listing\DTO" />
+	<Folder Include="Listing\Queries" />
+	<Folder Include="Order\EventHandlers\" />
+	<Folder Include="User\DTO" />
   </ItemGroup>
 
   <ItemGroup>

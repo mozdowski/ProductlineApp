@@ -1,44 +1,49 @@
-﻿using AutoMapper;
+using AutoMapper;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using ProductlineApp.Application.Common.Interfaces;
-using ProductlineApp.Application.Products.Models;
+using ProductlineApp.Application.Products.DTO;
 
 namespace ProductlineApp.Application.Products.Queries;
+
 public class GetProductByIdQuery
 {
-    public record Query(Guid UserId, Guid ProductId) : IQuery<ProductDtoResponse>;
+    public record Query(
+        Guid ProductId,
+        Guid UserId) : IQuery<GetProductResponse>;
 
-    public class Validator : AbstractValidator<ProductDtoResponse>
+    public class Validator : AbstractValidator<Query>
     {
         public Validator()
         {
+            this.RuleFor(x => x.ProductId).NotEmpty();
+            this.RuleFor(x => x.UserId).NotEmpty();
         }
     }
 
-    public class Handler : IQueryHandler<Query, ProductDtoResponse>
+    public class Handler : IQueryHandler<Query, GetProductResponse>
     {
-        private readonly IApplicationDbContext _context;
+        private readonly IMediator _mediator;
         private readonly IMapper _mapper;
 
         public Handler(
-            IApplicationDbContext context,
+            IMediator mediator,
             IMapper mapper)
         {
-            this._context = context;
+            this._mediator = mediator;
             this._mapper = mapper;
         }
 
-        public async Task<ProductDtoResponse> Handle(Query request, CancellationToken cancellationToken)
+        public async Task<GetProductResponse> Handle(Query request, CancellationToken cancellationToken)
         {
-            var seller = await this._context.Sellers
-                .FirstAsync(x => x.Id == request.UserId, cancellationToken);
+            var query = new GetProductRawQuery.Query(
+                request.ProductId,
+                request.UserId);
 
-            var product = seller.Products
-                .FirstOrDefault(x => x.Id == request.ProductId);
+            var product = await this._mediator.Send(query, cancellationToken);
 
-            return this._mapper.Map<ProductDtoResponse>(product);
+            return new GetProductResponse(
+                this._mapper.Map<ProductDto>(product));
         }
     }
 }
