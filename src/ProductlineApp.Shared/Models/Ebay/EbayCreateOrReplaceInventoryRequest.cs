@@ -2,7 +2,7 @@ namespace ProductlineApp.Shared.Models.Ebay;
 
 public class EbayCreateOrReplaceInventoryRequest
 {
-    public ProductObject Product { get; set; }
+    public EbayProduct Product { get; set; }
 
     public string Condition { get; set; }
 
@@ -10,11 +10,11 @@ public class EbayCreateOrReplaceInventoryRequest
 
     public AvailabilityObject Availability { get; set; }
 
-    public class ProductObject
+    public class EbayProduct
     {
         public string Title { get; set; }
 
-        public IDictionary<string, IEnumerable<string>> Aspects { get; set; }
+        public IDictionary<string, IEnumerable<string>>? Aspects { get; set; }
 
         public string Description { get; set; }
 

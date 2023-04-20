@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Authorization;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using ProductlineApp.Application.Authentication.DTO;
 using ProductlineApp.Application.Common.Contexts;
-using ProductlineApp.Shared.Enums;
+using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace ProductlineApp.WebUI.Services.Authorization;
 
@@ -19,9 +19,9 @@ public class JwtAuthorizationManager : IAuthorizationManager, ICurrentUserContex
 
     public Guid UserId => this._userId;
 
-    public IDictionary<PlatformNames, UserToken> PlatformTokens { get; set; }
+    public IDictionary<PlatformId, UserToken>? PlatformTokens { get; set; }
 
-    Guid ICurrentUserContext.UserId => this._userId;
+    Guid? ICurrentUserContext.UserId => this._userId;
 
     public async Task<AuthorizationResult> AuthorizeAsync(ClaimsPrincipal user, object resource, IEnumerable<IAuthorizationRequirement> requirements)
     {
@@ -30,7 +30,7 @@ public class JwtAuthorizationManager : IAuthorizationManager, ICurrentUserContex
             return AuthorizationResult.Failed();
         }
 
-        var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == JwtRegisteredClaimNames.Sub);
+        var userIdClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier);
         if (userIdClaim == null || !Guid.TryParse(userIdClaim.Value, out this._userId))
         {
             return AuthorizationResult.Failed();

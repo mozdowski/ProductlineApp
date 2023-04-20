@@ -44,29 +44,27 @@ public class EbayApiClient : IEbayApiClient
 
     public async Task<EbayTokenResponse> GetAccessTokenAsync(string code)
     {
-        var authHeader = new AuthenticationHeaderValue(
-            "Basic",
-            Convert.ToBase64String(
-                System.Text.Encoding.UTF8.GetBytes(
-                    $"{this._ebayConfiguration.ClientId}:{this._ebayConfiguration.ClientSecret}")));
-
-        var requestContent = new FormUrlEncodedContent(new[]
+        var request = new RestRequest(this._ebayConfiguration.OAuth2TokenUri, Method.Post)
         {
-            new KeyValuePair<string, string>("grant_type", "authorization_code"),
-            new KeyValuePair<string, string>("code", code),
-            new KeyValuePair<string, string>("redirect_uri", this._ebayConfiguration.RedirectUri),
-        });
+            Authenticator = new HttpBasicAuthenticator(
+                this._ebayConfiguration.ClientId,
+                this._ebayConfiguration.ClientSecret),
+        };
 
-        this._httpClient.DefaultRequestHeaders.Authorization = authHeader;
-        var response = await this._httpClient.PostAsync(this._ebayConfiguration.OAuth2TokenUri, requestContent);
+        request.OnBeforeDeserialization = resp => { resp.ContentType = "application/json"; };
 
-        if (!response.IsSuccessStatusCode)
+        request.AddParameter("grant_type", "authorization_code");
+        request.AddParameter("code", code);
+        request.AddParameter("redirect_uri", this._ebayConfiguration.RedirectUri);
+
+        var response = await this._restClient.ExecuteAsync<EbayTokenResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
         {
-            throw new Exception($"Failed to get token: {response.StatusCode} - {await response.Content.ReadAsStringAsync()}");
+            throw new Exception($"Failed to get token: {response.StatusCode} - {response.Content}");
         }
 
-        var responseContent = await response.Content.ReadAsStringAsync();
-        return JsonConvert.DeserializeObject<EbayTokenResponse>(responseContent);
+        return response.Data;
     }
 
     public async Task<EbayTokenResponse> GetRefreshTokenAsync(string refreshToken)
@@ -84,7 +82,7 @@ public class EbayApiClient : IEbayApiClient
 
         var response = await this._restClient.ExecuteAsync<EbayTokenResponse>(request);
 
-        if (response.StatusCode != HttpStatusCode.OK)
+        if (response.StatusCode != HttpStatusCode.OK || response.Data is null)
         {
             throw new Exception($"Failed to refresh token: {response.StatusCode}");
         }

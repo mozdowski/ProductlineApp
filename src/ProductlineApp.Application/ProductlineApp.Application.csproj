@@ -18,12 +18,9 @@
 
   <ItemGroup>
 	<Folder Include="Common\ApiClients\Allegro" />
-	<Folder Include="Common\Platforms\Ebay\DTO" />
-	<Folder Include="Common\Platforms\Ebay\Services" />
 	<Folder Include="Listing\Commands" />
 	<Folder Include="Listing\DTO" />
 	<Folder Include="Listing\Queries" />
-	<Folder Include="Order\Commands\" />
 	<Folder Include="Order\EventHandlers\" />
 	<Folder Include="User\DTO" />
   </ItemGroup>

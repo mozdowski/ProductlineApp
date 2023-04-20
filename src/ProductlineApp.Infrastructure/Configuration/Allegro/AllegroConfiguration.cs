@@ -2,17 +2,17 @@ namespace ProductlineApp.Infrastructure.Configuration.Allegro;
 
 public class AllegroConfiguration : IAllegroConfiguration
 {
-    public string ClientId { get; }
+    public string ClientId { get; set; }
 
-    public string ClientSecret { get; }
+    public string ClientSecret { get; set; }
 
-    public string RedirectUri { get; }
+    public string RedirectUri { get; set; }
 
-    public string AuthUri { get; }
+    public string AuthUri { get; set; }
 
-    public string OAuth2TokenUri { get; }
+    public string OAuth2TokenUri { get; set; }
 
-    public string BaseApiUrl { get; }
+    public string BaseApiUrl { get; set; }
 
-    public string BaseRestApiUrl { get; }
+    public string BaseRestApiUrl { get; set; }
 }

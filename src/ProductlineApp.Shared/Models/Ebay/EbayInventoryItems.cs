@@ -93,7 +93,7 @@ public class EbayInventoryItems
         public Weight Weight { get; set; }
     }
 
-    public class Product
+    public class EbayInventoryProduct
     {
         public string Aspects { get; set; }
 
@@ -136,7 +136,7 @@ public class EbayInventoryItems
 
         public PackageWeightAndSize PackageWeightAndSize { get; set; }
 
-        public Product Product { get; set; }
+        public EbayInventoryProduct Product { get; set; }
 
         public string Sku { get; set; }
     }

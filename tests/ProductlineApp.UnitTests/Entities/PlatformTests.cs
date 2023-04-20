@@ -13,7 +13,7 @@ public class PlatformTests
     public void Setup()
     {
         // Arrange
-        this._platform = Platform.Create("Test Platform", "https://example.com");
+        this._platform = Platform.Create("Test Platform");
     }
 
     [Test]
@@ -22,39 +22,31 @@ public class PlatformTests
         // Assert
         Assert.IsNotNull(this._platform.Id);
         Assert.AreEqual("Test Platform", this._platform.Name);
-        Assert.AreEqual(new Uri("https://example.com"), this._platform.Url);
     }
 
     [Test]
     public void Create_NullName_ThrowsArgumentException()
     {
         // Assert
-        Assert.Throws<ArgumentException>(() => this.CreatePlatform(null, "https://example.com"));
+        Assert.Throws<ArgumentException>(() => this.CreatePlatform(null));
     }
 
     [Test]
     public void Create_EmptyName_ThrowsArgumentException()
     {
         // Assert
-        Assert.Throws<ArgumentException>(() => this.CreatePlatform("", "https://example.com"));
+        Assert.Throws<ArgumentException>(() => this.CreatePlatform(""));
     }
 
     [Test]
     public void Create_WhiteSpaceName_ThrowsArgumentException()
     {
         // Assert
-        Assert.Throws<ArgumentException>(() => this.CreatePlatform("  ", "https://example.com"));
+        Assert.Throws<ArgumentException>(() => this.CreatePlatform("  "));
     }
 
-    [Test]
-    public void Create_InvalidUrl_ThrowsArgumentException()
+    private Platform CreatePlatform(string name)
     {
-        // Assert
-        Assert.Throws<ArgumentException>(() => this.CreatePlatform("Test Platform", "not-a-valid-url"));
-    }
-
-    private Platform CreatePlatform(string name, string url)
-    {
-        return Platform.Create(name, url);
+        return Platform.Create(name);
     }
 }

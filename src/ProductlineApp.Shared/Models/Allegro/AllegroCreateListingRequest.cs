@@ -76,7 +76,7 @@ public class Parameter
     public List<string> ValuesIds { get; set; }
 }
 
-public class Product
+public class AllegroListingProduct
 {
     public string Name { get; set; }
 
@@ -98,7 +98,7 @@ public class Quantity
 
 public class ProductSet
 {
-    public Product Product { get; set; }
+    public AllegroListingProduct Product { get; set; }
 
     public Quantity Quantity { get; set; }
 }

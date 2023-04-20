@@ -1,6 +1,6 @@
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 
 namespace ProductlineApp.Domain.Aggregates.Order.Entities;

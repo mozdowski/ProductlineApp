@@ -52,6 +52,7 @@ public class LinkPlatformCommand
                 request.RefreshToken,
                 request.ExpiresIn);
 
+            // await this._userRepository.UpdateUserAsync(user);
             await this._userRepository.UpdateUserAsync(user);
 
             return Unit.Value;

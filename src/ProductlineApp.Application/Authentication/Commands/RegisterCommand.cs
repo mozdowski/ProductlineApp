@@ -1,6 +1,7 @@
 using FluentValidation;
 using ProductlineApp.Application.Authentication.DTO;
 using ProductlineApp.Application.Common.Interfaces;
+using ProductlineApp.Application.Security;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 
 namespace ProductlineApp.Application.Authentication.Commands;
@@ -26,13 +27,16 @@ public class RegisterCommand
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _tokenGenerator;
+        private readonly IPasswordHasher _passwordHasher;
 
         public Handler(
             IUserRepository userRepository,
-            IJwtTokenGenerator tokenGenerator)
+            IJwtTokenGenerator tokenGenerator,
+            IPasswordHasher passwordHasher)
         {
             this._userRepository = userRepository;
             this._tokenGenerator = tokenGenerator;
+            this._passwordHasher = passwordHasher;
         }
 
         public async Task<AuthenticationResult> Handle(Command request, CancellationToken cancellationToken)
@@ -42,9 +46,12 @@ public class RegisterCommand
                 throw new Exception($"User {request.Email} already exists");
             }
 
+            var (hashedPassword, salt) = this._passwordHasher.HashPassword(request.Password);
+
             var user = Domain.Aggregates.User.User.Create(
                 request.Username,
-                request.Password,
+                hashedPassword,
+                salt,
                 request.Email);
 
             await this._userRepository.AddAsync(user);
@@ -57,7 +64,3 @@ public class RegisterCommand
         }
     }
 }
-
-
-
-

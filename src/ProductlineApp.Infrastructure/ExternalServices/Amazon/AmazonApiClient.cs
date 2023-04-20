@@ -1,6 +1,7 @@
 using Newtonsoft.Json;
 using ProductlineApp.Infrastructure.Configuration.Amazon;
 using ProductlineApp.Infrastructure.Models;
+using ProductlineApp.Infrastructure.Models.Amazon;
 
 namespace ProductlineApp.Infrastructure.ExternalServices.Amazon;
 

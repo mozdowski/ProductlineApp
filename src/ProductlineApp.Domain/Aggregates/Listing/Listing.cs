@@ -1,9 +1,10 @@
 ﻿using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 using System.Security.Authentication;
+using ProductlineApp.Domain.Aggregates.Products;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 
 namespace ProductlineApp.Domain.Aggregates.Listing;
 
@@ -76,7 +77,7 @@ public class Listing : AggregateRoot<ListingId>
             ownerId);
     }
 
-    public static Listing CreateFromProduct(Product.Product product, UserId ownerId)
+    public static Listing CreateFromProduct(Product product, UserId ownerId)
     {
         if (product is null)
             throw new ArgumentNullException(nameof(product));

@@ -1,3 +1,5 @@
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
+
 namespace ProductlineApp.UnitTests.Entities;
 
 using System;
@@ -5,7 +7,6 @@ using NUnit.Framework;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order.Entities;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
 
 [TestFixture]
 public class OrderLineTests

@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace ProductlineApp.Infrastructure.Models;
+namespace ProductlineApp.Infrastructure.Models.Amazon;
 
 public class AmazonTokenResponse
 {

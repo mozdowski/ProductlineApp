@@ -2,7 +2,7 @@ namespace ProductlineApp.Shared.Models.Allegro;
 
 public class AllegroProductCalalogueResponse
 {
-    public List<Product> Products { get; set; }
+    public List<AllegroCatalogueProduct> Products { get; set; }
 
     // public Categories Categories { get; set; }
 
@@ -75,7 +75,7 @@ public class AllegroProductCalalogueResponse
         public Options Options { get; set; }
     }
 
-    public class Product
+    public class AllegroCatalogueProduct
     {
         public string Id { get; set; }
 

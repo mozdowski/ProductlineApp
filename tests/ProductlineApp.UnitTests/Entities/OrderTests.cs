@@ -1,3 +1,5 @@
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
+
 namespace ProductlineApp.UnitTests.Entities;
 
 using System;
@@ -8,7 +10,6 @@ using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order;
 using ProductlineApp.Domain.Aggregates.Order.Entities;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.ValueObjects;
 

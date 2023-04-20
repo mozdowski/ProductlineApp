@@ -1,10 +1,11 @@
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
+
 namespace ProductlineApp.UnitTests.ValueObjects;
 
 using System;
 using NUnit.Framework;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Product.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.ValueObjects;
 

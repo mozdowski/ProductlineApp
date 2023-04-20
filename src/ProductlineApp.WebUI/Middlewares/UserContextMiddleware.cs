@@ -12,7 +12,7 @@ public class UserContextMiddleware
         this._next = next;
     }
 
-    public async Task InvokeAsync(HttpContext context, ICurrentUserContext userContext, IUserService userService)
+    public async Task InvokeAsync(HttpContext context, ICurrentUserContext userContext, IUserService userService, IAuthorizationManager authorization)
     {
         var userId = userContext.UserId;
 

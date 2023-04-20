@@ -3,6 +3,7 @@ using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using System.Security.Authentication;
 using ProductlineApp.Application.Authentication.DTO;
+using ProductlineApp.Application.Security;
 
 namespace ProductlineApp.Application.Authentication.Queries;
 
@@ -25,27 +26,30 @@ public class LoginQuery
     {
         private readonly IUserRepository _userRepository;
         private readonly IJwtTokenGenerator _tokenGenerator;
+        private readonly IPasswordHasher _passwordHasher;
 
         public Handler(
             IUserRepository userRepository,
-            IJwtTokenGenerator tokenGenerator)
+            IJwtTokenGenerator tokenGenerator,
+            IPasswordHasher passwordHasher)
         {
             this._userRepository = userRepository;
             this._tokenGenerator = tokenGenerator;
+            this._passwordHasher = passwordHasher;
         }
 
         public async Task<AuthenticationResult> Handle(Query request, CancellationToken cancellationToken)
         {
-            var user = await this._userRepository.GetUserByEmailAsync(request.Email);
+            var (user, salt) = await this._userRepository.GetByEmailWithSaltAsync(request.Email);
 
             if (user is null)
             {
                 throw new InvalidCredentialException("Invalid email or password");
             }
 
-            if (user.Password != request.Password)
+            if (salt is not null && !this._passwordHasher.VerifyPassword(request.Password, user.Password, salt))
             {
-                throw new InvalidCredentialException("Invalid email or password");
+                throw new InvalidCredentialException($"Invalid email or password for userId: {user.Id}");
             }
 
             var token = this._tokenGenerator.GenerateToken(user);
