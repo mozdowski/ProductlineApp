@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProductlineApp.Domain.Aggregates.User.Entities;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
-using ProductlineApp.Infrastructure.Persistance.Entities.Platform;
+using ProductlineApp.Shared.Enums;
 
 namespace ProductlineApp.Infrastructure.Persistance.Configurations;
 
@@ -10,7 +10,7 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
 {
     public void Configure(EntityTypeBuilder<Platform> builder)
     {
-        builder.ToTable("Platform");
+        builder.ToTable("Platforms");
 
         builder.HasKey(e => e.Id);
 
@@ -24,13 +24,12 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
             .IsRequired()
             .HasMaxLength(50);
 
-        builder.HasData(
-            new PlatformEntity(PlatformId.Create(Guid.NewGuid()), "ebay", $"https://www.ebay.com/"));
+        builder.Property(e => e.LastModified)
+            .HasConversion(
+                v => DateTime.UtcNow,
+                v => v.ToUniversalTime());
 
-        builder.HasData(
-            new PlatformEntity(PlatformId.Create(Guid.NewGuid()), "allegro", $"https://allegro.pl/"));
-
-        builder.HasData(
-            new PlatformEntity(PlatformId.Create(Guid.NewGuid()), "amazon", $"https://amazon.com/"));
+        builder.HasData(Platform.Create(PlatformNames.EBAY.ToString().ToLower()));
+        builder.HasData(Platform.Create(PlatformNames.ALLEGRO.ToString().ToLower()));
     }
 }

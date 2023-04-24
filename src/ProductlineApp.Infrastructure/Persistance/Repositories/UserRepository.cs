@@ -41,9 +41,9 @@ public class UserRepository : IUserRepository
         return await this._dbContext.Users.AnyAsync(x => x.Email.Equals(email));
     }
 
-    public async Task<bool> IsUserExistingAsync(Guid userId)
+    public async Task<bool> IsUserExistingAsync(UserId userId)
     {
-        throw new NotImplementedException();
+        return await this._dbContext.Users.AnyAsync(x => x.Id == userId);
     }
 
     public async Task AddAsync(User user)
@@ -90,5 +90,21 @@ public class UserRepository : IUserRepository
     {
         var user = await this._dbContext.Users.FirstOrDefaultAsync(x => x.Email.Equals(email));
         return (user, user?.Salt);
+    }
+
+    public async Task<IEnumerable<PlatformConnection>> GetAllPlatformConnectionsAsync()
+    {
+        return await this._dbContext.Users
+            .SelectMany(x => x.PlatformConnections)
+            .ToListAsync();
+    }
+
+    public async Task<IEnumerable<User>> GetUsersBatchAsync(int pageNumber, int pageSize)
+    {
+        return await this._dbContext.Users
+            .OrderBy(u => u.Id)
+            .Skip(pageNumber * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
     }
 }

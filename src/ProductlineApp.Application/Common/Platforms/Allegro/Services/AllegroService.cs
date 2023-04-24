@@ -66,7 +66,28 @@ public class AllegroService : IAllegroService
             this.PlatformId.Value,
             response.AccessToken,
             response.RefreshToken,
-            response.ExpiresIn);
+            response.ExpiresIn,
+            null);
+        await this._mediator.Send(command);
+    }
+
+    public async Task RefreshAccessTokenAsync(UserId userId, string refreshToken)
+    {
+        var response = await this._allegroApiClient.GetRefreshTokenAsync(refreshToken);
+
+        if (response is null)
+            throw new NullReferenceException("Retrieved accees token as null");
+
+        if (!this._currentUser.UserId.HasValue || this.PlatformId is null)
+            throw new NullReferenceException("User or platform is not defined");
+
+        var command = new RefreshPlatformTokenCommand.Command(
+            userId.Value,
+            this.PlatformId.Value,
+            response.AccessToken,
+            response.RefreshToken,
+            response.ExpiresIn,
+            null);
         await this._mediator.Send(command);
     }
 

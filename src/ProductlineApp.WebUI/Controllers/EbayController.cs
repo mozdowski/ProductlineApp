@@ -1,10 +1,9 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ProductlineApp.Application.Common.Platforms.Ebay.DTO;
 using ProductlineApp.Application.Common.Platforms.Ebay.Services;
-using ProductlineApp.Domain.Aggregates.Products;
-using ProductlineApp.WebUI.DTO.Product;
+using ProductlineApp.Application.Products.DTO;
+using ProductlineApp.Shared.Models.Ebay;
 
 namespace ProductlineApp.WebUI.Controllers;
 
@@ -25,10 +24,9 @@ public class EbayController : ControllerBase
     }
 
     [HttpPost("addOrUpdateProduct")]
-    public async Task<IActionResult> AddOrUpdateProduct([FromBody] ProductDtoRequest request)
+    public async Task<IActionResult> AddOrUpdateProduct([FromForm] EbayProductDtoRequest request)
     {
-        var product = this._mapper.Map<Product>(request);
-        await this._ebayService.CreateOrReplaceInventoryItem(product);
+        await this._ebayService.CreateOrReplaceInventoryItem(request);
 
         return this.Ok();
     }

@@ -2,17 +2,19 @@ namespace ProductlineApp.Infrastructure.Configuration.Ebay;
 
 public interface IEbayConfiguration
 {
-    string ClientId { get; }
+    string ClientId { get; set; }
 
-    string ClientSecret { get; }
+    string ClientSecret { get; set; }
 
-    string RedirectUri { get; }
+    string RedirectUri { get; set; }
 
-    string AuthUri { get; }
+    string AuthUri { get; set; }
 
-    string OAuth2TokenUri { get; }
+    string OAuth2TokenUri { get; set; }
 
-    string Scopes { get; }
+    string Scopes { get; set; }
 
-    string BaseApiUrl { get; }
+    string BaseApiUrl { get; set; }
+
+    string ContentLanguage { get; set; }
 }

@@ -12,7 +12,8 @@ public sealed class PlatformConnection : Entity<PlatformConnectionId>
         PlatformId platformId,
         string accessToken,
         string refreshToken,
-        DateTime expirationDate)
+        DateTime expirationDate,
+        DateTime? refreshTokenExpirationDate)
     : base(id)
     {
         this.Id = id;
@@ -21,13 +22,14 @@ public sealed class PlatformConnection : Entity<PlatformConnectionId>
         this.AccessToken = accessToken;
         this.ExpirationDate = expirationDate;
         this.RefreshToken = refreshToken;
+        this.RefreshTokenExpirationDate = refreshTokenExpirationDate;
     }
 
-    public PlatformConnectionId Id { get; }
+    public PlatformConnectionId Id { get; private init; }
 
-    public UserId UserId { get; }
+    public UserId UserId { get; private init; }
 
-    public PlatformId PlatformId { get; }
+    public PlatformId PlatformId { get; private init; }
 
     public string AccessToken { get; private set; }
 
@@ -35,12 +37,15 @@ public sealed class PlatformConnection : Entity<PlatformConnectionId>
 
     public DateTime ExpirationDate { get; private set; }
 
+    public DateTime? RefreshTokenExpirationDate { get; private set; }
+
     public static PlatformConnection Create(
         User user,
         PlatformId platformId,
         string accessToken,
         string refreshToken,
-        DateTime expirationDate)
+        DateTime expirationDate,
+        DateTime? refreshTokenExpirationDate)
     {
         if (string.IsNullOrEmpty(accessToken))
             throw new ArgumentException("Access token cannot be null or empty");
@@ -66,17 +71,29 @@ public sealed class PlatformConnection : Entity<PlatformConnectionId>
             platformId,
             accessToken,
             refreshToken,
-            expirationDate);
+            expirationDate,
+            refreshTokenExpirationDate);
     }
 
     public void RefreshAccessToken(string newAccessToken, DateTime newAccessTokenExpiration)
     {
-        if (newAccessTokenExpiration < DateTime.Now)
+        if (newAccessTokenExpiration < DateTime.UtcNow)
         {
             throw new ArgumentException("Access token cannot be expired");
         }
 
         this.AccessToken = newAccessToken;
         this.ExpirationDate = newAccessTokenExpiration;
+    }
+
+    public void RefreshAccessToken(string newAccessToken, string newRefreshToken, DateTime newAccessTokenExpiration)
+    {
+        this.RefreshAccessToken(newAccessToken, newAccessTokenExpiration);
+        this.RefreshToken = newRefreshToken;
+    }
+
+    public bool TokenNeedsRefresh()
+    {
+        return this.ExpirationDate < DateTime.UtcNow;
     }
 }

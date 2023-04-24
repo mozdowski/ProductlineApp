@@ -1,14 +1,14 @@
-using System.Security.Authentication;
 using FluentValidation;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+using System.Security.Authentication;
 
 namespace ProductlineApp.Application.Products.Queries;
 
-public class GetProductRawQuery
+internal class GetProductRawQuery
 {
     public record Query(
         Guid ProductId,
@@ -38,7 +38,7 @@ public class GetProductRawQuery
 
         public async Task<Domain.Aggregates.Products.Product> Handle(Query request, CancellationToken cancellationToken)
         {
-            var isUserExisting = await this._userRepository.IsUserExistingAsync(request.UserId);
+            var isUserExisting = await this._userRepository.IsUserExistingAsync(UserId.Create(request.UserId));
 
             if (!isUserExisting)
             {

@@ -2,7 +2,7 @@ namespace ProductlineApp.Domain.Common.Abstractions;
 
 public interface IFile
 {
-    public string Name { get; set; }
+    string Name { get; set; }
 
-    public Uri Url { get; set; }
+    Uri Url { get; set; }
 }

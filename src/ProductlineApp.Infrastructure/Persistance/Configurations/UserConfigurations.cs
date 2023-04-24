@@ -15,7 +15,7 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
 
     private void ConfigureUsersTable(EntityTypeBuilder<User> builder)
     {
-            builder.ToTable("User");
+            builder.ToTable("Users");
 
             builder.HasKey(e => e.Id);
 
@@ -40,6 +40,11 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             builder.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.Property(e => e.LastModified)
+                .HasConversion(
+                    v => DateTime.UtcNow,
+                    v => v.ToUniversalTime());
 
             // builder.HasMany(e => e.PlatformConnections)
             //     .WithOne()
@@ -68,7 +73,7 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
     {
         builder.OwnsMany(e => e.PlatformConnections, ba =>
         {
-            ba.ToTable("PlatformConnection");
+            ba.ToTable("PlatformConnections");
             ba.WithOwner().HasForeignKey(pc => pc.UserId);
             ba.Property(pc => pc.Id)
                 .HasConversion(
@@ -94,6 +99,15 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
                     v => v.ToUniversalTime(),
                     v => v.ToUniversalTime())
                 .IsRequired();
+            ba.Property(pc => pc.RefreshTokenExpirationDate)
+                .HasConversion(
+                    v => v.Value.ToUniversalTime(),
+                    v => v.ToUniversalTime());
+
+            ba.Property(e => e.LastModified)
+                .HasConversion(
+                    v => v.Value.ToUniversalTime(),
+                    v => v.ToUniversalTime());
         });
     }
 }
