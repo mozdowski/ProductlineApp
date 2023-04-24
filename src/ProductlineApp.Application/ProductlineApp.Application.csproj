@@ -21,7 +21,6 @@
 	<Folder Include="Listing\Commands" />
 	<Folder Include="Listing\DTO" />
 	<Folder Include="Listing\Queries" />
-	<Folder Include="Order\EventHandlers\" />
 	<Folder Include="User\DTO" />
   </ItemGroup>
 

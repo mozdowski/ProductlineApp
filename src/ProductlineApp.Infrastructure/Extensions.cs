@@ -1,12 +1,10 @@
-﻿using AutoMapper;
-using MediatR;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
@@ -24,12 +22,14 @@ using ProductlineApp.Infrastructure.Configuration.Allegro;
 using ProductlineApp.Infrastructure.Configuration.Ebay;
 using ProductlineApp.Infrastructure.ExternalServices;
 using ProductlineApp.Infrastructure.ExternalServices.Allegro;
-using ProductlineApp.Infrastructure.ExternalServices.Common;
+using ProductlineApp.Infrastructure.ExternalServices.Azure;
 using ProductlineApp.Infrastructure.ExternalServices.Ebay;
 using ProductlineApp.Infrastructure.Persistance;
 using ProductlineApp.Infrastructure.Persistance.Repositories;
 using ProductlineApp.Infrastructure.Security;
 using System.Text;
+using Microsoft.Extensions.Logging;
+using ProductlineApp.Infrastructure.ExternalServices.Common;
 
 namespace ProductlineApp.Infrastructure
 {
@@ -39,15 +39,13 @@ namespace ProductlineApp.Infrastructure
             this IServiceCollection services,
             IConfiguration configuration)
         {
-            // IApplicationDbContext
-            // configuration = new ConfigurationBuilder()
-            //     .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
-            //     .Build();
             services.AddAuth(configuration)
                     .AddPersistance(configuration);
 
             services.AddScoped<HttpClient>();
-            services.AddSingleton<IUploadFileService, UploadFileService>();
+
+            services.AddSingleton<IUploadFileService, AzureStorageService>();
+
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
 
             services.Configure<EbayConfiguration>(configuration.GetSection($"Infrastructure:Platforms:EbayConfiguration"));
@@ -61,37 +59,6 @@ namespace ProductlineApp.Infrastructure
             services.AddScoped<IEbayApiClient, EbayApiClient>();
             services.AddScoped<IAllegroApiClient, AllegroApiClient>();
 
-            // services.AddScoped(async serviceProvider =>
-            // {
-            //     var allegroApiClient = serviceProvider.GetService<IAllegroApiClient>();
-            //     var mapper = serviceProvider.GetService<IMapper>();
-            //     var mediator = serviceProvider.GetService<IMediator>();
-            //     var currentUser = serviceProvider.GetService<ICurrentUserContext>();
-            //     var platformRepository = serviceProvider.GetService<IPlatformRepository>();
-            //
-            //     return await AllegroService.CreateAsync(
-            //         allegroApiClient,
-            //         mapper,
-            //         mediator,
-            //         currentUser,
-            //         platformRepository);
-            // });
-            // services.AddScoped(async serviceProvider =>
-            // {
-            //     var ebayApiClient = serviceProvider.GetService<IEbayApiClient>();
-            //     var mapper = serviceProvider.GetService<IMapper>();
-            //     var mediator = serviceProvider.GetService<IMediator>();
-            //     var currentUser = serviceProvider.GetService<ICurrentUserContext>();
-            //     var platformRepository = serviceProvider.GetService<IPlatformRepository>();
-            //
-            //     return await EbayService.CreateAsync(
-            //         ebayApiClient,
-            //         mapper,
-            //         mediator,
-            //         currentUser,
-            //         platformRepository);
-            // });
-
             services.AddScoped<IEbayService, EbayService>();
             services.AddScoped<IAllegroService, AllegroService>();
             services.AddScoped<IPlatformService, AllegroService>();
@@ -103,34 +70,9 @@ namespace ProductlineApp.Infrastructure
                 return new PlatformServiceDispatcher(platformServices, provider);
             });
 
-            // services.AddScoped<IEnumerable<IPlatformService>>(p => p.GetServices<IPlatformService>());
-            // services.AddScoped<IPlatformServiceDispatcher, PlatformServiceDispatcher>();
-
-            // services.AddScoped<IPlatformService>(provider =>
-            // {
-            //     var allegroService = provider.GetService<IAllegroService>();
-            //     var ebayService = provider.GetService<IEbayService>();
-            //     return new List<IPlatformService> { allegroService, ebayService };
-            // });
-            // services.AddScoped<AllegroApiService>(provider =>
-            // {
-            //     var currentUserContext = provider.GetRequiredService<ICurrentUserContext>();
-            //     var mediator = provider.GetRequiredService<IMediator>();
-            //     var query = new GetUserPlatformTokenByServiceNameQuery.Query(
-            //         currentUserContext.UserId,
-            //         PlatformNames.ALLEGRO);
-            //     var accessToken = await mediator.Send(query);
-            //     return new AllegroApiService(accessToken: accessToken);
-            // });
-
-            // services.AddSingleton(configuration);
-            //
-            // services.AddDbContext<ProductlineDbContext>(options =>
-            //     options.UseNpgsql("Server=productline-db.postgres.database.azure.com;Database=postgres;Port=5432;User Id=productline_admin;Password=Inzynierka*12;Ssl Mode=Require;"));
-
-            // services.AddDbContext<ProductlineDbContext>();
-
-            // services.AddScoped<IUserRepository, UserRepository>();
+            // services.AddScoped<IHostedService, TokenRefreshService>();
+            // services.AddSingleton<IUserRepositoryFactory, UserRepositoryFactory>();
+            services.AddHostedService<TokenRefreshService>();
 
             return services;
         }

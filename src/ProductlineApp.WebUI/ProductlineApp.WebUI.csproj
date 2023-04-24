@@ -45,6 +45,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="DTO\Product" />
     <Folder Include="Services\Platforms" />
   </ItemGroup>
 

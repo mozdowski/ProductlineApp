@@ -16,7 +16,7 @@ public class Platform : AggregateRoot<PlatformId>
     {
     }
 
-    public PlatformId Id { get; }
+    public PlatformId Id { get; private init; }
 
     public string Name { get; private set; }
 

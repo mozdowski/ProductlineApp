@@ -14,7 +14,8 @@ public class LinkPlatformCommand
         Guid PlatformId,
         string AccessToken,
         string RefreshToken,
-        int ExpiresIn) : ICommand;
+        int ExpiresIn,
+        int? RefreshTokenExpiresIn) : ICommand;
 
     public class Validator : AbstractValidator<Command>
     {
@@ -25,6 +26,7 @@ public class LinkPlatformCommand
             this.RuleFor(x => x.AccessToken).NotEmpty();
             this.RuleFor(x => x.RefreshToken).NotEmpty().NotEqual(x => x.AccessToken);
             this.RuleFor(x => x.ExpiresIn).GreaterThan(0);
+            this.RuleFor(x => x.RefreshTokenExpiresIn).GreaterThan(0);
         }
     }
 
@@ -50,9 +52,9 @@ public class LinkPlatformCommand
                 PlatformId.Create(request.PlatformId),
                 request.AccessToken,
                 request.RefreshToken,
-                request.ExpiresIn);
+                request.ExpiresIn,
+                request.RefreshTokenExpiresIn);
 
-            // await this._userRepository.UpdateUserAsync(user);
             await this._userRepository.UpdateUserAsync(user);
 
             return Unit.Value;

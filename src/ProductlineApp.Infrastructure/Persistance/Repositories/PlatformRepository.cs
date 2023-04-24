@@ -44,7 +44,7 @@ public class PlatformRepository : IPlatformRepository
         throw new NotImplementedException();
     }
 
-    public async Task RemoveAsync(PlatformId id)
+    public async Task RemoveAsync(Platform id)
     {
         throw new NotImplementedException();
     }
