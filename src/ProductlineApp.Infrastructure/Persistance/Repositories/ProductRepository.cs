@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
@@ -7,9 +8,17 @@ namespace ProductlineApp.Infrastructure.Persistance.Repositories;
 
 public class ProductRepository : IProductRepository
 {
-    public async Task<Product> GetByIdAsync(ProductId id)
+    private readonly ProductlineDbContext _dbContext;
+
+    public ProductRepository(
+        ProductlineDbContext dbContext)
     {
-        throw new NotImplementedException();
+        this._dbContext = dbContext;
+    }
+
+    public async Task<Product?> GetByIdAsync(ProductId id)
+    {
+        return await this._dbContext.Products.FindAsync(id);
     }
 
     public async Task<IEnumerable<Product>> GetAllAsync()
@@ -19,22 +28,35 @@ public class ProductRepository : IProductRepository
 
     public async Task AddAsync(Product entity)
     {
-        throw new NotImplementedException();
+        await this._dbContext.Products.AddAsync(entity);
+        await this._dbContext.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Product entity)
     {
-        throw new NotImplementedException();
+        if (this._dbContext.Entry(entity).State is EntityState.Detached)
+        {
+            throw new Exception("Product not attached to the context");
+        }
+
+        await this._dbContext.SaveChangesAsync();
     }
 
-    public async Task RemoveAsync(ProductId id)
+    public async Task RemoveAsync(Product product)
     {
-        throw new NotImplementedException();
+        if (this._dbContext.Entry(product).State is EntityState.Detached)
+        {
+            throw new Exception("Product not attached to the context");
+        }
+
+        this._dbContext.Products.Remove(product);
+        await this._dbContext.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Product>> GetAllByUserIdAsync(UserId userId)
     {
-        throw new NotImplementedException();
+        var products = await this._dbContext.Products.Where(x => x.OwnerId == userId).ToListAsync();
+        return products;
     }
 
     public async Task DeleteProductWithUserIdAsync(ProductId productId, UserId userId)

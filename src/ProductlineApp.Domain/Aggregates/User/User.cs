@@ -73,7 +73,7 @@ public sealed class User : AggregateRoot<UserId>
             email);
     }
 
-    public void AddPlatformConnection(PlatformId platformId, string accessToken, string refreshToken, int expiresIn)
+    public void AddPlatformConnection(PlatformId platformId, string accessToken, string refreshToken, int expiresIn, int? refreshTokenExpiresIn)
     {
         if (this._platformConnections.Any(pc => pc.PlatformId == platformId))
         {
@@ -85,19 +85,27 @@ public sealed class User : AggregateRoot<UserId>
             throw new ArgumentException("Invalid expiration time");
         }
 
-        var expirationDate = DateTime.Now.AddSeconds(expiresIn);
-
-        var platformConnection = PlatformConnection.Create(this, platformId, accessToken, refreshToken, expirationDate);
-        this._platformConnections.Add(platformConnection);
+        var expirationDate = DateTime.UtcNow.AddSeconds(expiresIn);
+        if (refreshTokenExpiresIn.HasValue)
+        {
+            var refreshTokenExpirationDate = DateTime.UtcNow.AddSeconds(expiresIn);
+            var platformConnection = PlatformConnection.Create(this, platformId, accessToken, refreshToken, expirationDate, refreshTokenExpirationDate);
+            this._platformConnections.Add(platformConnection);
+        }
+        else
+        {
+            var platformConnection = PlatformConnection.Create(this, platformId, accessToken, refreshToken, expirationDate, null);
+            this._platformConnections.Add(platformConnection);
+        }
     }
 
-    public void RemovePlatformConnection(Platform platform)
+    public void RemovePlatformConnection(PlatformId platformId)
     {
-        var connection = this._platformConnections.FirstOrDefault(p => p.PlatformId == platform.Id);
+        var connection = this._platformConnections.FirstOrDefault(p => p.PlatformId == platformId);
 
         if (connection == null)
         {
-            throw new ArgumentException($"User is not connected to platform {platform.Name}");
+            throw new ArgumentException($"User is not connected to platform with id {platformId}");
         }
 
         this._platformConnections.Remove(connection);
@@ -115,6 +123,27 @@ public sealed class User : AggregateRoot<UserId>
             throw new InvalidCredentialException("Old password is incorrect");
 
         this.Password = newPassword;
+    }
+
+    public IEnumerable<PlatformConnection> GetPlatformConnectionsToRefresh()
+    {
+        return this._platformConnections.Where(x => x.TokenNeedsRefresh());
+    }
+
+    public void RefreshAccessTokenForPlatform(PlatformId platformId, string newAccessToken, int expiresIn)
+    {
+        var newAccessTokenExpiration = DateTime.UtcNow.AddSeconds(expiresIn);
+
+        var pc = this._platformConnections.First(x => x.PlatformId == platformId);
+        pc.RefreshAccessToken(newAccessToken, newAccessTokenExpiration);
+    }
+
+    public void RefreshAccessTokenForPlatform(PlatformId platformId, string newAccessToken, string newRefreshToken, int expiresIn)
+    {
+        var newAccessTokenExpiration = DateTime.UtcNow.AddSeconds(expiresIn);
+
+        var pc = this._platformConnections.First(x => x.PlatformId == platformId);
+        pc.RefreshAccessToken(newAccessToken, newRefreshToken, newAccessTokenExpiration);
     }
 
     private void ChangeUsername(string username)

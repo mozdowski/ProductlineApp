@@ -22,6 +22,57 @@ namespace ProductlineApp.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<bool>("IsListed")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Sku")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Products", (string)null);
+                });
+
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.User.Entities.Platform", b =>
                 {
                     b.Property<Guid>("Id")
@@ -46,23 +97,26 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Platform", (string)null);
+                    b.ToTable("Platforms", (string)null);
 
                     b.HasData(
                         new
                         {
-                            Id = new Guid("24a9d2f1-28a7-4cb7-81ee-5da5571f3766"),
+                            Id = new Guid("2f264950-4682-42dd-9bcd-2e06fb5a40dd"),
+                            CreatedAt = new DateTime(2023, 4, 24, 12, 56, 15, 770, DateTimeKind.Utc).AddTicks(4310),
+                            CreatedBy = "system",
+                            LastModified = new DateTime(2023, 4, 24, 12, 56, 15, 872, DateTimeKind.Utc).AddTicks(4600),
+                            LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("26bb305b-8acc-476e-82a5-137cdde6034e"),
+                            Id = new Guid("8c73857d-9f23-4600-8241-8015e90ddbef"),
+                            CreatedAt = new DateTime(2023, 4, 24, 12, 56, 15, 770, DateTimeKind.Utc).AddTicks(4330),
+                            CreatedBy = "system",
+                            LastModified = new DateTime(2023, 4, 24, 12, 56, 15, 872, DateTimeKind.Utc).AddTicks(4660),
+                            LastModifiedBy = "system",
                             Name = "allegro"
-                        },
-                        new
-                        {
-                            Id = new Guid("aef459b3-7f40-4d3d-91ca-cc8a842bb1e0"),
-                            Name = "amazon"
                         });
                 });
 
@@ -105,7 +159,106 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User", (string)null);
+                    b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>
+                {
+                    b.OwnsMany("ProductlineApp.Domain.ValueObjects.Image", "Gallery", b1 =>
+                        {
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<int>("Id")
+                                .ValueGeneratedOnAdd()
+                                .HasColumnType("integer");
+
+                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("varchar(500)")
+                                .HasColumnName("ImageUrl");
+
+                            b1.HasKey("ProductId", "Id");
+
+                            b1.ToTable("Products_Gallery");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
+                    b.OwnsOne("ProductlineApp.Domain.ValueObjects.Image", "Image", b1 =>
+                        {
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("character varying(255)");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("varchar(500)");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
+                    b.OwnsOne("ProductlineApp.Domain.Aggregates.Products.ValueObjects.Brand", "Brand", b1 =>
+                        {
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
+                    b.OwnsOne("ProductlineApp.Domain.Aggregates.Products.ValueObjects.Category", "Category", b1 =>
+                        {
+                            b1.Property<Guid>("ProductId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(50)
+                                .HasColumnType("character varying(50)");
+
+                            b1.HasKey("ProductId");
+
+                            b1.ToTable("Products");
+
+                            b1.WithOwner()
+                                .HasForeignKey("ProductId");
+                        });
+
+                    b.Navigation("Brand")
+                        .IsRequired();
+
+                    b.Navigation("Category");
+
+                    b.Navigation("Gallery");
+
+                    b.Navigation("Image")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.User.User", b =>
@@ -141,6 +294,9 @@ namespace ProductlineApp.Infrastructure.Migrations
                                 .IsRequired()
                                 .HasColumnType("text");
 
+                            b1.Property<DateTime?>("RefreshTokenExpirationDate")
+                                .HasColumnType("timestamp with time zone");
+
                             b1.Property<Guid>("UserId")
                                 .HasColumnType("uuid");
 
@@ -148,7 +304,7 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                             b1.HasIndex("UserId");
 
-                            b1.ToTable("PlatformConnection", (string)null);
+                            b1.ToTable("PlatformConnections", (string)null);
 
                             b1.WithOwner()
                                 .HasForeignKey("UserId");

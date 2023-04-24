@@ -16,8 +16,8 @@ public class GetProductByIdQuery
     {
         public Validator()
         {
-            this.RuleFor(x => x.ProductId).NotEmpty();
-            this.RuleFor(x => x.UserId).NotEmpty();
+            this.RuleFor(x => x.ProductId).NotEmpty().NotEqual(Guid.Empty);
+            this.RuleFor(x => x.UserId).NotEmpty().NotEqual(Guid.Empty);
         }
     }
 
@@ -42,8 +42,7 @@ public class GetProductByIdQuery
 
             var product = await this._mediator.Send(query, cancellationToken);
 
-            return new GetProductResponse(
-                this._mapper.Map<ProductDto>(product));
+            return new GetProductResponse(this._mapper.Map<ProductDtoResponse>(product));
         }
     }
 }

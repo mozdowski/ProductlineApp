@@ -16,7 +16,10 @@ public class UserContextMiddleware
     {
         var userId = userContext.UserId;
 
-        userContext.PlatformTokens = await userService.GetPlatformTokens(userId);
+        if (await userService.IsUserExisting(userId))
+        {
+            userContext.PlatformTokens = await userService.GetPlatformTokens(userId);
+        }
 
         await this._next(context);
     }

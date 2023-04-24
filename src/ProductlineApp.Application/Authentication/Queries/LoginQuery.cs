@@ -1,9 +1,9 @@
 using FluentValidation;
+using ProductlineApp.Application.Authentication.DTO;
 using ProductlineApp.Application.Common.Interfaces;
+using ProductlineApp.Application.Security;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using System.Security.Authentication;
-using ProductlineApp.Application.Authentication.DTO;
-using ProductlineApp.Application.Security;
 
 namespace ProductlineApp.Application.Authentication.Queries;
 

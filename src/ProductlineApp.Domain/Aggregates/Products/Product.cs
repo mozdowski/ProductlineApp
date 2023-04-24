@@ -7,7 +7,8 @@ namespace ProductlineApp.Domain.Aggregates.Products;
 
 public class Product : AggregateRoot<ProductId>
 {
-    private readonly List<Image> _gallery = new();
+    const int MaxProductImages = 10;
+    private readonly List<Image> _gallery = new(MaxProductImages);
 
     private Product(
         ProductId id,
@@ -34,7 +35,42 @@ public class Product : AggregateRoot<ProductId>
         this.OwnerId = ownerId;
     }
 
-    public ProductId Id { get; }
+    private Product(
+        ProductId id,
+        string sku,
+        string name,
+        Category? category,
+        decimal price,
+        int quantity,
+        Image image,
+        Brand brand,
+        string description,
+        UserId ownerId,
+        IEnumerable<Image> gallery)
+        : base(id)
+    {
+        this.Id = id;
+        this.Sku = sku;
+        this.Name = name;
+        this.Category = category;
+        this.Price = price;
+        this.Quantity = quantity;
+        this.Image = image;
+        this.Brand = brand;
+        this.Description = description;
+        this.OwnerId = ownerId;
+
+        foreach (var img in gallery)
+        {
+            this.AddImageToGallery(img);
+        }
+    }
+
+    private Product()
+    {
+    }
+
+    public ProductId Id { get; private init; }
 
     public string Name { get; private set; }
 
@@ -56,7 +92,7 @@ public class Product : AggregateRoot<ProductId>
 
     public UserId OwnerId { get; private init; }
 
-    public string Sku { get; }
+    public string Sku { get; private init; }
 
     public static Product Create(
         string sku,
@@ -67,7 +103,8 @@ public class Product : AggregateRoot<ProductId>
         Image image,
         string brandName,
         string description,
-        UserId ownerId)
+        UserId ownerId,
+        IEnumerable<Image>? gallery)
     {
         if (string.IsNullOrEmpty(name) || price < 0 || (quantity < 0) ||
             string.IsNullOrEmpty(description) || string.IsNullOrEmpty(brandName))
@@ -77,17 +114,30 @@ public class Product : AggregateRoot<ProductId>
         var category = categoryName is null ? null : new Category(categoryName);
         var brand = new Brand(brandName);
 
-        return new Product(
-            id,
-            sku,
-            name,
-            category,
-            price,
-            quantity,
-            image,
-            brand,
-            description,
-            ownerId);
+        return gallery is null
+            ? new Product(
+                id,
+                sku,
+                name,
+                category,
+                price,
+                quantity,
+                image,
+                brand,
+                description,
+                ownerId)
+            : new Product(
+                id,
+                sku,
+                name,
+                category,
+                price,
+                quantity,
+                image,
+                brand,
+                description,
+                ownerId,
+                gallery);
     }
 
     public void AddImageToGallery(Image image)
@@ -108,11 +158,10 @@ public class Product : AggregateRoot<ProductId>
         this._gallery.Clear();
     }
 
-    public void Update(
+    public void UpdateInfo(
         string name,
         string categoryName,
         decimal price,
-        Image image,
         int quantity,
         string brandName,
         string description)
@@ -125,9 +174,14 @@ public class Product : AggregateRoot<ProductId>
         this.Category = new Category(categoryName);
         this.Price = price;
         this.Quantity = quantity;
-        this.Image = image;
         this.Brand = new Brand(brandName);
         this.Description = description;
+    }
+
+    public void UpdateImage(Image image)
+    {
+        if (this.Image != image)
+            this.Image = image;
     }
 
     public void MarkAsListed()
@@ -149,5 +203,10 @@ public class Product : AggregateRoot<ProductId>
     public bool IsOwnerConsistent(UserId userId)
     {
         return this.OwnerId == userId;
+    }
+
+    public bool HasGalleryReachedMaxCapacity()
+    {
+        return this._gallery.Count >= MaxProductImages;
     }
 }

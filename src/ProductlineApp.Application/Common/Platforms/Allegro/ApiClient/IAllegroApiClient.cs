@@ -8,6 +8,8 @@ public interface IAllegroApiClient
 
     Task<AllegroTokenResponse> GetAccessTokenAsync(string code);
 
+    Task<AllegroTokenResponse> GetRefreshTokenAsync(string accessToken);
+
     Task<AllegroOrdersResponse> GetOrdersAsync(
         string accessToken,
         int offset = 0,

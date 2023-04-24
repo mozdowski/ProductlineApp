@@ -1,3 +1,3 @@
 namespace ProductlineApp.Application.Products.DTO;
 
-public record GetProductsResponse(List<ProductDto> Products);
+public record GetProductsResponse(List<ProductDtoResponse> Products);

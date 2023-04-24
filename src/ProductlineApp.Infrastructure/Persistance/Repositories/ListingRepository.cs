@@ -28,7 +28,7 @@ public class ListingRepository : IListingRepository
         throw new NotImplementedException();
     }
 
-    public async Task RemoveAsync(ListingId id)
+    public async Task RemoveAsync(Listing id)
     {
         throw new NotImplementedException();
     }

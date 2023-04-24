@@ -6,7 +6,7 @@ public interface IRepository<T, in TId> : IRepositoryBase
     where T : AggregateRoot<TId>
     where TId : notnull
 {
-    Task<T> GetByIdAsync(TId id);
+    Task<T?> GetByIdAsync(TId id);
 
     Task<IEnumerable<T>> GetAllAsync();
 
@@ -14,7 +14,7 @@ public interface IRepository<T, in TId> : IRepositoryBase
 
     Task UpdateAsync(T entity);
 
-    Task RemoveAsync(TId id);
+    Task RemoveAsync(T entity);
 
     Task<IEnumerable<T>> GetAllByUserIdAsync(UserId userId);
 }
