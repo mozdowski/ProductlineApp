@@ -17,4 +17,6 @@ public class EbayConfiguration : IEbayConfiguration
     public string Scopes { get; set; }
 
     public string BaseApiUrl { get; set; }
+
+    public string ContentLanguage { get; set; }
 }

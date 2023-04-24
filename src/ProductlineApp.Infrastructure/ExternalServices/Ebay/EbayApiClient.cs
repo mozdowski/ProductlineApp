@@ -12,7 +12,6 @@ namespace ProductlineApp.Infrastructure.ExternalServices.Ebay;
 public class EbayApiClient : IEbayApiClient
 {
     private readonly IEbayConfiguration _ebayConfiguration;
-    private readonly HttpClient _httpClient;
     private readonly RestClient _restClient;
 
     public EbayApiClient(
@@ -20,8 +19,8 @@ public class EbayApiClient : IEbayApiClient
         HttpClient httpClient)
     {
         this._ebayConfiguration = ebayConfiguration;
-        this._httpClient = httpClient;
         this._restClient = new RestClient(this._ebayConfiguration.BaseApiUrl);
+        this._restClient.AddDefaultHeader("Content-Language", ebayConfiguration.ContentLanguage);
     }
 
     public string GetAuthorizationUrl()

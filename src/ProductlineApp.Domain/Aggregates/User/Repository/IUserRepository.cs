@@ -12,13 +12,12 @@ public interface IUserRepository : IRepositoryBase
 
     public Task<bool> IsUserExistingAsync(string email);
 
-    public Task<bool> IsUserExistingAsync(Guid userId);
+    public Task<bool> IsUserExistingAsync(UserId userId);
 
     public Task AddAsync(User user);
 
     public Task UpdateUserAsync(User user);
 
-    // public Task AddPlatformConnection(UserId userId, PlatformConnection platformConnection);
     public Task AddPlatformConnection(User user, PlatformConnection platformConnection);
 
     public Task<IEnumerable<PlatformConnection>> GetUserPlatformConnectionsAsync(UserId userId);
@@ -26,4 +25,8 @@ public interface IUserRepository : IRepositoryBase
     public Task<string> GetUserPlatformToken(UserId userId, PlatformId platformId);
 
     Task<(User? User, string? Salt)> GetByEmailWithSaltAsync(string email);
+
+    Task<IEnumerable<PlatformConnection>> GetAllPlatformConnectionsAsync();
+
+    Task<IEnumerable<User>> GetUsersBatchAsync(int pageNumber, int pageSize);
 }

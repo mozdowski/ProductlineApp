@@ -12,6 +12,8 @@ public interface IPlatformService
 
     Task GainAccessTokenAsync(string code);
 
+    Task RefreshAccessTokenAsync(UserId userId, string refreshToken);
+
     Task<IEnumerable<Domain.Aggregates.Order.Order>> GetOrdersAsync();
 
     Task<IEnumerable<Listing>> GetListingsAsync();

@@ -28,7 +28,7 @@ public class OrderRepository : IOrderRepository
         throw new NotImplementedException();
     }
 
-    public async Task RemoveAsync(OrderId id)
+    public async Task RemoveAsync(Order id)
     {
         throw new NotImplementedException();
     }

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Http;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Application.Common.Services.Interfaces;
+using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.ValueObjects;
@@ -15,20 +16,19 @@ public class AddProductCommand
     public record Command(
         string Sku,
         string Name,
-        string Category,
+        string? Category,
         decimal Price,
         int Quantity,
         IFormFile ImageFile,
         string BrandName,
         string Description,
-        Guid UserId) : ICommand;
+        Guid UserId) : IResultCommand<Product>;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
             this.RuleFor(x => x.Name).NotEmpty();
-            this.RuleFor(x => x.Category).NotEmpty();
             this.RuleFor(x => x.Price).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.UserId).NotEmpty();
@@ -36,7 +36,7 @@ public class AddProductCommand
         }
     }
 
-    public class Handler : ICommandHandler<Command>
+    public class Handler : IResultCommandHandler<Command, Product>
     {
         private readonly IProductRepository _productRepository;
         private readonly IUploadFileService _uploadFileService;
@@ -49,7 +49,7 @@ public class AddProductCommand
             this._uploadFileService = uploadFileService;
         }
 
-        public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
+        public async Task<Product> Handle(Command request, CancellationToken cancellationToken)
         {
             var image = await this._uploadFileService.UploadFileAsync(request.ImageFile, FileType.IMAGE);
 
@@ -58,7 +58,7 @@ public class AddProductCommand
                 throw new Exception("Failed to upload an image");
             }
 
-            var product = Domain.Aggregates.Products.Product.Create(
+            var product = Product.Create(
                 request.Sku,
                 request.Name,
                 request.Category,
@@ -67,11 +67,12 @@ public class AddProductCommand
                 (Image)image,
                 request.BrandName,
                 request.Description,
-                UserId.Create(request.UserId));
+                UserId.Create(request.UserId),
+                null);
 
             await this._productRepository.AddAsync(product);
 
-            return Unit.Value;
+            return product;
         }
     }
 }

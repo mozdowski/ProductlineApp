@@ -6,9 +6,11 @@ namespace ProductlineApp.Application.Common.Services.Interfaces;
 
 public interface IUploadFileService
 {
-    public Task<IFile> UploadFileAsync(IFormFile fileData, FileType fileType);
+    Task<IFile> UploadFileAsync(IFormFile fileData, FileType fileType);
 
-    public Task<IEnumerable<IFile>> UploadMultiFileAsync(IEnumerable<FileUploadModel> filesUploadData);
+    Task<IEnumerable<IFile>> UploadMultiFileAsync(IEnumerable<FileUploadModel> filesUploadData);
 
-    public Task DeleteFileAsync(string fileName, string url);
+    Task DeleteFileAsync(string fileName);
+
+    Task DeleteMultiFilesAsync(IEnumerable<string> fileNames);
 }

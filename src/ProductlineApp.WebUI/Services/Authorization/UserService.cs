@@ -24,4 +24,19 @@ public class UserService : IUserService
             k => k.PlatformId,
             v => new UserToken(v.AccessToken, v.RefreshToken, v.ExpirationDate));
     }
+
+    public async Task<bool> IsUserExisting(Guid? userId)
+    {
+        if (userId == Guid.Empty || !userId.HasValue)
+        {
+            return false;
+        }
+
+        if (await this._userRepository.IsUserExistingAsync(UserId.Create(userId.Value)))
+        {
+            return true;
+        }
+
+        throw new UnauthorizedAccessException($"User with id: {userId.Value} not found");
+    }
 }
