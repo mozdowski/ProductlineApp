@@ -8,56 +8,116 @@ namespace ProductlineApp.Domain.Aggregates.Listing.Entities
     {
         private ListingInstance(
             ListingInstanceId id,
-            PlatformConnectionId platformConnectionId,
+            ListingId listingId,
+            PlatformId platformId,
             string platformListingId,
-            Uri listingUrl,
-            Uri withdrawUrl,
-            Uri publishUrl)
+            Uri? listingUrl,
+            ListingStatus status,
+            int? expiresIn)
             : base(id)
         {
-            this.PlatformConnectionId = platformConnectionId ?? throw new ArgumentNullException(nameof(platformConnectionId));
+            this.PlatformId = platformId ?? throw new ArgumentNullException(nameof(platformId));
+            this.ListingId = listingId ?? throw new ArgumentNullException(nameof(listingId));
+
             this.PlatformListingId = platformListingId ?? throw new ArgumentNullException(nameof(platformListingId));
-            this.ListingUrl = listingUrl ?? throw new ArgumentNullException(nameof(listingUrl));
-            this.WithdrawUrl = withdrawUrl ?? throw new ArgumentNullException(nameof(withdrawUrl));
-            this.PublishUrl = publishUrl ?? throw new ArgumentNullException(nameof(publishUrl));
+            this.ListingUrl = listingUrl;
+            this.Status = status;
+            this.ExpiresIn = expiresIn;
         }
 
-        public PlatformConnectionId PlatformConnectionId { get; private set; }
+        private ListingInstance()
+        {
+        }
+
+        public ListingId ListingId { get; private set; }
+
+        public PlatformId PlatformId { get; private set; }
 
         public string PlatformListingId { get; private set; }
 
-        public Uri ListingUrl { get; private set; }
+        public Uri? ListingUrl { get; private set; }
 
-        public Uri WithdrawUrl { get; private set; }
+        public ListingStatus Status { get; private set; }
 
-        public Uri PublishUrl { get; private set; }
+        public int? ExpiresIn { get; private set; }
 
-        public static ListingInstance Create(
-            PlatformConnectionId platformConnectionId,
+        private static ListingInstance Create(
+            ListingId listingId,
+            PlatformId platformId,
             string platformListingId,
-            string listingUrl,
-            string withdrawUrl,
-            string publishUrl)
+            string? listingUrl,
+            ListingStatus status,
+            int? expiresIn)
         {
             if (string.IsNullOrWhiteSpace(platformListingId))
                 throw new ArgumentException("PlatformListingId cannot be empty.", nameof(platformListingId));
 
-            if (string.IsNullOrWhiteSpace(listingUrl))
-                throw new ArgumentException("Url cannot be empty.", nameof(listingUrl));
-
-            if (string.IsNullOrWhiteSpace(withdrawUrl))
-                throw new ArgumentException("Url cannot be empty.", nameof(withdrawUrl));
-
-            if (string.IsNullOrWhiteSpace(publishUrl))
-                throw new ArgumentException("Url cannot be empty.", nameof(publishUrl));
+            Uri uri = null;
+            if (listingUrl is not null)
+            {
+                uri = new Uri(listingUrl);
+            }
 
             return new ListingInstance(
                 ListingInstanceId.CreateUnique(),
-                platformConnectionId,
+                listingId,
+                platformId,
                 platformListingId,
-                new Uri(listingUrl),
-                new Uri(withdrawUrl),
-                new Uri(publishUrl));
+                uri,
+                status,
+                expiresIn);
+        }
+
+        public static ListingInstance CreateAndPublish(
+            ListingId listingId,
+            PlatformId platformId,
+            string platformListingId,
+            string? listingUrl,
+            int? expiresIn)
+        {
+            return Create(
+                listingId,
+                platformId,
+                platformListingId,
+                listingUrl,
+                ListingStatus.ACTIVE,
+                expiresIn);
+        }
+
+        public static ListingInstance CreateNoPublish(
+            ListingId listingId,
+            PlatformId platformId,
+            string platformListingId,
+            string? listingUrl)
+        {
+            return Create(
+                listingId,
+                platformId,
+                platformListingId,
+                listingUrl,
+                ListingStatus.INACTIVE,
+                null);
+        }
+
+        public void MarkAsInactive()
+        {
+            if (this.Status != ListingStatus.ACTIVE)
+                throw new InvalidOperationException("Listing is not active.");
+
+            this.Status = ListingStatus.INACTIVE;
+        }
+
+        public void MarkAsSold()
+        {
+            if (this.Status != ListingStatus.ACTIVE)
+                throw new InvalidOperationException("Listing is not active.");
+
+            this.Status = ListingStatus.SOLD;
+        }
+
+        public void MarkAsActive()
+        {
+            this.Status = ListingStatus.ACTIVE;
         }
     }
 }

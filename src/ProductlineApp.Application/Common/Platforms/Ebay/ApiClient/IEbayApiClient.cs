@@ -16,12 +16,23 @@ public interface IEbayApiClient
 
     Task<EbayInventoryLocations> GetInventoryLocations(string accessToken, int? offset, int? limit);
 
-    Task<string> CreateOffer(string accessToken, EbayCreateOrReplaceInventoryRequest requestBody);
+    Task<string> CreateOffer(string accessToken, EbayCreateOfferRequest requestBody);
 
-    Task<EbayOffersReponse> GetOffers(string accessToken);
+    // Task<IEnumerable<EbayOffersReponse.Offer>> GetOffers(string accessToken);
+
+    public Task<IEnumerable<EbayOffersReponse.Offer>> GetOffers(string accessToken, IEnumerable<string> offerIds);
 
     Task WithdrawOffer(string accessToken, string offerId);
 
+    Task PublishOffer(string accessToken, string offerId);
+
+    Task<EbaySuggestedCategoriesResponse> GetCategories(string accessToken, string phrase);
+
+    Task<EbayCategoryTreeResponse> GetCategories(string accessToken);
+
+    Task<EbayAspectsResponse> GetAspectsForCategory(string accessToken, string categoryId);
+
+    Task<string> GetCategoryNameById(string accessToken, string categoryId);
     // update offer
     // publish offer
     // withdraw offer

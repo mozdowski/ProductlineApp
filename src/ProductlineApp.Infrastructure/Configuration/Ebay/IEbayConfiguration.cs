@@ -2,6 +2,8 @@ namespace ProductlineApp.Infrastructure.Configuration.Ebay;
 
 public interface IEbayConfiguration
 {
+    string MarketplaceId { get; set; }
+
     string ClientId { get; set; }
 
     string ClientSecret { get; set; }

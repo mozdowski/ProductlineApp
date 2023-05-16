@@ -2,6 +2,7 @@
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Enums;
 
 namespace ProductlineApp.Domain.Aggregates.Products;
 
@@ -20,6 +21,7 @@ public class Product : AggregateRoot<ProductId>
         Image image,
         Brand brand,
         string description,
+        ProductCondition condition,
         UserId ownerId)
         : base(id)
     {
@@ -33,6 +35,7 @@ public class Product : AggregateRoot<ProductId>
         this.Brand = brand;
         this.Description = description;
         this.OwnerId = ownerId;
+        this.Condition = condition;
     }
 
     private Product(
@@ -45,6 +48,7 @@ public class Product : AggregateRoot<ProductId>
         Image image,
         Brand brand,
         string description,
+        ProductCondition condition,
         UserId ownerId,
         IEnumerable<Image> gallery)
         : base(id)
@@ -59,6 +63,7 @@ public class Product : AggregateRoot<ProductId>
         this.Brand = brand;
         this.Description = description;
         this.OwnerId = ownerId;
+        this.Condition = condition;
 
         foreach (var img in gallery)
         {
@@ -94,6 +99,8 @@ public class Product : AggregateRoot<ProductId>
 
     public string Sku { get; private init; }
 
+    public ProductCondition Condition { get; private set; }
+
     public static Product Create(
         string sku,
         string name,
@@ -103,6 +110,7 @@ public class Product : AggregateRoot<ProductId>
         Image image,
         string brandName,
         string description,
+        ProductCondition condition,
         UserId ownerId,
         IEnumerable<Image>? gallery)
     {
@@ -125,6 +133,7 @@ public class Product : AggregateRoot<ProductId>
                 image,
                 brand,
                 description,
+                condition,
                 ownerId)
             : new Product(
                 id,
@@ -136,6 +145,7 @@ public class Product : AggregateRoot<ProductId>
                 image,
                 brand,
                 description,
+                condition,
                 ownerId,
                 gallery);
     }
