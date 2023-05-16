@@ -22,10 +22,57 @@ namespace ProductlineApp.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Listing.Listing", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("character varying(500)");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Listings", (string)null);
+                });
+
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("Condition")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -102,19 +149,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2f264950-4682-42dd-9bcd-2e06fb5a40dd"),
-                            CreatedAt = new DateTime(2023, 4, 24, 12, 56, 15, 770, DateTimeKind.Utc).AddTicks(4310),
+                            Id = new Guid("85a8c28c-5cd6-44af-8fef-f16a9293bcce"),
+                            CreatedAt = new DateTime(2023, 5, 16, 7, 11, 48, 140, DateTimeKind.Utc).AddTicks(8300),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 4, 24, 12, 56, 15, 872, DateTimeKind.Utc).AddTicks(4600),
+                            LastModified = new DateTime(2023, 5, 16, 7, 11, 48, 264, DateTimeKind.Utc).AddTicks(6450),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("8c73857d-9f23-4600-8241-8015e90ddbef"),
-                            CreatedAt = new DateTime(2023, 4, 24, 12, 56, 15, 770, DateTimeKind.Utc).AddTicks(4330),
+                            Id = new Guid("6e4e2024-4a3a-4f26-9229-41228e3fb8f4"),
+                            CreatedAt = new DateTime(2023, 5, 16, 7, 11, 48, 140, DateTimeKind.Utc).AddTicks(8320),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 4, 24, 12, 56, 15, 872, DateTimeKind.Utc).AddTicks(4660),
+                            LastModified = new DateTime(2023, 5, 16, 7, 11, 48, 264, DateTimeKind.Utc).AddTicks(6510),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -160,6 +207,60 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users", (string)null);
+                });
+
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Listing.Listing", b =>
+                {
+                    b.OwnsMany("ProductlineApp.Domain.Aggregates.Listing.Entities.ListingInstance", "Instances", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime?>("CreatedAt")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("CreatedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<int?>("ExpiresIn")
+                                .HasColumnType("integer");
+
+                            b1.Property<DateTime?>("LastModified")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("LastModifiedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<Guid>("ListingId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("ListingUrl")
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)");
+
+                            b1.Property<Guid>("PlatformId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PlatformListingId")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<string>("Status")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("ListingId");
+
+                            b1.ToTable("ListingInstances", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("ListingId");
+                        });
+
+                    b.Navigation("Instances");
                 });
 
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>

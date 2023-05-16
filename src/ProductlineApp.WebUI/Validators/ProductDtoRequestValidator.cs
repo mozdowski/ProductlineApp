@@ -14,5 +14,6 @@ public class ProductDtoRequestValidator : AbstractValidator<AddProductDtoRequest
         this.RuleFor(x => x.Quantity).NotEmpty().GreaterThan(0);
         this.RuleFor(x => x.Sku).NotEmpty();
         this.RuleFor(x => x.Image).NotNull();
+        this.RuleFor(x => x.Condition).IsInEnum();
     }
 }

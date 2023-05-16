@@ -38,4 +38,13 @@ public class PlatformsController : ControllerBase
 
         return this.Ok();
     }
+
+    [HttpGet("listings/{platformId:guid}")]
+    public async Task<IActionResult> GetListings(Guid platformId)
+    {
+        var platformService = this._platformServiceDispatcher.Dispatch(platformId);
+        var listings = await platformService.GetListingsAsync();
+
+        return this.Ok(listings);
+    }
 }

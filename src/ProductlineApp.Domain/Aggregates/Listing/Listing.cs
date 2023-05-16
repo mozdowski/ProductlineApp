@@ -1,10 +1,10 @@
 ﻿using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Products;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 using System.Security.Authentication;
-using ProductlineApp.Domain.Aggregates.Products;
-using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 
 namespace ProductlineApp.Domain.Aggregates.Listing;
 
@@ -27,25 +27,29 @@ public class Listing : AggregateRoot<ListingId>
         this.ProductId = productId;
         this.Price = price;
         this.Quantity = quantity;
-        this.Owner = ownerId;
-        this.Status = ListingStatus.ACTIVE;
+        this.OwnerId = ownerId;
+        // this.Status = ListingStatus.ACTIVE;
     }
 
     public string Title { get; private set; }
 
     public string Description { get; private set; }
 
-    public ProductId ProductId { get; }
+    public ProductId ProductId { get; private init; }
 
     public decimal Price { get; private set; }
 
     public int Quantity { get; private set; }
 
-    public IReadOnlyList<ListingInstance> Instances => this._instances.AsReadOnly();
+    public IReadOnlyList<ListingInstance> Instances
+    {
+        get => this._instances.AsReadOnly();
+        private init => this._instances = value.ToList();
+    }
 
-    public ListingStatus Status { get; private set; }
+// public ListingStatus Status { get; private set; }
 
-    public UserId Owner { get; }
+    public UserId OwnerId { get; private init; }
 
     public static Listing Create(
         string title,
@@ -53,8 +57,7 @@ public class Listing : AggregateRoot<ListingId>
         ProductId product,
         decimal price,
         int quantity,
-        UserId ownerId,
-        PlatformConnectionId platformConnection)
+        UserId ownerId)
     {
         if (string.IsNullOrWhiteSpace(title))
             throw new ArgumentException("Title cannot be empty.", nameof(title));
@@ -122,28 +125,56 @@ public class Listing : AggregateRoot<ListingId>
         this.Quantity = quantity;
     }
 
-    public void MarkAsInactive()
+    public ListingInstance GetListingInstance(ListingInstanceId listingInstanceId)
     {
-        if (this.Status != ListingStatus.ACTIVE)
-            throw new InvalidOperationException("Listing is not active.");
+        var listingInstance = this._instances.FirstOrDefault(x => x.Id == listingInstanceId);
+        if (listingInstance is null)
+            throw new Exception($"No listing instance with ID: {listingInstanceId} found");
 
-        this.Status = ListingStatus.INACTIVE;
+        return listingInstance;
     }
 
-    public void MarkAsSold()
+    public void MarkListingInstanceAsActive(ListingInstanceId listingInstanceId)
     {
-        if (this.Status != ListingStatus.ACTIVE)
-            throw new InvalidOperationException("Listing is not active.");
-
-        this.Status = ListingStatus.SOLD;
+        var li = this.GetListingInstance(listingInstanceId);
+        li.MarkAsActive();
     }
 
-    public void AddInstance(ListingInstance instance)
+    public void MarkListingInstanceAsInactive(ListingInstanceId listingInstanceId)
     {
-        if (instance is null)
-            throw new ArgumentNullException(nameof(instance));
+        var li = this.GetListingInstance(listingInstanceId);
+        li.MarkAsInactive();
+    }
 
-        this._instances.Add(instance);
+    // public void MarkAsInactive()
+    // {
+    //     if (this.Status != ListingStatus.ACTIVE)
+    //         throw new InvalidOperationException("Listing is not active.");
+    //
+    //     this.Status = ListingStatus.INACTIVE;
+    // }
+    //
+    // public void MarkAsSold()
+    // {
+    //     if (this.Status != ListingStatus.ACTIVE)
+    //         throw new InvalidOperationException("Listing is not active.");
+    //
+    //     this.Status = ListingStatus.SOLD;
+    //
+    //     foreach (var instance in this._instances)
+    //     {
+    //         instance.Status == ListingStatus.SOLD
+    //     }
+    // }
+
+    public void AddInstance(PlatformId platformId, string platformListingId, string? listingUrl, int? expiresIn)
+    {
+        this._instances.Add(ListingInstance.CreateAndPublish(
+            this.Id,
+            platformId,
+            platformListingId,
+            listingUrl,
+            expiresIn));
     }
 
     public void RemoveInstance(ListingInstance instance)
@@ -153,5 +184,9 @@ public class Listing : AggregateRoot<ListingId>
 
         this._instances.Remove(instance);
     }
-}
 
+    public bool IsUserConsistent(UserId userId)
+    {
+        return this.OwnerId == userId;
+    }
+}

@@ -6,7 +6,7 @@ public class EbayOffersReponse
 
     public int Limit { get; set; }
 
-    public string Next { get; set; }
+    public string? Next { get; set; }
 
     public List<Offer> Offers { get; set; }
 
@@ -22,6 +22,8 @@ public class EbayOffersReponse
 
         public string CategoryId { get; set; }
 
+        public string CategoryName { get; set; }
+
         public Charity Charity { get; set; }
 
         public ExtendedProducerResponsibility ExtendedProducerResponsibility { get; set; }
@@ -32,7 +34,7 @@ public class EbayOffersReponse
 
         public bool IncludeCatalogProductDetails { get; set; }
 
-        public Listing Listing { get; set; }
+        public EbayListing Listing { get; set; }
 
         public string ListingDescription { get; set; }
 
@@ -285,57 +287,62 @@ public class EbayOffersReponse
         public string PostalCode { get; set; }
     }
 
-    public class Listing
+    public class EbayListing
     {
-        public bool BestOfferEnabled { get; set; }
+        public string ListingId { get; set; }
 
-        public string Description { get; set; }
+        public string ListingStatus { get; set; }
 
-        public string EbayCollectAndRemitTax { get; set; }
-
-        public bool EbayCollectAndRemitTaxInclusive { get; set; }
-
-        public string EbayCollectAndRemitTaxType { get; set; }
-
-        public bool EbayPlusEnabled { get; set; }
-
-        public string EbayPlusLevel { get; set; }
-
-        public string EbayPlusRelistEnabled { get; set; }
-
-        public string EbayPlusShippingCost { get; set; }
-
-        public string EbayPlusSubTitle { get; set; }
-
-        public string EbayPlusTier { get; set; }
-
-        public string EbayPlusTitle { get; set; }
-
-        public string EbayPlusTotalShippingCost { get; set; }
-
-        public string EbayPlusVATEnabled { get; set; }
-
-        public string ItemEndDate { get; set; }
-
-        public string ItemId { get; set; }
-
-        public string ItemLocation { get; set; }
-
-        public string ItemStartDate { get; set; }
-
-        public List<ShippingOption> ShippingOptions { get; set; }
-
-        public List<ShippingOptionWithCost> ShippingOptionsWithCost { get; set; }
-
-        public ShippingSurcharge ShippingSurcharge { get; set; }
-
-        public string TimeLeft { get; set; }
-
-        public string Title { get; set; }
-
-        public string TopRatedListing { get; set; }
-
-        public string ViewItemURL { get; set; }
+        public int SoldQuantity { get; set; }
+        // public bool BestOfferEnabled { get; set; }
+        //
+        // public string Description { get; set; }
+        //
+        // public string EbayCollectAndRemitTax { get; set; }
+        //
+        // public bool EbayCollectAndRemitTaxInclusive { get; set; }
+        //
+        // public string EbayCollectAndRemitTaxType { get; set; }
+        //
+        // public bool EbayPlusEnabled { get; set; }
+        //
+        // public string EbayPlusLevel { get; set; }
+        //
+        // public string EbayPlusRelistEnabled { get; set; }
+        //
+        // public string EbayPlusShippingCost { get; set; }
+        //
+        // public string EbayPlusSubTitle { get; set; }
+        //
+        // public string EbayPlusTier { get; set; }
+        //
+        // public string EbayPlusTitle { get; set; }
+        //
+        // public string EbayPlusTotalShippingCost { get; set; }
+        //
+        // public string EbayPlusVATEnabled { get; set; }
+        //
+        // public string ItemEndDate { get; set; }
+        //
+        // public string ItemId { get; set; }
+        //
+        // public string ItemLocation { get; set; }
+        //
+        // public string ItemStartDate { get; set; }
+        //
+        // public List<ShippingOption> ShippingOptions { get; set; }
+        //
+        // public List<ShippingOptionWithCost> ShippingOptionsWithCost { get; set; }
+        //
+        // public ShippingSurcharge ShippingSurcharge { get; set; }
+        //
+        // public string TimeLeft { get; set; }
+        //
+        // public string Title { get; set; }
+        //
+        // public string TopRatedListing { get; set; }
+        //
+        // public string ViewItemURL { get; set; }
     }
 
     public class Regulatory
