@@ -3,8 +3,8 @@ using MediatR;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 using ProductlineApp.Application.Common.Platforms.Allegro.DTO;
+using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.User.Commands;
-using ProductlineApp.Domain.Aggregates.Listing;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
@@ -56,7 +56,7 @@ public class AllegroService : IAllegroService
         var response = await this._allegroApiClient.GetAccessTokenAsync(code);
 
         if (response is null)
-            throw new NullReferenceException("Retrieved accees token as null");
+            throw new NullReferenceException("Retrieved access token as null");
 
         if (!this._currentUser.UserId.HasValue || this.PlatformId is null)
             throw new NullReferenceException("User or platform is not defined");
@@ -98,19 +98,29 @@ public class AllegroService : IAllegroService
         return this._mapper.Map<IEnumerable<Domain.Aggregates.Order.Order>>(response);
     }
 
-    public async Task<IEnumerable<Listing>> GetListingsAsync()
+    public async Task<IEnumerable<ListingDtoResponse>> GetListingsAsync()
     {
         this.CheckIfAuthorized();
         var response = await this._allegroApiClient.GetOffersAsync(this._accessToken);
-        return this._mapper.Map<IEnumerable<Listing>>(response);
+        return this._mapper.Map<IEnumerable<ListingDtoResponse>>(response);
     }
 
-    public Task<string> CreateListingAsync(Listing listing)
+    public Task<string> CreateListingAsync(Domain.Aggregates.Listing.Listing listing)
     {
         throw new NotImplementedException();
     }
 
     public Task<IEnumerable<ListingStatus>> GetListingStatusesAsync(IEnumerable<string> listingIds)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task WithdrawListingAsync(ListingId listingId, ListingInstanceId listingInstanceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task PublishListingAsync(ListingId listingId, ListingInstanceId listingInstanceId)
     {
         throw new NotImplementedException();
     }

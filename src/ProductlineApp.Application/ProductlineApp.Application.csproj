@@ -17,10 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-	<Folder Include="Common\ApiClients\Allegro" />
-	<Folder Include="Listing\Commands" />
-	<Folder Include="Listing\DTO" />
-	<Folder Include="Listing\Queries" />
 	<Folder Include="User\DTO" />
   </ItemGroup>
 

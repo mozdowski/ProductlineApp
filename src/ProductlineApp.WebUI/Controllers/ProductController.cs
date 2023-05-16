@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Common.Contexts;
+using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Products.Commands;
 using ProductlineApp.Application.Products.DTO;
 using ProductlineApp.Application.Products.Queries;
@@ -15,13 +16,16 @@ public class ProductController : ControllerBase
 {
     private readonly IMediator _mediator;
     private readonly ICurrentUserContext _currentUser;
+    private readonly IPlatformServiceDispatcher _platformServiceDispatcher;
 
     public ProductController(
         IMediator mediator,
-        ICurrentUserContext currentUser)
+        ICurrentUserContext currentUser,
+        IPlatformServiceDispatcher platformServiceDispatcher)
     {
         this._mediator = mediator;
         this._currentUser = currentUser;
+        this._platformServiceDispatcher = platformServiceDispatcher;
     }
 
     [HttpGet]
@@ -54,6 +58,7 @@ public class ProductController : ControllerBase
             request.Image,
             request.BrandName,
             request.Description,
+            request.Condition,
             this._currentUser.UserId.GetValueOrDefault());
         await this._mediator.Send(command);
 
@@ -111,4 +116,11 @@ public class ProductController : ControllerBase
 
         return this.Ok();
     }
+
+    // [HttpGet("categories/{platformId:guid}")]
+    // public async Task<IActionResult> GetCategoriesForPlatform(Guid platformId)
+    // {
+    //     var platformService = this._platformServiceDispatcher.Dispatch(platformId);
+    //
+    // }
 }

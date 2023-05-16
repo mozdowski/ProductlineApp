@@ -7,6 +7,7 @@ using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Enums;
 using ProductlineApp.Shared.Models.Files;
 
 namespace ProductlineApp.Application.Products.Commands;
@@ -22,6 +23,7 @@ public class AddProductCommand
         IFormFile ImageFile,
         string BrandName,
         string Description,
+        ProductCondition Condition,
         Guid UserId) : IResultCommand<Product>;
 
     public class Validator : AbstractValidator<Command>
@@ -33,6 +35,7 @@ public class AddProductCommand
             this.RuleFor(x => x.Quantity).GreaterThanOrEqualTo(0);
             this.RuleFor(x => x.UserId).NotEmpty();
             this.RuleFor(x => x.Sku).NotEmpty();
+            this.RuleFor(x => x.Condition).IsInEnum();
         }
     }
 
@@ -67,6 +70,7 @@ public class AddProductCommand
                 (Image)image,
                 request.BrandName,
                 request.Description,
+                request.Condition,
                 UserId.Create(request.UserId),
                 null);
 
