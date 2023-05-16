@@ -36,6 +36,7 @@ public class JwtAuthorizationManager : IAuthorizationManager, ICurrentUserContex
             return AuthorizationResult.Failed();
         }
 
+        // TODO: sprawdzenie czy uzytkownik znajduje sie w bazie
         // Check if the user is authorized based on the requirements.
         // ...
 

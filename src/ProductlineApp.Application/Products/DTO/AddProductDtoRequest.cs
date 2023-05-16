@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Shared.Binders;
+using ProductlineApp.Shared.Enums;
 
 namespace ProductlineApp.Application.Products.DTO;
 
@@ -22,4 +23,6 @@ public class AddProductDtoRequest
     public string BrandName { get; set; }
 
     public string Description { get; set; }
+
+    public ProductCondition Condition { get; set; }
 }

@@ -4,6 +4,8 @@ namespace ProductlineApp.Infrastructure.Configuration.Ebay;
 
 public class EbayConfiguration : IEbayConfiguration
 {
+    public string MarketplaceId { get; set; }
+
     public string ClientId { get; set; }
 
     public string ClientSecret { get; set; }

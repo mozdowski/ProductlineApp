@@ -26,7 +26,7 @@ public class ProductRepository : IProductRepository
         throw new NotImplementedException();
     }
 
-    public async Task AddAsync(Product entity)
+    public async Task AddAsync(Product? entity)
     {
         await this._dbContext.Products.AddAsync(entity);
         await this._dbContext.SaveChangesAsync();
@@ -42,7 +42,7 @@ public class ProductRepository : IProductRepository
         await this._dbContext.SaveChangesAsync();
     }
 
-    public async Task RemoveAsync(Product product)
+    public async Task RemoveAsync(Product? product)
     {
         if (this._dbContext.Entry(product).State is EntityState.Detached)
         {
@@ -53,7 +53,7 @@ public class ProductRepository : IProductRepository
         await this._dbContext.SaveChangesAsync();
     }
 
-    public async Task<IEnumerable<Product>> GetAllByUserIdAsync(UserId userId)
+    public async Task<IEnumerable<Product?>> GetAllByUserIdAsync(UserId userId)
     {
         var products = await this._dbContext.Products.Where(x => x.OwnerId == userId).ToListAsync();
         return products;
@@ -72,5 +72,22 @@ public class ProductRepository : IProductRepository
     public async Task<Category> GetCategoriesAsync(UserId userId)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<Product?> GetProductBySku(string sku)
+    {
+        return await this._dbContext.Products.FirstOrDefaultAsync(x => x.Sku == sku);
+    }
+
+    public async Task<IEnumerable<string>> GetSkusByIds(IEnumerable<ProductId> productIds, UserId userId)
+    {
+        return await this._dbContext.Products.Where(x => x.OwnerId == userId).Where(x => productIds.Contains(x.Id))
+            .Select(x => x.Sku).ToListAsync();
+    }
+
+    public async Task<IEnumerable<Product?>> GetUserProductsByIds(IEnumerable<ProductId> productIds, UserId userId)
+    {
+        return await this._dbContext.Products.Where(x => x.OwnerId == userId).Where(x => productIds.Contains(x.Id))
+            .ToListAsync();
     }
 }
