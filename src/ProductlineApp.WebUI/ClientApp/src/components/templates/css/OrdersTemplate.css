@@ -1,0 +1,15 @@
+.conent {
+    width: 100%;
+    min-height: 100%;
+    height: 100vh;
+}
+
+.content .tableOrders {
+    margin-left: 60px;
+    margin-top: 20px;
+    margin-right: 60px;
+    background-color: var(--white-color);
+    height: calc(100vh - 212px);
+    border-radius: 8px;
+    position: relative;
+}

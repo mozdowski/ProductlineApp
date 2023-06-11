@@ -1,0 +1,20 @@
+.OrdersTableButtons {
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    height: 65px;
+}
+
+.OrdersTableActionButtons {
+    display: flex;
+    align-items: center;
+    float: right;
+    margin-right: 14px;
+}
+
+.changeTypeOrdersButtons {
+    display: inline;
+    display: flex;
+    float: left;
+    margin-left: 14px;
+}

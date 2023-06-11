@@ -1,0 +1,34 @@
+.olxButton {
+    border-radius: 8px;
+    height: 35px;
+    width: 45px;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+.olxButton .olxIcon {
+    width: 32px;
+    height: 18.39px;
+}
+
+.olxButton .olxIcon path {
+    fill: #ffff
+}
+
+.olxButton:hover {
+    border: 1px solid var(--first-color);
+    color: var(--first-color);
+}
+
+.olxButton:hover .olxIcon {
+    fill: var(--first-color);
+}
+
+.olxButton.selected {
+    border: 1px solid var(--first-color);
+    color: var(--first-color);
+}
