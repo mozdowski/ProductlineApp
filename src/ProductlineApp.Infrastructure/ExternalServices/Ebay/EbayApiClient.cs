@@ -5,6 +5,8 @@ using ProductlineApp.Shared.Models.Ebay;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Net;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace ProductlineApp.Infrastructure.ExternalServices.Ebay;
 
@@ -172,20 +174,21 @@ public class EbayApiClient : IEbayApiClient
         }
     }
 
-    public async Task PublishOffer(string accessToken, string offerId)
+    public async Task<string> PublishOffer(string accessToken, string offerId)
     {
         var request = new RestRequest($"sell/inventory/v1/offer/{offerId}/publish", Method.Post)
         {
             Authenticator = new JwtAuthenticator(accessToken),
         };
-        request.AddHeader("Content-Language", this._ebayConfiguration.ContentLanguage);
 
-        var response = await this._restClient.ExecuteAsync(request);
+        var response = await this._restClient.ExecuteAsync<EbayPublishOfferResponse>(request);
 
-        if (!response.IsSuccessful)
+        if (!response.IsSuccessful || response.Data is null)
         {
             throw new Exception($"Failed to publish the offer: {response.StatusCode} - {response.Content}");
         }
+
+        return response.Data.ListingId;
     }
 
     public async Task<EbaySuggestedCategoriesResponse> GetCategories(string accessToken, string phrase)
@@ -272,6 +275,81 @@ public class EbayApiClient : IEbayApiClient
         var jsonResponse = JObject.Parse(response.Content);
 
         return jsonResponse["categorySubtreeNode"]?["category"]?["categoryName"]?.ToString() ?? string.Empty;
+    }
+
+    public async Task<IEnumerable<EbayOrderResponse>> GetOrders(string accessToken, IEnumerable<string> orderIds)
+    {
+        // bool hasMore = true;
+        // string endpointUrl = $"sell/fulfillment/v1/order?orderIds" + string.Join(",", orderIds);
+        // var orders = new List<EbayOrderResponse>();
+        //
+        // while (hasMore)
+        // {
+        //     var request = new RestRequest(endpointUrl)
+        //     {
+        //         Authenticator = new JwtAuthenticator(accessToken),
+        //     };
+        //
+        //     var response = await this._restClient.ExecuteAsync<EbayOrdersResponse>(request);
+        //
+        //     if (!response.IsSuccessful || response.Data is null)
+        //     {
+        //         throw new Exception($"Failed to get orders: {response.StatusCode} - {response.Content}");
+        //     }
+        //
+        //     orders.AddRange(response.Data.Orders);
+        //
+        //     if (response.Data.Next is not null)
+        //     {
+        //         endpointUrl = response.Data.Next;
+        //     }
+        //     else
+        //     {
+        //         hasMore = false;
+        //     }
+        // }
+        //
+        // return orders;
+
+        string json = await File.ReadAllTextAsync("../../Mocks/ebay_orders.json");
+        var response = JsonConvert.DeserializeObject<EbayOrdersResponse>(json);
+
+        return response.Orders;
+    }
+
+    public async Task<IEnumerable<EbayLocationsResponse.LocationItem>> GetMerchantLocationKeys(string accessToken)
+    {
+        bool hasMore = true;
+        string endpointUrl = $"sell/inventory/v1/location";
+        var locations = new List<EbayLocationsResponse.LocationItem>();
+
+        while (hasMore)
+        {
+            var request = new RestRequest(endpointUrl)
+            {
+                Authenticator = new JwtAuthenticator(accessToken),
+            };
+
+            var response = await this._restClient.ExecuteAsync<EbayLocationsResponse>(request);
+
+            if (!response.IsSuccessful || response.Data is null)
+            {
+                throw new Exception($"Failed to get orders: {response.StatusCode} - {response.Content}");
+            }
+
+            locations.AddRange(response.Data.Locations);
+
+            if (response.Data.Next is not null)
+            {
+                endpointUrl = response.Data.Next;
+            }
+            else
+            {
+                hasMore = false;
+            }
+        }
+
+        return locations;
     }
 
     private async Task<string> GetDefaultCategoryTreeId(string accessToken)
