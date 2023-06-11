@@ -1,0 +1,62 @@
+.OrdersTableRow {
+    font-style: var(--body-font);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--secondTableColor);
+}
+
+.OrdersTableRow td {
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.OrdersTableRow td:nth-child(1) {
+    max-width: 30px;
+}
+
+.OrdersTableRow td:nth-child(2),
+.OrdersTableRow td:nth-child(3),
+.OrdersTableRow td:nth-child(4),
+.OrdersTableRow td:nth-child(5),
+.OrdersTableRow td:nth-child(6),
+.OrdersTableRow td:nth-child(8) {
+    max-width: 80px;
+}
+
+.OrdersTableRow td:nth-child(7) {
+    padding-left: 35px;
+}
+
+.OrdersTableRow {
+    height: 64px;
+    text-align: center;
+    color: var(--letter-color);
+}
+
+/* order status */
+.orderStatus {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.orderStatus.complete {
+    color: var(--orderCompleted);
+}
+
+.orderStatus.send {
+    color: var(--orderSend);
+}
+
+.orderStatus.waiting {
+    color: var(--orderWaiting);
+}
+
+.orderStatus.imlemented {
+    color: var(--orderImplemented);
+}
+
+/* buttons Action */
+.ordersButtonsAction .editOrderIcon {
+    cursor: pointer;
+}

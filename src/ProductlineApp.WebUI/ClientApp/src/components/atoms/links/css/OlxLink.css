@@ -1,0 +1,12 @@
+.olxLink {
+    width: 30px;
+    height: 22px;
+    text-decoration: none;
+    margin-left: 11px;
+}
+
+.olxLink .olxIcon {
+    width: 30px;
+    height: 22px;
+    cursor: pointer;
+}

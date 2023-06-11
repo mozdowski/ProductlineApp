@@ -1,13 +1,12 @@
 import React from "react";
 import './sidebar.css';
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
-import DashboardImage from './img/dashboard.png';
-import ProductsImage from './img/products.png';
-import AuctionsImage from './img/auctions.png';
-import OrdersImage from './img/orders.png';
-import StatisticsImage from './img/statistics.png';
-import SettingsImage from './img/settings.png';
-import LogoutImage from './img/logout.png';
+import DashboardImage from "./img/dashboard.png";
+import ProductsImage from "./img/products.png";
+import AuctionsImage from "./img/auctions.png";
+import OrdersImage from "./img/orders.png";
+import SettingsImage from "./img/settings.png";
+import LogoutImage from "./img/logout.png";
 
 const SidebarOverHandler = (event: React.MouseEvent<HTMLDivElement>) => {
     const sidebar: HTMLDivElement = event.currentTarget;
@@ -75,13 +74,11 @@ function Sidebar() {
 
                 <CustomLink to="/orders" children="Zamówienia" image={OrdersImage}></CustomLink>
 
-                <CustomLink to="/statistics" children="Statystyki" image={StatisticsImage}></CustomLink>
-
                 <div className="separator" id="separator"></div>
 
                 <CustomLink to="/settings" children="Ustawienia" image={SettingsImage}></CustomLink>
 
-                <CustomLink to="/logout" children="Wyloguj" image={LogoutImage}></CustomLink>
+                <CustomLink to="/login" children="Wyloguj" image={LogoutImage}></CustomLink>
             </ul>
 
         </div>

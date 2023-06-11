@@ -1,0 +1,27 @@
+.deleteAccountButton {
+    border-radius: 8px;
+    height: 35px;
+    width: 400px;
+    background-color: var(--white-color);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    box-sizing: border-box;
+    border: 1px solid var(--settings-red-color);
+}
+
+.deleteAccountButton p {
+    color: var(--settings-red-color);
+    font-family: var(--body-font);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.deleteAccountButton:hover {
+    border: 1px solid var(--settings-red-color-hover);
+}
+
+.deleteAccountButton:hover p {
+    color: var(--settings-red-color-hover);
+}

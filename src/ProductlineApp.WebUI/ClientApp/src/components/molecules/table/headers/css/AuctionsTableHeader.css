@@ -1,0 +1,15 @@
+.AuctionsTableHeader {
+    height: 49px;
+    color: var(--letter-color);
+    font-style: var(--body-font);
+    background-color: #ffffff;
+}
+
+.AuctionsTableHeader th {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.AuctionsTableHeader th:nth-child(7) {
+    padding-left: 35px;
+}
