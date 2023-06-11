@@ -1,19 +1,25 @@
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
 using ProductlineApp.Application;
 using ProductlineApp.Infrastructure;
+using ProductlineApp.WebUI;
+using ProductlineApp.WebUI.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
-
 builder.Services.AddControllers();
 
-builder.Services.AddApplication()
-                .AddInfrastructure();
+builder.Services
+    .AddWebUI()
+    .AddApplication()
+    .AddInfrastructure(builder.Configuration);
+
+// Add logging
+builder.Host.ConfigureLogging(logging =>
+{
+    logging.ClearProviders();
+    logging.AddConsole();
+});
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -44,6 +50,9 @@ app.UseSpa(spa =>
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseMiddleware<UserContextMiddleware>();
 
 app.MapControllers();
 
