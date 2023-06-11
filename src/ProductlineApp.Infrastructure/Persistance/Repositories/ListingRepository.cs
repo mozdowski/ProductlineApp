@@ -1,0 +1,77 @@
+using Microsoft.EntityFrameworkCore;
+using ProductlineApp.Domain.Aggregates.Listing;
+using ProductlineApp.Domain.Aggregates.Listing.Entities;
+using ProductlineApp.Domain.Aggregates.Listing.Repository;
+using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
+using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+
+namespace ProductlineApp.Infrastructure.Persistance.Repositories;
+
+public class ListingRepository : IListingRepository
+{
+    private readonly ProductlineDbContext _dbContext;
+
+    public ListingRepository(
+        ProductlineDbContext dbContext)
+    {
+        this._dbContext = dbContext;
+    }
+
+    public async Task<Listing> GetByIdAsync(ListingId id)
+    {
+        var listing = await this._dbContext.Listings.FindAsync(id);
+        return listing;
+    }
+
+    public async Task<IEnumerable<Listing>> GetAllAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task AddAsync(Listing entity)
+    {
+        await this._dbContext.Listings.AddAsync(entity);
+        await this._dbContext.SaveChangesAsync();
+    }
+
+    public async Task UpdateAsync(Listing entity)
+    {
+        await this._dbContext.SaveChangesAsync();
+    }
+
+    public async Task RemoveAsync(Listing id)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<Listing>> GetAllByUserIdAsync(UserId userId)
+    {
+        return await this._dbContext.Listings.Where(x => x.OwnerId == userId).ToListAsync();
+    }
+
+    public async Task<IEnumerable<ListingInstance>> GetAllListingInstancesByListingId(ListingId listingId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<ListingInstance> GetListingInstanceById(ListingId listingId, ListingInstanceId listingInstanceId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<string>> GetUsersPlatformListingsIds(UserId userId, PlatformId platformId)
+    {
+        return await this._dbContext.Listings
+            .Include(x => x.Instances)
+            .Where(x => x.OwnerId == userId)
+            .SelectMany(x => x.Instances)
+            .Where(x => x.PlatformId == platformId)
+            .Select(x => x.PlatformListingId)
+            .ToListAsync();
+    }
+
+    public async Task<ListingInstance> GetListingInstanceById(ListingInstanceId listingInstanceId)
+    {
+        throw new NotImplementedException();
+    }
+}

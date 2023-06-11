@@ -1,12 +1,51 @@
 ﻿namespace ProductlineApp.Domain.ValueObjects;
 
-public record Address(
-    string StreetName,
-    string StreetNumber,
-    string Zip,
-    string City,
-    string Country)
+public record Address
 {
+    public Address(string streetName, string streetNumber, string zip, string city, string country)
+    {
+        if (string.IsNullOrWhiteSpace(streetName))
+        {
+            throw new ArgumentException("Street name must be provided.", nameof(streetName));
+        }
+
+        if (string.IsNullOrWhiteSpace(streetNumber))
+        {
+            throw new ArgumentException("Street number must be provided.", nameof(streetNumber));
+        }
+
+        if (string.IsNullOrWhiteSpace(zip))
+        {
+            throw new ArgumentException("Zip code must be provided.", nameof(zip));
+        }
+
+        if (string.IsNullOrWhiteSpace(city))
+        {
+            throw new ArgumentException("City must be provided.", nameof(city));
+        }
+
+        if (string.IsNullOrWhiteSpace(country))
+        {
+            throw new ArgumentException("Country must be provided.", nameof(country));
+        }
+
+        this.StreetName = streetName;
+        this.StreetNumber = streetNumber;
+        this.Zip = zip;
+        this.City = city;
+        this.Country = country;
+    }
+
+    public string StreetName { get; private set; }
+
+    public string StreetNumber { get; private set; }
+
+    public string Zip { get; private set; }
+
+    public string City { get; private set; }
+
+    public string Country { get; private set; }
+
     public override string ToString()
     {
         return string.Join(

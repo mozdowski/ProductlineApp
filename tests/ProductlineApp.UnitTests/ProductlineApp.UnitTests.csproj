@@ -22,4 +22,12 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ProductlineApp.Domain\ProductlineApp.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="DomainModels" />
+  </ItemGroup>
+
 </Project>
