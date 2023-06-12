@@ -8,12 +8,14 @@ namespace ProductlineApp.Domain.Aggregates.Order.Entities;
 public class OrderLine : Entity<OrderLineId>
 {
     private const int MinimumQuantity = 1;
+    private int _quantity;
 
     private OrderLine(
         OrderLineId id,
-        ListingInstanceId listingInstanceId,
+        string platformListingId,
+        ListingInstanceId? listingInstanceId,
         OrderId orderId,
-        ProductId productId,
+        ProductId? productId,
         int quantity,
         decimal price)
         : base(id)
@@ -23,15 +25,16 @@ public class OrderLine : Entity<OrderLineId>
         this.ProductId = productId;
         this.Quantity = quantity;
         this.Price = price;
+        this.PlatformListingId = platformListingId;
     }
 
-    public ListingInstanceId ListingInstanceId { get; private set; }
+    public string PlatformListingId { get; set; }
+
+    public ListingInstanceId? ListingInstanceId { get; private set; }
 
     public OrderId OrderId { get; private set; }
 
-    public ProductId ProductId { get; private set; }
-
-    private int _quantity;
+    public ProductId? ProductId { get; private set; }
 
     public int Quantity
     {
@@ -45,15 +48,15 @@ public class OrderLine : Entity<OrderLineId>
     public decimal TotalAmount => this.Quantity * this.Price;
 
     public static OrderLine Create(
-        ListingInstanceId listingInstanceId,
+        string platformListingId,
+        ListingInstanceId? listingInstanceId,
         OrderId orderId,
-        ProductId productId,
+        ProductId? productId,
         int quantity,
         decimal price)
     {
         var id = OrderLineId.CreateUnique();
 
-        return new OrderLine(id, listingInstanceId, orderId, productId, quantity, price);
+        return new OrderLine(id, platformListingId, listingInstanceId, orderId, productId, quantity, price);
     }
 }
-

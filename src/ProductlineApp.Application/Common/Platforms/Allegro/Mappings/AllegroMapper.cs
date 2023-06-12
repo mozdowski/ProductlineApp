@@ -16,6 +16,7 @@ public class AllegroMapper : Profile
         this.MapOrders();
         this.MapListings();
         this.CreateMap<AllegroProductCalalogueResponse, AllegroProductListDto>();
+        this.CreateMap<AllegroProductParametersResponse, AllegroProductParametersDtoResponse>();
     }
 
     private void MapOrders()
@@ -83,6 +84,78 @@ public class AllegroMapper : Profile
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Stock.Available))
             .ForMember(dest => dest.DaysToExpire, opt => opt.MapFrom(src => CalculateDaysToExpire(src.Publication.EndingAt)))
             .ForMember(dest => dest.IsActive, opt => opt.MapFrom(src => src.Publication.Status == "ACTIVE" ? 1 : 0));
+
+        this.CreateMap<AllegroCreateListingDtoRequest, AllegroCreateListingRequest>()
+            .ForMember(dest => dest.ProductSet, opt => opt.MapFrom(src => new List<ProductSet>()
+            {
+                new ProductSet()
+                {
+                    Product = new AllegroListingProduct()
+                    {
+                        Id = src.AllegroProductId,
+                        Parameters = src.Parameters,
+                    },
+                    Quantity = new Quantity()
+                    {
+                        Value = 1,
+                    },
+                },
+            }))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            // .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category { Id = src.CategoryId }))
+            .ForMember(dest => dest.Parameters, opt => opt.Ignore())
+            .ForMember(dest => dest.B2b, opt => opt.MapFrom(src => new B2b()
+                {
+                    BuyableOnlyByBusiness = false,
+                }))
+            .ForMember(dest => dest.Stock, opt => opt.MapFrom(src => new Stock()
+            {
+                Available = src.Quantity,
+                Unit = "UNIT",
+            }))
+            .ForMember(dest => dest.Language, opt => opt.MapFrom(src => "pl-PL"))
+            .ForMember(dest => dest.AfterSalesServices, opt => opt.MapFrom(src => new AfterSalesServices
+            {
+                ImpliedWarranty = new ImpliedWarranty { Id = src.ImpliedWarrantyId },
+                ReturnPolicy = new ReturnPolicy { Id = src.ReturnPolicyId },
+            }))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.SellingMode, opt => opt.MapFrom(src => new SellingMode
+            {
+                Format = "BUY_NOW",
+                Price = new Price { Amount = src.Price, Currency = "PLN" },
+            }))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => new Description
+            {
+                Sections = new List<Section>
+                {
+                    new Section
+                    {
+                        Items = new List<Item2>
+                        {
+                            new Item2 { Type = "TEXT", Content = src.Description },
+                        },
+                    },
+                },
+            }))
+            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.ImagesUrls))
+            .ForMember(dest => dest.Publication, opt => opt.MapFrom(src => new Publication
+            {
+                Duration = src.Duration.ToString(),
+                StartingAt = src.StartingAt,
+                Status = "ACTIVE",
+                Republish = src.Republish,
+            }))
+            .ForMember(dest => dest.Delivery, opt => opt.MapFrom(src => src.Delivery))
+            .ForMember(dest => dest.Payments, opt => opt.MapFrom(src => new Payments()
+            {
+                Invoice = Payments.PaymentInvoice.VAT.ToString(),
+            }))
+            .ForMember(dest => dest.External, opt => opt.MapFrom(src => new External()
+            {
+                Id = src.ProductId.ToString(),
+            }));
     }
 
     private static OrderStatus MapToOrderStatus(string mainStatus, string fullfilmentStatus)
@@ -114,4 +187,23 @@ public class AllegroMapper : Profile
 
         return null;
     }
+
+    // private static string GetDuration(AllegroDurationPeriods duration)
+    // {
+    //     switch (duration)
+    //     {
+    //         case AllegroDurationPeriods.PT24H:
+    //             return "24H";
+    //         case AllegroDurationPeriods.P3D:
+    //             return "P3D";
+    //         case AllegroDurationPeriods.P5D:
+    //             return "P5D";
+    //         case AllegroDurationPeriods.P7D:
+    //             return "P7D";
+    //         case AllegroDurationPeriods.P10D:
+    //             return "P10D";
+    //         default:
+    //             throw new ArgumentOutOfRangeException(nameof(duration), "Invalid duration period.");
+    //     }
+    // }
 }

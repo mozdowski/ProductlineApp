@@ -36,6 +36,10 @@ public record Address
         this.Country = country;
     }
 
+    public Address()
+    {
+    }
+
     public string StreetName { get; private set; }
 
     public string StreetNumber { get; private set; }

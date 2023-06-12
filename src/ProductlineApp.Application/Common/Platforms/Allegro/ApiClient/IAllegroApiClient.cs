@@ -30,7 +30,7 @@ public interface IAllegroApiClient
 
     Task<string> CreateListingAsync(string accessToken, AllegroCreateListingRequest requestBody);
 
-    Task<AllegroUserOffersResponse> GetOffersAsync(
+    Task<IEnumerable<AllegroUserOffersResponse.Offer>> GetOffersAsync(
         string accessToken,
         string offerId = null,
         string name = null,
