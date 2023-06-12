@@ -42,6 +42,14 @@ public class CheckoutForm
     public string Revision { get; set; }
 }
 
+public enum PurchaseStatus
+{
+    BOUGHT,
+    FILLED_IN,
+    READY_FOR_PROCESSING,
+    CANCELLED,
+}
+
 public class Buyer
 {
     public string Id { get; set; }
@@ -85,14 +93,14 @@ public class Address
 
 public class PaidAmount
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
 
 public class Reconciliation
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -165,7 +173,7 @@ public class PickupPoint
 
 public class Cost
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -232,9 +240,9 @@ public class Invoice
 {
     public bool Required { get; set; }
 
-    public Address3 Address { get; set; }
+    public Address3? Address { get; set; }
 
-    public DateTime DueDate { get; set; }
+    public DateTime? DueDate { get; set; }
 }
 
 public class Offer
@@ -253,14 +261,14 @@ public class External
 
 public class OriginalPrice
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
 
 public class Value
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -276,7 +284,7 @@ public class Reconciliation2
 
 public class Price
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -313,14 +321,14 @@ public class LineItem
 
 public class PaidAmount2
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
 
 public class Reconciliation3
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -347,7 +355,7 @@ public class Discount
 
 public class TotalToPay
 {
-    public string Amount { get; set; }
+    public decimal Amount { get; set; }
 
     public string Currency { get; set; }
 }
@@ -360,4 +368,16 @@ public class Summary
 public class Marketplace
 {
     public string Id { get; set; }
+}
+
+public enum FullfilmentStatus
+{
+    NEW,
+    PROCESSING,
+    READY_FOR_SHIPMENT,
+    READY_FOR_PICKUP,
+    SENT,
+    PICKED_UP,
+    CANCELLED,
+    SUSPENDED,
 }

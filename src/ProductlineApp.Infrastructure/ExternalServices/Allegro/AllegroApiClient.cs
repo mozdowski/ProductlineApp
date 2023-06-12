@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 using ProductlineApp.Infrastructure.Configuration.Allegro;
 using ProductlineApp.Shared.Models.Allegro;
 using RestSharp;
@@ -7,7 +8,6 @@ using RestSharp.Authenticators;
 using System.Globalization;
 using System.Net;
 using System.Net.Http.Headers;
-using ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 using Method = RestSharp.Method;
 
 namespace ProductlineApp.Infrastructure.ExternalServices.Allegro;

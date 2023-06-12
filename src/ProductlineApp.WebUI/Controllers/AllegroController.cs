@@ -26,11 +26,16 @@ public class AllegroController : ControllerBase
     }
 
     [HttpPost("createListing")]
-    public async Task<IActionResult> CreateEbayListing([FromBody] AllegroCreateListingRequest request)
+    public async Task<IActionResult> CreateEbayListing([FromBody] AllegroCreateListingDtoRequest request)
     {
         await this._allegroService.CreateListingBasedOnAllegroProductAsync(request);
-
         return this.Ok();
     }
 
+    [HttpGet("product/categoryParameters")]
+    public async Task<IActionResult> GetCategoryParameters(string categoryId)
+    {
+        var result = await this._allegroService.GetProductParametersForCategory(categoryId);
+        return this.Ok(result);
+    }
 }

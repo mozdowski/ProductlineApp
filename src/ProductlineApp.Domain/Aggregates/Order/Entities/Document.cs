@@ -4,7 +4,7 @@ using ProductlineApp.Domain.ValueObjects;
 
 namespace ProductlineApp.Domain.Aggregates.Order.Entities;
 
-public class Document : Entity<DocumentId>
+public class Document : Entity<DocumentId>, IFile
 {
     private Document(
         DocumentId id,
@@ -18,11 +18,11 @@ public class Document : Entity<DocumentId>
         this.OrderId = orderId;
     }
 
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
-    public Uri Url { get; private set; }
+    public Uri Url { get; set; }
 
-    public OrderId OrderId { get; }
+    public OrderId OrderId { get; private init; }
 
     public static Document Create(
         string name,

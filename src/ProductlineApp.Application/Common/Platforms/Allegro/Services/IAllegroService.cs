@@ -7,5 +7,7 @@ public interface IAllegroService : IPlatformService
 {
     Task<AllegroProductListDto> GetProductList(string phrase);
 
-    Task<string> CreateListingBasedOnAllegroProductAsync();
+    Task CreateListingBasedOnAllegroProductAsync(AllegroCreateListingDtoRequest request);
+
+    Task<AllegroProductParametersDtoResponse> GetProductParametersForCategory(string categoryId);
 }

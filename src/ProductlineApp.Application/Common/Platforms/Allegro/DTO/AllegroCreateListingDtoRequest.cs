@@ -2,7 +2,7 @@ using ProductlineApp.Shared.Models.Allegro;
 
 namespace ProductlineApp.Application.Common.Platforms.Allegro.DTO;
 
-public class AllegroCreateListingRequest
+public class AllegroCreateListingDtoRequest
 {
     public string Name { get; set; }
 
@@ -10,7 +10,7 @@ public class AllegroCreateListingRequest
 
     public string Description { get; set; }
 
-    public string CategoryId { get; set; }
+    // public string CategoryId { get; set; }
 
     public string ImpliedWarrantyId { get; set; }
 
@@ -22,7 +22,7 @@ public class AllegroCreateListingRequest
 
     public Guid ProductId { get; set; }
 
-    public IEnumerable<Parameter> Parameters;
+    public List<Parameter> Parameters;
 
     public AllegroDurationPeriods Duration { get; set; }
 
@@ -32,18 +32,9 @@ public class AllegroCreateListingRequest
 
     public Delivery Delivery { get; set; }
 
-    public class Parameter
-    {
-        public string Id { get; set; }
+    public int Quantity { get; set; }
 
-        public string Name { get; set; }
-
-        public ParameterRangeValue RangeValue { get; set; }
-
-        public string[] Values { get; set; }
-
-        public string[] ValueIds { get; set; }
-    }
+    public DateTime? StartingAt { get; set; } = null;
 
     public class ParameterRangeValue
     {

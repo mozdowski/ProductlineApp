@@ -5,7 +5,6 @@ using ProductlineApp.Shared.Models.Ebay;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Net;
-using System.Text;
 using Newtonsoft.Json;
 
 namespace ProductlineApp.Infrastructure.ExternalServices.Ebay;

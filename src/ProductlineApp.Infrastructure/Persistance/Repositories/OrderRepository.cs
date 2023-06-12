@@ -8,6 +8,14 @@ namespace ProductlineApp.Infrastructure.Persistance.Repositories;
 
 public class OrderRepository : IOrderRepository
 {
+    private readonly ProductlineDbContext _context;
+
+    public OrderRepository(
+        ProductlineDbContext context)
+    {
+        this._context = context;
+    }
+
     public async Task<Order> GetByIdAsync(OrderId id)
     {
         throw new NotImplementedException();
@@ -44,6 +52,11 @@ public class OrderRepository : IOrderRepository
     }
 
     public async Task<Document> GetDocumentByIdAsync(DocumentId documentId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public async Task<IEnumerable<string>> GetOfferIdsForPlatform(UserId userId, PlatformId platformId)
     {
         throw new NotImplementedException();
     }

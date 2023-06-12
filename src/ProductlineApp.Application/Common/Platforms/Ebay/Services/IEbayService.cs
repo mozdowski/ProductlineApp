@@ -16,4 +16,6 @@ public interface IEbayService : IPlatformService
     Task<PlatformCategoriesListDto> GetCategoriesByPhrase(string phrase);
 
     Task<EbayCategoryTreeDto> GetCategories();
+
+    Task<EbayLocationsDtoResponse> GetLocations();
 }
