@@ -1,0 +1,29 @@
+.userAccountButton {
+    display: flex;
+    align-items: center;
+    margin-left: 22px;
+}
+
+.userAccountButton .userInfo h2 {
+    color: var(--letter-color);
+    font-family: var(--body-font);
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 8px;
+}
+
+.userAccountButton .userInfo p {
+    color: var(--letter-color);
+    font-family: var(--body-font);
+    font-size: 11px;
+    font-weight: 300;
+    margin-top: -16px;
+}
+
+.userAccountButton .userImage {
+    height: 50px;
+    width: 50px;
+    background-color: #61dafb;
+    border-radius: 50%;
+    margin-left: 14px;
+}

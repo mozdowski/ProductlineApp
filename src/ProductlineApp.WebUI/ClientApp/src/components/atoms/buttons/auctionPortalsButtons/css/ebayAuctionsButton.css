@@ -1,0 +1,28 @@
+.ebayButton {
+    border-radius: 8px;
+    height: 35px;
+    width: 45px;
+    background-color: var(--bg-color);
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    justify-content: center;
+    margin-right: 11px;
+    box-sizing: border-box;
+}
+
+.ebayButton .ebayIcon {
+    width: 32px;
+    height: 13px;
+    color: var(--grey-color);
+}
+
+.ebayButton:hover {
+    border: 1px solid var(--first-color);
+    color: var(--first-color);
+}
+
+.ebayButton.selected {
+    border: 1px solid var(--first-color);
+    color: var(--first-color);
+}

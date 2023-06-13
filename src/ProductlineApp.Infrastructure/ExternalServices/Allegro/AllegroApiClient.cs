@@ -25,7 +25,6 @@ public class AllegroApiClient : IAllegroApiClient
         this._allegroConfiguration = allegroConfiguration;
         this._httpClient = httpClient;
         this._restClient = new RestClient(this._allegroConfiguration.BaseApiUrl);
-        this._restClient.AddDefaultHeader("Accept", "application/vnd.allegro.public.v1+json");
     }
 
     public string GetAuthorizationUrl()
@@ -100,7 +99,7 @@ public class AllegroApiClient : IAllegroApiClient
         string paymentId = null, string surchargeId = null, string deliveryMethodId = null, string buyerLogin = null,
         string marketplaceId = null, DateTime? updatedAtLte = null, DateTime? updatedAtGte = null, string sort = null)
     {
-        var request = new RestRequest("order/checkout-forms");
+        var request = new RestRequest("orders");
 
         request.AddParameter("offset", offset);
         request.AddParameter("limit", limit);
@@ -171,6 +170,7 @@ public class AllegroApiClient : IAllegroApiClient
         }
 
         request.Authenticator = new JwtAuthenticator(accessToken);
+        request.AddHeader("Content-Type", "application/vnd.allegro.public.v1+json");
 
         var response = await this._restClient.ExecuteAsync<AllegroOrdersResponse>(request);
 
@@ -202,7 +202,7 @@ public class AllegroApiClient : IAllegroApiClient
         return createdListingId;
     }
 
-    public async Task<IEnumerable<AllegroUserOffersResponse.Offer>> GetOffersAsync(string accessToken, string offerId = null, string name = null, decimal? minPrice = null,
+    public async Task<AllegroUserOffersResponse> GetOffersAsync(string accessToken, string offerId = null, string name = null, decimal? minPrice = null,
         decimal? maxPrice = null, List<string>? publicationStatuses = null, List<string>? sellingFormats = null, List<string>? externalIds = null,
         string shippingRatesId = null, bool? shippingRatesIdEmpty = null, string sort = null, int limit = 20,
         int offset = 0, string categoryId = null, bool? productIdEmpty = null, bool? productizationRequired = null,
@@ -212,6 +212,8 @@ public class AllegroApiClient : IAllegroApiClient
         {
             Authenticator = new JwtAuthenticator(accessToken),
         };
+
+        request.AddHeader("Content-Type", "application/vnd.allegro.public.v1+json");
 
         request.AddParameter("limit", limit.ToString());
         request.AddParameter("offset", offset.ToString());
@@ -256,20 +258,7 @@ public class AllegroApiClient : IAllegroApiClient
             throw new Exception($"Failed to get seller offers: {response.StatusCode}");
         }
 
-        var offers = response.Data.Offers;
-
-        var tasks = offers.Select(async offer =>
-        {
-            string categoryName = await this.GetCategoryNameById(accessToken, offer.Category.Id);
-            string description = await this.GetOfferDescription(accessToken, offer.Id);
-
-            offer.Category.Name = categoryName;
-            offer.Description = description;
-        }).ToList();
-
-        await Task.WhenAll(tasks);
-
-        return offers;
+        return response.Data;
     }
 
     public async Task<AllegroCategoriesResponse> GetCategoriesAsync(string accessToken, string parentId = null)
@@ -278,6 +267,8 @@ public class AllegroApiClient : IAllegroApiClient
         {
             Authenticator = new JwtAuthenticator(accessToken),
         };
+
+        request.AddHeader("Content-Type", "application/vnd.allegro.public.v1+json");
 
         if (!string.IsNullOrEmpty(parentId)) request.AddParameter("parent.id", parentId);
 
@@ -299,6 +290,7 @@ public class AllegroApiClient : IAllegroApiClient
             Authenticator = new JwtAuthenticator(accessToken),
         };
 
+        request.AddHeader("Content-Type", "application/vnd.allegro.public.v1+json");
         request.AddParameter("phrase", phrase);
         request.AddParameter("includeDrafts", includeDrafts);
 
@@ -344,6 +336,8 @@ public class AllegroApiClient : IAllegroApiClient
             Authenticator = new JwtAuthenticator(accessToken),
         };
 
+        request.AddHeader("Content-Type", "application/vnd.allegro.public.v1+json");
+
         var response = await this._restClient.ExecuteAsync<AllegroProductParametersResponse>(request);
 
         if (response.StatusCode != HttpStatusCode.OK)
@@ -352,44 +346,5 @@ public class AllegroApiClient : IAllegroApiClient
         }
 
         return response.Data;
-    }
-
-    private async Task<string> GetCategoryNameById(string accessToken, string categoryId)
-    {
-        var request = new RestRequest($"sale/categories/{categoryId}")
-        {
-            Authenticator = new JwtAuthenticator(accessToken),
-        };
-
-        var response = await this._restClient.ExecuteAsync<AllegroCategoryDetailsResponse>(request);
-
-        if (response.StatusCode != HttpStatusCode.OK || response.Data.Id != categoryId)
-        {
-            throw new Exception($"Failed to get category name: {response.StatusCode}");
-        }
-
-        return response.Data.Name;
-    }
-
-    private async Task<string> GetOfferDescription(string accessToken, string offerId)
-    {
-        var request = new RestRequest($"sale/product-offers/{offerId}")
-        {
-            Authenticator = new JwtAuthenticator(accessToken),
-        };
-
-        var response = await this._restClient.ExecuteAsync<AllegroOfferDetailsResponse>(request);
-
-        if (response.StatusCode != HttpStatusCode.OK)
-        {
-            throw new Exception($"Failed to get offer description: {response.StatusCode}");
-        }
-
-        var textDescriptionContent = string.Join(" ", response.Data.Description.Sections
-            .SelectMany(section => section.Items)
-            .Where(item => item.Type == "TEXT")
-            .Select(item => item.Content));
-
-        return textDescriptionContent;
     }
 }

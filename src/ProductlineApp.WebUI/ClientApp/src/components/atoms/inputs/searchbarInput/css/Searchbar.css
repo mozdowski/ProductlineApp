@@ -1,0 +1,44 @@
+:root {
+    --searchBarColor: #AAB1C6;
+    --searchBarBgColor: #FFFFFF;
+}
+
+.searchabar {
+    width: 211px;
+    height: 33px;
+    background-color: var(--searchBarBgColor);
+    border-radius: 8px;
+    border: 1px solid var(--searchBarColor);
+    align-items: center;
+    display: flex;
+}
+
+.searchabar .searchImage {
+    width: 16px;
+    height: 16px;
+    margin-left: 10px;
+    margin-right: 5px;
+}
+
+.searchabar .searchProductInput {
+    font-size: 12px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    color: var(--searchBarColor);
+}
+
+.searchProductInput::placeholder {
+    color: var(--searchBarColor);
+}
+
+.searchabar .searchProductInput[type="text"] {
+    outline: 0;
+    background: var(--searchBarBgColor);
+    border: 0px;
+    width: 170px;
+    height: 31px;
+}
+
+.searchabar .searchProductInput:focus {
+    outline: none;
+}

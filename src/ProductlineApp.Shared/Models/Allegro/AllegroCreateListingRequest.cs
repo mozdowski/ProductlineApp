@@ -136,16 +136,11 @@ public class Delivery
 {
     public string HandlingTime { get; set; }
 
-    public ShippingRate ShippingRates { get; set; }
+    public object ShippingRates { get; set; }
 
     public string AdditionalInfo { get; set; }
 
     public DateTime ShipmentDate { get; set; }
-
-    public class ShippingRate
-    {
-        public string Name { get; set; }
-    }
 }
 
 public class Publication

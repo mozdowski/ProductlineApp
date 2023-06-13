@@ -26,8 +26,6 @@ public class EbayOfferDtoRequest
 
     public string ReturnPolicyId { get; set; }
 
-    public string LocationKey { get; set; }
-
     // public decimal VatPercentage { get; set; }
     //
     // public bool ApplyTax { get; set; }
