@@ -11,6 +11,8 @@ public class AllegroUserOffersResponse
     public class Category
     {
         public string Id { get; set; }
+
+        public string Name { get; set; }
     }
 
     public class PrimaryImage
@@ -20,7 +22,7 @@ public class AllegroUserOffersResponse
 
     public class Price
     {
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public string Currency { get; set; }
     }
@@ -38,7 +40,7 @@ public class AllegroUserOffersResponse
 
     public class CurrentPrice
     {
-        public string Amount { get; set; }
+        public decimal Amount { get; set; }
 
         public string Currency { get; set; }
     }
@@ -68,13 +70,13 @@ public class AllegroUserOffersResponse
     {
         public string Status { get; set; }
 
-        public DateTime StartingAt { get; set; }
+        public DateTime? StartingAt { get; set; }
 
-        public DateTime StartedAt { get; set; }
+        public DateTime? StartedAt { get; set; }
 
-        public DateTime EndingAt { get; set; }
+        public DateTime? EndingAt { get; set; }
 
-        public DateTime EndedAt { get; set; }
+        public DateTime? EndedAt { get; set; }
     }
 
     public class ImpliedWarranty
@@ -134,6 +136,8 @@ public class AllegroUserOffersResponse
 
         public Category Category { get; set; }
 
+        public string Description { get; set; }
+
         public PrimaryImage PrimaryImage { get; set; }
 
         public SellingMode SellingMode { get; set; }
@@ -161,8 +165,6 @@ public class AllegroUserOffersResponse
 
     public class External
     {
-        public string Id { get; set; }
+        public string? Id { get; set; }
     }
 }
-
-
