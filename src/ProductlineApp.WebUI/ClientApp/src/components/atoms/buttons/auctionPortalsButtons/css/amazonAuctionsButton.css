@@ -1,29 +1,29 @@
 .amazonButton {
-    border-radius: 8px;
-    height: 35px;
-    width: 45px;
-    background-color: var(--bg-color);
-    justify-content: space-between;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    justify-content: center;
-    margin-right: 11px;
-    box-sizing: border-box;
+  border-radius: 8px;
+  height: 35px;
+  width: 45px;
+  background-color: var(--bg-color);
+  justify-content: space-between;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  margin-right: 11px;
+  box-sizing: border-box;
 }
 
 .amazonButton .amazonIcon {
-    width: 20px;
-    height: 20px;
-    color: var(--grey-color);
+  width: 20px;
+  height: 20px;
+  color: var(--grey-color);
 }
 
 .amazonButton:hover {
-    border: 1px solid var(--first-color);
-    color: var(--first-color);
+  border: 1px solid var(--first-color);
+  color: var(--first-color);
 }
 
 .amazonButton.selected {
-    border: 1px solid var(--first-color);
-    color: var(--first-color);
+  border: 1px solid var(--first-color);
+  color: var(--first-color);
 }

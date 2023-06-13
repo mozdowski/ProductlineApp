@@ -1,36 +1,36 @@
 .heading {
-    position: relative;
-    align-items: center;
-    display: flex;
-    height: 115px;
+  position: relative;
+  align-items: center;
+  display: flex;
+  height: 115px;
 }
 
 .heading .pageTitle {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 .heading .pageTitle h1 {
-    margin-left: 60px;
-    color: var(--letter-color);
-    font-family: var(--body-font);
-    font-size: 32px;
-    font-weight: 700;
+  margin-left: 60px;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 32px;
+  font-weight: 700;
 }
 
 .heading .pageTitle p {
-    margin-left: 60px;
-    color: var(--letter-color);
-    font-family: var(--body-font);
-    font-size: 13px;
-    font-weight: 400;
-    margin-top: -27px;
+  margin-left: 60px;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 13px;
+  font-weight: 400;
+  margin-top: -27px;
 }
 
 .heading .pageUserActions {
-    position: absolute;
-    float: right;
-    right: 60px;
-    margin-top: 40px;
-    align-items: center;
-    display: flex;
+  position: absolute;
+  float: right;
+  right: 60px;
+  margin-top: 40px;
+  align-items: center;
+  display: flex;
 }

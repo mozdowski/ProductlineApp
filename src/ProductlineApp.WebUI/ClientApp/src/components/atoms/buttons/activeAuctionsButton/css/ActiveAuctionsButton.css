@@ -1,36 +1,35 @@
 .activeAuctionsButton {
-    border-radius: 8px;
-    height: 35px;
-    width: 130px;
-    background-color: var(--white-color);
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    justify-content: center;
-    margin-right: 11px;
-    box-sizing: border-box;
+  border-radius: 8px;
+  height: 35px;
+  width: 130px;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  margin-right: 11px;
+  box-sizing: border-box;
 }
 
 .activeAuctionsButton.selected {
-    border: 1px solid var(--first-color);
+  border: 1px solid var(--first-color);
 }
 
 .activeAuctionsButton.selected p {
-    color: var(--first-color);
+  color: var(--first-color);
 }
 
-
 .activeAuctionsButton p {
-    color: var(--grey-color);
-    font-family: var(--body-font);
-    font-size: 12px;
-    font-weight: 600;
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .activeAuctionsButton:hover {
-    border: 1px solid var(--first-color);
+  border: 1px solid var(--first-color);
 }
 
 .activeAuctionsButton:hover p {
-    color: var(--first-color);
+  color: var(--first-color);
 }

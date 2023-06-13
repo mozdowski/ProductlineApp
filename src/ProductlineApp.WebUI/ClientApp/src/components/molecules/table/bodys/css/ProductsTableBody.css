@@ -1,18 +1,18 @@
 .ProductsTableRow {
-    font-style: var(--body-font);
+  font-style: var(--body-font);
 }
 
 tbody tr:nth-child(odd) {
-    background-color: var(--secondTableColor);
+  background-color: var(--secondTableColor);
 }
 
 .ProductsTableRow td {
-    font-size: 14px;
-    font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .tableRow td:nth-child(1) {
-    max-width: 30px;
+  max-width: 30px;
 }
 
 .ProductsTableRow td:nth-child(2),
@@ -21,57 +21,56 @@ tbody tr:nth-child(odd) {
 .ProductsTableRow td:nth-child(5),
 .ProductsTableRow td:nth-child(6),
 .ProductsTableRow td:nth-child(8) {
-    max-width: 80px;
+  max-width: 80px;
 }
 
 .ProductsTableRow td:nth-child(7) {
-    padding-left: 35px;
+  padding-left: 35px;
 }
 
 .ProductsTableRow {
-    height: 64px;
-    text-align: center;
-    color: var(--letter-color);
+  height: 64px;
+  text-align: center;
+  color: var(--letter-color);
 }
 
 /* product name */
 .ProductsTableRow .productName {
-    align-items: center;
-    display: inline-flex;
+  align-items: center;
+  display: inline-flex;
 }
 
 .ProductsTableRow .productName .productImage {
-    height: 32px;
-    width: 32px;
-    background-color: aqua;
-    border-radius: 8px;
+  height: 32px;
+  width: 32px;
+  background-color: aqua;
+  border-radius: 8px;
 }
 
 .ProductsTableRow .productName p {
-    margin-left: 8px;
+  margin-left: 8px;
 }
-
 
 /* product status */
 .productStatus {
-    font-size: 12px;
-    font-weight: 500;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .productStatus.productExposed {
-    color: var(--productExposedColor);
+  color: var(--productExposedColor);
 }
 
 .productStatus.productNotExposed {
-    color: var(--productNotExposedColor);
+  color: var(--productNotExposedColor);
 }
 
 /* buttons Action */
 .productsButtonsAction .editProductIcon {
-    margin-right: 8px;
-    cursor: pointer;
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 .productsButtonsAction .deleteProductIcon {
-    cursor: pointer;
+  cursor: pointer;
 }

@@ -1,64 +1,62 @@
-import React from "react";
-import ReactEcharts from "echarts-for-react";
+import React from 'react';
+import ReactEcharts from 'echarts-for-react';
 import './css/SoldTodayChart.css';
 
 function SoldTodayChart() {
-    const option = {
-        tooltip: {
-            trigger: 'item'
+  const option = {
+    tooltip: {
+      trigger: 'item',
+    },
+    legend: {
+      bottom: '1%',
+      left: 'center',
+    },
+    series: [
+      {
+        color: ['pink', 'purple', 'ff0000', 'red', 'blue'],
+        type: 'pie',
+        radius: ['35%', '65%'],
+        avoidLabelOverlap: false,
+        itemStyle: {
+          borderRadius: 10,
+          borderColor: '#fff',
+          borderWidth: 2,
         },
-        legend: {
-            bottom: '1%',
-            left: 'center'
+        label: {
+          show: false,
+          position: 'center',
         },
-        series: [
-            {
-                color: ['pink', 'purple', 'ff0000', 'red', 'blue'],
-                type: 'pie',
-                radius: ['35%', '65%'],
-                avoidLabelOverlap: false,
-                itemStyle: {
-                    borderRadius: 10,
-                    borderColor: '#fff',
-                    borderWidth: 2
-                },
-                label: {
-                    show: false,
-                    position: 'center'
-                },
-                emphasis: {
-                    label: {
-                        show: true,
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        fontFamiy: 'Poppins, sans-serif'
-                    }
-                },
-                labelLine: {
-                    show: false
-                },
-                data: [
-                    { value: 1048, name: 'Search Engine' },
-                    { value: 735, name: 'Direct' },
-                    { value: 580, name: 'Email' },
-                    { value: 484, name: 'Union Ads' },
-                    { value: 300, name: 'Video Ads' }
-                ]
-            }
-        ]
-    };
+        emphasis: {
+          label: {
+            show: true,
+            fontSize: 16,
+            fontWeight: 'bold',
+            fontFamiy: 'Poppins, sans-serif',
+          },
+        },
+        labelLine: {
+          show: false,
+        },
+        data: [
+          { value: 1048, name: 'Search Engine' },
+          { value: 735, name: 'Direct' },
+          { value: 580, name: 'Email' },
+          { value: 484, name: 'Union Ads' },
+          { value: 300, name: 'Video Ads' },
+        ],
+      },
+    ],
+  };
 
-
-    return (
-        <div className="chart1">
-            <h1>Sprzedane Dzisiaj</h1>
-            <ReactEcharts option={option} style={{ height: "340px" }} />
-        </div>
-    );
+  return (
+    <div className="chart1">
+      <h1>Sprzedane Dzisiaj</h1>
+      <ReactEcharts option={option} style={{ height: '340px' }} />
+    </div>
+  );
 }
 
-export default SoldTodayChart
-
+export default SoldTodayChart;
 
 /*
 const option = {
