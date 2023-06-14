@@ -1,5 +1,7 @@
 namespace ProductlineApp.Application.Authentication.DTO;
 
 public record AuthenticationResult(
-     Domain.Aggregates.User.User User,
+     Guid Id,
+     string Username,
+     string Email,
      string Token);

@@ -59,7 +59,9 @@ public class RegisterCommand
             var token = this._tokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(
-                user,
+                user.Id.Value,
+                user.Username,
+                user.Email,
                 token);
         }
     }
