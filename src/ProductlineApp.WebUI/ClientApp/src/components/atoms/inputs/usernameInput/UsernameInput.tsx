@@ -1,13 +1,20 @@
-import "./css/usernameInput.css"
+import './css/usernameInput.css';
 
 function UsernameInput() {
-
-    return (
-        <>
-            <label htmlFor="uname" className="unameLabel">Nazwa uzytkownika</label>
-            <input type="text" id="uname" name="uname" placeholder="Nazwa uzytkownika" className="unameInput"></input>
-        </>
-    );
+  return (
+    <>
+      <label htmlFor="uname" className="unameLabel">
+        Nazwa uzytkownika
+      </label>
+      <input
+        type="text"
+        id="uname"
+        name="uname"
+        placeholder="Nazwa uzytkownika"
+        className="unameInput"
+      ></input>
+    </>
+  );
 }
 
-export default UsernameInput
+export default UsernameInput;

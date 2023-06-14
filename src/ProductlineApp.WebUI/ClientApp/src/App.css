@@ -1,35 +1,35 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&family=Sen:wght@400;700;800&display=swap');
 
 :root {
-  --first-color: #5F47F1;
+  --first-color: #5f47f1;
   --letter-color: #333333;
   --letter-color2: #434343;
-  --first-color-light: #E5E5E5;
-  --white-color: #FFFFFF;
-  --logo-dot-color: #6AD2FF;
-  --bg-color: #F8F8F8;
-  --light-mode-color: #FFD400;
-  --purple-button-hover: #8675F1;
-  --searchbar-color: #9E9E9E;
-  --grey-color: #AAB1C6;
-  --settings-red-color: #FF4A4A;
+  --first-color-light: #e5e5e5;
+  --white-color: #ffffff;
+  --logo-dot-color: #6ad2ff;
+  --bg-color: #f8f8f8;
+  --light-mode-color: #ffd400;
+  --purple-button-hover: #8675f1;
+  --searchbar-color: #9e9e9e;
+  --grey-color: #aab1c6;
+  --settings-red-color: #ff4a4a;
   --settings-red-color-hover: #f67878;
 
   /* table */
-  --secondTableColor: #F5F4FE;
+  --secondTableColor: #f5f4fe;
 
   /* product status */
-  --productExposedColor: #1F9254;
-  --productNotExposedColor: #FF4A4A;
+  --productExposedColor: #1f9254;
+  --productNotExposedColor: #ff4a4a;
 
   /* order status */
-  --orderCompleted: #1F9254;
-  --orderSend: #257BE1;
-  --orderWaiting: #FFA030;
-  --orderImplemented: #FFD400;
+  --orderCompleted: #1f9254;
+  --orderSend: #257be1;
+  --orderWaiting: #ffa030;
+  --orderImplemented: #ffd400;
 
-  --buttonPaginatioBgColor: #F8F8F8;
-  --buttonPaginationBgActivePage: #5F47F1;
+  --buttonPaginatioBgColor: #f8f8f8;
+  --buttonPaginationBgActivePage: #5f47f1;
 
   --body-font: 'Poppins', sans-serif;
   --logo-font: 'Sen', sans-serif;

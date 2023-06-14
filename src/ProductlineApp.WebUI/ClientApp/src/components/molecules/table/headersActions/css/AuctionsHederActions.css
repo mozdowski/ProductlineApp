@@ -1,19 +1,19 @@
 .AuctionsTableButtons {
-    justify-content: space-between;
-    align-items: center;
-    display: flex;
-    height: 65px;
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+  height: 65px;
 }
 
 .AuctionsTableActionButtons {
-    display: flex;
-    align-items: center;
-    float: right;
+  display: flex;
+  align-items: center;
+  float: right;
 }
 
 .changeTypeAuctionsButtons {
-    display: inline;
-    display: flex;
-    float: left;
-    margin-left: 14px;
+  display: inline;
+  display: flex;
+  float: left;
+  margin-left: 14px;
 }

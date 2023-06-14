@@ -1,34 +1,34 @@
 .addProductLink {
-    text-decoration: none;
-    margin-right: 14px;
-    margin-left: 11px;
+  text-decoration: none;
+  margin-right: 14px;
+  margin-left: 11px;
 }
 
 .addProductButton2 {
-    border-radius: 8px;
-    height: 35px;
-    width: 152px;
-    background-color: var(--first-color);
-    justify-content: space-between;
-    text-align: center;
-    display: flex;
-    align-items: center;
+  border-radius: 8px;
+  height: 35px;
+  width: 152px;
+  background-color: var(--first-color);
+  justify-content: space-between;
+  text-align: center;
+  display: flex;
+  align-items: center;
 }
 
 .addProductButton2 img {
-    width: 16px;
-    height: 16px;
-    margin-left: 20px;
+  width: 16px;
+  height: 16px;
+  margin-left: 20px;
 }
 
 .addProductButton2 p {
-    color: var(--white-color);
-    font-family: var(--body-font);
-    font-size: 12px;
-    font-weight: 600;
-    margin-right: 25px;
+  color: var(--white-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 25px;
 }
 
 .addProductButton2:hover {
-    background-color: var(--purple-button-hover);
+  background-color: var(--purple-button-hover);
 }

@@ -1,12 +1,12 @@
 .changeProfilePhotoSection {
-    display: flex;
-    display: inline;
+  display: flex;
+  display: inline;
 }
 
 .uploladedImage {
-    width: 95px;
-    height: 95px;
-    background-color: aqua;
-    border-radius: 50;
-    margin-right: 41px;
+  width: 95px;
+  height: 95px;
+  background-color: aqua;
+  border-radius: 50;
+  margin-right: 41px;
 }
