@@ -1,15 +1,32 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import LoginButton from '../components/atoms/buttons/logInButton/LoginButton';
 import '../pages/css/Login.css';
 import EyeVisible from '../assets/icons/eyeVisible_icon.png';
 import EyeInvisible from '../assets/icons/eyeInvisible_icon.png';
 import { useState } from 'react';
+import { useAuth } from '../hooks/auth/useAuth';
 
 export default function Login() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const navigate = useNavigate();
+  const { login } = useAuth();
 
   const showPassword = () => {
     setPasswordVisible(!isPasswordVisible);
+  };
+
+  const handleLogin = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    login(email, password)
+      .then(() => {
+        navigate('/dashboard');
+      })
+      .catch((error) => {
+        console.log('Wystąpił błąd podczas logowania:', error);
+      });
   };
 
   return (
@@ -18,8 +35,8 @@ export default function Login() {
         <div className="login">
           <div className="loginSection">
             <h1>Zaloguj się</h1>
-            <form>
-              <label htmlFor="emial" className="emailLabel">
+            <form onSubmit={handleLogin}>
+              <label htmlFor="email" className="emailLabel">
                 Email
               </label>
               <input
@@ -28,6 +45,8 @@ export default function Login() {
                 name="email"
                 placeholder="Podaj email"
                 className="emailInput"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
 
               <label htmlFor="password" className="passwordLabel">
@@ -40,6 +59,8 @@ export default function Login() {
                   name="password"
                   placeholder="Podaj hasło"
                   className="passwordInput"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 ></input>
                 <img
                   className="imageEye"

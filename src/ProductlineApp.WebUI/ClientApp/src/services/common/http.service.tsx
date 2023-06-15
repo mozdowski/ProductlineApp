@@ -7,19 +7,21 @@ import axios, {
 
 class HttpService {
   private http: AxiosInstance;
+  private authToken: string | undefined;
 
-  constructor() {
+  constructor(authToken: string | undefined) {
     this.http = axios.create({
-      baseURL: 'adres_url', // Zmienic na wartosc z pliku configuracyjnego
+      baseURL: process.env.REACT_APP_API_SERVER_URL,
       headers: {
         'Content-Type': 'application/json',
       },
     });
 
+    this.authToken = authToken;
+
     this.http.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-      const token = 'TUTAJ_TOKEN_BEARER';
-      if (token) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+      if (this.authToken) {
+        config.headers['Authorization'] = `Bearer ${this.authToken}`;
       }
       return config;
     });
@@ -41,11 +43,11 @@ class HttpService {
   }
 
   async get<T>(url: string, config?: AxiosRequestConfig): Promise<T> {
-    return this.http.get<T>(url, config).then((response) => response.data);
+    return this.http.get<T>(url, config).then((response) => response as T);
   }
 
   async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
-    return this.http.post<T>(url, data, config).then((response) => response.data);
+    return this.http.post<T>(url, data, config).then((response) => response as T);
   }
 
   async put<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {

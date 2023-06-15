@@ -17,7 +17,7 @@ export const CollapseProductDetails = ({
         <div className="productConditionSection">
           <h1>Stan: </h1>
           {productRecords.map((product) => (
-            <h2>{product.Quality}</h2>
+            <h2>{product.quality}</h2>
           ))}
         </div>
       </td>

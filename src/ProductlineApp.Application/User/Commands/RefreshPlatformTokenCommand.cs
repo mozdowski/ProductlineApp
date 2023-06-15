@@ -48,7 +48,14 @@ public class RefreshPlatformTokenCommand
 
             var platformId = PlatformId.Create(request.PlatformId);
 
-            user.RefreshAccessTokenForPlatform(platformId, request.AccessToken, request.ExpiresIn);
+            if (string.IsNullOrEmpty(request.RefreshToken))
+            {
+                user.RefreshAccessTokenForPlatform(platformId, request.AccessToken, request.ExpiresIn);
+            }
+            else
+            {
+                user.RefreshAccessTokenForPlatform(platformId, request.AccessToken, request.RefreshToken, request.ExpiresIn);
+            }
 
             await this._userRepository.UpdateUserAsync(user);
 

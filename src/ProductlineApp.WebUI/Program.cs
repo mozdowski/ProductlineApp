@@ -1,13 +1,17 @@
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using ProductlineApp.Application;
 using ProductlineApp.Infrastructure;
 using ProductlineApp.WebUI;
 using ProductlineApp.WebUI.Middlewares;
+using ProductlineApp.WebUI.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddFluentValidation(s =>
+{
+    s.RegisterValidatorsFromAssemblyContaining<LoginRequestValidator>();
+});
 
 builder.Services
     .AddWebUI()
@@ -36,16 +40,23 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseSpa(spa =>
-{
-    spa.Options.SourcePath = "ClientApp";
+// app.UseSpa(spa =>
+// {
+//     spa.Options.SourcePath = "ClientApp";
+//
+//     if (app.Environment.IsDevelopment())
+//     {
+// #pragma warning disable S1075 // URIs should not be hardcoded
+//         spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
+// #pragma warning restore S1075 // URIs should not be hardcoded
+//     }
+// });
 
-    if (app.Environment.IsDevelopment())
-    {
-#pragma warning disable S1075 // URIs should not be hardcoded
-        spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
-#pragma warning restore S1075 // URIs should not be hardcoded
-    }
+app.UseCors(options =>
+{
+    options.AllowAnyOrigin();
+    options.AllowAnyMethod();
+    options.AllowAnyHeader();
 });
 
 app.UseAuthentication();
