@@ -3,12 +3,12 @@ export interface ProductsPage {
 }
 
 export interface ProductsRecord {
-  SKU: string;
-  Brand: string;
-  ProductName: string;
-  Category: string;
-  Price: number;
-  Quantity: number;
-  Status: string;
-  Quality: string;
+  sku: string;
+  brand: string;
+  productName: string;
+  category: string;
+  price: number;
+  quantity: number;
+  status: string;
+  quality: string;
 }

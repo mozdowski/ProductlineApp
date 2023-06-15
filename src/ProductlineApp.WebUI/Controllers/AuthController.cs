@@ -34,7 +34,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Register(LoginRequest request)
+    public async Task<IActionResult> Register([FromBody] LoginRequest request)
     {
         var command = this._mapper.Map<LoginQuery.Query>(request);
         var response = await this._mediator.Send(command);

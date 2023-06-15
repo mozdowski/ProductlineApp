@@ -4,12 +4,15 @@ module.exports = {
     'es2021': true,
     'jest': true
   },
-  'extends': ['eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:storybook/recommended'],
+  'extends': ['prettier', 'eslint:recommended', 'plugin:react/recommended', 'plugin:@typescript-eslint/recommended', 'plugin:react/jsx-runtime'],
   'overrides': [],
   'parser': '@typescript-eslint/parser',
   'parserOptions': {
     'ecmaVersion': 'latest',
-    'sourceType': 'module'
+    'sourceType': 'module',
+    "ecmaFeatures": {
+      "jsx": true
+    }
   },
   'plugins': ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   'rules': {

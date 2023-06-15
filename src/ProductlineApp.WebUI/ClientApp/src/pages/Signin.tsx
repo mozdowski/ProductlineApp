@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../pages/css/Signin.css';
 import EyeVisible from '../assets/icons/eyeVisible_icon.png';
 import EyeInvisible from '../assets/icons/eyeInvisible_icon.png';
@@ -7,9 +7,19 @@ import AddPhotoIcon from '../assets/icons/addPhoto_icon.png';
 import BackButtonImage from '../assets/icons/back_icon.png';
 import React, { useState } from 'react';
 import SigninButton from '../components/atoms/buttons/signInButton/SigninButton';
+import { useAuth } from '../hooks/auth/useAuth';
+import { setegid } from 'process';
 
 export default function Signin() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [passwordRep, setPasswordRep] = useState('');
+
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
   const showPassword = () => {
     setPasswordVisible(!isPasswordVisible);
   };
@@ -19,6 +29,17 @@ export default function Signin() {
     if (!e.target.files) return;
 
     setImage(e.target.files[0]);
+  };
+
+  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    register(username, email, password)
+      .then(() => {
+        navigate('/dashboard');
+      })
+      .catch((error) => {
+        console.log('Wystąpił błąd podczas rejestracji:', error);
+      });
   };
 
   return (
@@ -31,7 +52,7 @@ export default function Signin() {
             </Link>
 
             <h1>Zarejestruj się</h1>
-            <form>
+            <form onSubmit={handleRegister}>
               <div className="avatarField">
                 <img
                   className="avatarUploadedImage"
@@ -59,6 +80,8 @@ export default function Signin() {
                 name="uname"
                 placeholder="Nazwa uzytkownika"
                 className="unameInput"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
               ></input>
 
               <label htmlFor="emial" className="emailLabel">
@@ -70,6 +93,8 @@ export default function Signin() {
                 name="email"
                 placeholder="Email"
                 className="emailInput"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               ></input>
 
               <label htmlFor="password" className="passwordLabel">
@@ -82,6 +107,8 @@ export default function Signin() {
                   name="password"
                   placeholder="Podaj hasło"
                   className="passwordInput"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 ></input>
                 <img
                   className="imageEye"
@@ -100,6 +127,8 @@ export default function Signin() {
                   name="repeatPassword"
                   placeholder="Podaj hasło"
                   className="repeatPasswordInput"
+                  value={passwordRep}
+                  onChange={(e) => setPasswordRep(e.target.value)}
                 ></input>
                 <img
                   className="repeatImageEye"
