@@ -25,10 +25,8 @@ export const ProductsTableBody = ({ productRecords }: { productRecords: Products
         <td>
           <CollapseTableButton isOpen={isOpen} toggle={toggle} />
         </td>
-      </tr>
-      {productRecords.map((product, index) => (
-        <React.Fragment key={index}>
-          <tr className="ProductsTableRow">
+        {productRecords.map((product, index) => (
+          <React.Fragment key={index}>
             <td>{product.sku}</td>
             <td>{product.brand}</td>
             <td>
@@ -47,9 +45,9 @@ export const ProductsTableBody = ({ productRecords }: { productRecords: Products
                 <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" />
               </div>
             </td>
-          </tr>
-        </React.Fragment>
-      ))}
+          </React.Fragment>
+        ))}
+      </tr>
       {isOpen && (
         <React.Fragment key="details">
           <tr className="ProductsTableRow">
