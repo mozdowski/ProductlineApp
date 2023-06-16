@@ -67,4 +67,11 @@ public class PlatformRepository : IPlatformRepository
             .Select(x => x.Id)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<IDictionary<PlatformId, string>> GetPlatformNamesByIdsAsync(IEnumerable<PlatformId> platformIds)
+    {
+        return await this._dbContext.Platforms
+            .Where(x => platformIds.Contains(x.Id))
+            .ToDictionaryAsync(x => x.Id, x => x.Name);
+    }
 }

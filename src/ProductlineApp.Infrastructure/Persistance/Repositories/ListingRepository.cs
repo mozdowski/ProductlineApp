@@ -3,6 +3,7 @@ using ProductlineApp.Domain.Aggregates.Listing;
 using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 
 namespace ProductlineApp.Infrastructure.Persistance.Repositories;
@@ -68,6 +69,34 @@ public class ListingRepository : IListingRepository
             .Where(x => x.PlatformId == platformId)
             .Select(x => x.PlatformListingId)
             .ToListAsync();
+    }
+
+    public async Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId)
+    {
+        return await this._dbContext.Listings
+            .Include(x => x.Instances)
+            .Where(x => x.ProductId == productId)
+            .SelectMany(x => x.Instances)
+            .Select(x => x.PlatformId)
+            .ToListAsync();
+    }
+
+    public async Task<IDictionary<ProductId, IEnumerable<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds)
+    {
+        var dictionary = new Dictionary<ProductId, IEnumerable<PlatformId>>();
+
+        var listings = await this._dbContext.Listings
+            .Where(x => productIds.Contains(x.ProductId))
+            .Include(x => x.Instances)
+            .ToListAsync();
+
+        foreach (var listing in listings)
+        {
+            var platformIds = listing.Instances.Select(instance => instance.PlatformId);
+            dictionary[listing.ProductId] = platformIds;
+        }
+
+        return dictionary;
     }
 
     public async Task<ListingInstance> GetListingInstanceById(ListingInstanceId listingInstanceId)

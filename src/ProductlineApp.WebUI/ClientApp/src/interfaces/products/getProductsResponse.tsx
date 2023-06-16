@@ -1,27 +1,20 @@
+import { Platform } from '../../enums/platform.enum';
+import { ProductCondition } from '../../enums/productCondition';
+
 export interface GetProductsResponse {
   products: ProductDtoResponse[];
 }
 
 interface ProductDtoResponse {
+  sku: string;
   name: string;
-  category: Category;
+  category: string;
   price: number;
   quantity: number;
-  image: Image;
-  brand: Brand;
+  imageUrl: string;
+  brand: string;
+  condition: ProductCondition;
   description: string;
-  gallery: Image[];
-}
-
-interface Category {
-  name: string;
-}
-
-interface Image {
-  name: string;
-  url: string;
-}
-
-interface Brand {
-  name: string;
+  gallery: string[];
+  platforms: Platform[];
 }
