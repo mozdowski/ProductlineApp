@@ -53,7 +53,7 @@ public class ProductlineDbContextFactory : IDesignTimeDbContextFactory<Productli
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProductlineDbContext>();
 
-        optionsBuilder.UseNpgsql("connectionString_here");
+        optionsBuilder.UseNpgsql("Server=productline-db.postgres.database.azure.com;Database=postgres;Port=5432;User Id=productline_admin;Password=Inzynierka*12;Ssl Mode=VerifyCA;Trust Server Certificate=false");
 
         return new ProductlineDbContext(optionsBuilder.Options);
     }

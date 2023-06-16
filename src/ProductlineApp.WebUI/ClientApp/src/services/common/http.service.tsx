@@ -47,6 +47,15 @@ class HttpService {
   }
 
   async post<T>(url: string, data?: any, config?: AxiosRequestConfig): Promise<T> {
+    if (data instanceof FormData) {
+      config = {
+        ...config,
+        headers: {
+          ...config?.headers,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+    }
     return this.http.post<T>(url, data, config).then((response) => response as T);
   }
 
