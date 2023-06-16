@@ -50,11 +50,7 @@ export const ProductsTableBody = ({ productRecords }: { productRecords: Products
       </tr>
       {isOpen && (
         <React.Fragment key="details">
-          <tr className="ProductsTableRow">
-            <td colSpan={8}>
-              <CollapseProductDetails isOpen={isOpen} productRecords={productRecords} />
-            </td>
-          </tr>
+          <CollapseProductDetails isOpen={isOpen} productRecords={productRecords} />
         </React.Fragment>
       )}
     </tbody>
