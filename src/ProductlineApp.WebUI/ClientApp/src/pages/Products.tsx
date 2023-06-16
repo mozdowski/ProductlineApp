@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import ProductsTemplate from '../components/templates/ProductsTemplate';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
+import { mapProductConditionToString } from '../helpers/mappers';
 
 export default function Products() {
   const ref = useRef<HTMLInputElement>(null);
@@ -12,14 +13,17 @@ export default function Products() {
   useEffect(() => {
     productsService.getProductList().then((res) => {
       const productsRecords = res.products.map((product) => ({
-        sku: product.name,
-        brand: product.brand.name,
+        sku: product.sku,
+        brand: product.brand,
         productName: product.name,
-        category: product.category.name,
+        category: product.category,
         price: product.price,
+        imageUrl: product.imageUrl,
         quantity: product.quantity,
-        status: '',
+        condition: mapProductConditionToString(product.condition),
         quality: '',
+        galleryUrls: product.gallery,
+        platforms: product.platforms,
       }));
       setProducts(productsRecords);
     });

@@ -33,14 +33,14 @@ export const ProductsTableBody = ({ productRecords }: { productRecords: Products
             <td>{product.brand}</td>
             <td>
               <div className="productName">
-                <div className="productImage"></div>
+                <img className="productImage" src={product?.imageUrl} alt="product img" />
                 <p>{product.productName}</p>
               </div>
             </td>
             <td>{product.category}</td>
             <td>{product.price} zł</td>
             <td>{product.quantity}</td>
-            <td className="productStatus productExposed">{product.status}</td>
+            <td className="productStatus productExposed">{product.condition}</td>
             <td>
               <div className="productsButtonsAction">
                 <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />

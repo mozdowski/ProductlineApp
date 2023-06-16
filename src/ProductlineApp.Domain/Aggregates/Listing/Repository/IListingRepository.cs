@@ -1,5 +1,6 @@
 using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 
@@ -12,4 +13,8 @@ public interface IListingRepository : IRepository<Listing, ListingId>
     Task<ListingInstance> GetListingInstanceById(ListingId listingId, ListingInstanceId listingInstanceId);
 
     Task<IEnumerable<string>> GetUsersPlatformListingsIds(UserId userId, PlatformId platformId);
+
+    Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId);
+
+    Task<IDictionary<ProductId, IEnumerable<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds);
 }
