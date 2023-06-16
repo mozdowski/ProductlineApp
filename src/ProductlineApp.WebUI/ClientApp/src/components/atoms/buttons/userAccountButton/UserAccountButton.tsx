@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import './css/UserAccountButton.css';
 import { useAuth } from '../../../../hooks/auth/useAuth';
+import UserImage from '../../../../assets/icons/userAvatarImage.jpeg';
 
 function UserAccountButton() {
   const { user } = useAuth();
@@ -13,7 +14,7 @@ function UserAccountButton() {
         <p>{user?.email}</p>
       </div>
       <Link to="/settings" className="goToAccountSettingsLink" id="link">
-        <div className="userImage"></div>
+        <img className="userImage" src={user?.avatar === null ? UserImage : user?.avatar}></img>
       </Link>
     </div>
   );

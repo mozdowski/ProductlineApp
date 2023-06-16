@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductlineApp.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using ProductlineApp.Infrastructure.Persistance;
 namespace ProductlineApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductlineDbContext))]
-    partial class ProductlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230615195331_AddedUserAvTARfIELDch")]
+    partial class AddedUserAvTARfIELDch
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -149,19 +152,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("305c7267-63f1-4565-aa8a-bc9610a441d2"),
-                            CreatedAt = new DateTime(2023, 6, 15, 20, 7, 36, 956, DateTimeKind.Utc).AddTicks(1860),
+                            Id = new Guid("1a33114f-e717-46dd-89d9-61252e42ca26"),
+                            CreatedAt = new DateTime(2023, 6, 15, 19, 53, 31, 289, DateTimeKind.Utc).AddTicks(4480),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 15, 20, 7, 37, 70, DateTimeKind.Utc).AddTicks(7660),
+                            LastModified = new DateTime(2023, 6, 15, 19, 53, 31, 409, DateTimeKind.Utc).AddTicks(8770),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("e1ce4b5b-a8b2-47c4-bb4d-f775d802e47d"),
-                            CreatedAt = new DateTime(2023, 6, 15, 20, 7, 36, 956, DateTimeKind.Utc).AddTicks(1880),
+                            Id = new Guid("f8ed7776-5ad7-4954-b2fe-3c31fbd0987c"),
+                            CreatedAt = new DateTime(2023, 6, 15, 19, 53, 31, 289, DateTimeKind.Utc).AddTicks(4500),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 15, 20, 7, 37, 70, DateTimeKind.Utc).AddTicks(7720),
+                            LastModified = new DateTime(2023, 6, 15, 19, 53, 31, 409, DateTimeKind.Utc).AddTicks(8850),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -171,9 +174,6 @@ namespace ProductlineApp.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("Avatar")
-                        .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -413,6 +413,31 @@ namespace ProductlineApp.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("UserId");
                         });
+
+                    b.OwnsOne("ProductlineApp.Domain.ValueObjects.Image", "Avatar", b1 =>
+                        {
+                            b1.Property<Guid>("UserId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(255)
+                                .HasColumnType("character varying(255)");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("varchar(500)");
+
+                            b1.HasKey("UserId");
+
+                            b1.ToTable("Users");
+
+                            b1.WithOwner()
+                                .HasForeignKey("UserId");
+                        });
+
+                    b.Navigation("Avatar")
+                        .IsRequired();
 
                     b.Navigation("PlatformConnections");
                 });

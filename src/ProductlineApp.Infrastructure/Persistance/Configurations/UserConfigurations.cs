@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ProductlineApp.Domain.Aggregates.User;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+using ProductlineApp.Domain.ValueObjects;
 
 namespace ProductlineApp.Infrastructure.Persistance.Configurations;
 
@@ -40,6 +41,11 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
             builder.Property(e => e.Email)
                 .IsRequired()
                 .HasMaxLength(100);
+
+            builder.Property(p => p.Avatar)
+                .HasConversion(
+                    v => v == null ? null : v.Url.ToString(),
+                    v => string.IsNullOrEmpty(v) ? null : Image.Create(v));
 
             builder.Property(e => e.LastModified)
                 .HasConversion(

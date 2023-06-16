@@ -8,7 +8,7 @@ import BackButtonImage from '../assets/icons/back_icon.png';
 import React, { useState } from 'react';
 import SigninButton from '../components/atoms/buttons/signInButton/SigninButton';
 import { useAuth } from '../hooks/auth/useAuth';
-import { setegid } from 'process';
+import { RegisterRequest } from '../interfaces/auth/registerRequest';
 
 export default function Signin() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
@@ -24,7 +24,7 @@ export default function Signin() {
     setPasswordVisible(!isPasswordVisible);
   };
 
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<File | undefined>(undefined);
   const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
@@ -33,7 +33,15 @@ export default function Signin() {
 
   const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    register(username, email, password)
+
+    const data: RegisterRequest = {
+      username: username,
+      password: password,
+      email: email,
+      avatar: image,
+    };
+
+    register(data)
       .then(() => {
         navigate('/dashboard');
       })
@@ -56,7 +64,7 @@ export default function Signin() {
               <div className="avatarField">
                 <img
                   className="avatarUploadedImage"
-                  src={image === null ? UserImage : URL.createObjectURL(image)}
+                  src={image === undefined ? UserImage : URL.createObjectURL(image)}
                 ></img>
                 <div className="file">
                   <input

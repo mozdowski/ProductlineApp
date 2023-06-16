@@ -21,19 +21,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const register = (username: string, email: string, password: string): Promise<void> => {
-    const requestBody: RegisterRequest = {
-      username: username,
-      email: email,
-      password: password,
-    };
+  const register = (data: RegisterRequest): Promise<void> => {
+    const formData = new FormData();
 
-    return authService.register(requestBody).then((res) => {
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    return authService.register(formData).then((res) => {
       const userResponse: User = {
         id: res.id,
         name: res.username,
         email: res.email,
         authToken: res.token,
+        avatar: res.avatar,
       };
 
       setUser(userResponse);
@@ -53,6 +54,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name: res.username,
         email: res.email,
         authToken: res.token,
+        avatar: res.avatar,
       };
 
       setUser(userResponse);

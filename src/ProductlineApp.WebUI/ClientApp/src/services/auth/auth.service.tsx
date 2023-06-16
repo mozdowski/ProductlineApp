@@ -1,6 +1,5 @@
 import { AuthenticationResult } from '../../interfaces/auth/authenticationResult';
 import { LoginRequest } from '../../interfaces/auth/loginRequest';
-import { RegisterRequest } from '../../interfaces/auth/registerRequest';
 import HttpService from '../common/http.service';
 
 export class AuthService {
@@ -14,7 +13,7 @@ export class AuthService {
     return this.httpService.post<AuthenticationResult>('/auth/login', request);
   }
 
-  public async register(request: RegisterRequest): Promise<AuthenticationResult> {
+  public async register(request: FormData): Promise<AuthenticationResult> {
     return this.httpService.post<AuthenticationResult>('/auth/register', request);
   }
 }

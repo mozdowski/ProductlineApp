@@ -58,7 +58,8 @@ public class LoginQuery
                 user.Id.Value,
                 user.Username,
                 user.Email,
-                token);
+                token,
+                user.Avatar?.Url.ToString());
         }
     }
 }
