@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { CollapseTableButton } from '../../../atoms/buttons/collapseTableButton/CollapseTableButton';
 import { CollapseAuctionDetails } from './CollapseAuctionDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
@@ -27,21 +27,21 @@ export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: Auctions
             <CollapseTableButton isOpen={isOpen} toggle={toggle} />
           </td>
           {auctionRecords.map((auction, key) => (
-            <>
-              <td key={key}>{auction.auctionID}</td>
-              <td>{auction.sku}</td>
-              <td>{auction.brand}</td>
+            <React.Fragment key={key}>
+              <td>{auction?.auctionID}</td>
+              <td>{auction?.sku}</td>
+              <td>{auction?.brand}</td>
               <td>
                 <div className="productName">
-                  <div className="productImage"></div>
-                  <p>{auction.productName}</p>
+                  <img className="productImage" src={auction?.productImageUrl}></img>
+                  <p>{auction?.productName}</p>
                 </div>
               </td>
-              <td>{auction.category}</td>
-              <td>{auction.price} zł</td>
-              <td>{auction.quantity}</td>
-              <td>{auction.daysToEnd}</td>
-            </>
+              <td>{auction?.category}</td>
+              <td>{auction?.price} zł</td>
+              <td>{auction?.quantity}</td>
+              <td>{auction?.daysToEnd ? auction?.daysToEnd : '-'}</td>
+            </React.Fragment>
           ))}
           <td>
             <div className="auctionsButtonsAction">

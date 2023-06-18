@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
 import EbayIcon from '../../../../assets/icons/ebay_icon1.svg';
 import './css/ebayAuctionsButton.css';
+import { PlatformEnum } from '../../../../enums/platform.enum';
 
 function EbayAuctionsButton({
-  isSelectedAuctionPortal,
+  selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   id,
 }: {
-  isSelectedAuctionPortal: any;
+  selectedAuctionPortal: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
-  id: string;
+  id: PlatformEnum;
 }) {
   return (
     <div
-      id={id}
-      className={isSelectedAuctionPortal === 'ebay' ? 'ebayButton selected' : 'ebayButton'}
-      onClick={handleClickTypeAuctionPortalButton}
+      id={id + ''}
+      className={selectedAuctionPortal === PlatformEnum.EBAY ? 'ebayButton selected' : 'ebayButton'}
+      onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.EBAY)}
     >
       <img className="ebayIcon" src={EbayIcon} />
     </div>

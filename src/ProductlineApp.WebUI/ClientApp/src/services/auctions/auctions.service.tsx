@@ -16,6 +16,10 @@ export class AuctionsService {
   public async getPlatformsWithListings(): Promise<GetPlatformsResponse> {
     return this.httpService.get<GetPlatformsResponse>('/listings/getPlatformsWithListings');
   }
+
+  public async getPlatforms(): Promise<GetPlatformsResponse> {
+    return this.httpService.get<GetPlatformsResponse>('/platforms/getAllAvailable');
+  }
 }
 
 export {};

@@ -3,11 +3,18 @@ import { useEffect, useState } from 'react';
 import { AuctionsRecord } from '../interfaces/auctions/AuctionsPageInteface';
 import { useAuctionsService } from '../hooks/auctions/useAuctionsService';
 import { Platform } from '../interfaces/platforms/platform';
+import { PlatformEnum } from '../enums/platform.enum';
 
 export default function Auctions() {
-  const [isSelectedAuctionPortal, setIsSelectedAuctionPortal] = useState('');
-  const handleClickTypeAuctionPortalButton = (e: any) => {
-    setIsSelectedAuctionPortal(e.target.id);
+  const [selectedAuctionPortal, setSelectedAuctionPortal] = useState<Platform | null>(null);
+
+  const handleClickTypeAuctionPortalButton = (platformName: PlatformEnum) => {
+    setSelectedAuctionPortal(
+      Object.assign(
+        {},
+        platforms?.find((p) => p.name === platformName),
+      ),
+    );
   };
 
   const [isSelectedTypeAuctions, SetisSelectedTypeAuctions] = useState('');
@@ -16,23 +23,26 @@ export default function Auctions() {
   };
 
   const [platforms, setPlatforms] = useState<Platform[] | null>(null);
-  const [selectedPlatform, setSelectedPlatform] = useState<Platform | null>(null);
 
   const { auctionsService } = useAuctionsService();
   const [auctions, setAuctions] = useState<AuctionsRecord[]>([]);
 
   useEffect(() => {
-    const fetchPlatformData = async () => {
-      if (!selectedPlatform) {
-        const res = await auctionsService.getPlatformsWithListings();
+    if (!platforms) {
+      auctionsService.getPlatforms().then((res) => {
         if (res.platforms.length > 0) {
           setPlatforms(res.platforms);
-          setSelectedPlatform(res.platforms[0]);
+          setSelectedAuctionPortal(
+            res.platforms.find((p) => p.name === PlatformEnum.EBAY) as Platform,
+          );
         }
-      }
+      });
+    }
+  }, [platforms]);
 
-      if (selectedPlatform) {
-        const res = await auctionsService.getPlatformAuctionsList(selectedPlatform.id);
+  useEffect(() => {
+    if (selectedAuctionPortal) {
+      auctionsService.getPlatformAuctionsList(selectedAuctionPortal.id).then((res) => {
         const auctionsRecords: AuctionsRecord[] = res.listings.map((auction) => ({
           auctionID: auction.listingId,
           sku: auction.sku,
@@ -42,18 +52,17 @@ export default function Auctions() {
           price: auction.price,
           quantity: auction.quantity,
           daysToEnd: auction.daysToExpire,
+          productImageUrl: auction.productImageUrl,
         }));
         setAuctions(auctionsRecords);
-      }
-    };
-
-    fetchPlatformData();
-  }, [selectedPlatform]);
+      });
+    }
+  }, [selectedAuctionPortal]);
 
   return (
     <AuctionsTemplate
       auctionRecords={auctions}
-      isSelectedAuctionPortal={isSelectedAuctionPortal}
+      selectedAuctionPortal={selectedAuctionPortal ? selectedAuctionPortal.name : PlatformEnum.EBAY}
       handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
       isSelectedTypeAuctions={isSelectedTypeAuctions}
       handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}

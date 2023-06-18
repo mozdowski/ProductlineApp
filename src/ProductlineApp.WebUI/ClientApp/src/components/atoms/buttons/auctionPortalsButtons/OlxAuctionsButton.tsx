@@ -1,21 +1,21 @@
-import React, { useState } from 'react';
 import OlxIcon from '../../../../assets/icons/olx_icon1.svg';
 import './css/olxAuctionsButton.css';
+import { PlatformEnum } from '../../../../enums/platform.enum';
 
 function OlxAuctionsButton({
-  isSelectedAuctionPortal,
+  selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   id,
 }: {
-  isSelectedAuctionPortal: any;
+  selectedAuctionPortal: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
-  id: string;
+  id: PlatformEnum;
 }) {
   return (
     <div
-      id={id}
-      className={isSelectedAuctionPortal === 'olx' ? 'olxButton selected' : 'olxButton'}
-      onClick={handleClickTypeAuctionPortalButton}
+      id={id + ''}
+      className={selectedAuctionPortal === PlatformEnum.OLX ? 'olxButton selected' : 'olxButton'}
+      onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.OLX)}
     >
       <img className="olxIcon" src={OlxIcon} />
     </div>

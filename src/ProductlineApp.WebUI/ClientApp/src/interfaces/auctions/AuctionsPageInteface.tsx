@@ -11,4 +11,5 @@ export interface AuctionsRecord {
   price: number;
   quantity: number;
   daysToEnd: number | undefined;
+  productImageUrl: string;
 }
