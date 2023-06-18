@@ -69,7 +69,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   };
 
   const isAuthenticated = () => {
-    if (user?.authToken == null) {
+    if (user?.authToken == undefined) {
       return false;
     }
 

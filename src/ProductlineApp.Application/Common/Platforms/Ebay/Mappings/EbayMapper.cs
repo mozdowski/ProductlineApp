@@ -50,7 +50,7 @@ public class EbayMapper : Profile
             .ForMember(x => x.Title, opt => opt.Ignore())
             .ForMember(x => x.Price, opt => opt.MapFrom(x => decimal.Parse(x.PricingSummary.Price.Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture)))
             .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.AvailableQuantity))
-            .ForMember(x => x.ListingId, opt => opt.MapFrom(x => x.OfferId))
+            .ForMember(x => x.ListingId, opt => opt.MapFrom(x => x.Listing.ListingId))
             .ForMember(x => x.Description, opt => opt.MapFrom(x => x.ListingDescription))
             .ForMember(x => x.PlatformListingUrl, opt => opt.Ignore())
             .ForMember(x => x.IsActive, opt => opt.MapFrom(x => x.Status == "PUBLISHED" && x.Listing.ListingStatus == "ACTIVE"))
@@ -59,7 +59,7 @@ public class EbayMapper : Profile
             .ForMember(x => x.DaysToExpire, opt => opt.Ignore())
             .ForMember(x => x.ProductId, opt => opt.Ignore())
             .ForMember(x => x.ProductName, opt => opt.Ignore())
-            .ForMember(x => x.ProductImage, opt => opt.Ignore());
+            .ForMember(x => x.ProductImageUrl, opt => opt.Ignore());
 
         // this.CreateMap<Product, ListingDtoResponse>()
         //     .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Name))

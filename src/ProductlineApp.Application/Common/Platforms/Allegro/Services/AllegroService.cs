@@ -132,8 +132,9 @@ public class AllegroService : IAllegroService
             }
 
             mappedOffer.ProductName = product.Name;
-            mappedOffer.ProductImage = product.Image;
+            mappedOffer.ProductImageUrl = product.Image.Url.ToString();
             mappedOffer.Sku = product.Sku;
+            mappedOffer.Brand = product.Brand.Name;
 
             result.Add(mappedOffer);
         }

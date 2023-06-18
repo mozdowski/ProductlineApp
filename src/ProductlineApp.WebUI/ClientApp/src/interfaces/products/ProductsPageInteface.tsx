@@ -1,4 +1,4 @@
-import { Platform } from '../../enums/platform.enum';
+import { PlatformEnum } from '../../enums/platform.enum';
 
 export interface ProductsPage {
   productsTableRecords: ProductsRecord[];
@@ -15,5 +15,5 @@ export interface ProductsRecord {
   condition: string;
   quality: string;
   galleryUrls: string[];
-  platforms: Platform[];
+  platforms: PlatformEnum[];
 }

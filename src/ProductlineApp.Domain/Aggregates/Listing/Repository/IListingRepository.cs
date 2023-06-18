@@ -1,6 +1,7 @@
 using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
+using ProductlineApp.Domain.Aggregates.User.Entities;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 
@@ -17,4 +18,6 @@ public interface IListingRepository : IRepository<Listing, ListingId>
     Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId);
 
     Task<IDictionary<ProductId, IEnumerable<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds);
+
+    Task<IEnumerable<PlatformId>> GetPlatformsUserHasListingsOn(UserId userId);
 }

@@ -4,6 +4,7 @@ using ProductlineApp.Domain.Aggregates.Listing.Entities;
 using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
+using ProductlineApp.Domain.Aggregates.User.Entities;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 
 namespace ProductlineApp.Infrastructure.Persistance.Repositories;
@@ -97,6 +98,15 @@ public class ListingRepository : IListingRepository
         }
 
         return dictionary;
+    }
+
+    public async Task<IEnumerable<PlatformId>> GetPlatformsUserHasListingsOn(UserId userId)
+    {
+        return await this._dbContext.Listings
+        .Where(x => x.OwnerId == userId)
+        .SelectMany(x => x.Instances)
+        .Select(x => x.PlatformId)
+        .ToListAsync();
     }
 
     public async Task<ListingInstance> GetListingInstanceById(ListingInstanceId listingInstanceId)
