@@ -12,6 +12,7 @@ import Orders from '../../pages/Orders';
 import Auctions from '../../pages/Auctions';
 import Logout from '../../pages/Logout';
 import Settings from '../../pages/Settings';
+import { AuctionsProvider } from '../../providers/auctionsProvider';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -66,7 +67,9 @@ const RoutingWrapper = () => {
           path="/auctions"
           element={
             <ProtectedRoute>
-              <Auctions />
+              <AuctionsProvider>
+                <Auctions />
+              </AuctionsProvider>
             </ProtectedRoute>
           }
         ></Route>

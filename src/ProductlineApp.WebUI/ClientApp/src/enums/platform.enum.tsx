@@ -1,4 +1,4 @@
-export enum Platform {
+export enum PlatformEnum {
   ALLEGRO = 0,
   EBAY,
 }

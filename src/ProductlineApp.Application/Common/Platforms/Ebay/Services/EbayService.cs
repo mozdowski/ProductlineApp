@@ -151,7 +151,8 @@ public class EbayService : IEbayService
 
             mappedOffer.ProductId = product.Id.Value;
             mappedOffer.ProductName = product.Name;
-            mappedOffer.ProductImage = product.Image;
+            mappedOffer.ProductImageUrl = product.Image.Url.ToString();
+            mappedOffer.Brand = product.Brand.Name;
 
             result.Add(mappedOffer);
         }

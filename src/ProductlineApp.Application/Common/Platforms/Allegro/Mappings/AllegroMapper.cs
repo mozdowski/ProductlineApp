@@ -77,7 +77,7 @@ public class AllegroMapper : Profile
             .ForMember(dest => dest.PlatformListingUrl, opt => opt.Ignore())
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.External.Id) ? Guid.Empty : Guid.Parse(src.External.Id)))
             .ForMember(dest => dest.Sku, opt => opt.Ignore())
-            .ForMember(dest => dest.ProductImage, opt => opt.MapFrom(src => Image.Create(src.PrimaryImage.Url)))
+            .ForMember(dest => dest.ProductImageUrl, opt => opt.MapFrom(src => src.PrimaryImage.Url))
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
             .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.SellingMode.Price.Amount))

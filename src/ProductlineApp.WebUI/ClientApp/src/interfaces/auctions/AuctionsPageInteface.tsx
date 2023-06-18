@@ -3,12 +3,12 @@ export interface AuctionsPage {
 }
 
 export interface AuctionsRecord {
-  AuctionID: number;
-  SKU: string;
-  Brand: string;
-  ProductName: string;
-  Category: string;
-  Price: number;
-  Quantity: number;
-  DaysToEnd: number;
+  auctionID: string;
+  sku: string;
+  brand: string;
+  productName: string;
+  category: string;
+  price: number;
+  quantity: number;
+  daysToEnd: number | undefined;
 }

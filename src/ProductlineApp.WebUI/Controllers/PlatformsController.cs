@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Common.Platforms;
+using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.WebUI.DTO.Platforms;
 
 namespace ProductlineApp.WebUI.Controllers;
@@ -45,6 +46,9 @@ public class PlatformsController : ControllerBase
         var platformService = this._platformServiceDispatcher.Dispatch(platformId);
         var listings = await platformService.GetListingsAsync();
 
-        return this.Ok(listings);
+        return this.Ok(new GetListingsResponse()
+        {
+            Listings = listings,
+        });
     }
 }

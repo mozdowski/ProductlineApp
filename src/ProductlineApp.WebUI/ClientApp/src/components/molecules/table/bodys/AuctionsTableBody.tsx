@@ -28,19 +28,19 @@ export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: Auctions
           </td>
           {auctionRecords.map((auction, key) => (
             <>
-              <td key={key}>{auction.AuctionID}</td>
-              <td>{auction.SKU}</td>
-              <td>{auction.Brand}</td>
+              <td key={key}>{auction.auctionID}</td>
+              <td>{auction.sku}</td>
+              <td>{auction.brand}</td>
               <td>
                 <div className="productName">
                   <div className="productImage"></div>
-                  <p>{auction.ProductName}</p>
+                  <p>{auction.productName}</p>
                 </div>
               </td>
-              <td>{auction.Category}</td>
-              <td>{auction.Price} zł</td>
-              <td>{auction.Quantity}</td>
-              <td>{auction.DaysToEnd}</td>
+              <td>{auction.category}</td>
+              <td>{auction.price} zł</td>
+              <td>{auction.quantity}</td>
+              <td>{auction.daysToEnd}</td>
             </>
           ))}
           <td>

@@ -59,7 +59,7 @@ public class EbayMapper : Profile
             .ForMember(x => x.DaysToExpire, opt => opt.Ignore())
             .ForMember(x => x.ProductId, opt => opt.Ignore())
             .ForMember(x => x.ProductName, opt => opt.Ignore())
-            .ForMember(x => x.ProductImage, opt => opt.Ignore());
+            .ForMember(x => x.ProductImageUrl, opt => opt.Ignore());
 
         // this.CreateMap<Product, ListingDtoResponse>()
         //     .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Name))
