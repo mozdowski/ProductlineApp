@@ -2,7 +2,7 @@ import "./css/changePersonalDataButton.css"
 
 function ChangePersonalDataButton() {
     return (
-        <div className="ChangePersonalDataButton">
+        <div className="changePersonalDataButton">
             <p>Zmień swoje dane</p>
         </div>
     );

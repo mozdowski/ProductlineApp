@@ -11,6 +11,12 @@
     border: 1px solid var(--first-color);
 }
 
+.changeProfilePhotoButton .profilePhoto {
+    height: 35px;
+    width: 175px;
+    cursor: pointer;
+}
+
 .changeProfilePhotoButton p {
     color: var(--first-color);
     font-family: var(--body-font);
@@ -24,4 +30,13 @@
 
 .changeProfilePhotoButton:hover p {
     color: var(--purple-button-hover);
+}
+
+.changeProfilePhotoButton input[type="file"] {
+    position: absolute;
+    opacity: 0;
+}
+
+input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
 }

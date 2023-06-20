@@ -6,7 +6,9 @@ function ChangeProfilePhotoSection({ image, showImage, UserImage }: { image: any
     return (
         <>
             <div className="changeProfilePhotoSection">
-                <img className="uploadedImage" src={image === null ? UserImage : URL.createObjectURL(image)}></img >
+                <div className="profileImage">
+                    <img className="uploadedImage" src={image === null ? UserImage : URL.createObjectURL(image)}></img >
+                </div>
                 <ChangeProfilePhotoButton showImage={showImage} />
             </div>
         </>

@@ -11,13 +11,12 @@
     text-align: center;
     display: flex;
     align-items: center;
-}
-
-.loginButton p {
     color: var(--white-color);
     font-family: var(--body-font);
     font-size: 16px;
     font-weight: 600;
+    border: 0px;
+    cursor: pointer;
 }
 
 .loginButton:hover {

@@ -13,6 +13,7 @@ import Login from './pages/Login';
 import { Outlet } from "react-router-dom"
 import Signin from './pages/Signin';
 import Forgotpassword from "./pages/Forgotpassword";
+import AddProduct from './pages/AddProduct';
 
 function App() {
 
@@ -38,7 +39,7 @@ function App() {
           <Route path='/dashboard' element={<Dashboard />}></Route>
 
           <Route path='/products' element={<Products />}></Route>
-          <Route path='/products/add' element={""}></Route>
+          <Route path='/products/add' element={<AddProduct />}></Route>
           <Route path='/products/edit' element={""}></Route>
 
           <Route path='/auctions' element={<Auctions />}></Route>

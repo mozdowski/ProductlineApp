@@ -49,7 +49,7 @@ function CustomLink({ to, children, image, ...props }: { to: string, children: s
     return (
         <li className={isActive ? "nav__link active" : "nav__link"} id="nav__link">
             <Link to={to} className="link" id="link" {...props}>
-                <img id="image" src={image} />
+                <img id="image" className="sidebrIcons" src={image} />
                 <span className="nav__name">{children}</span>
             </Link>
         </li>

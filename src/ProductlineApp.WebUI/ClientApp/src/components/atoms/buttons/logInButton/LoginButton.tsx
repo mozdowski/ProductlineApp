@@ -5,9 +5,7 @@ import './css/LoginButton.css';
 function LoginButton() {
     return (
         <Link to="/dashboard" className="loginButtonLink" id="link">
-            <div className="loginButton">
-                <p>Zaloguj</p>
-            </div>
+            <input type="submit" className="loginButton" value="Zaloguj" />
         </Link>
     );
 }

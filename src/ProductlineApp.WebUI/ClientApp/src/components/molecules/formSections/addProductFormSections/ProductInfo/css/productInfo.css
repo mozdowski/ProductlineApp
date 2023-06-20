@@ -1,0 +1,72 @@
+.productInfo {
+    width: 50%;
+    margin-right: 70px;
+}
+
+.productInfo .sectionLabel {
+    align-items: center;
+    display: flex;
+}
+
+.productInfo .sectionLabel .sectionNumber {
+    background-color: var(--first-color);
+    border-radius: 50px;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.productInfo .sectionLabel .sectionNumber h1 {
+    font-size: 14px;
+    color: var(--white-color);
+    font-family: var(--body-font);
+    font-weight: 600;
+}
+
+.productInfo .sectionLabel p {
+    font-size: 16px;
+    font-family: var(--body-font);
+    font-weight: 600;
+    margin-left: 18px;
+}
+
+
+
+
+
+.productInfo .addProductInputs .firsLineInputs {
+    margin-top: 38px;
+    margin-left: 54px;
+    align-items: center;
+    display: flex;
+}
+
+
+
+
+
+.productInfo .addProductInputs .secondLineInputs {
+    margin-top: 40px;
+    margin-left: 54px;
+    align-items: center;
+    display: flex;
+}
+
+
+
+
+.productInfo .addProductInputs .thirdLineInputs {
+    margin-top: 40px;
+    margin-left: 54px;
+    align-items: center;
+    display: flex;
+}
+
+
+
+.productInfo .addProductInputs .textAreaProductDescription {
+    margin-top: 40px;
+    margin-left: 54px;
+}
