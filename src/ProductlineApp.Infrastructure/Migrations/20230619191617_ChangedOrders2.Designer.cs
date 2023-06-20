@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductlineApp.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using ProductlineApp.Infrastructure.Persistance;
 namespace ProductlineApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductlineDbContext))]
-    partial class ProductlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230619191617_ChangedOrders2")]
+    partial class ChangedOrders2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -77,15 +80,6 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.Property<string>("CreatedBy")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("DeliveryCost")
-                        .HasColumnType("numeric");
-
-                    b.Property<DateTime>("DeliveryDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("IsPaid")
-                        .HasColumnType("boolean");
-
                     b.Property<DateTime?>("LastModified")
                         .HasColumnType("timestamp with time zone");
 
@@ -94,9 +88,6 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                     b.Property<Guid>("OwnerId")
                         .HasColumnType("uuid");
-
-                    b.Property<DateTime>("PlacedAt")
-                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid>("PlatformId")
                         .HasColumnType("uuid");
@@ -109,9 +100,6 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.Property<string>("Status")
                         .IsRequired()
                         .HasColumnType("text");
-
-                    b.Property<decimal>("SubtotalPrice")
-                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -201,19 +189,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("242bae2b-9c50-4ac7-883a-90ed9606667e"),
-                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5140),
+                            Id = new Guid("ae194948-df4f-4fed-9431-7fc701e65a69"),
+                            CreatedAt = new DateTime(2023, 6, 19, 19, 16, 17, 288, DateTimeKind.Utc).AddTicks(7910),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7620),
+                            LastModified = new DateTime(2023, 6, 19, 19, 16, 17, 406, DateTimeKind.Utc).AddTicks(2350),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("0847775c-ba55-4318-8065-042546b9ca43"),
-                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5170),
+                            Id = new Guid("954dff22-70de-4cbc-b002-ee632c9c7e88"),
+                            CreatedAt = new DateTime(2023, 6, 19, 19, 16, 17, 288, DateTimeKind.Utc).AddTicks(7930),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7690),
+                            LastModified = new DateTime(2023, 6, 19, 19, 16, 17, 406, DateTimeKind.Utc).AddTicks(2420),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -377,11 +365,6 @@ namespace ProductlineApp.Infrastructure.Migrations
                             b1.Property<string>("LastModifiedBy")
                                 .HasColumnType("text");
 
-                            b1.Property<string>("Name")
-                                .IsRequired()
-                                .HasMaxLength(100)
-                                .HasColumnType("character varying(100)");
-
                             b1.Property<Guid>("OrderId")
                                 .HasColumnType("uuid");
 
@@ -422,11 +405,13 @@ namespace ProductlineApp.Infrastructure.Migrations
                                 .HasColumnName("BillingAddress_Address");
 
                             b1.Property<string>("Email")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("BillingAddress_Email");
 
                             b1.Property<string>("FirstName")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("BillingAddress_Firstname");
@@ -437,11 +422,13 @@ namespace ProductlineApp.Infrastructure.Migrations
                                 .HasColumnName("BillingAddress_Lastname");
 
                             b1.Property<string>("PhoneNumber")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("BillingAddress_Phone");
 
                             b1.Property<string>("Username")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("BillingAddress_Username");
@@ -469,6 +456,7 @@ namespace ProductlineApp.Infrastructure.Migrations
                                 .HasColumnType("text");
 
                             b1.Property<string>("FirstName")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("ShippingAddress_Firstname");
@@ -479,6 +467,7 @@ namespace ProductlineApp.Infrastructure.Migrations
                                 .HasColumnName("ShippingAddress_Lastname");
 
                             b1.Property<string>("PhoneNumber")
+                                .IsRequired()
                                 .HasMaxLength(100)
                                 .HasColumnType("character varying(100)")
                                 .HasColumnName("ShippingAddress_Phone");

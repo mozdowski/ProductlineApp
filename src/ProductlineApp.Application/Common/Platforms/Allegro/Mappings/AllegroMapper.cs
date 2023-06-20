@@ -2,8 +2,10 @@ using AutoMapper;
 using ProductlineApp.Application.Common.Platforms.Allegro.DTO;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.Order.DTO;
+using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
 using ProductlineApp.Domain.Enums;
 using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Enums;
 using ProductlineApp.Shared.Models.Allegro;
 using Address = ProductlineApp.Domain.ValueObjects.Address;
 
@@ -24,12 +26,23 @@ public class AllegroMapper : Profile
         this.CreateMap<CheckoutForm, OrderDtoResponse>()
             .ForMember(dest => dest.OrderId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.CreationDate, opt => opt.MapFrom(src => src.LineItems.First().BoughtAt))
-            .ForMember(dest => dest.MaxDeliveryDate, opt => opt.MapFrom(src => DateTime.Parse(src.Delivery.Time.Guaranteed.To)))
-            .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => $"{src.Buyer.FirstName} {src.Buyer.LastName}"))
-            .ForMember(dest => dest.CustomerEmail, opt => opt.MapFrom(src => src.Buyer.Email))
-            .ForMember(dest => dest.CustomerPhoneNumber, opt => opt.MapFrom(src => src.Buyer.PhoneNumber))
-            .ForMember(dest => dest.CustomerAddress, opt => opt.MapFrom(src => src.Buyer.Address))
-            .ForMember(dest => dest.ShippingAddress, opt => opt.MapFrom(src => src.Delivery.Address))
+            .ForMember(dest => dest.MaxDeliveryDate, opt => opt.MapFrom(src => src.Delivery.Time.Guaranteed == null ? DateTime.Now : DateTime.Parse(src.Delivery.Time.Guaranteed.To)))
+            .ForMember(dest => dest.BillingAddress, opt => opt.MapFrom(src => new BillingAddress()
+            {
+                FirstName = src.Buyer.FirstName,
+                LastName = src.Buyer.LastName,
+                Username = src.Buyer.Login,
+                Email = src.Buyer.Email,
+                PhoneNumber = src.Buyer.PhoneNumber ?? string.Empty,
+                Address = new Address(src.Buyer.Address.Street, src.Buyer.Address.PostCode, src.Buyer.Address.City, src.Buyer.Address.CountryCode),
+            }))
+            .ForMember(dest => dest.ShippingAddress, opt => opt.MapFrom(src => new ShippingAddress()
+            {
+                FirstName = src.Delivery.Address.FirstName,
+                LastName = src.Delivery.Address.LastName ?? string.Empty,
+                CompanyName = src.Delivery.Address.CompanyName ?? string.Empty,
+                Address = new Address(src.Delivery.Address.Street, src.Delivery.Address.ZipCode, src.Delivery.Address.City, src.Delivery.Address.CountryCode),
+            }))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Summary.TotalToPay.Amount))
             .ForMember(dest => dest.SubtotalPrice, opt => opt.MapFrom(src => src.Summary.TotalToPay.Amount - src.Delivery.Cost.Amount))
             .ForMember(dest => dest.DeliveryCost, opt => opt.MapFrom(src => src.Delivery.Cost.Amount))
@@ -37,6 +50,8 @@ public class AllegroMapper : Profile
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => MapToOrderStatus(src.Status, src.Fulfillment.Status)))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.LineItems))
             .ForMember(dest => dest.IsFulfilled, opt => opt.MapFrom(src => src.Fulfillment.Status == FullfilmentStatus.PICKED_UP.ToString()))
+            .ForMember(dest => dest.Platform, opt => opt.MapFrom(src => PlatformNames.ALLEGRO))
+            .ForMember(dest => dest.PlatformOrderId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.IsPaid, opt => opt.MapFrom(src => src.Payment.PaidAmount.Amount == src.Summary.TotalToPay.Amount));
 
         this.CreateMap<LineItem, OrderItemDto>()
@@ -44,6 +59,7 @@ public class AllegroMapper : Profile
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Offer.Name))
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
             .ForMember(dest => dest.UnitPrice, opt => opt.MapFrom(src => src.Price.Amount))
+            .ForMember(dest => dest.Sku, opt => opt.MapFrom(src => src.Offer.External == null ? string.Empty : src.Offer.External.Id))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => src.Reconciliation.Value.Amount * src.Quantity));
 
         this.CreateMap<Shared.Models.Allegro.Address, Address>()

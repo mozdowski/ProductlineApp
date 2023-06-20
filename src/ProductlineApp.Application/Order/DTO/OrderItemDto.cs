@@ -10,9 +10,9 @@ public class OrderItemDto
 
     public decimal UnitPrice { get; set; }
 
-    public string Quantity { get; set; }
+    public int Quantity { get; set; }
 
-    public decimal DeliveryCost { get; set; }
+    public decimal? DeliveryCost { get; set; }
 
     public decimal TotalPrice { get; set; }
 

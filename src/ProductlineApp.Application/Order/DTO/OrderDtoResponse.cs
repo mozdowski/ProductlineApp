@@ -1,26 +1,23 @@
 ﻿using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
 using ProductlineApp.Domain.Enums;
 using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Enums;
 
 namespace ProductlineApp.Application.Order.DTO
 {
     public class OrderDtoResponse
     {
-        public string OrderId { get; set; }
+        public Guid OrderId { get; set; }
+
+        public string PlatformOrderId { get; set; }
 
         public DateTime CreationDate { get; set; }
 
         public DateTime? MaxDeliveryDate { get; set; }
 
-        public string CustomerName { get; set; }
+        public ShippingAddress ShippingAddress { get; set; }
 
-        public string CustomerEmail { get; set; }
-
-        public string CustomerPhoneNumber { get; set; }
-
-        public Address CustomerAddress { get; set; }
-
-        public Address ShippingAddress { get; set; }
+        public BillingAddress BillingAddress { get; set; }
 
         public decimal TotalPrice { get; set; }
 
@@ -37,5 +34,7 @@ namespace ProductlineApp.Application.Order.DTO
         public bool IsFulfilled { get; set; }
 
         public bool IsPaid { get; set; }
+
+        public PlatformNames Platform { get; set; }
     }
 }

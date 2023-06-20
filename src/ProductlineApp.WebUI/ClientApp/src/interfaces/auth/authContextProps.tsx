@@ -6,7 +6,6 @@ export interface AuthContextProps {
   register: (data: RegisterRequest) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
-  isAuthenticated: () => boolean;
 }
 
 export {};

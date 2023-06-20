@@ -74,25 +74,29 @@ public class AllegroApiClient : IAllegroApiClient
 
     public async Task<AllegroTokenResponse> GetRefreshTokenAsync(string refreshToken)
     {
-        var request = new RestRequest(this._allegroConfiguration.OAuth2TokenUri, Method.Post)
+        var authHeader = new AuthenticationHeaderValue(
+            "Basic",
+            Convert.ToBase64String(
+                System.Text.Encoding.UTF8.GetBytes(
+                    $"{this._allegroConfiguration.ClientId}:{this._allegroConfiguration.ClientSecret}")));
+
+        var requestContent = new FormUrlEncodedContent(new[]
         {
-            Authenticator = new HttpBasicAuthenticator(
-                this._allegroConfiguration.ClientId,
-                this._allegroConfiguration.ClientSecret),
-        };
+            new KeyValuePair<string, string>("grant_type", "refresh_token"),
+            new KeyValuePair<string, string>("refresh_token", refreshToken),
+            new KeyValuePair<string, string>("redirect_uri", this._allegroConfiguration.RedirectUri),
+        });
 
-        request.AddParameter("grant_type", "refresh_token");
-        request.AddParameter("refresh_token", refreshToken);
-        request.AddParameter("redirect_uri", this._allegroConfiguration.RedirectUri);
+        this._httpClient.DefaultRequestHeaders.Authorization = authHeader;
+        var response = await this._httpClient.PostAsync(this._allegroConfiguration.OAuth2TokenUri, requestContent);
 
-        var response = await this._restClient.ExecuteAsync<AllegroTokenResponse>(request);
-
-        if (response.StatusCode != HttpStatusCode.OK)
+        if (!response.IsSuccessStatusCode)
         {
             throw new Exception($"Failed to refresh token: {response.StatusCode}");
         }
 
-        return response.Data;
+        var responseContent = await response.Content.ReadAsStringAsync();
+        return JsonConvert.DeserializeObject<AllegroTokenResponse>(responseContent);
     }
 
     public async Task<AllegroOrdersResponse> GetOrdersAsync(string accessToken, int offset = 0, int limit = 100, string status = null, string fulfillmentStatus = null,

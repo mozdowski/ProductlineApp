@@ -1,6 +1,4 @@
-using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 
 namespace ProductlineApp.Domain.Aggregates.Order.Entities;
@@ -12,29 +10,29 @@ public class OrderLine : Entity<OrderLineId>
 
     private OrderLine(
         OrderLineId id,
+        string sku,
         string platformListingId,
-        ListingInstanceId? listingInstanceId,
-        OrderId orderId,
-        ProductId? productId,
         int quantity,
-        decimal price)
+        decimal price,
+        string name)
         : base(id)
     {
-        this.ListingInstanceId = listingInstanceId;
-        this.OrderId = orderId;
-        this.ProductId = productId;
         this.Quantity = quantity;
         this.Price = price;
         this.PlatformListingId = platformListingId;
+        this.Sku = sku;
+        this.Name = name;
+    }
+
+    public OrderLine()
+    {
     }
 
     public string PlatformListingId { get; set; }
 
-    public ListingInstanceId? ListingInstanceId { get; private set; }
+    public string Sku { get; private set; }
 
-    public OrderId OrderId { get; private set; }
-
-    public ProductId? ProductId { get; private set; }
+    public string Name { get; private set; }
 
     public int Quantity
     {
@@ -49,14 +47,13 @@ public class OrderLine : Entity<OrderLineId>
 
     public static OrderLine Create(
         string platformListingId,
-        ListingInstanceId? listingInstanceId,
-        OrderId orderId,
-        ProductId? productId,
+        string sku,
         int quantity,
-        decimal price)
+        decimal price,
+        string name)
     {
         var id = OrderLineId.CreateUnique();
 
-        return new OrderLine(id, platformListingId, listingInstanceId, orderId, productId, quantity, price);
+        return new OrderLine(id, sku, platformListingId, quantity, price, name);
     }
 }

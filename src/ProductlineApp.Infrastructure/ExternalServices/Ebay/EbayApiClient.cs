@@ -310,10 +310,18 @@ public class EbayApiClient : IEbayApiClient
         //
         // return orders;
 
-        string json = await File.ReadAllTextAsync("../../Mocks/ebay_orders.json");
-        var response = JsonConvert.DeserializeObject<EbayOrdersResponse>(json);
+        try
+        {
+            string fullPath = Path.GetFullPath("ebay_orders.json");
+            string json = await File.ReadAllTextAsync(fullPath);
+            var response = JsonConvert.DeserializeObject<EbayOrdersResponse>(json);
 
-        return response.Orders;
+            return response.Orders;
+        }
+        catch (Exception e)
+        {
+            return new List<EbayOrderResponse>();
+        }
     }
 
     public async Task<IEnumerable<EbayLocationsResponse.LocationItem>> GetMerchantLocationKeys(string accessToken)

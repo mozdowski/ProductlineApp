@@ -1,9 +1,8 @@
-﻿using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Order.Entities;
+﻿using ProductlineApp.Domain.Aggregates.Order.Entities;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
-using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Domain.Enums;
 
 namespace ProductlineApp.Domain.Aggregates.Order;
 
@@ -14,29 +13,65 @@ public class Order : AggregateRoot<OrderId>
 
     private Order(
         OrderId id,
-        ListingInstanceId listingInstanceId,
         UserId ownerId,
         List<OrderLine> orderLines,
-        Address shippingAddress)
+        ShippingAddress shippingAddress,
+        BillingAddress billingAddress,
+        PlatformId platformId,
+        string PlatformOrderId,
+        OrderStatus status,
+        DateTime placedAt,
+        bool isPaid,
+        decimal subtotalPrice,
+        decimal deliveryCost,
+        DateTime? deliveryDate)
         : base(id)
     {
         this._orderLines = orderLines;
-        this.ListingInstanceId = listingInstanceId ?? throw new ArgumentNullException(nameof(listingInstanceId));
         this.OwnerId = ownerId ?? throw new ArgumentNullException(nameof(ownerId));
         this.ShippingAddress = shippingAddress ?? throw new ArgumentNullException(nameof(shippingAddress));
+        this.BillingAddress = billingAddress ?? throw new ArgumentNullException(nameof(billingAddress));
+        this.PlatformId = platformId;
+        this.PlatformOrderId = PlatformOrderId;
+        this.Status = status;
+        this.PlacedAt = placedAt;
+        this.IsPaid = isPaid;
+        this.SubtotalPrice = subtotalPrice;
+        this.DeliveryCost = deliveryCost;
+        this.DeliveryDate = deliveryDate;
     }
 
-    public ListingInstanceId ListingInstanceId { get; private set; }
+    public Order()
+    {
+    }
 
     public UserId OwnerId { get; private set; }
 
-    public Address ShippingAddress { get; private set; }
+    public ShippingAddress ShippingAddress { get; private set; }
+
+    public BillingAddress BillingAddress { get; private set; }
 
     public IReadOnlyCollection<OrderLine> OrderLines => this._orderLines.AsReadOnly();
 
     public IReadOnlyCollection<Document> Documents => this._documents.AsReadOnly();
 
-    public decimal TotalAmount => this._orderLines.Sum(x => x.TotalAmount);
+    public PlatformId PlatformId { get; private set; }
+
+    public string PlatformOrderId { get; private set; }
+
+    public OrderStatus Status { get; private set; }
+
+    public DateTime PlacedAt { get; private set; }
+
+    public bool IsPaid { get; set; }
+
+    public decimal SubtotalPrice { get; set; }
+
+    public decimal DeliveryCost { get; set; }
+
+    public DateTime? DeliveryDate { get; set; }
+
+    public decimal TotalAmount => this.SubtotalPrice + this.DeliveryCost;
 
     public void AddOrderLine(OrderLine orderLine)
     {
@@ -46,6 +81,11 @@ public class Order : AggregateRoot<OrderId>
         }
 
         this._orderLines.Add(orderLine);
+    }
+
+    public void AddOrderLines(IEnumerable<OrderLine> orderLines)
+    {
+        this._orderLines.AddRange(orderLines);
     }
 
     public void AddDocument(Document document)
@@ -59,10 +99,18 @@ public class Order : AggregateRoot<OrderId>
     }
 
     public static Order Create(
-        ListingInstanceId listingInstanceId,
         UserId ownerId,
         IEnumerable<OrderLine> orderLines,
-        Address shippingAddress)
+        ShippingAddress shippingAddress,
+        BillingAddress billingAddress,
+        PlatformId platformId,
+        string platformOrderId,
+        OrderStatus status,
+        DateTime placedAt,
+        bool isPaid,
+        decimal subtotalPrice,
+        decimal deliveryCost,
+        DateTime? deliveryDate)
     {
         var id = OrderId.CreateUnique();
 
@@ -70,7 +118,19 @@ public class Order : AggregateRoot<OrderId>
         if (!enumerable.Any())
             throw new ArgumentException("There should be at least one OrderLine to create an Order");
 
-        return new Order(id, listingInstanceId, ownerId, enumerable, shippingAddress);
+        return new Order(
+            id,
+            ownerId,
+            enumerable,
+            shippingAddress,
+            billingAddress,
+            platformId,
+            platformOrderId,
+            status,
+            placedAt,
+            isPaid,
+            subtotalPrice,
+            deliveryCost,
+            deliveryDate);
     }
 }
-
