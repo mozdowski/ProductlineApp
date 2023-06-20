@@ -5,6 +5,9 @@ using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Shared.Models.Common;
 using ProductlineApp.Shared.Models.Ebay;
 using System.Globalization;
+using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
+using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Enums;
 
 namespace ProductlineApp.Application.Common.Platforms.Ebay.Mappings;
 
@@ -98,17 +101,20 @@ public class EbayMapper : Profile
             .ForMember(
                 dest => dest.MaxDeliveryDate,
                 opt => opt.MapFrom(src => src.FulfillmentStartInstructions[0].MaxEstimatedDeliveryDate))
-            .ForMember(
-                dest => dest.CustomerName,
-                opt => opt.MapFrom(src => src.Buyer.BuyerRegistrationAddress.FullName))
-            .ForMember(dest => dest.CustomerEmail, opt => opt.MapFrom(src => src.Buyer.BuyerRegistrationAddress.Email))
-            .ForMember(
-                dest => dest.CustomerPhoneNumber,
-                opt => opt.MapFrom(src => src.Buyer.BuyerRegistrationAddress.PrimaryPhone.PhoneNumber))
-            .ForMember(dest => dest.CustomerAddress,
-                opt => opt.MapFrom(src => src.Buyer.BuyerRegistrationAddress.ContactAddress))
-            .ForMember(dest => dest.ShippingAddress,
-                opt => opt.MapFrom(src => src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress))
+            .ForMember(dest => dest.BillingAddress, opt => opt.MapFrom(src => new BillingAddress()
+            {
+                FirstName = src.Buyer.BuyerRegistrationAddress.FullName,
+                Username = src.Buyer.Username,
+                Email = src.Buyer.BuyerRegistrationAddress.Email,
+                PhoneNumber = src.Buyer.BuyerRegistrationAddress.PrimaryPhone.PhoneNumber,
+                Address = new Address(src.Buyer.BuyerRegistrationAddress.ContactAddress.AddressLine1 + " " + src.Buyer.BuyerRegistrationAddress.ContactAddress.AddressLine2, src.Buyer.BuyerRegistrationAddress.ContactAddress.PostalCode, src.Buyer.BuyerRegistrationAddress.ContactAddress.City, src.Buyer.BuyerRegistrationAddress.ContactAddress.CountryCode),
+            }))
+            .ForMember(dest => dest.ShippingAddress, opt => opt.MapFrom(src => new ShippingAddress()
+            {
+                FirstName = src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.FullName,
+                PhoneNumber = src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.PrimaryPhone.PhoneNumber,
+                Address = new Address(src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress.AddressLine1 + " " + src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress.AddressLine2, src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress.PostalCode, src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress.City, src.FulfillmentStartInstructions[0].ShippingStep.ShipTo.ContactAddress.CountryCode),
+            }))
             .ForMember(dest => dest.TotalPrice,
                 opt => opt.MapFrom(src => decimal.Parse(src.PricingSummary.Total.Value)))
             .ForMember(dest => dest.SubtotalPrice,
@@ -117,6 +123,7 @@ public class EbayMapper : Profile
                 opt => opt.MapFrom(src => decimal.Parse(src.PricingSummary.DeliveryCost.ShippingCost.Value)))
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.LineItems[0].Quantity))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src => src.OrderFulfillmentStatus))
+            .ForMember(dest => dest.Platform, opt => opt.MapFrom(src => PlatformNames.EBAY))
             .ForMember(dest => dest.Items, opt => opt.MapFrom(src => src.LineItems));
 
         this.CreateMap<EbayOrderResponse.LineItem, OrderItemDto>()
@@ -125,6 +132,7 @@ public class EbayMapper : Profile
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
             .ForMember(dest => dest.DeliveryCost, opt => opt.MapFrom(src => decimal.Parse(src.DeliveryCost.ShippingCost.Value)))
             .ForMember(dest => dest.TotalPrice, opt => opt.MapFrom(src => decimal.Parse(src.Total.Value)))
+            .ForMember(dest => dest.Sku, opt => opt.MapFrom(src => src.Sku))
             .ForMember(dest => dest.FulfillmentStatus, opt => opt.MapFrom(src => src.LineItemFulfillmentStatus));
 
         this.CreateMap<EbayLocationsResponse.LocationItem, EbayLocationsDtoResponse.EbayLocationDto>()

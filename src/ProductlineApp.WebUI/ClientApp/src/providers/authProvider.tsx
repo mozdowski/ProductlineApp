@@ -5,7 +5,6 @@ import { AuthContextProps } from '../interfaces/auth/authContextProps';
 import { AuthService } from '../services/auth/auth.service';
 import { LoginRequest } from '../interfaces/auth/loginRequest';
 import { RegisterRequest } from '../interfaces/auth/registerRequest';
-import jwtDecode, { JwtPayload } from 'jwt-decode';
 
 interface AuthProviderProps {
   children: ReactNode;
@@ -68,50 +67,11 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
-  const isAuthenticated = () => {
-    if (user?.authToken == undefined) {
-      return false;
-    }
-
-    const isTokenValid = verifyToken(user.authToken);
-
-    if (!isTokenValid) {
-      logout();
-    }
-
-    return isTokenValid;
-  };
-
   const authContextValue: AuthContextProps = {
     user,
     register,
     login,
     logout,
-    isAuthenticated,
-  };
-
-  const verifyToken = (token: string): boolean => {
-    try {
-      const decodedToken: JwtPayload = jwtDecode(token);
-      const { sub, exp } = decodedToken;
-
-      const expirationDate = exp ? new Date(exp * 1000) : null;
-
-      if (sub != user?.id) {
-        console.error('Unauthorized');
-        return false;
-      }
-
-      if (expirationDate && expirationDate < new Date()) {
-        console.error('Token wygasl');
-        return false;
-      }
-
-      return true;
-    } catch (error) {
-      console.error('Błąd podczas weryfikacji tokena:', error);
-      return false;
-    }
   };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

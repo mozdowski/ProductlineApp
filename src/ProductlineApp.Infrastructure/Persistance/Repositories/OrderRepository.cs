@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ProductlineApp.Domain.Aggregates.Order;
 using ProductlineApp.Domain.Aggregates.Order.Entities;
 using ProductlineApp.Domain.Aggregates.Order.Repository;
@@ -16,48 +17,80 @@ public class OrderRepository : IOrderRepository
         this._context = context;
     }
 
-    public async Task<Order> GetByIdAsync(OrderId id)
+    public async Task<Order?> GetByIdAsync(OrderId id)
     {
-        throw new NotImplementedException();
+        return await this._context.Orders.FindAsync(id);
     }
 
     public async Task<IEnumerable<Order>> GetAllAsync()
     {
-        throw new NotImplementedException();
+        return await this._context.Orders.ToListAsync();
     }
 
     public async Task AddAsync(Order entity)
     {
-        throw new NotImplementedException();
+        await this._context.Orders.AddAsync(entity);
+        await this._context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(Order entity)
     {
-        throw new NotImplementedException();
+        await this._context.SaveChangesAsync();
     }
 
     public async Task RemoveAsync(Order id)
     {
-        throw new NotImplementedException();
+        if (this._context.Entry(id).State is EntityState.Detached)
+        {
+            return;
+        }
+
+        this._context.Orders.Remove(id);
+        await this._context.SaveChangesAsync();
     }
 
     public async Task<IEnumerable<Order>> GetAllByUserIdAsync(UserId userId)
     {
-        throw new NotImplementedException();
+        return await this._context.Orders.Where(x => x.OwnerId == userId).ToListAsync();
     }
 
     public async Task<IEnumerable<Document>> GetDocumentsByOrderIdAsync(OrderId orderId)
     {
-        throw new NotImplementedException();
+        return await this._context.Orders
+            .Where(x => x.Id == orderId)
+            .Include(x => x.Documents)
+            .SelectMany(x => x.Documents)
+            .ToListAsync();
     }
 
-    public async Task<Document> GetDocumentByIdAsync(DocumentId documentId)
+    public async Task<Document?> GetDocumentByIdAsync(DocumentId documentId)
     {
-        throw new NotImplementedException();
+        return await this._context.Orders
+            .Include(x => x.Documents)
+            .SelectMany(x => x.Documents)
+            .FirstOrDefaultAsync(x => x.Id == documentId);
     }
 
     public async Task<IEnumerable<string>> GetOfferIdsForPlatform(UserId userId, PlatformId platformId)
     {
-        throw new NotImplementedException();
+        return await this._context.Orders
+            .Where(x => x.OwnerId == userId && x.PlatformId == platformId)
+            .Select(x => x.PlatformOrderId)
+            .ToListAsync();
+    }
+
+    public async Task<bool> IsAnyByPlatformOrderId(UserId userId, PlatformId platformId, string orderId)
+    {
+        return await this._context.Orders
+            .Where(x => x.OwnerId == userId && x.PlatformId == platformId && x.PlatformOrderId == orderId)
+            .AnyAsync();
+    }
+
+    public async Task<OrderId?> GetOrderIdByPlatformOrder(UserId userId, PlatformId platformId, string orderId)
+    {
+        return await this._context.Orders
+            .Where(x => x.OwnerId == userId && x.PlatformId == platformId && x.PlatformOrderId == orderId)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
     }
 }

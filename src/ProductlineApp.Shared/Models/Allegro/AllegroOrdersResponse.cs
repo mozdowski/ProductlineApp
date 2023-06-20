@@ -62,13 +62,13 @@ public class Buyer
 
     public string LastName { get; set; }
 
-    public object CompanyName { get; set; }
+    public string? CompanyName { get; set; }
 
     public bool Guest { get; set; }
 
     public string PersonalIdentity { get; set; }
 
-    public object PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
     public Preferences Preferences { get; set; }
 
@@ -153,11 +153,11 @@ public class Address2
 
     public string CountryCode { get; set; }
 
-    public object CompanyName { get; set; }
+    public string? CompanyName { get; set; }
 
-    public object PhoneNumber { get; set; }
+    public string? PhoneNumber { get; set; }
 
-    public object ModifiedAt { get; set; }
+    public DateTime? ModifiedAt { get; set; }
 }
 
 public class PickupPoint
@@ -182,7 +182,7 @@ public class Guaranteed
 {
     public string From { get; set; }
 
-    public string To { get; set; }
+    public string? To { get; set; }
 }
 
 public class Time
@@ -251,12 +251,12 @@ public class Offer
 
     public string Name { get; set; }
 
-    public External External { get; set; }
+    public External? External { get; set; }
 }
 
 public class External
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
 }
 
 public class OriginalPrice

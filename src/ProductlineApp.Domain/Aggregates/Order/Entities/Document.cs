@@ -24,6 +24,10 @@ public class Document : Entity<DocumentId>, IFile
 
     public OrderId OrderId { get; private init; }
 
+    public Document()
+    {
+    }
+
     public static Document Create(
         string name,
         string url,

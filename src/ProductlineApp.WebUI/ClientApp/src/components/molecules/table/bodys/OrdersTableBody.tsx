@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { CollapseTableButton } from '../../../atoms/buttons/collapseTableButton/CollapseTableButton';
 import { CollapseOrderDetails } from './CollapseOrderDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
@@ -26,15 +26,15 @@ export const OrdersTableBody = ({ orderRecords }: { orderRecords: OrdersRecord[]
             <CollapseTableButton isOpen={isOpen} toggle={toggle} />
           </td>
           {orderRecords.map((order, key) => (
-            <>
-              <td key={key}>{order.OrderID}</td>
-              <td>{order.OrderDate}</td>
-              <td>{order.ShipToDate}</td>
+            <React.Fragment key={key}>
+              <td>{order.OrderID}</td>
+              <td>{order.OrderDate.toLocaleDateString()}</td>
+              <td>{order.ShipToDate.toLocaleDateString()}</td>
               <td>{order.Client}</td>
               <td>{order.Price} zł</td>
               <td>{order.Quantity}</td>
               <td className="orderStatus complete">{order.Status}</td>
-            </>
+            </React.Fragment>
           ))}
           <td>
             <div className="ordersButtonsAction">
