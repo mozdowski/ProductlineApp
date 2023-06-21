@@ -7,9 +7,11 @@ using ProductlineApp.Application.Common.Platforms.Ebay.Mappings;
 using ProductlineApp.Application.Common.Services.Interfaces;
 using ProductlineApp.Application.Listing.Commands;
 using ProductlineApp.Application.Listing.DTO;
+using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Application.User.Commands;
 using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
+using ProductlineApp.Domain.Aggregates.Order.Repository;
 using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
@@ -33,6 +35,7 @@ public class EbayService : IEbayService
     private readonly IProductRepository _productRepository;
     private readonly IUploadFileService _uploadFileService;
     private readonly IListingRepository _listingRepository;
+    private readonly IOrderRepository _orderRepository;
 
     public EbayService(
         IEbayApiClient ebayApiClient,
@@ -42,7 +45,8 @@ public class EbayService : IEbayService
         IPlatformRepository platformRepository,
         IProductRepository productRepository,
         IUploadFileService uploadFileService,
-        IListingRepository listingRepository)
+        IListingRepository listingRepository,
+        IOrderRepository orderRepository)
     {
         this._ebayApiClient = ebayApiClient;
         this._mapper = mapper;
@@ -51,6 +55,7 @@ public class EbayService : IEbayService
         this._productRepository = productRepository;
         this._uploadFileService = uploadFileService;
         this._listingRepository = listingRepository;
+        this._orderRepository = orderRepository;
 
         var platformId = platformRepository.GetIdByNameAsync(PlatformNames.EBAY.ToString().ToLower()).GetAwaiter().GetResult();
         this.PlatformId = platformId;
@@ -109,9 +114,12 @@ public class EbayService : IEbayService
         await this._mediator.Send(command);
     }
 
-    public async Task<IEnumerable<Domain.Aggregates.Order.Order>> GetOrdersAsync()
+    public async Task<IEnumerable<OrderDtoResponse>> GetOrdersAsync()
     {
-        throw new NotImplementedException();
+        var orderIds = await this._orderRepository.GetOfferIdsForPlatform(UserId.Create(this._currentUser.UserId.Value), this.PlatformId);
+        var orders = await this._ebayApiClient.GetOrders(this._accessToken, orderIds);
+
+        return this._mapper.Map<IEnumerable<OrderDtoResponse>>(orders);
     }
 
     // pierwsza wersja zaklada pobieranie ofert stworzonych tylko na naszym portalu
@@ -143,7 +151,8 @@ public class EbayService : IEbayService
 
             mappedOffer.ProductId = product.Id.Value;
             mappedOffer.ProductName = product.Name;
-            mappedOffer.ProductImage = product.Image;
+            mappedOffer.ProductImageUrl = product.Image.Url.ToString();
+            mappedOffer.Brand = product.Brand.Name;
 
             result.Add(mappedOffer);
         }
@@ -166,13 +175,13 @@ public class EbayService : IEbayService
                 });
 
         var ebayOfferId = await this._ebayApiClient.CreateOffer(this._accessToken, requestBody);
-        // await this._ebayApiClient.PublishOffer(this._accessToken, ebayOfferId);
+        var listingId = await this._ebayApiClient.PublishOffer(this._accessToken, ebayOfferId);
 
         var command = new AddListingInstance.Command(
             this._currentUser.UserId.Value,
             request.ListingId,
             this.PlatformId.Value,
-            ebayOfferId,
+            listingId,
             null,
             null);
         await this._mediator.Send(command);
@@ -223,6 +232,17 @@ public class EbayService : IEbayService
     {
         var categoryTree = await this._ebayApiClient.GetCategories(this._accessToken);
         return this._mapper.Map<EbayCategoryTreeDto>(categoryTree);
+    }
+
+    public async Task<EbayLocationsDtoResponse> GetLocations()
+    {
+        var response = await this._ebayApiClient.GetMerchantLocationKeys(this._accessToken);
+        var mappedLocations = this._mapper.Map<IEnumerable<EbayLocationsDtoResponse.EbayLocationDto>>(response);
+
+        return new EbayLocationsDtoResponse()
+        {
+            Locations = mappedLocations,
+        };
     }
 
     private async Task CreateOrReplaceInventoryItem(EbayProductDtoRequest product)

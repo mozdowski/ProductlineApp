@@ -66,6 +66,58 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.ToTable("Listings", (string)null);
                 });
 
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Order.Order", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("CreatedBy")
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("DeliveryCost")
+                        .HasColumnType("numeric");
+
+                    b.Property<DateTime>("DeliveryDate")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("boolean");
+
+                    b.Property<DateTime?>("LastModified")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("LastModifiedBy")
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("OwnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("PlacedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("PlatformId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PlatformOrderId")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("SubtotalPrice")
+                        .HasColumnType("numeric");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Orders", (string)null);
+                });
+
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>
                 {
                     b.Property<Guid>("Id")
@@ -149,19 +201,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("85a8c28c-5cd6-44af-8fef-f16a9293bcce"),
-                            CreatedAt = new DateTime(2023, 5, 16, 7, 11, 48, 140, DateTimeKind.Utc).AddTicks(8300),
+                            Id = new Guid("242bae2b-9c50-4ac7-883a-90ed9606667e"),
+                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5140),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 5, 16, 7, 11, 48, 264, DateTimeKind.Utc).AddTicks(6450),
+                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7620),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("6e4e2024-4a3a-4f26-9229-41228e3fb8f4"),
-                            CreatedAt = new DateTime(2023, 5, 16, 7, 11, 48, 140, DateTimeKind.Utc).AddTicks(8320),
+                            Id = new Guid("0847775c-ba55-4318-8065-042546b9ca43"),
+                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5170),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 5, 16, 7, 11, 48, 264, DateTimeKind.Utc).AddTicks(6510),
+                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7690),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -171,6 +223,9 @@ namespace ProductlineApp.Infrastructure.Migrations
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("Avatar")
+                        .HasColumnType("text");
 
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnType("timestamp with time zone");
@@ -261,6 +316,190 @@ namespace ProductlineApp.Infrastructure.Migrations
                         });
 
                     b.Navigation("Instances");
+                });
+
+            modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Order.Order", b =>
+                {
+                    b.OwnsMany("ProductlineApp.Domain.Aggregates.Order.Entities.Document", "Documents", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime?>("CreatedAt")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("CreatedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<DateTime?>("LastModified")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("LastModifiedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Url")
+                                .IsRequired()
+                                .HasColumnType("varchar(500)")
+                                .HasColumnName("DocumentUrl");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("Document");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsMany("ProductlineApp.Domain.Aggregates.Order.Entities.OrderLine", "OrderLines", b1 =>
+                        {
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<DateTime?>("CreatedAt")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("CreatedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<DateTime?>("LastModified")
+                                .HasColumnType("timestamp with time zone");
+
+                            b1.Property<string>("LastModifiedBy")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("Name")
+                                .IsRequired()
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)");
+
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("PlatformListingId")
+                                .IsRequired()
+                                .HasColumnType("text");
+
+                            b1.Property<decimal>("Price")
+                                .HasColumnType("numeric");
+
+                            b1.Property<int>("Quantity")
+                                .HasColumnType("integer");
+
+                            b1.Property<string>("Sku")
+                                .IsRequired()
+                                .HasMaxLength(20)
+                                .HasColumnType("character varying(20)");
+
+                            b1.HasKey("Id");
+
+                            b1.HasIndex("OrderId");
+
+                            b1.ToTable("OrderLines", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("ProductlineApp.Domain.Aggregates.Order.ValueObjects.BillingAddress", "BillingAddress", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("BillingAddress_Address");
+
+                            b1.Property<string>("Email")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("BillingAddress_Email");
+
+                            b1.Property<string>("FirstName")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("BillingAddress_Firstname");
+
+                            b1.Property<string>("LastName")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("BillingAddress_Lastname");
+
+                            b1.Property<string>("PhoneNumber")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("BillingAddress_Phone");
+
+                            b1.Property<string>("Username")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("BillingAddress_Username");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("ProductlineApp.Domain.Aggregates.Order.ValueObjects.ShippingAddress", "ShippingAddress", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<string>("Address")
+                                .IsRequired()
+                                .HasMaxLength(500)
+                                .HasColumnType("character varying(500)")
+                                .HasColumnName("ShippingAddress_Address");
+
+                            b1.Property<string>("CompanyName")
+                                .HasColumnType("text");
+
+                            b1.Property<string>("FirstName")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("ShippingAddress_Firstname");
+
+                            b1.Property<string>("LastName")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("ShippingAddress_Lastname");
+
+                            b1.Property<string>("PhoneNumber")
+                                .HasMaxLength(100)
+                                .HasColumnType("character varying(100)")
+                                .HasColumnName("ShippingAddress_Phone");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("BillingAddress")
+                        .IsRequired();
+
+                    b.Navigation("Documents");
+
+                    b.Navigation("OrderLines");
+
+                    b.Navigation("ShippingAddress")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("ProductlineApp.Domain.Aggregates.Products.Product", b =>

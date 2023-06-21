@@ -2,7 +2,7 @@ namespace ProductlineApp.Shared.Models.Allegro;
 
 public class AllegroCreateListingRequest
 {
-    public IEnumerable<ProductSet> ProductSets { get; set; }
+    public IEnumerable<ProductSet> ProductSet { get; set; }
 
     public B2b B2b { get; set; }
 
@@ -68,8 +68,6 @@ public class Parameter
     public string Id { get; set; }
 
     public string Name { get; set; }
-
-    public RangeValue RangeValue { get; set; }
 
     public List<string> Values { get; set; }
 
@@ -138,18 +136,23 @@ public class Delivery
 {
     public string HandlingTime { get; set; }
 
-    public object ShippingRates { get; set; }
+    public ShippingRate ShippingRates { get; set; }
 
     public string AdditionalInfo { get; set; }
 
     public DateTime ShipmentDate { get; set; }
+
+    public class ShippingRate
+    {
+        public string Name { get; set; }
+    }
 }
 
 public class Publication
 {
     public string Duration { get; set; }
 
-    public DateTime StartingAt { get; set; }
+    public DateTime? StartingAt { get; set; }
 
     public string Status { get; set; }
 
@@ -265,6 +268,8 @@ public class Section
 public class Item2
 {
     public string Type { get; set; }
+
+    public string Content { get; set; }
 }
 
 public class Tax

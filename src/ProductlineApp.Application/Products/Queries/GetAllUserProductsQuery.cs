@@ -2,7 +2,9 @@ using AutoMapper;
 using FluentValidation;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Interfaces;
+using ProductlineApp.Application.Common.Mappings;
 using ProductlineApp.Application.Products.DTO;
+using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
@@ -17,15 +19,21 @@ public class GetAllUserProductsQuery
     {
         private readonly IProductRepository _productRepository;
         private readonly IUserRepository _userRepository;
+        private readonly IListingRepository _listingRepository;
+        private readonly IPlatformRepository _platformRepository;
         private readonly IMapper _mapper;
 
         public Handler(
             IProductRepository productRepository,
             IUserRepository userRepository,
+            IListingRepository listingRepository,
+            IPlatformRepository platformRepository,
             IMapper mapper)
         {
             this._productRepository = productRepository;
             this._userRepository = userRepository;
+            this._listingRepository = listingRepository;
+            this._platformRepository = platformRepository;
             this._mapper = mapper;
         }
 
@@ -49,7 +57,18 @@ public class GetAllUserProductsQuery
             var products = await this._productRepository.GetAllByUserIdAsync(
                 UserId.Create(request.UserId));
 
-            var mappedProducts = this._mapper.Map<List<ProductDtoResponse>>(products);
+            var productPlatformsDictionary = await this._listingRepository
+                .GetPlatformsProductsAreListedOn(products.Select(x => x.Id));
+
+            var allPlatformsIds = productPlatformsDictionary
+                .SelectMany(x => x.Value)
+                .Distinct();
+
+            var platformNames = await this._platformRepository.GetPlatformNamesByIdsAsync(allPlatformsIds);
+
+            var productResponseMapperInputs = (from product in products let platforms = productPlatformsDictionary[product.Id].Select(x => platformNames[x]).ToList() select new ProductResponseMapperInput(product, platforms)).ToList();
+
+            var mappedProducts = this._mapper.Map<List<ProductDtoResponse>>(productResponseMapperInputs);
 
             return new GetProductsResponse(mappedProducts.ToList());
         }

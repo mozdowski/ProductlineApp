@@ -3,6 +3,7 @@ using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 using System.ComponentModel.DataAnnotations;
 using System.Security.Authentication;
+using ProductlineApp.Domain.ValueObjects;
 
 namespace ProductlineApp.Domain.Aggregates.User;
 
@@ -36,6 +37,8 @@ public sealed class User : AggregateRoot<UserId>
 
     [EmailAddress]
     public string Email { get; private init; }
+
+    public Image? Avatar { get; private set; }
 
     public IReadOnlyList<PlatformConnection> PlatformConnections
     {
@@ -123,6 +126,11 @@ public sealed class User : AggregateRoot<UserId>
             throw new InvalidCredentialException("Old password is incorrect");
 
         this.Password = newPassword;
+    }
+
+    public void UpdateAvatar(Image avatar)
+    {
+        this.Avatar = avatar;
     }
 
     public IEnumerable<PlatformConnection> GetPlatformConnectionsToRefresh()

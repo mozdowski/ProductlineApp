@@ -12,11 +12,13 @@ public class ListingDtoResponse
 
     public string? PlatformListingUrl { get; set; }
 
+    public string Brand { get; set; }
+
     public Guid ProductId { get; set; }
 
     public string Sku { get; set; }
 
-    public Image ProductImage { get; set; }
+    public string ProductImageUrl { get; set; }
 
     public string ProductName { get; set; }
 

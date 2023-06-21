@@ -1,4 +1,5 @@
 using ProductlineApp.Application.Listing.DTO;
+using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Shared.Models.Common;
@@ -15,7 +16,7 @@ public interface IPlatformService
 
     Task RefreshAccessTokenAsync(UserId userId, string refreshToken);
 
-    Task<IEnumerable<Domain.Aggregates.Order.Order>> GetOrdersAsync();
+    Task<IEnumerable<OrderDtoResponse>> GetOrdersAsync();
 
     Task<IEnumerable<ListingDtoResponse>> GetListingsAsync();
 

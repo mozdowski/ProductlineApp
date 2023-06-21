@@ -1,21 +1,23 @@
-import React from "react";
-import { Link, useMatch, useResolvedPath } from "react-router-dom";
+import React from 'react';
+import { Link, useMatch, useResolvedPath } from 'react-router-dom';
 import './css/UserAccountButton.css';
+import { useAuth } from '../../../../hooks/auth/useAuth';
+import UserImage from '../../../../assets/icons/userAvatarImage.jpeg';
 
 function UserAccountButton() {
-    return (
-        <div className="userAccountButton">
-            <div className="userInfo">
-                <h2>Jan Kowalski</h2>
-                <p>jankowalski@gmal.com</p>
-            </div>
-            <Link to="/settings" className="goToAccountSettingsLink" id="link">
-                <div className="userImage"></div>
-            </Link>
-        </div>
-    );
+  const { user } = useAuth();
+
+  return (
+    <div className="userAccountButton">
+      <div className="userInfo">
+        <h2>{user?.name}</h2>
+        <p>{user?.email}</p>
+      </div>
+      <Link to="/settings" className="goToAccountSettingsLink" id="link">
+        <img className="userImage" src={user?.avatar === null ? UserImage : user?.avatar}></img>
+      </Link>
+    </div>
+  );
 }
 
-export default UserAccountButton
-
-
+export default UserAccountButton;

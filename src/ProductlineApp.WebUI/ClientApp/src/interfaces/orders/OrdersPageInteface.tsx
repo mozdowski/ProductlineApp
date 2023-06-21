@@ -1,13 +1,15 @@
+import { OrderStatus } from '../../enums/orderStatus.enum';
+
 export interface OrdersPage {
-    orderssTableRecords: OrdersRecord[];
+  orderssTableRecords: OrdersRecord[];
 }
 
 export interface OrdersRecord {
-    OrderID: number
-    OrderDate: string;
-    ShipToDate: string;
-    Client: string;
-    Price: number;
-    Quantity: number;
-    Status: string;
+  OrderID: string;
+  OrderDate: Date;
+  ShipToDate: Date;
+  Client: string;
+  Price: number;
+  Quantity: number;
+  Status: string;
 }

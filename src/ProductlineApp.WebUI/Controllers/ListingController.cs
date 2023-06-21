@@ -6,6 +6,7 @@ using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Listing.Commands;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.Listing.Queries;
+using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 
 namespace ProductlineApp.WebUI.Controllers;
@@ -18,15 +19,18 @@ public class ListingController : ControllerBase
     private readonly IMediator _mediator;
     private readonly ICurrentUserContext _currentUser;
     private readonly IPlatformServiceDispatcher _platformServiceDispatcher;
+    private readonly IListingRepository _listingRepository;
 
     public ListingController(
         IMediator mediator,
         ICurrentUserContext currentUser,
-        IPlatformServiceDispatcher platformServiceDispatcher)
+        IPlatformServiceDispatcher platformServiceDispatcher,
+        IListingRepository listingRepository)
     {
         this._mediator = mediator;
         this._currentUser = currentUser;
         this._platformServiceDispatcher = platformServiceDispatcher;
+        this._listingRepository = listingRepository;
     }
 
     [HttpPost("createTemplate")]
@@ -126,6 +130,15 @@ public class ListingController : ControllerBase
             ListingInstanceId.Create(listingInstanceId));
 
         return this.Ok();
+    }
+
+    [HttpGet("getPlatformsWithListings")]
+    public async Task<IActionResult> GetPlatformsWithListings()
+    {
+        var query = new GetPlatformsWithListingsQuery.Query(this._currentUser.UserId.GetValueOrDefault());
+        var response = await this._mediator.Send(query);
+
+        return this.Ok(response);
     }
 
     private async Task<Guid> GetPlatformIdByListingInstance(Guid listingId, Guid listingInstanceId)

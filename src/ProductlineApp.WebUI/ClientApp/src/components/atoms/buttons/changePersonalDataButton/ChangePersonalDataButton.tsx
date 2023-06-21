@@ -1,11 +1,11 @@
-import "./css/changePersonalDataButton.css"
+import './css/changePersonalDataButton.css';
 
 function ChangePersonalDataButton() {
-    return (
-        <div className="changePersonalDataButton">
-            <p>Zmień swoje dane</p>
-        </div>
-    );
+  return (
+    <div className="ChangePersonalDataButton">
+      <p>Zmień swoje dane</p>
+    </div>
+  );
 }
 
-export default ChangePersonalDataButton
+export default ChangePersonalDataButton;

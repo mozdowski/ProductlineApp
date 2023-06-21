@@ -1,18 +1,18 @@
 .AuctionsTableRow {
-    font-style: var(--body-font);
+  font-style: var(--body-font);
 }
 
 tbody tr:nth-child(odd) {
-    background-color: var(--secondTableColor);
+  background-color: var(--secondTableColor);
 }
 
 .AuctionsTableRow td {
-    font-size: 14px;
-    font-weight: 400;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .AuctionsTableRow td:nth-child(1) {
-    max-width: 30px;
+  max-width: 30px;
 }
 
 .AuctionsTableRow td:nth-child(2),
@@ -21,57 +21,56 @@ tbody tr:nth-child(odd) {
 .AuctionsTableRow td:nth-child(5),
 .AuctionsTableRow td:nth-child(6),
 .AuctionsTableRow td:nth-child(8) {
-    max-width: 80px;
+  max-width: 80px;
 }
 
 .AuctionsTableRow td:nth-child(7) {
-    padding-left: 35px;
+  padding-left: 35px;
 }
 
 .AuctionsTableRow {
-    height: 64px;
-    text-align: center;
-    color: var(--letter-color);
+  height: 64px;
+  text-align: center;
+  color: var(--letter-color);
 }
 
 /* product name */
 .AuctionsTableRow .productName {
-    align-items: center;
-    display: inline-flex;
+  align-items: center;
+  display: inline-flex;
 }
 
 .AuctionsTableRow .productName .productImage {
-    height: 32px;
-    width: 32px;
-    background-color: aqua;
-    border-radius: 8px;
+  height: 32px;
+  width: 32px;
+  background-color: aqua;
+  border-radius: 8px;
 }
 
 .AuctionsTableRow .productName p {
-    margin-left: 8px;
+  margin-left: 8px;
 }
-
 
 /* product status */
 .productStatus {
-    font-size: 12px;
-    font-weight: 500;
+  font-size: 12px;
+  font-weight: 500;
 }
 
 .productStatus.productExposed {
-    color: var(--productExposedColor);
+  color: var(--productExposedColor);
 }
 
 .productStatus.productNotExposed {
-    color: var(--productNotExposedColor);
+  color: var(--productNotExposedColor);
 }
 
 /* buttons Action */
 .auctionsButtonsAction .editAuctionIcon {
-    margin-right: 8px;
-    cursor: pointer;
+  margin-right: 8px;
+  cursor: pointer;
 }
 
 .auctionsButtonsAction .backAuctionIcon {
-    cursor: pointer;
+  cursor: pointer;
 }

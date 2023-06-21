@@ -1,14 +1,27 @@
-import React, { useState } from "react";
-import AmazonIcon from "../../../../assets/icons/amazon_icon1.svg";
+import AmazonIcon from '../../../../assets/icons/amazon_icon1.svg';
 import './css/amazonAuctionsButton.css';
+import { PlatformEnum } from '../../../../enums/platform.enum';
 
-function AmazonAuctionsButton({ isSelectedAuctionPortal, handleClickTypeAuctionPortalButton, id }: { isSelectedAuctionPortal: any, handleClickTypeAuctionPortalButton: any, id: string }) {
-
-    return (
-        <div id={id} className={isSelectedAuctionPortal === "amazon" ? "amazonButton selected" : "amazonButton"} onClick={handleClickTypeAuctionPortalButton}>
-            <img className="amazonIcon" src={AmazonIcon} />
-        </div>
-    );
+function AmazonAuctionsButton({
+  selectedAuctionPortal,
+  handleClickTypeAuctionPortalButton,
+  id,
+}: {
+  selectedAuctionPortal: PlatformEnum;
+  handleClickTypeAuctionPortalButton: any;
+  id: PlatformEnum;
+}) {
+  return (
+    <div
+      id={id + ''}
+      className={
+        selectedAuctionPortal === PlatformEnum.AMAZON ? 'amazonButton selected' : 'amazonButton'
+      }
+      onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.AMAZON)}
+    >
+      <img className="amazonIcon" src={AmazonIcon} />
+    </div>
+  );
 }
 
-export default AmazonAuctionsButton
+export default AmazonAuctionsButton;

@@ -1,42 +1,27 @@
 .changeProfilePhotoButton {
-    border-radius: 8px;
-    height: 35px;
-    width: 175px;
-    background-color: var(--white-color);
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    justify-content: center;
-    box-sizing: border-box;
-    border: 1px solid var(--first-color);
-}
-
-.changeProfilePhotoButton .profilePhoto {
-    height: 35px;
-    width: 175px;
-    cursor: pointer;
+  border-radius: 8px;
+  height: 35px;
+  width: 175px;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid var(--first-color);
 }
 
 .changeProfilePhotoButton p {
-    color: var(--first-color);
-    font-family: var(--body-font);
-    font-size: 12px;
-    font-weight: 600;
+  color: var(--first-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .changeProfilePhotoButton:hover {
-    border: 1px solid var(--purple-button-hover);
+  border: 1px solid var(--purple-button-hover);
 }
 
 .changeProfilePhotoButton:hover p {
-    color: var(--purple-button-hover);
-}
-
-.changeProfilePhotoButton input[type="file"] {
-    position: absolute;
-    opacity: 0;
-}
-
-input[type=file]::-webkit-file-upload-button {
-    cursor: pointer;
+  color: var(--purple-button-hover);
 }

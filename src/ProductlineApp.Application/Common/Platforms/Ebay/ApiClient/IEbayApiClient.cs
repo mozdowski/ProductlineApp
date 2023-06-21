@@ -24,13 +24,17 @@ public interface IEbayApiClient
 
     Task WithdrawOffer(string accessToken, string offerId);
 
-    Task PublishOffer(string accessToken, string offerId);
+    Task<string> PublishOffer(string accessToken, string offerId);
 
     Task<EbaySuggestedCategoriesResponse> GetCategories(string accessToken, string phrase);
 
     Task<EbayCategoryTreeResponse> GetCategories(string accessToken);
 
     Task<EbayAspectsResponse> GetAspectsForCategory(string accessToken, string categoryId);
+
+    Task<IEnumerable<EbayOrderResponse>> GetOrders(string accessToken, IEnumerable<string> orderIds);
+
+    Task<IEnumerable<EbayLocationsResponse.LocationItem>> GetMerchantLocationKeys(string accessToken);
 
     Task<string> GetCategoryNameById(string accessToken, string categoryId);
     // update offer

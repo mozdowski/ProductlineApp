@@ -1,13 +1,20 @@
-import "./css/emailInput.css"
+import './css/emailInput.css';
 
 function EmailInput() {
-
-    return (
-        <div className="emailField">
-            <label htmlFor="email" className="emailLabel">Email</label>
-            <input type="email" id="email" name="email" placeholder="Email" className="emailInput"></input>
-        </div>
-    );
+  return (
+    <>
+      <label htmlFor="emial" className="emailLabel">
+        Email
+      </label>
+      <input
+        type="email"
+        id="email"
+        name="email"
+        placeholder="Email"
+        className="emailInput"
+      ></input>
+    </>
+  );
 }
 
-export default EmailInput
+export default EmailInput;

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using ProductlineApp.Domain.Aggregates.Listing;
+using ProductlineApp.Domain.Aggregates.Order;
 using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.User;
 using ProductlineApp.Domain.Aggregates.User.Entities;
@@ -22,6 +23,8 @@ public class ProductlineDbContext : DbContext
     public DbSet<Product> Products { get; set; }
 
     public DbSet<Listing> Listings { get; set; }
+
+    public DbSet<Order> Orders { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
@@ -53,7 +56,7 @@ public class ProductlineDbContextFactory : IDesignTimeDbContextFactory<Productli
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProductlineDbContext>();
 
-        optionsBuilder.UseNpgsql("connectionString_here");
+        optionsBuilder.UseNpgsql("Server=productline-db.postgres.database.azure.com;Database=postgres;Port=5432;User Id=productline_admin;Password=Inzynierka*12;Ssl Mode=VerifyCA;Trust Server Certificate=false");
 
         return new ProductlineDbContext(optionsBuilder.Options);
     }

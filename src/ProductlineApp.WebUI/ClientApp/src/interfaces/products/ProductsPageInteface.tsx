@@ -1,15 +1,19 @@
+import { PlatformEnum } from '../../enums/platform.enum';
+
 export interface ProductsPage {
-    productsTableRecords: ProductsRecord[];
+  productsTableRecords: ProductsRecord[];
 }
 
-
 export interface ProductsRecord {
-    SKU: string;
-    Brand: string;
-    ProductName: string;
-    Category: string;
-    Price: number;
-    Quantity: number;
-    Status: string;
-    Quality: string
+  sku: string;
+  brand: string;
+  productName: string;
+  category: string;
+  price: number;
+  imageUrl: string;
+  quantity: number;
+  condition: string;
+  quality: string;
+  galleryUrls: string[];
+  platforms: PlatformEnum[];
 }

@@ -1,6 +1,4 @@
-using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
-using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Common.Abstractions;
 
 namespace ProductlineApp.Domain.Aggregates.Order.Entities;
@@ -8,30 +6,33 @@ namespace ProductlineApp.Domain.Aggregates.Order.Entities;
 public class OrderLine : Entity<OrderLineId>
 {
     private const int MinimumQuantity = 1;
+    private int _quantity;
 
     private OrderLine(
         OrderLineId id,
-        ListingInstanceId listingInstanceId,
-        OrderId orderId,
-        ProductId productId,
+        string sku,
+        string platformListingId,
         int quantity,
-        decimal price)
+        decimal price,
+        string name)
         : base(id)
     {
-        this.ListingInstanceId = listingInstanceId;
-        this.OrderId = orderId;
-        this.ProductId = productId;
         this.Quantity = quantity;
         this.Price = price;
+        this.PlatformListingId = platformListingId;
+        this.Sku = sku;
+        this.Name = name;
     }
 
-    public ListingInstanceId ListingInstanceId { get; private set; }
+    public OrderLine()
+    {
+    }
 
-    public OrderId OrderId { get; private set; }
+    public string PlatformListingId { get; set; }
 
-    public ProductId ProductId { get; private set; }
+    public string Sku { get; private set; }
 
-    private int _quantity;
+    public string Name { get; private set; }
 
     public int Quantity
     {
@@ -45,15 +46,14 @@ public class OrderLine : Entity<OrderLineId>
     public decimal TotalAmount => this.Quantity * this.Price;
 
     public static OrderLine Create(
-        ListingInstanceId listingInstanceId,
-        OrderId orderId,
-        ProductId productId,
+        string platformListingId,
+        string sku,
         int quantity,
-        decimal price)
+        decimal price,
+        string name)
     {
         var id = OrderLineId.CreateUnique();
 
-        return new OrderLine(id, listingInstanceId, orderId, productId, quantity, price);
+        return new OrderLine(id, sku, platformListingId, quantity, price, name);
     }
 }
-

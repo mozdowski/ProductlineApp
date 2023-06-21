@@ -1,24 +1,25 @@
 .loginButtonLink {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .loginButton {
-    border-radius: 8px;
-    height: 45px;
-    width: 357px;
-    background-color: var(--first-color);
-    justify-content: center;
-    text-align: center;
-    display: flex;
-    align-items: center;
-    color: var(--white-color);
-    font-family: var(--body-font);
-    font-size: 16px;
-    font-weight: 600;
-    border: 0px;
-    cursor: pointer;
+  border-radius: 8px;
+  height: 45px;
+  width: 357px;
+  background-color: var(--first-color);
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+
+.loginButton p {
+  color: var(--white-color);
+  font-family: var(--body-font);
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .loginButton:hover {
-    background-color: var(--purple-button-hover);
+  background-color: var(--purple-button-hover);
 }

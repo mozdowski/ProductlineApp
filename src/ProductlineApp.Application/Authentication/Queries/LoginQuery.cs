@@ -55,8 +55,11 @@ public class LoginQuery
             var token = this._tokenGenerator.GenerateToken(user);
 
             return new AuthenticationResult(
-                user,
-                token);
+                user.Id.Value,
+                user.Username,
+                user.Email,
+                token,
+                user.Avatar?.Url.ToString());
         }
     }
 }

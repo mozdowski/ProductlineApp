@@ -1,6 +1,12 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Platforms;
+using ProductlineApp.Application.Listing.DTO;
+using ProductlineApp.Domain.Aggregates.User.Entities;
+using ProductlineApp.Domain.Aggregates.User.Repository;
+using ProductlineApp.Domain.Aggregates.User.ValueObjects;
+using ProductlineApp.Shared.Enums;
 using ProductlineApp.WebUI.DTO.Platforms;
 
 namespace ProductlineApp.WebUI.Controllers;
@@ -11,11 +17,17 @@ namespace ProductlineApp.WebUI.Controllers;
 public class PlatformsController : ControllerBase
 {
     private readonly IPlatformServiceDispatcher _platformServiceDispatcher;
+    private readonly IPlatformRepository _platformRepository;
+    private readonly ICurrentUserContext _userContext;
 
     public PlatformsController(
-        IPlatformServiceDispatcher platformServiceDispatcher)
+        IPlatformServiceDispatcher platformServiceDispatcher,
+        IPlatformRepository platformRepository,
+        ICurrentUserContext userContext)
     {
         this._platformServiceDispatcher = platformServiceDispatcher;
+        this._platformRepository = platformRepository;
+        this._userContext = userContext;
     }
 
     [HttpGet("auth/url/{platformId:guid}")]
@@ -42,9 +54,34 @@ public class PlatformsController : ControllerBase
     [HttpGet("listings/{platformId:guid}")]
     public async Task<IActionResult> GetListings(Guid platformId)
     {
+        if (!this._userContext.PlatformTokens.TryGetValue(PlatformId.Create(platformId), out var platformToken))
+        {
+            return this.Ok(new GetListingsResponse()
+            {
+                Listings = new List<ListingDtoResponse>(),
+            });
+        }
+
         var platformService = this._platformServiceDispatcher.Dispatch(platformId);
         var listings = await platformService.GetListingsAsync();
 
-        return this.Ok(listings);
+        return this.Ok(new GetListingsResponse()
+        {
+            Listings = listings,
+        });
+    }
+
+    [HttpGet("getAllAvailable")]
+    public async Task<IActionResult> GetAllAvailable()
+    {
+        var platforms = await this._platformRepository.GetAllAsync();
+        return this.Ok(new
+        {
+            Platforms = platforms.Select(p => new PlatformResponse()
+            {
+                Id = p.Id.Value,
+                Name = Enum.Parse<PlatformNames>(p.Name.ToUpper()),
+            }),
+        });
     }
 }

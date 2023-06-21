@@ -1,18 +1,12 @@
 .changeProfilePhotoSection {
-    display: flex;
-    align-items: center;
+  display: flex;
+  display: inline;
 }
 
-.profileImage {
-    width: 95px;
-    height: 95px;
-    background-color: aqua;
-    border-radius: 50px;
-    margin-right: 41px;
-}
-
-.uploadedImage {
-    width: 95px;
-    height: 95px;
-    border-radius: 50px;
+.uploladedImage {
+  width: 95px;
+  height: 95px;
+  background-color: aqua;
+  border-radius: 50;
+  margin-right: 41px;
 }

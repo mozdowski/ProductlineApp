@@ -62,4 +62,12 @@ public class EbayController : ControllerBase
 
         return this.Ok(response);
     }
+
+    [HttpGet("locations")]
+    public async Task<IActionResult> GetMerchantLocations()
+    {
+        var response = await this._ebayService.GetLocations();
+
+        return this.Ok(response);
+    }
 }
