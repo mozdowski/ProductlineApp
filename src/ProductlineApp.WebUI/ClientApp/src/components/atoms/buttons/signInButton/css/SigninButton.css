@@ -1,7 +1,3 @@
-.signinButtonLink {
-  text-decoration: none;
-}
-
 .signinButton {
   border-radius: 8px;
   height: 45px;
@@ -11,13 +7,11 @@
   text-align: center;
   display: flex;
   align-items: center;
-}
-
-.signinButton p {
   color: var(--white-color);
   font-family: var(--body-font);
   font-size: 16px;
   font-weight: 600;
+  border: 0px;
 }
 
 .signinButton:hover {

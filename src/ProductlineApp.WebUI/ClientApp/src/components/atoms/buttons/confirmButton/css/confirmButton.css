@@ -1,23 +1,20 @@
-.loginButtonLink {
-  text-decoration: none;
-}
-
-.loginButton {
+.confrimButton {
   border-radius: 8px;
-  height: 45px;
-  width: 357px;
+  height: 35px;
+  width: 125px;
   background-color: var(--first-color);
   justify-content: center;
   text-align: center;
   display: flex;
   align-items: center;
-  border: 0px;
   color: var(--white-color);
   font-family: var(--body-font);
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 600;
+  border: 0px;
+  cursor: pointer;
 }
 
-.loginButton:hover {
+.confrimButton:hover {
   background-color: var(--purple-button-hover);
 }

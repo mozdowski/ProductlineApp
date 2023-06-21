@@ -1,5 +1,5 @@
 import { useAuth } from '../../hooks/auth/useAuth';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 import Login from '../../pages/Login';
 import Forgotpassword from '../../pages/Forgotpassword';
 import Signin from '../../pages/Signin';
@@ -14,6 +14,7 @@ import Logout from '../../pages/Logout';
 import Settings from '../../pages/Settings';
 import { AuctionsProvider } from '../../providers/auctionsProvider';
 import { OrdersProvider } from '../../providers/ordersProvider';
+import AddProduct from '../../pages/AddProduct';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -51,17 +52,18 @@ const RoutingWrapper = () => {
         ></Route>
 
         <Route
-          path="/products"
+          path="products"
           element={
             <ProtectedRoute>
               <ProductsProvider>
-                <Products />
+                <Outlet />
               </ProductsProvider>
             </ProtectedRoute>
           }
         >
-          <Route path="add" element={''}></Route>
-          <Route path="edit" element={''}></Route>
+          <Route path='' element={<Products />}></Route>
+          <Route path='add' element={<AddProduct />}></Route>
+          <Route path='edit' element={''}></Route>
         </Route>
 
         <Route

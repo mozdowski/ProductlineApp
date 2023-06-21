@@ -1,0 +1,28 @@
+.returnToProductsLink {
+  text-decoration: none;
+  margin-right: 14px;
+  margin-left: 11px;
+}
+
+.cancelButton {
+  border-radius: 8px;
+  height: 35px;
+  width: 95px;
+  background-color: var(--white-color);
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.cancelButton p {
+  color: var(--first-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.cancelButton:hover {
+  border: 1px solid var(--first-color);
+}

@@ -1,0 +1,81 @@
+.uploadPhotosField .uploadPhotosLabel,
+.uploadPhotosField .productPhotos .uploadPhotosInput {
+  display: block;
+}
+
+.uploadPhotosField .uploadPhotosLabel {
+  margin-bottom: 19.5px;
+}
+
+.uploadPhotosField p {
+  margin-bottom: 19.5px;
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.uploadPhotosField .uploadPhotosLabel {
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.uploadPhotosField .productPhotos .uploadPhotosInput {
+  width: 120px;
+  height: 120px;
+  color: #757575;
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  text-indent: 12px;
+  cursor: pointer;
+}
+
+.uploadPhotosField .productPhotos .uploadPhotosInput .uploadImageIcon {
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  margin-left: 30px;
+  margin-top: 30px;
+}
+
+.uploadPhotosField .productPhotos .uploadPhotosInput p {
+  color: var(--first-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  margin: 3px;
+  margin-left: 8px;
+}
+
+.uploadPhotosField .productPhotos .uploadPhotosInput input[type='file'] {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.uploadPhotosField .productPhotos .uploadPhotosInput input[type='file']::-webkit-file-upload-button {
+  cursor: pointer;
+}
+
+.uploadPhotosField .productPhotos {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.uploadPhotosField .productPhotos .productImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}
