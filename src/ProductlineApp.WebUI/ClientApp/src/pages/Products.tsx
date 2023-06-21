@@ -3,6 +3,7 @@ import ProductsTemplate from '../components/templates/ProductsTemplate';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
 import { mapProductConditionToString } from '../helpers/mappers';
+import { Outlet } from 'react-router-dom';
 
 export default function Products() {
   const ref = useRef<HTMLInputElement>(null);
@@ -38,5 +39,12 @@ export default function Products() {
   // console.log('height ' + height);
   // console.log('liczba wierszy ' + countRows);
 
-  return <ProductsTemplate productRecords={products} />;
+  return (
+    <>
+
+      <Outlet />
+      <ProductsTemplate productRecords={products} />
+
+    </>
+  );
 }

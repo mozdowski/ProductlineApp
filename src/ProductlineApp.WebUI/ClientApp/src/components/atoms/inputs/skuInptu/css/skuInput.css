@@ -1,32 +1,32 @@
 .skuField {
-    margin-right: 40px;
+  margin-right: 40px;
 }
 
 .skuLabel,
 .skuInput {
-    display: block;
+  display: block;
 }
 
 .skuLabel {
-    margin-bottom: 19.5px;
+  margin-bottom: 19.5px;
 }
 
 .skuLabel {
-    color: var(--letter-color);
-    font-family: var(--body-font);
-    font-size: 12px;
-    font-weight: 400;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .skuInput {
-    width: 310px;
-    height: 40px;
-    color: #757575;
-    font-family: var(--body-font);
-    font-size: 12px;
-    font-weight: 300;
-    background-color: #f8f8f8;
-    border: 1px solid #d8d8d8;
-    border-radius: 8px;
-    text-indent: 12px;
+  width: 310px;
+  height: 40px;
+  color: #757575;
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  text-indent: 12px;
 }

@@ -1,28 +1,25 @@
-import { ChangeEvent, SetStateAction, useState } from "react";
-import AddProductTemplate from "../components/templates/AddProductTemplate";
-
+import { ChangeEvent, SetStateAction, useState } from 'react';
+import AddProductTemplate from '../components/templates/AddProductTemplate';
 
 export default function AddProduct() {
+  const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
+  const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
 
-    const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-    const [imagePreviews, setImagePreviews] = useState<Array<string>>([]);
+  const selectImages = (event: React.ChangeEvent<HTMLInputElement>) => {
+    let photos: Array<string> = [];
+    let files = event.target.files;
 
-    const selectImages = (event: React.ChangeEvent<HTMLInputElement>) => {
-        let images: Array<string> = [];
-        let files = event.target.files;
+    if (files) {
+      for (let i = 0; i < files.length; i++) {
+        photos.push(URL.createObjectURL(files[i]));
+      }
 
-        if (files) {
-            for (let i = 0; i < files.length; i++) {
-                images.push(URL.createObjectURL(files[i]));
-            }
+      setSelectedPhotos(files);
+      setPhotosPreviews(photos);
+    }
+  };
 
-            setSelectedFiles(files);
-            setImagePreviews(images);
-        }
-    };
+  console.log("hahahh");
 
-    return (
-        <AddProductTemplate uploadProductPhotos={selectImages} photos={imagePreviews} />
-    );
+  return <AddProductTemplate uploadProductPhotos={selectImages} photos={photoPreviews} />;
 }
-

@@ -11,9 +11,7 @@
   text-align: center;
   display: flex;
   align-items: center;
-}
-
-.loginButton p {
+  border: 0px;
   color: var(--white-color);
   font-family: var(--body-font);
   font-size: 16px;
