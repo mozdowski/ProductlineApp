@@ -5,54 +5,14 @@ import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import DeleteProductIcon from '../../../../assets/icons/delete_icon.svg';
 import './css/ProductsTableBody.css';
 import { ProductsRecord } from '../../../../interfaces/products/ProductsPageInteface';
-
-export default function openCollapse(init: boolean) {
-  const [isOpen, setOpenState] = useState(init);
-
-  const toggle = useCallback(() => {
-    setOpenState((state: boolean) => !state);
-  }, [setOpenState]);
-
-  return { isOpen, toggle };
-}
+import { ProductsTableRow } from './rows/productsTableRow';
 
 export const ProductsTableBody = ({ productRecords }: { productRecords: ProductsRecord[] }) => {
-  const { isOpen, toggle } = openCollapse(false);
-
   return (
     <tbody>
-      <tr className="ProductsTableRow">
-        <td>
-          <CollapseTableButton isOpen={isOpen} toggle={toggle} />
-        </td>
-        {productRecords.map((product, index) => (
-          <React.Fragment key={index}>
-            <td>{product.sku}</td>
-            <td>{product.brand}</td>
-            <td>
-              <div className="productName">
-                <img className="productImage" src={product?.imageUrl} alt="product img" />
-                <p>{product.productName}</p>
-              </div>
-            </td>
-            <td>{product.category}</td>
-            <td>{product.price} zł</td>
-            <td>{product.quantity}</td>
-            <td className="productStatus productExposed">{product.condition}</td>
-            <td>
-              <div className="productsButtonsAction">
-                <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
-                <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" />
-              </div>
-            </td>
-          </React.Fragment>
-        ))}
-      </tr>
-      {isOpen && (
-        <React.Fragment key="details">
-          <CollapseProductDetails isOpen={isOpen} productRecords={productRecords} />
-        </React.Fragment>
-      )}
+      {productRecords.map((product, key) => (
+        <ProductsTableRow key={key} product={product} />
+      ))}
     </tbody>
   );
 };

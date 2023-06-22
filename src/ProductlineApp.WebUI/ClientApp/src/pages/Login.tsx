@@ -25,7 +25,7 @@ export default function Login() {
         navigate('/dashboard');
       })
       .catch((error) => {
-        console.log('Wystąpił błąd podczas logowania:', error);
+        console.error('Wystąpił błąd podczas logowania:', error);
       });
   };
 

@@ -46,7 +46,7 @@ export default function Signin() {
         navigate('/dashboard');
       })
       .catch((error) => {
-        console.log('Wystąpił błąd podczas rejestracji:', error);
+        console.error('Wystąpił błąd podczas rejestracji:', error);
       });
   };
 

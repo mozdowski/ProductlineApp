@@ -22,7 +22,8 @@ export default function Products() {
         imageUrl: product.imageUrl,
         quantity: product.quantity,
         condition: mapProductConditionToString(product.condition),
-        quality: '',
+        listingStatus: product.platforms.length > 0 ? 'Wystawione' : 'Niewystawione',
+        isListed: product.platforms.length > 0,
         galleryUrls: product.gallery,
         platforms: product.platforms,
       }));
@@ -41,10 +42,8 @@ export default function Products() {
 
   return (
     <>
-
       <Outlet />
       <ProductsTemplate productRecords={products} />
-
     </>
   );
 }

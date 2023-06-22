@@ -61,9 +61,9 @@ const RoutingWrapper = () => {
             </ProtectedRoute>
           }
         >
-          <Route path='' element={<Products />}></Route>
-          <Route path='add' element={<AddProduct />}></Route>
-          <Route path='edit' element={''}></Route>
+          <Route path="" element={<Products />}></Route>
+          <Route path="add" element={<AddProduct />}></Route>
+          <Route path="edit" element={''}></Route>
         </Route>
 
         <Route
