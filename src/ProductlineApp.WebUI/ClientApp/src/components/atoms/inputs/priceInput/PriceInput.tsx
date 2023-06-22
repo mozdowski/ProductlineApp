@@ -1,12 +1,27 @@
+import FormInput from '../../common/formInput/formInput';
 import './css/priceInput.css';
 
-function PriceInput() {
+function PriceInput({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (name: string, value: number) => void;
+}) {
   return (
     <div className="priceField">
       <label htmlFor="price" className="priceLabel">
         Cena
       </label>
-      <input type="text" id="price" name="price" placeholder="Cena" className="priceInput"></input>
+      <FormInput
+        value={value}
+        onChange={onChange}
+        type="text"
+        id="price"
+        name="price"
+        placeholder="Cena"
+        className="priceInput"
+      />
     </div>
   );
 }

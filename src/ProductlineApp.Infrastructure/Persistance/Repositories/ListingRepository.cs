@@ -82,9 +82,9 @@ public class ListingRepository : IListingRepository
             .ToListAsync();
     }
 
-    public async Task<IDictionary<ProductId, IEnumerable<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds)
+    public async Task<IDictionary<ProductId, List<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds)
     {
-        var dictionary = new Dictionary<ProductId, IEnumerable<PlatformId>>();
+        var dictionary = productIds.ToDictionary(x => x, x => new List<PlatformId>());
 
         var listings = await this._dbContext.Listings
             .Where(x => productIds.Contains(x.ProductId))
@@ -93,8 +93,8 @@ public class ListingRepository : IListingRepository
 
         foreach (var listing in listings)
         {
-            var platformIds = listing.Instances.Select(instance => instance.PlatformId);
-            dictionary[listing.ProductId] = platformIds;
+            var platformIds = listing.Instances.Select(instance => instance.PlatformId).ToList();
+            dictionary[listing.ProductId].AddRange(platformIds);
         }
 
         return dictionary;

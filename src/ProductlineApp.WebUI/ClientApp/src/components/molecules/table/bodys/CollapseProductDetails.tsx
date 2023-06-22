@@ -2,13 +2,15 @@ import React from 'react';
 import './css/CollapseProductDetails.css';
 import ProductAuctionLinksSection from '../../auctionlinks/ProductAuctionLinksSection';
 import { ProductsRecord } from '../../../../interfaces/products/ProductsPageInteface';
+import { PlatformEnum } from '../../../../enums/platform.enum';
+import { ProductCondition } from '../../../../enums/productCondition';
 
 export const CollapseProductDetails = ({
-  isOpen,
-  productRecords,
+  platformsListedOn,
+  condition,
 }: {
-  isOpen: any;
-  productRecords: ProductsRecord[];
+  platformsListedOn: PlatformEnum[];
+  condition: string;
 }) => {
   return (
     <tr className="productDetailsWrapper">
@@ -16,9 +18,7 @@ export const CollapseProductDetails = ({
       <td>
         <div className="productConditionSection">
           <h1>Stan: </h1>
-          {productRecords.map((product) => (
-            <h2>{product.quality}</h2>
-          ))}
+          <h2>{condition}</h2>
         </div>
       </td>
       <td></td>
@@ -28,7 +28,7 @@ export const CollapseProductDetails = ({
       <td></td>
       <td></td>
       <td>
-        <ProductAuctionLinksSection />
+        <ProductAuctionLinksSection platformsListedOn={platformsListedOn} />
       </td>
     </tr>
   );

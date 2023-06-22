@@ -17,7 +17,7 @@ public interface IListingRepository : IRepository<Listing, ListingId>
 
     Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId);
 
-    Task<IDictionary<ProductId, IEnumerable<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds);
+    Task<IDictionary<ProductId, List<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds);
 
     Task<IEnumerable<PlatformId>> GetPlatformsUserHasListingsOn(UserId userId);
 }

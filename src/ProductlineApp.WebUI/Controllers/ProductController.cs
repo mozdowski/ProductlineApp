@@ -46,7 +46,7 @@ public class ProductController : ControllerBase
         return this.Ok(response);
     }
 
-    [HttpPost]
+    [HttpPost("add")]
     public async Task<IActionResult> AddProduct([FromForm] AddProductDtoRequest request)
     {
         var command = new AddProductCommand.Command(
@@ -60,9 +60,12 @@ public class ProductController : ControllerBase
             request.Description,
             request.Condition,
             this._currentUser.UserId.GetValueOrDefault());
-        await this._mediator.Send(command);
+        var product = await this._mediator.Send(command);
 
-        return this.Ok();
+        return this.Ok(new
+        {
+            ProductId = product.Id.Value,
+        });
     }
 
     [HttpPost("{productId:guid}/addImageToGallery")]

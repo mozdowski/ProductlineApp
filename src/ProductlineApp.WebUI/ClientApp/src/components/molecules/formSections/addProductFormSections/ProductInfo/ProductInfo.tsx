@@ -1,3 +1,5 @@
+import { AddProductRequest } from '../../../../../interfaces/products/addProductRequest';
+import { ProductForm } from '../../../../../interfaces/products/productForm';
 import BrandInput from '../../../../atoms/inputs/brandInput/BrandInput';
 import CategoryInput from '../../../../atoms/inputs/categoryInput/CatrgoryInput';
 import ConditionInput from '../../../../atoms/inputs/conditionInput/ConditionInput';
@@ -8,7 +10,13 @@ import QuantityInput from '../../../../atoms/inputs/quantityInput/QuantityInput'
 import SKUInput from '../../../../atoms/inputs/skuInptu/SKUInput';
 import './css/productInfo.css';
 
-function ProductInfo() {
+function ProductInfo({
+  productForm,
+  onChange,
+}: {
+  productForm: ProductForm;
+  onChange: (name: string, value: string | number) => void;
+}) {
   return (
     <>
       <div className="productInfo">
@@ -20,20 +28,20 @@ function ProductInfo() {
         </div>
         <div className="addProductInputs">
           <div className="firsLineInputs">
-            <SKUInput />
-            <ProductNameInput />
+            <SKUInput value={productForm.sku} onChange={onChange} />
+            <ProductNameInput value={productForm.name} onChange={onChange} />
           </div>
           <div className="secondLineInputs">
-            <BrandInput />
-            <QuantityInput />
-            <PriceInput />
+            <BrandInput value={productForm.brand} onChange={onChange} />
+            <QuantityInput value={productForm.quantity} onChange={onChange} />
+            <PriceInput value={productForm.price} onChange={onChange} />
           </div>
           <div className="thirdLineInputs">
-            <CategoryInput />
-            <ConditionInput />
+            <CategoryInput value={productForm.category} onChange={onChange} />
+            <ConditionInput value={productForm.condition} onChange={onChange} />
           </div>
           <div className="textAreaProductDescription">
-            <ProductDescritionInput />
+            <ProductDescritionInput value={productForm.description} onChange={onChange} />
           </div>
         </div>
       </div>

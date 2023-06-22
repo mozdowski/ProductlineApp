@@ -1,12 +1,27 @@
+import FormInput from '../../common/formInput/formInput';
 import './css/brandInput.css';
 
-function BrandInput() {
+function BrandInput({
+  value,
+  onChange,
+}: {
+  value: string;
+  onChange: (name: string, value: string) => void;
+}) {
   return (
     <div className="brandField">
       <label htmlFor="sku" className="brandLabel">
         Marka
       </label>
-      <input type="text" id="brand" name="brand" placeholder="Marka" className="brandInput"></input>
+      <FormInput
+        value={value}
+        onChange={onChange}
+        type="text"
+        id="brand"
+        name="brand"
+        placeholder="Marka"
+        className="brandInput"
+      />
     </div>
   );
 }

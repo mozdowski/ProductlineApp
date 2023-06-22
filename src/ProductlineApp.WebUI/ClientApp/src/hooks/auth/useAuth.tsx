@@ -11,7 +11,6 @@ export const useAuth = () => {
   const { user, register, login, logout } = authContext;
 
   const isAuthenticated = () => {
-    console.log(user);
     if (user?.authToken == undefined) {
       return false;
     }

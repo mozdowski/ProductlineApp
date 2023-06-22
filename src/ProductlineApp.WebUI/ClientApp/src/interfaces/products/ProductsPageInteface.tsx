@@ -13,7 +13,8 @@ export interface ProductsRecord {
   imageUrl: string;
   quantity: number;
   condition: string;
-  quality: string;
+  listingStatus: string;
+  isListed: boolean;
   galleryUrls: string[];
   platforms: PlatformEnum[];
 }
