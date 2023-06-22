@@ -4,9 +4,11 @@ import './css/productNameInput.css';
 function PoductNameInput({
   value,
   onChange,
+  error,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   return (
     <div className="productNameField">
@@ -21,6 +23,7 @@ function PoductNameInput({
         name="name"
         placeholder="Nazwa produktu"
         className="productNameInput"
+        error={error}
       />
     </div>
   );

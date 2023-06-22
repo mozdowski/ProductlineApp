@@ -4,9 +4,11 @@ import './css/productDescriptionInput.css';
 function ProductDescritionInput({
   value,
   onChange,
+  error,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   return (
     <div className="productDescriptionField">
@@ -20,6 +22,7 @@ function ProductDescritionInput({
         name="description"
         placeholder="Opis produktu"
         className="productDescriptionTextarea"
+        error={error}
       />
     </div>
   );

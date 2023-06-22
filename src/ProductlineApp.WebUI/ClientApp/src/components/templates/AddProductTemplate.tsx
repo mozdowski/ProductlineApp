@@ -11,12 +11,14 @@ export default function AddProductTemplate({
   onSubmit,
   productForm,
   onChange,
+  errors,
 }: {
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
+  errors: any;
 }) {
   return (
     <>
@@ -29,6 +31,7 @@ export default function AddProductTemplate({
             onSubmit={onSubmit}
             productForm={productForm}
             onChange={onChange}
+            errors={errors}
           />
         </div>
       </div>

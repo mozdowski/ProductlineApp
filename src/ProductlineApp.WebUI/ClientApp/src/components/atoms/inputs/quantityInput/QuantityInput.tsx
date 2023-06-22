@@ -4,9 +4,11 @@ import './css/quantityInput.css';
 function QuantityInput({
   value,
   onChange,
+  error,
 }: {
   value: number;
   onChange: (name: string, value: number) => void;
+  error: any;
 }) {
   return (
     <div className="quantityField">
@@ -21,6 +23,7 @@ function QuantityInput({
         name="quantity"
         placeholder="Ilość"
         className="quantityInput"
+        error={error}
       />
     </div>
   );

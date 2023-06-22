@@ -4,9 +4,11 @@ import './css/categoryInput.css';
 function CategoryInput({
   value,
   onChange,
+  error,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   return (
     <div className="categoryField">
@@ -21,6 +23,7 @@ function CategoryInput({
         name="category"
         placeholder="Kategoria"
         className="categoryInput"
+        error={error}
       />
     </div>
   );

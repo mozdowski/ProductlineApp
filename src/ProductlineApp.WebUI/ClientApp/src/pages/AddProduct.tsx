@@ -1,10 +1,21 @@
-import { ChangeEvent, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import AddProductTemplate from '../components/templates/AddProductTemplate';
 import { AddProductRequest } from '../interfaces/products/addProductRequest';
-import { ProductCondition } from '../enums/productCondition';
 import { ProductForm } from '../interfaces/products/productForm';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate } from 'react-router-dom';
+import * as Yup from 'yup';
+
+const productSchema = Yup.object().shape({
+  sku: Yup.string().required('SKU jest wymagane'),
+  name: Yup.string().required('Nazwa jest wymagana'),
+  brand: Yup.string().required('Marka jest wymagana'),
+  quantity: Yup.number().required('Ilość jest wymagana').positive('Ilość musi być dodatnia'),
+  price: Yup.number().required('Cena jest wymagana').positive('Cena musi być dodatnia'),
+  category: Yup.string().required('Kategoria jest wymagana'),
+  condition: Yup.string().required('Stan jest wymagany'),
+  description: Yup.string().required('Opis jest wymagany'),
+});
 
 export default function AddProduct() {
   const { productsService } = useProductsService();
@@ -21,6 +32,22 @@ export default function AddProduct() {
     condition: 0,
     description: '',
   });
+  const [errors, setErrors] = useState<Partial<ProductForm>>({});
+
+  const validateForm = async () => {
+    try {
+      await productSchema.validate(productForm, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (validationErrors: any) {
+      const errors: Partial<ProductForm> = {};
+      validationErrors.inner.forEach((error: any) => {
+        errors[error.path as keyof ProductForm] = error.message;
+      });
+      setErrors(errors);
+      return false;
+    }
+  };
 
   const selectImages = (event: React.ChangeEvent<HTMLInputElement>) => {
     const photos: Array<string> = [];
@@ -38,6 +65,12 @@ export default function AddProduct() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
+
+    const isValid: boolean = await validateForm();
+
+    if (!isValid) {
+      return;
+    }
 
     const photos: FileList = selectedPhotos as FileList;
 
@@ -87,6 +120,7 @@ export default function AddProduct() {
       onSubmit={handleSubmit}
       productForm={productForm}
       onChange={handleChange}
+      errors={errors}
     />
   );
 }
