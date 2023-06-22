@@ -11,19 +11,21 @@ export default function AddProductForm({
   onSubmit,
   productForm,
   onChange,
+  errors,
 }: {
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
+  errors: Partial<ProductForm>;
 }) {
   return (
     <>
       <form onSubmit={onSubmit}>
         <div className="addProduct">
           <div className="detailsAboutProductForm">
-            <ProductInfo productForm={productForm} onChange={onChange} />
+            <ProductInfo productForm={productForm} onChange={onChange} errors={errors} />
           </div>
           <div className="productPhotosForm">
             <Photos uploadProductPhotos={uploadProductPhotos} photos={photos} />

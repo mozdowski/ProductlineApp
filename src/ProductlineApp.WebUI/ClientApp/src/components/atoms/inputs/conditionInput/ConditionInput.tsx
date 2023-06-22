@@ -6,9 +6,11 @@ import './css/conditionInput.css';
 function ConditionInput({
   value,
   onChange,
+  error,
 }: {
   value: number;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   const options: { label: string; value: string }[] = [];
   for (const key in ProductCondition) {
@@ -32,6 +34,7 @@ function ConditionInput({
         name="condition"
         placeholder="Stan"
         className="conditionInput"
+        error={error}
       />
     </div>
   );

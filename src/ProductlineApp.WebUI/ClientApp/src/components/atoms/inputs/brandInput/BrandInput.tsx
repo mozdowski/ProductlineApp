@@ -4,9 +4,11 @@ import './css/brandInput.css';
 function BrandInput({
   value,
   onChange,
+  error,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   return (
     <div className="brandField">
@@ -21,6 +23,7 @@ function BrandInput({
         name="brand"
         placeholder="Marka"
         className="brandInput"
+        error={error}
       />
     </div>
   );

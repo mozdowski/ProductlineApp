@@ -4,9 +4,11 @@ import './css/priceInput.css';
 function PriceInput({
   value,
   onChange,
+  error,
 }: {
   value: number;
   onChange: (name: string, value: number) => void;
+  error: any;
 }) {
   return (
     <div className="priceField">
@@ -21,6 +23,7 @@ function PriceInput({
         name="price"
         placeholder="Cena"
         className="priceInput"
+        error={error}
       />
     </div>
   );

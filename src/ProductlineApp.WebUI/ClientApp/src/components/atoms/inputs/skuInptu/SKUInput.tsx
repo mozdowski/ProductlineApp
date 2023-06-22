@@ -4,9 +4,11 @@ import './css/skuInput.css';
 function SKUInput({
   value,
   onChange,
+  error,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
+  error: any;
 }) {
   return (
     <div className="skuField">
@@ -21,6 +23,7 @@ function SKUInput({
         placeholder="SKU"
         className="skuInput"
         type="text"
+        error={error}
       />
     </div>
   );

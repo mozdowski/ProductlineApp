@@ -4,7 +4,7 @@ interface FormInputProps<T> {
   name: string;
   value: T;
   onChange: (name: string, value: T) => void;
-  error?: string;
+  error?: any;
   [key: string]: any;
 }
 
