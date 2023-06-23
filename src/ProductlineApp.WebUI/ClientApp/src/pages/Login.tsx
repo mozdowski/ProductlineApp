@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAuth } from '../hooks/auth/useAuth';
 import * as Yup from 'yup';
 import FormInput from '../components/atoms/common/formInput/formInput';
+import { toast } from 'react-toastify';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email('Podaj poprawny adres email').required('Email jest wymagany'),
@@ -67,8 +68,14 @@ export default function Login() {
     login(loginForm.email, loginForm.password)
       .then(() => {
         navigate('/dashboard');
+        toast.success('Zalogowano pomyślnie', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       })
       .catch((error) => {
+        toast.error('Błąd logowania', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         console.error('Wystąpił błąd podczas logowania:', error);
       });
   };
