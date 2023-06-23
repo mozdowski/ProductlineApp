@@ -9,13 +9,58 @@ import React, { useState } from 'react';
 import SigninButton from '../components/atoms/buttons/signInButton/SigninButton';
 import { useAuth } from '../hooks/auth/useAuth';
 import { RegisterRequest } from '../interfaces/auth/registerRequest';
+import * as Yup from 'yup';
+import FormInput from '../components/atoms/common/formInput/formInput';
+
+interface SigninForm {
+  username: string;
+  email: string;
+  password: string;
+  passwordRep: string;
+}
+
+const signinSchema = Yup.object().shape({
+  username: Yup.string().required('Nazwa użytkownika jest wymagana'),
+  email: Yup.string().email('Nieprawidłowy adres email').required('Email jest wymagany'),
+  password: Yup.string()
+    .required('Hasło jest wymagane')
+    .min(6, 'Hasło musi mieć co najmniej 6 znaków'),
+  passwordRep: Yup.string()
+    .oneOf([Yup.ref('password')], 'Hasła muszą się zgadzać')
+    .required('Powtórzenie hasła jest wymagane'),
+});
 
 export default function Signin() {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [passwordRep, setPasswordRep] = useState('');
+  const [signinForm, setSigninForm] = useState<SigninForm>({
+    username: '',
+    email: '',
+    password: '',
+    passwordRep: '',
+  });
+  const [errors, setErrors] = useState<Partial<SigninForm>>({});
+
+  const handleChange = (name: string, value: number | string) => {
+    setSigninForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = async (): Promise<boolean> => {
+    try {
+      await signinSchema.validate(signinForm, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (validationErrors: any) {
+      const errors: Partial<SigninForm> = {};
+      validationErrors.inner.forEach((error: any) => {
+        errors[error.path as keyof SigninForm] = error.message;
+      });
+      setErrors(errors);
+      return false;
+    }
+  };
 
   const navigate = useNavigate();
   const { register } = useAuth();
@@ -31,13 +76,19 @@ export default function Signin() {
     setImage(e.target.files[0]);
   };
 
-  const handleRegister = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    const isValid: boolean = await validateForm();
+
+    if (!isValid) {
+      return;
+    }
+
     const data: RegisterRequest = {
-      username: username,
-      password: password,
-      email: email,
+      username: signinForm.username,
+      password: signinForm.password,
+      email: signinForm.email,
       avatar: image,
     };
 
@@ -82,42 +133,43 @@ export default function Signin() {
               <label htmlFor="uname" className="unameLabel">
                 Nazwa uzytkownika
               </label>
-              <input
+              <FormInput
                 type="text"
                 id="uname"
-                name="uname"
+                name="username"
                 placeholder="Nazwa uzytkownika"
                 className="unameInput"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-              ></input>
-
+                value={signinForm.username}
+                onChange={handleChange}
+                error={errors.username}
+              />
               <label htmlFor="emial" className="emailLabel">
                 Email
               </label>
-              <input
+              <FormInput
                 type="email"
                 id="email"
                 name="email"
                 placeholder="Email"
                 className="emailInput"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              ></input>
-
+                value={signinForm.email}
+                onChange={handleChange}
+                error={errors.email}
+              />
               <label htmlFor="password" className="passwordLabel">
                 Hasło
               </label>
               <div className="passwordField">
-                <input
+                <FormInput
                   type={!isPasswordVisible ? 'password' : 'text'}
                   id="password"
                   name="password"
                   placeholder="Podaj hasło"
                   className="passwordInput"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                ></input>
+                  value={signinForm.password}
+                  onChange={handleChange}
+                  error={errors.password}
+                />
                 <img
                   className="imageEye"
                   src={isPasswordVisible ? EyeVisible : EyeInvisible}
@@ -129,15 +181,16 @@ export default function Signin() {
                 Powtórz Hasło
               </label>
               <div className="repeatPasswordField">
-                <input
+                <FormInput
                   type={!isPasswordVisible ? 'password' : 'text'}
                   id="repeatPassword"
-                  name="repeatPassword"
+                  name="passwordRep"
                   placeholder="Podaj hasło"
                   className="repeatPasswordInput"
-                  value={passwordRep}
-                  onChange={(e) => setPasswordRep(e.target.value)}
-                ></input>
+                  value={signinForm.passwordRep}
+                  onChange={handleChange}
+                  error={errors.passwordRep}
+                />
                 <img
                   className="repeatImageEye"
                   src={isPasswordVisible ? EyeVisible : EyeInvisible}

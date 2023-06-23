@@ -1,4 +1,5 @@
 import { ProductCondition } from '../../../../enums/productCondition';
+import { mapProductConditionToString } from '../../../../helpers/mappers';
 import FormInput from '../../common/formInput/formInput';
 import { FormSelect } from '../../common/formSelect/formSelect';
 import './css/conditionInput.css';
@@ -16,7 +17,10 @@ function ConditionInput({
   for (const key in ProductCondition) {
     if (isNaN(Number(key))) {
       const value = ProductCondition[key];
-      options.push({ value: value, label: key });
+      options.push({
+        value: value,
+        label: mapProductConditionToString(ProductCondition[key as keyof typeof ProductCondition]),
+      });
     }
   }
 

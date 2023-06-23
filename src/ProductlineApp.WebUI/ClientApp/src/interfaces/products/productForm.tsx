@@ -7,4 +7,5 @@ export interface ProductForm {
   category: string;
   condition: number;
   description: string;
+  photos: FileList | null;
 }

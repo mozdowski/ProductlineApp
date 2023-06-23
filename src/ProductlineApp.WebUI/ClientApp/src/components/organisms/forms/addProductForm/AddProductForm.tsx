@@ -28,7 +28,11 @@ export default function AddProductForm({
             <ProductInfo productForm={productForm} onChange={onChange} errors={errors} />
           </div>
           <div className="productPhotosForm">
-            <Photos uploadProductPhotos={uploadProductPhotos} photos={photos} />
+            <Photos
+              uploadProductPhotos={uploadProductPhotos}
+              photos={photos}
+              error={errors.photos}
+            />
           </div>
         </div>
         <ButtonsSection />

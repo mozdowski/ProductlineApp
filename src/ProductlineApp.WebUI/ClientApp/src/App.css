@@ -99,4 +99,10 @@
   font-size: 12px;
   margin-top: 4px;
   margin-left: 8px;
+  margin-top: -20px;
+}
+
+.error-spacer {
+  height: 20px;
+  visibility: hidden;
 }
