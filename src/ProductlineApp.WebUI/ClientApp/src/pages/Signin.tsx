@@ -11,6 +11,7 @@ import { useAuth } from '../hooks/auth/useAuth';
 import { RegisterRequest } from '../interfaces/auth/registerRequest';
 import * as Yup from 'yup';
 import FormInput from '../components/atoms/common/formInput/formInput';
+import { toast } from 'react-toastify';
 
 interface SigninForm {
   username: string;
@@ -94,9 +95,15 @@ export default function Signin() {
 
     register(data)
       .then(() => {
+        toast.success('Zarejestrowano pomyślnie', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         navigate('/dashboard');
       })
       .catch((error) => {
+        toast.error('Błąd rejestracji', {
+          position: toast.POSITION.TOP_RIGHT,
+        });
         console.error('Wystąpił błąd podczas rejestracji:', error);
       });
   };

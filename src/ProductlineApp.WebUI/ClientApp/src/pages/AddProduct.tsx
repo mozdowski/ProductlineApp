@@ -5,6 +5,7 @@ import { ProductForm } from '../interfaces/products/productForm';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
+import { toast } from 'react-toastify';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -112,6 +113,9 @@ export default function AddProduct() {
 
     await Promise.all(addImageRequestPool);
 
+    toast.success('Pomyślnie dodano produkt', {
+      position: toast.POSITION.TOP_RIGHT,
+    });
     navigate('/products');
   };
 
