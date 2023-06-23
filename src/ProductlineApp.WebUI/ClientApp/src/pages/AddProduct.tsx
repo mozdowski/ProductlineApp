@@ -15,12 +15,17 @@ const productSchema = Yup.object().shape({
   category: Yup.string().required('Kategoria jest wymagana'),
   condition: Yup.string().required('Stan jest wymagany'),
   description: Yup.string().required('Opis jest wymagany'),
+  photos: Yup.mixed()
+    .nullable()
+    .test('file', 'Wymagane co najmniej jedno zdjęcie', (value) => {
+      return value instanceof FileList && value.length > 0;
+    }),
 });
 
 export default function AddProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
-  const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
+  // const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
   const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
   const [productForm, setProductForm] = useState<ProductForm>({
     sku: '',
@@ -31,6 +36,7 @@ export default function AddProduct() {
     category: '',
     condition: 0,
     description: '',
+    photos: null,
   });
   const [errors, setErrors] = useState<Partial<ProductForm>>({});
 
@@ -58,7 +64,10 @@ export default function AddProduct() {
         photos.push(URL.createObjectURL(files[i]));
       }
 
-      setSelectedPhotos(files);
+      setProductForm((prevData) => ({
+        ...prevData,
+        ['photos']: files,
+      }));
       setPhotosPreviews(photos);
     }
   };
@@ -72,7 +81,7 @@ export default function AddProduct() {
       return;
     }
 
-    const photos: FileList = selectedPhotos as FileList;
+    const photos: FileList = productForm.photos as FileList;
 
     const newProductRequestData: AddProductRequest = {
       sku: productForm.sku,

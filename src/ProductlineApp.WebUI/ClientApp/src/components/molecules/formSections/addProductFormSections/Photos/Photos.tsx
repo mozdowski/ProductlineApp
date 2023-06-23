@@ -1,7 +1,15 @@
 import ProductPhotosInput from '../../../../atoms/inputs/productPhotosInput/ProductPhotosInput';
 import './css/photos.css';
 
-function Photos({ uploadProductPhotos, photos }: { uploadProductPhotos: any; photos: string[] }) {
+function Photos({
+  uploadProductPhotos,
+  photos,
+  error,
+}: {
+  uploadProductPhotos: any;
+  photos: string[];
+  error: any;
+}) {
   return (
     <>
       <div className="photosInfo">
@@ -12,7 +20,11 @@ function Photos({ uploadProductPhotos, photos }: { uploadProductPhotos: any; pho
           <p>Zdjęcia</p>
         </div>
         <div className="productImages">
-          <ProductPhotosInput uploadProductPhotos={uploadProductPhotos} photos={photos} />
+          <ProductPhotosInput
+            uploadProductPhotos={uploadProductPhotos}
+            photos={photos}
+            error={error}
+          />
         </div>
       </div>
     </>

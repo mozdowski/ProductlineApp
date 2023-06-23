@@ -4,9 +4,11 @@ import UploadImageIcon from '../../../../assets/icons/uplaoadImage_icon.png';
 function ProductPhotosInput({
   uploadProductPhotos,
   photos,
+  error,
 }: {
   uploadProductPhotos: any;
   photos: string[];
+  error: any;
 }) {
   return (
     <div className="uploadPhotosField">
@@ -31,6 +33,7 @@ function ProductPhotosInput({
           <p>Dodaj zdjęcia</p>
         </div>
       </div>
+      {error && <span className="error">{error}</span>}
     </div>
   );
 }
