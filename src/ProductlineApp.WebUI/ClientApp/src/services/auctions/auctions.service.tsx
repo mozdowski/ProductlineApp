@@ -1,5 +1,6 @@
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { GetPlatformsResponse } from '../../interfaces/platforms/getPlatformsResponse';
+import { GetProductsResponse } from '../../interfaces/products/getProductsResponse';
 import HttpService from '../common/http.service';
 
 export class AuctionsService {
@@ -7,6 +8,10 @@ export class AuctionsService {
 
   constructor(token: string | undefined) {
     this.httpService = new HttpService(token);
+  }
+
+  public async getProductList(): Promise<GetProductsResponse> {
+    return this.httpService.get<GetProductsResponse>('/products');
   }
 
   public async getPlatformAuctionsList(platformId: string): Promise<GetAuctionsResponse> {
@@ -22,4 +27,4 @@ export class AuctionsService {
   }
 }
 
-export {};
+export { };

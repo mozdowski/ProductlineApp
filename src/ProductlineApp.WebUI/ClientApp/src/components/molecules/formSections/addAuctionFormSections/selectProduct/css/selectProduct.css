@@ -1,0 +1,33 @@
+.selectProduct {
+  width: 50%;
+  margin-right: 70px;
+}
+
+.selectProduct .sectionLabel {
+  align-items: center;
+  display: flex;
+}
+
+.selectProduct .sectionLabel .sectionNumber {
+  background-color: var(--first-color);
+  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.selectProduct .sectionLabel .sectionNumber h1 {
+  font-size: 14px;
+  color: var(--white-color);
+  font-family: var(--body-font);
+  font-weight: 600;
+}
+
+.selectProduct .sectionLabel p {
+  font-size: 16px;
+  font-family: var(--body-font);
+  font-weight: 600;
+  margin-left: 18px;
+}

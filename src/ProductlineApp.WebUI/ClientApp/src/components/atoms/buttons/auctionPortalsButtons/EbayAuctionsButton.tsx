@@ -1,4 +1,4 @@
-import EbayIcon from '../../../../assets/icons/ebay_icon1.svg';
+import EbayIcon from '../../../../assets/icons/ebay_icon.svg';
 import './css/ebayAuctionsButton.css';
 import { PlatformEnum } from '../../../../enums/platform.enum';
 

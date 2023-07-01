@@ -1,4 +1,3 @@
-import { AddProductRequest } from '../../../../interfaces/products/addProductRequest';
 import { ProductForm } from '../../../../interfaces/products/productForm';
 import Photos from '../../../molecules/formSections/addProductFormSections/Photos/Photos';
 import ProductInfo from '../../../molecules/formSections/addProductFormSections/ProductInfo/ProductInfo';

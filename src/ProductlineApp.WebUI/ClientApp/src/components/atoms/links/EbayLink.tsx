@@ -1,5 +1,5 @@
 import React from 'react';
-import EbayIcon from '../../../assets/icons/ebay_icon1.svg';
+import EbayIcon from '../../../assets/icons/ebay_icon.svg';
 import './css/EbayLink.css';
 
 function EbayLink() {
