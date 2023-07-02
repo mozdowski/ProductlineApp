@@ -79,6 +79,9 @@ export default function AddProduct() {
     const isValid: boolean = await validateForm();
 
     if (!isValid) {
+      toast.error('Formularz zawiera błędy', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       return;
     }
 
@@ -96,27 +99,33 @@ export default function AddProduct() {
       image: photos.item(0) as File,
     };
 
-    const productResponse = await productsService.addProduct(newProductRequestData);
+    try {
+      const productResponse = await productsService.addProduct(newProductRequestData);
 
-    const addImageRequestPool: Promise<void>[] = [];
+      const addImageRequestPool: Promise<void>[] = [];
 
-    for (let i = 0; i < photos.length; i++) {
-      const photo = photos[i];
-      const addImageToGalleryFormData: FormData = new FormData();
-      addImageToGalleryFormData.append('image', photo);
-      const request = productsService.addImageToGallery(
-        productResponse.productId,
-        addImageToGalleryFormData,
-      );
-      addImageRequestPool.push(request);
+      for (let i = 0; i < photos.length; i++) {
+        const photo = photos[i];
+        const addImageToGalleryFormData: FormData = new FormData();
+        addImageToGalleryFormData.append('image', photo);
+        const request = productsService.addImageToGallery(
+          productResponse.productId,
+          addImageToGalleryFormData,
+        );
+        addImageRequestPool.push(request);
+      }
+
+      await Promise.all(addImageRequestPool);
+
+      toast.success('Pomyślnie dodano produkt', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      navigate('/products');
+    } catch (err: any) {
+      toast.error('Wystąpił błąd przy dodawaniu produktu', {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     }
-
-    await Promise.all(addImageRequestPool);
-
-    toast.success('Pomyślnie dodano produkt', {
-      position: toast.POSITION.TOP_RIGHT,
-    });
-    navigate('/products');
   };
 
   const handleChange = (name: string, value: number | string) => {
