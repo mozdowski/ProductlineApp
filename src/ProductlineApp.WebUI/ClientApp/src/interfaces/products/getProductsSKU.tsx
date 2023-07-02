@@ -1,7 +1,7 @@
 export interface GetProductsSKU {
-    productsSKU: ProductSKU[];
+  productsSKU: ProductSKU[];
 }
 
 export interface ProductSKU {
-    sku: string;
+  sku: string;
 }

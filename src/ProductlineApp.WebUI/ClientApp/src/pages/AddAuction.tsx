@@ -25,7 +25,6 @@ const allegroAuctionSchema = Yup.object().shape({
 });
 
 export default function AddAuction() {
-
   const navigate = useNavigate();
   const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
   const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
@@ -39,7 +38,7 @@ export default function AddAuction() {
     price: 0,
     description: '',
     photos: null,
-    allegroProductIdea: 0
+    allegroProductIdea: 0,
   });
   const [errors, setErrors] = useState<Partial<AuctionForm>>({});
 
@@ -59,12 +58,18 @@ export default function AddAuction() {
   };
 
   return (
-    <AddAuctionTemplate uploadProductPhotos={undefined} photos={[]} onSubmit={function (event: FormEvent<HTMLFormElement>): void {
-      throw new Error('Function not implemented.');
-    }} auctionForm={auctionForm} onChange={function (name: string, value: string | number): void {
-      throw new Error('Function not implemented.');
-    }} errors={undefined}
-
-      productsSKURecords={[]} />
-  )
+    <AddAuctionTemplate
+      uploadProductPhotos={undefined}
+      photos={[]}
+      onSubmit={function (event: FormEvent<HTMLFormElement>): void {
+        throw new Error('Function not implemented.');
+      }}
+      auctionForm={auctionForm}
+      onChange={function (name: string, value: string | number): void {
+        throw new Error('Function not implemented.');
+      }}
+      errors={undefined}
+      productsSKURecords={[]}
+    />
+  );
 }

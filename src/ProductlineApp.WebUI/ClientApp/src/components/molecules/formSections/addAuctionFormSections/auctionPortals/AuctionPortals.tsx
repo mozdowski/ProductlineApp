@@ -27,7 +27,11 @@ function AuctionPortals({
         </div>
         <div className="addAuctionPortalsInputs">
           <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
-          <AllegroFormPopup openAllegroPopup={openAllegroPopup} errors={errors} closeAllegroPopup={() => setOpenAllegroFormPopup(false)} />
+          <AllegroFormPopup
+            openAllegroPopup={openAllegroPopup}
+            errors={errors}
+            closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
+          />
           <EbayFormButton />
         </div>
       </div>

@@ -1,7 +1,7 @@
 export interface GetProductPhotos {
-    productPhotos: ProductPhotos[];
+  productPhotos: ProductPhotos[];
 }
 
 export interface ProductPhotos {
-    galleryUrls: string[];
+  galleryUrls: string[];
 }

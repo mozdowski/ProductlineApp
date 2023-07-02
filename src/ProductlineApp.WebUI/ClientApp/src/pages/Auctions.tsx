@@ -65,7 +65,9 @@ export default function Auctions() {
       <Outlet />
       <AuctionsTemplate
         auctionRecords={auctions}
-        selectedAuctionPortal={selectedAuctionPortal ? selectedAuctionPortal.name : PlatformEnum.EBAY}
+        selectedAuctionPortal={
+          selectedAuctionPortal ? selectedAuctionPortal.name : PlatformEnum.EBAY
+        }
         handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         isSelectedTypeAuctions={isSelectedTypeAuctions}
         handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}

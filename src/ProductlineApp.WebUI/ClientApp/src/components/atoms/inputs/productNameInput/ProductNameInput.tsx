@@ -5,12 +5,12 @@ function PoductNameInput({
   value,
   onChange,
   error,
-  disabled
+  disabled,
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
   error: any;
-  disabled: boolean
+  disabled: boolean;
 }) {
   return (
     <div className="productNameField">

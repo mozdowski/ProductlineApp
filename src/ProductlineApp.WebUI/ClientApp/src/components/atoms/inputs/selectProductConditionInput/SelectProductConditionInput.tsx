@@ -39,7 +39,8 @@ function SelectProductConditionInput({
         placeholder="Stan"
         className="conditionInput"
         error={error}
-        showFormSteps={""} />
+        showFormSteps={''}
+      />
     </div>
   );
 }

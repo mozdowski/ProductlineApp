@@ -1,44 +1,44 @@
 .overlayAllegroPopup {
-    background-color: rgba(0, 0, 0, 0.5);
-    left: 0px;
-    top: 0px;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    display: flex;
-    align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
 }
 
 .allegroPopup {
-    width: 667px;
-    height: 600px;
-    background-color: var(--white-color);
-    border-radius: 8px;
-    padding: 35px 35px 35px 35px;
+  width: 667px;
+  height: 600px;
+  background-color: var(--white-color);
+  border-radius: 8px;
+  padding: 35px 35px 35px 35px;
 }
 
 .allegroPopup .allegroPopupFormInputs .firstLineAllegroAuctionInputs {
-    display: flex;
+  display: flex;
 }
 
 .allegroPopup .allegroPopupFormInputs .secondLineAllegroAuctionInputs {
-    display: flex;
+  display: flex;
 }
 
 .allegroPopup .allegroPopupFormInputs .thirdLineAllegroAuctionInputs {
-    display: flex;
+  display: flex;
 }
 
 .allegroPopup .allegroPopupFormInputs .fourthLineAllegroAuctionInputs {
-    display: flex;
+  display: flex;
 }
 
 .allegroPopup .allegroPopupFormInputs .addauctionAllegroButtons {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    float: right;
-    right: 35px;
-    bottom: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  right: 35px;
+  bottom: 35px;
 }

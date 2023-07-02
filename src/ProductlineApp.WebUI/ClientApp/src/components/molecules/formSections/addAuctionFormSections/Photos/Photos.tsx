@@ -1,10 +1,6 @@
 import './css/addAuction_Photos.css';
 
-function Photos({
-  photos,
-}: {
-  photos: string[];
-}) {
+function Photos({ photos }: { photos: string[] }) {
   return (
     <>
       <div className="photosInfo">
@@ -16,7 +12,7 @@ function Photos({
         </div>
         <div className="auctionProductImages">
           {(photos || []).map(function (img, i) {
-            return (i < 6) ? <img src={img} key={i} className="auctionProductImage"></img> : ""
+            return i < 6 ? <img src={img} key={i} className="auctionProductImage"></img> : '';
           })}
         </div>
       </div>
