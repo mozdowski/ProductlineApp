@@ -5,10 +5,12 @@ function PoductNameInput({
   value,
   onChange,
   error,
+  disabled
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
   error: any;
+  disabled: boolean
 }) {
   return (
     <div className="productNameField">
@@ -24,6 +26,7 @@ function PoductNameInput({
         placeholder="Nazwa produktu"
         className="productNameInput"
         error={error}
+        disabled={disabled}
       />
     </div>
   );

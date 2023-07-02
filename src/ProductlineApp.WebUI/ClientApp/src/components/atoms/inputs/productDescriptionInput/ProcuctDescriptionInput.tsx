@@ -5,10 +5,12 @@ function ProductDescritionInput({
   value,
   onChange,
   error,
+  disabled
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
   error: any;
+  disabled: boolean
 }) {
   return (
     <div className="productDescriptionField">
@@ -23,6 +25,7 @@ function ProductDescritionInput({
         placeholder="Opis produktu"
         className="productDescriptionTextarea"
         error={error}
+        disabled={disabled}
       />
     </div>
   );

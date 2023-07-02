@@ -1,0 +1,56 @@
+.ebayPortalButton {
+  border-radius: 8px;
+  height: 40px;
+  width: 126px;
+  background-color: var(--white-color);
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--grey-color);
+  cursor: pointer;
+}
+
+.ebayPortalButton .iconPortalEbay {
+  width: 37.42px;
+  height: 15px;
+  margin-left: 20px;
+  background-size: cover;
+  margin-right: 7px;
+}
+
+.ebayPortalButton .ebayIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon.svg');
+}
+
+.ebayPortalButton p {
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 25px;
+}
+
+.ebayPortalButton:hover {
+  border: 1px solid var(--first-color);
+}
+
+.ebayPortalButton:hover p {
+  color: var(--first-color);
+}
+
+.ebayPortalButton:hover .ebayIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
+}
+
+.ebayPortalButton.assigned {
+  border: 1px solid var(--first-color);
+}
+
+.ebayPortalButton.assigned .ebayIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
+}
+
+.ebayPortalButton.assigned p {
+  color: var(--first-color);
+}

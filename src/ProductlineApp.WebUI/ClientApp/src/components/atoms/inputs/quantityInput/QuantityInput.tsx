@@ -5,10 +5,12 @@ function QuantityInput({
   value,
   onChange,
   error,
+  disabled
 }: {
   value: number;
   onChange: (name: string, value: number) => void;
   error: any;
+  disabled: boolean
 }) {
   return (
     <div className="quantityField">
@@ -24,6 +26,7 @@ function QuantityInput({
         placeholder="Ilość"
         className="quantityInput"
         error={error}
+        disabled={disabled}
       />
     </div>
   );

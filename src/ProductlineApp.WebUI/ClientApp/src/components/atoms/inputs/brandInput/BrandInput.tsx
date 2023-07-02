@@ -1,3 +1,4 @@
+import { isDisabled } from '@testing-library/user-event/dist/utils';
 import FormInput from '../../common/formInput/formInput';
 import './css/brandInput.css';
 
@@ -5,10 +6,12 @@ function BrandInput({
   value,
   onChange,
   error,
+  disabled
 }: {
   value: string;
   onChange: (name: string, value: string) => void;
   error: any;
+  disabled: boolean
 }) {
   return (
     <div className="brandField">
@@ -24,6 +27,7 @@ function BrandInput({
         placeholder="Marka"
         className="brandInput"
         error={error}
+        disabled={disabled}
       />
     </div>
   );

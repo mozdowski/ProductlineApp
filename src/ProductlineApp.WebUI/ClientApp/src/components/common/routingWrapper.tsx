@@ -15,6 +15,7 @@ import Settings from '../../pages/Settings';
 import { AuctionsProvider } from '../../providers/auctionsProvider';
 import { OrdersProvider } from '../../providers/ordersProvider';
 import AddProduct from '../../pages/AddProduct';
+import AddAuction from '../../pages/AddAuction';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -71,11 +72,15 @@ const RoutingWrapper = () => {
           element={
             <ProtectedRoute>
               <AuctionsProvider>
-                <Auctions />
+                <Outlet />
               </AuctionsProvider>
             </ProtectedRoute>
           }
-        ></Route>
+        >
+          <Route path="" element={<Auctions />}></Route>
+          <Route path="add" element={<AddAuction />}></Route>
+          <Route path="edit" element={''}></Route>
+        </Route>
         <Route
           path="/orders"
           element={

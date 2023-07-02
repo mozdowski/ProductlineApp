@@ -1,0 +1,57 @@
+.allegroPortalButton {
+  border-radius: 8px;
+  height: 40px;
+  width: 134px;
+  background-color: var(--white-color);
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--grey-color);
+  cursor: pointer;
+  margin-right: 12px;
+}
+
+.allegroPortalButton .iconPortalAllegro {
+  width: 13.03px;
+  height: 15px;
+  margin-left: 20px;
+  background-size: cover;
+  margin-right: 7px;
+}
+
+.allegroPortalButton .allegroIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon.svg');
+}
+
+.allegroPortalButton p {
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+  margin-right: 25px;
+}
+
+.allegroPortalButton:hover {
+  border: 1px solid var(--first-color);
+}
+
+.allegroPortalButton:hover p {
+  color: var(--first-color);
+}
+
+.allegroPortalButton:hover .allegroIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+}
+
+.allegroPortalButton.assigned {
+  border: 1px solid var(--first-color);
+}
+
+.allegroPortalButton.assigned .allegroIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+}
+
+.allegroPortalButton.assigned p {
+  color: var(--first-color);
+}
