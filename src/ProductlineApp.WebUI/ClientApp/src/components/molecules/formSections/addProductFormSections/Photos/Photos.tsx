@@ -1,5 +1,5 @@
 import ProductPhotosInput from '../../../../atoms/inputs/productPhotosInput/ProductPhotosInput';
-import './css/photos.css';
+import './css/addProduct_Photos.css';
 
 function Photos({
   uploadProductPhotos,

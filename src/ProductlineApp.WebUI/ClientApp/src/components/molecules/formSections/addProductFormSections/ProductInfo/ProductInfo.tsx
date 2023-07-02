@@ -2,13 +2,13 @@ import { AddProductRequest } from '../../../../../interfaces/products/addProduct
 import { ProductForm } from '../../../../../interfaces/products/productForm';
 import BrandInput from '../../../../atoms/inputs/brandInput/BrandInput';
 import CategoryInput from '../../../../atoms/inputs/categoryInput/CatrgoryInput';
-import ConditionInput from '../../../../atoms/inputs/conditionInput/ConditionInput';
+import ConditionInput from '../../../../atoms/inputs/selectProductConditionInput/SelectProductConditionInput';
 import PriceInput from '../../../../atoms/inputs/priceInput/PriceInput';
 import ProductDescritionInput from '../../../../atoms/inputs/productDescriptionInput/ProcuctDescriptionInput';
-import ProductNameInput from '../../../../atoms/inputs/produktNameInput/ProductNameInput';
+import ProductNameInput from '../../../../atoms/inputs/productNameInput/ProductNameInput';
 import QuantityInput from '../../../../atoms/inputs/quantityInput/QuantityInput';
 import SKUInput from '../../../../atoms/inputs/skuInptu/SKUInput';
-import './css/productInfo.css';
+import './css/addProduct_ProductInfo.css';
 
 function ProductInfo({
   productForm,
@@ -31,16 +31,17 @@ function ProductInfo({
         <div className="addProductInputs">
           <div className="firsLineInputs">
             <SKUInput value={productForm.sku} onChange={onChange} error={errors.sku} />
-            <ProductNameInput value={productForm.name} onChange={onChange} error={errors.name} />
+            <ProductNameInput value={productForm.name} onChange={onChange} error={errors.name} disabled={false} />
           </div>
           <div className="secondLineInputs">
-            <BrandInput value={productForm.brand} onChange={onChange} error={errors.brand} />
+            <BrandInput value={productForm.brand} onChange={onChange} error={errors.brand} disabled={false} />
             <QuantityInput
               value={productForm.quantity}
               onChange={onChange}
               error={errors.quantity}
+              disabled={false}
             />
-            <PriceInput value={productForm.price} onChange={onChange} error={errors.price} />
+            <PriceInput value={productForm.price} onChange={onChange} error={errors.price} disabled={false} />
           </div>
           <div className="thirdLineInputs">
             <CategoryInput
@@ -59,6 +60,7 @@ function ProductInfo({
               value={productForm.description}
               onChange={onChange}
               error={errors.description}
+              disabled={false}
             />
           </div>
         </div>

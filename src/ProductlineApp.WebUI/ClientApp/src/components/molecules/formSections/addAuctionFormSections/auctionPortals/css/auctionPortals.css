@@ -1,9 +1,9 @@
-.photosInfo .sectionLabel {
+.auctionPortals .sectionLabel {
   align-items: center;
   display: flex;
 }
 
-.photosInfo .sectionLabel .sectionNumber {
+.auctionPortals .sectionLabel .sectionNumber {
   background-color: var(--first-color);
   border-radius: 50px;
   width: 36px;
@@ -13,20 +13,22 @@
   align-items: center;
 }
 
-.photosInfo .sectionLabel .sectionNumber h1 {
+.auctionPortals .sectionLabel .sectionNumber h1 {
   font-size: 14px;
   color: var(--white-color);
   font-family: var(--body-font);
   font-weight: 600;
 }
 
-.photosInfo .sectionLabel p {
+.auctionPortals .sectionLabel p {
   font-size: 16px;
   font-family: var(--body-font);
   font-weight: 600;
   margin-left: 18px;
 }
 
-.photosInfo .productImages {
-  margin-top: 38px;
+.auctionPortals .addAuctionPortalsInputs {
+  margin-left: 54px;
+  margin-top: 36px;
+  display: flex;
 }

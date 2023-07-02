@@ -1,0 +1,45 @@
+.photosInfo .sectionLabel {
+  align-items: center;
+  display: flex;
+}
+
+.photosInfo .sectionLabel .sectionNumber {
+  background-color: var(--first-color);
+  border-radius: 50px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photosInfo .sectionLabel .sectionNumber h1 {
+  font-size: 14px;
+  color: var(--white-color);
+  font-family: var(--body-font);
+  font-weight: 600;
+}
+
+.photosInfo .sectionLabel p {
+  font-size: 16px;
+  font-family: var(--body-font);
+  font-weight: 600;
+  margin-left: 18px;
+}
+
+.photosInfo .auctionProductImages {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-left: 54px;
+  margin-top: 38px;
+  margin-bottom: 40px;
+}
+
+.photosInfo .auctionProductImages .auctionProductImage {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  object-fit: cover;
+}

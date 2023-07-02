@@ -5,10 +5,12 @@ function PriceInput({
   value,
   onChange,
   error,
+  disabled
 }: {
   value: number;
   onChange: (name: string, value: number) => void;
   error: any;
+  disabled: boolean
 }) {
   return (
     <div className="priceField">
@@ -24,6 +26,7 @@ function PriceInput({
         placeholder="Cena"
         className="priceInput"
         error={error}
+        disabled={disabled}
       />
     </div>
   );

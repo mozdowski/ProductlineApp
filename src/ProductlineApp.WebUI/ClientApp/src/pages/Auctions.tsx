@@ -4,6 +4,7 @@ import { AuctionsRecord } from '../interfaces/auctions/AuctionsPageInteface';
 import { useAuctionsService } from '../hooks/auctions/useAuctionsService';
 import { Platform } from '../interfaces/platforms/platform';
 import { PlatformEnum } from '../enums/platform.enum';
+import { Outlet } from 'react-router-dom';
 
 export default function Auctions() {
   const [selectedAuctionPortal, setSelectedAuctionPortal] = useState<Platform | null>(null);
@@ -60,12 +61,15 @@ export default function Auctions() {
   }, [selectedAuctionPortal]);
 
   return (
-    <AuctionsTemplate
-      auctionRecords={auctions}
-      selectedAuctionPortal={selectedAuctionPortal ? selectedAuctionPortal.name : PlatformEnum.EBAY}
-      handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
-      isSelectedTypeAuctions={isSelectedTypeAuctions}
-      handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
-    />
+    <>
+      <Outlet />
+      <AuctionsTemplate
+        auctionRecords={auctions}
+        selectedAuctionPortal={selectedAuctionPortal ? selectedAuctionPortal.name : PlatformEnum.EBAY}
+        handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
+        isSelectedTypeAuctions={isSelectedTypeAuctions}
+        handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+      />
+    </>
   );
 }
