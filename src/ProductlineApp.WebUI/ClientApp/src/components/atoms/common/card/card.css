@@ -1,3 +1,29 @@
-.action-area-card {
-  height: 300px;
+.card {
+  border: 1px solid;
+  border-radius: 5px;
+}
+
+.cardActionArea {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+  align-items: center;
+}
+
+.cardMedia {
+  align-self: flex-start;
+  width: auto;
+  height: 80px;
+}
+
+.cardMedia .productImage {
+  height: 80px;
+  width: auto;
+}
+
+.cardContent .title {
+  color: var(--first-color);
+  font-family: var(--body-font);
+  font-size: 18px;
+  font-weight: 500;
 }

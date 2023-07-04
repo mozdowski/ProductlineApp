@@ -26,8 +26,6 @@ function SelectProductInput({
     }
   }
 
-  console.log('hhh ' + options);
-
   return (
     <div className="selectProductInputField">
       <label htmlFor="selectProduct" className="selectProductLabel">

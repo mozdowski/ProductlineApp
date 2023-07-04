@@ -66,7 +66,7 @@ function CustomLink({
   return (
     <li className={isActive ? 'nav__link active' : 'nav__link'} id="nav__link">
       <Link to={to} className="link" id="link" onClick={handleClick} {...props}>
-        <img id="image" src={image} />
+        <img id="image" src={image} className="sidebar-img" />
         <span className="nav__name">{children}</span>
       </Link>
     </li>

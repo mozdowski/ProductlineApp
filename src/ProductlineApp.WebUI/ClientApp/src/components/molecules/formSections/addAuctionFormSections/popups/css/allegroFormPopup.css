@@ -12,7 +12,7 @@
 
 .allegroPopup {
   width: 667px;
-  height: 600px;
+  /* height: 600px; */
   background-color: var(--white-color);
   border-radius: 8px;
   padding: 35px 35px 35px 35px;
@@ -41,4 +41,9 @@
   float: right;
   right: 35px;
   bottom: 35px;
+}
+
+.allegroBrandIcon {
+  width: 100px;
+  height: 45px;
 }
