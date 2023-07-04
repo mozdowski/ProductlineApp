@@ -31,21 +31,11 @@ const AllegroFormPopup = ({
           <p>Wypełnij poniższe pola dla wystawianego produktu</p>
         </div>
         <div className="allegroPopupFormInputs">
+          <div className="firstLineAllegroAuctionInputs">
+            <AllegroCatalogueComponent />
+          </div>
           <form>
-            <div className="firstLineAllegroAuctionInputs">
-              <ProductNameInput
-                value={''}
-                onChange={function (name: string, value: string): void {
-                  throw new Error('Function not implemented.');
-                }}
-                error={errors}
-                disabled={false}
-              />
-              <SelectProductAllegroIdeas />
-            </div>
-            <div className="secondLineAllegroAuctionInputs">
-              <AllegroCatalogueComponent />
-            </div>
+            <div className="secondLineAllegroAuctionInputs"></div>
             <div className="thirdLineAllegroAuctionInputs"></div>
             <div className="fourthLineAllegroAuctionInputs"></div>
           </form>
