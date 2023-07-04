@@ -1,0 +1,13 @@
+.dropdown-options {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: scroll;
+  height: 400px;
+}
+
+.dropdown-option {
+  width: 47%;
+}

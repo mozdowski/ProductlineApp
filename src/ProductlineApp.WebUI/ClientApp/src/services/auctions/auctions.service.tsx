@@ -1,4 +1,5 @@
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
+import { GetAllegroCalalogueResponse } from '../../interfaces/platforms/getAllegroCatalogueResponse';
 import { GetPlatformsResponse } from '../../interfaces/platforms/getPlatformsResponse';
 import { GetProductsResponse } from '../../interfaces/products/getProductsResponse';
 import HttpService from '../common/http.service';
@@ -25,6 +26,12 @@ export class AuctionsService {
   public async getPlatforms(): Promise<GetPlatformsResponse> {
     return this.httpService.get<GetPlatformsResponse>('/platforms/getAllAvailable');
   }
+
+  public async getAllegoProductCatalogueByPhrase(phrase: string) {
+    return this.httpService.get<GetAllegroCalalogueResponse>(
+      '/allegro/productList?phrase=' + phrase,
+    );
+  }
 }
 
-export { };
+export {};

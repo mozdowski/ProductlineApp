@@ -2,7 +2,6 @@ import { ProductSKU } from '../../../../interfaces/products/getProductsSKU';
 import { FormSelect } from '../../common/formSelect/formSelect';
 import './css/selectProductInput.css';
 
-
 function SelectProductInput({
   showFormSteps,
   productsSKURecords,
@@ -10,13 +9,12 @@ function SelectProductInput({
   onChange,
   error,
 }: {
-  showFormSteps: any,
-  productsSKURecords: ProductSKU[]
+  showFormSteps: any;
+  productsSKURecords: ProductSKU[];
   value: string;
   onChange: (name: string, value: string) => void;
   error: any;
 }) {
-
   const options: { label: string; value: string }[] = [];
   for (const key in productsSKURecords) {
     if (isNaN(Number(key))) {
@@ -28,7 +26,7 @@ function SelectProductInput({
     }
   }
 
-  console.log("hhh " + options)
+  console.log('hhh ' + options);
 
   return (
     <div className="selectProductInputField">

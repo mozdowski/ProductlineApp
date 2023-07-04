@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 
 interface FormSelectProps {
-  showFormSteps: any,
+  showFormSteps: any;
   name: string;
   value: string;
   onChange: (name: string, value: string) => void;
@@ -10,18 +10,23 @@ interface FormSelectProps {
   [key: string]: any;
 }
 
-
-
-const FormSelect = ({ showFormSteps, name, value, onChange, options, error, ...props }: FormSelectProps) => {
-
+const FormSelect = ({
+  showFormSteps,
+  name,
+  value,
+  onChange,
+  options,
+  error,
+  ...props
+}: FormSelectProps) => {
   const handleChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     onChange(name, selectedValue);
   };
 
   return (
-    <div className='selectDiv'>
-      <select value={value} onChange={handleChange}  {...props}>
+    <div className="selectDiv">
+      <select value={value} onChange={handleChange} {...props}>
         {options.map((option) => (
           <option key={option.value} value={option.value}>
             {option.label}

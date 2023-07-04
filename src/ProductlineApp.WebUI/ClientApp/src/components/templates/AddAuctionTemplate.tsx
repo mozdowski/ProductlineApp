@@ -18,7 +18,7 @@ export default function AddAuctionTemplate({
   onChange,
   errors,
 }: {
-  productsSKURecords: ProductSKU[],
+  productsSKURecords: ProductSKU[];
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
@@ -37,7 +37,8 @@ export default function AddAuctionTemplate({
             onSubmit={onSubmit}
             auctionForm={auctionForm}
             onChange={onChange}
-            errors={errors} />
+            errors={errors}
+          />
         </div>
       </div>
     </>

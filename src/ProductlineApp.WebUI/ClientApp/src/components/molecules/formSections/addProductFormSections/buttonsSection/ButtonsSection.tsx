@@ -6,7 +6,7 @@ function ButtonsSection() {
   return (
     <>
       <div className="addProductButtonsSection">
-        <CancelButton pathTo={"/products"} />
+        <CancelButton pathTo={'/products'} />
         <ConfrimButton />
       </div>
     </>

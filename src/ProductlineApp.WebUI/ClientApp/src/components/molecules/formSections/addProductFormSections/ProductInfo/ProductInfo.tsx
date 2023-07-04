@@ -31,17 +31,32 @@ function ProductInfo({
         <div className="addProductInputs">
           <div className="firsLineInputs">
             <SKUInput value={productForm.sku} onChange={onChange} error={errors.sku} />
-            <ProductNameInput value={productForm.name} onChange={onChange} error={errors.name} disabled={false} />
+            <ProductNameInput
+              value={productForm.name}
+              onChange={onChange}
+              error={errors.name}
+              disabled={false}
+            />
           </div>
           <div className="secondLineInputs">
-            <BrandInput value={productForm.brand} onChange={onChange} error={errors.brand} disabled={false} />
+            <BrandInput
+              value={productForm.brand}
+              onChange={onChange}
+              error={errors.brand}
+              disabled={false}
+            />
             <QuantityInput
               value={productForm.quantity}
               onChange={onChange}
               error={errors.quantity}
               disabled={false}
             />
-            <PriceInput value={productForm.price} onChange={onChange} error={errors.price} disabled={false} />
+            <PriceInput
+              value={productForm.price}
+              onChange={onChange}
+              error={errors.price}
+              disabled={false}
+            />
           </div>
           <div className="thirdLineInputs">
             <CategoryInput

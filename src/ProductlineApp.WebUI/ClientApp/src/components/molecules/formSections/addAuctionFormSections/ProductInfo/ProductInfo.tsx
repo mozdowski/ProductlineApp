@@ -27,24 +27,34 @@ function ProductInfo({
         </div>
         <div className="addAuctionInputs">
           <div className="firsLineInputs">
-            <BrandInput value={auctionForm.brand} onChange={onChange} error={""} disabled={true} />
-            <ProductNameInput value={auctionForm.name} onChange={onChange} error={""} disabled={true} />
+            <BrandInput value={auctionForm.brand} onChange={onChange} error={''} disabled={true} />
+            <ProductNameInput
+              value={auctionForm.name}
+              onChange={onChange}
+              error={''}
+              disabled={true}
+            />
           </div>
           <div className="secondLineInputs">
-            <ConditionInput value={auctionForm.condition.toString()} onChange={onChange} error={""} disabled={true} />
+            <ConditionInput
+              value={auctionForm.condition.toString()}
+              onChange={onChange}
+              error={''}
+              disabled={true}
+            />
             <QuantityInput
               value={auctionForm.quantity}
               onChange={onChange}
-              error={""}
+              error={''}
               disabled={true}
             />
-            <PriceInput value={auctionForm.price} onChange={onChange} error={""} disabled={true} />
+            <PriceInput value={auctionForm.price} onChange={onChange} error={''} disabled={true} />
           </div>
           <div className="textAreaProductDescription">
             <ProductDescritionInput
               value={auctionForm.description}
               onChange={onChange}
-              error={""}
+              error={''}
               disabled={true}
             />
           </div>

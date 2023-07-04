@@ -10,8 +10,8 @@ function SelectProduct({
   onChange,
   errors,
 }: {
-  showFormSteps: any,
-  productsSKURecords: ProductSKU[],
+  showFormSteps: any;
+  productsSKURecords: ProductSKU[];
   auctionForm: AuctionForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<AuctionForm>;
@@ -26,9 +26,15 @@ function SelectProduct({
           <p>Wyberz Produkt</p>
         </div>
         <div className="selectProducctInput">
-          <SelectProductInput productsSKURecords={productsSKURecords} showFormSteps={showFormSteps} value={auctionForm.sku} onChange={function (name: string, value: string): void {
-            throw new Error('Function not implemented.');
-          }} error={undefined} />
+          <SelectProductInput
+            productsSKURecords={productsSKURecords}
+            showFormSteps={showFormSteps}
+            value={auctionForm.sku}
+            onChange={function (name: string, value: string): void {
+              throw new Error('Function not implemented.');
+            }}
+            error={undefined}
+          />
         </div>
       </div>
     </>

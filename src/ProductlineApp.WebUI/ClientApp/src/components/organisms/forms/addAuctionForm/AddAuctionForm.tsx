@@ -16,32 +16,37 @@ export default function AddAuctionForm({
   onChange,
   errors,
 }: {
-  productsSKURecords: ProductSKU[],
+  productsSKURecords: ProductSKU[];
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   auctionForm: AuctionForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<AuctionForm>;
 }) {
-
   const [showFormSteps, setSelectedOption] = useState('');
 
   const handleShowFormSteps = (e: ChangeEvent<HTMLSelectElement>) => {
     const optionValue = e.target.value;
     setSelectedOption(optionValue);
-  }
+  };
 
   return (
     <>
       <div className="addAuction">
         <div className="addAuctionFirstSection">
-          <SelectProduct productsSKURecords={productsSKURecords} auctionForm={auctionForm} showFormSteps={(e: ChangeEvent<HTMLSelectElement>) => (handleShowFormSteps(e))} onChange={onChange} errors={errors} />
-          {showFormSteps != " " && (
+          <SelectProduct
+            productsSKURecords={productsSKURecords}
+            auctionForm={auctionForm}
+            showFormSteps={(e: ChangeEvent<HTMLSelectElement>) => handleShowFormSteps(e)}
+            onChange={onChange}
+            errors={errors}
+          />
+          {showFormSteps != ' ' && (
             <ProductInfo auctionForm={auctionForm} onChange={onChange} errors={errors} />
           )}
         </div>
         <ButtonsSection />
-        {showFormSteps != " " && (
+        {showFormSteps != ' ' && (
           <div className="addAuctionSecondSection">
             <Photos photos={photos} />
             <AuctionPortals auctionForm={auctionForm} errors={errors} />
