@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import AddAuctionForm from '../components/organisms/forms/addAuctionForm/AddAuctionForm';
-import { useOrdersService } from '../hooks/orders/useOrdersService';
 import AddAuctionTemplate from '../components/templates/AddAuctionTemplate';
 import { AuctionForm } from '../interfaces/auctions/auctionForm';
 

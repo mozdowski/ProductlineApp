@@ -6,6 +6,7 @@ import ProductNameInput from '../../../../atoms/inputs/productNameInput/ProductN
 import SelectProductAllegroIdeas from '../../../../atoms/inputs/selectProductAllegroIdeas/SelectProductAllegroIdeas';
 import { AuctionForm } from '../../../../../interfaces/auctions/auctionForm';
 import { CloseButton } from 'react-toastify/dist/components';
+import AllegroCatalogueComponent from '../../../../allegroCatalogueComponent/allegroCatalogueComponent';
 
 const AllegroFormPopup = ({
   openAllegroPopup,
@@ -42,7 +43,9 @@ const AllegroFormPopup = ({
               />
               <SelectProductAllegroIdeas />
             </div>
-            <div className="secondLineAllegroAuctionInputs"></div>
+            <div className="secondLineAllegroAuctionInputs">
+              <AllegroCatalogueComponent />
+            </div>
             <div className="thirdLineAllegroAuctionInputs"></div>
             <div className="fourthLineAllegroAuctionInputs"></div>
           </form>

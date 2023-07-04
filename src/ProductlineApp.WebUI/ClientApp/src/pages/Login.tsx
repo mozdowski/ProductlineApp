@@ -70,6 +70,7 @@ export default function Login() {
         navigate('/dashboard');
         toast.success('Zalogowano pomyślnie', {
           position: toast.POSITION.TOP_RIGHT,
+          autoClose: 1000,
         });
       })
       .catch((error) => {
