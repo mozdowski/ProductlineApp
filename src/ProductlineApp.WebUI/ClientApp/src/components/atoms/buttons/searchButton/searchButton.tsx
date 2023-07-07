@@ -4,9 +4,9 @@ import './searchButton.css';
 function SearchButton({ onClick }: { onClick: (event: React.FormEvent<HTMLFormElement>) => void }) {
   return (
     <div className="searchLink" id="link">
-      <div className="searchButton">
-        <img id="image" src={SearchIcon} onClick={() => onClick} />
-      </div>
+      <button type="submit" className="searchButton">
+        <img id="image" src={SearchIcon} />
+      </button>
     </div>
   );
 }

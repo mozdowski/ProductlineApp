@@ -1,4 +1,6 @@
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
+import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
+import { GetAllegroCatalogueProductDetailsResponse } from '../../interfaces/platforms/getAllegroCatalogueProductDetailsResponse';
 import { GetAllegroCalalogueResponse } from '../../interfaces/platforms/getAllegroCatalogueResponse';
 import { GetPlatformsResponse } from '../../interfaces/platforms/getPlatformsResponse';
 import { GetProductsResponse } from '../../interfaces/products/getProductsResponse';
@@ -30,6 +32,18 @@ export class AuctionsService {
   public async getAllegoProductCatalogueByPhrase(phrase: string) {
     return this.httpService.get<GetAllegroCalalogueResponse>(
       '/allegro/productList?phrase=' + phrase,
+    );
+  }
+
+  public async getAllegoCatalogueProductDetails(id: string) {
+    return this.httpService.get<GetAllegroCatalogueProductDetailsResponse>(
+      '/allegro/product/' + id,
+    );
+  }
+
+  public async getAllegoParametersByCategory(categoryId: string) {
+    return this.httpService.get<AllegroProductParametersResponse>(
+      '/allegro/product/categoryParameters/' + categoryId,
     );
   }
 }

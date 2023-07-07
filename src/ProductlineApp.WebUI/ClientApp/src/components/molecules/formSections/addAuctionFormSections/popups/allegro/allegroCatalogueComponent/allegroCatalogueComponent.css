@@ -17,9 +17,13 @@
   overflow: scroll;
   overflow-x: hidden;
   height: 400px;
-  box-shadow: inset 0px 0px 4px rgba(0, 0, 0, 0.1);
+  /* box-shadow: inset -10px 0px 5px rgba(0, 0, 0, 0.1); */
 }
 
 .productCard {
   padding: 10px;
+}
+
+.allegroCatalogueComponent .error {
+  margin-top: -10px;
 }

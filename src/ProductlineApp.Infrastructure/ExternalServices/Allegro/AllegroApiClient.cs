@@ -341,7 +341,7 @@ public class AllegroApiClient : IAllegroApiClient
         return response.Data;
     }
 
-    public async Task<AllegroProductParametersResponse> GetProductParametersForCategory(string accessToken, string categoryId)
+    public async Task<string> GetProductParametersForCategory(string accessToken, string categoryId)
     {
         var request = new RestRequest($"sale/categories/{categoryId}/product-parameters")
         {
@@ -349,6 +349,23 @@ public class AllegroApiClient : IAllegroApiClient
         };
 
         var response = await this._restClient.ExecuteAsync<AllegroProductParametersResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Failed to get parameters list: {response.StatusCode}");
+        }
+
+        return response.Content;
+    }
+
+    public async Task<AllegroCatalogueProductDetailsResponse> CatalogueProductDetails(string accessToken, string productId)
+    {
+        var request = new RestRequest($"sale/products/{productId}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<AllegroCatalogueProductDetailsResponse>(request);
 
         if (response.StatusCode != HttpStatusCode.OK)
         {

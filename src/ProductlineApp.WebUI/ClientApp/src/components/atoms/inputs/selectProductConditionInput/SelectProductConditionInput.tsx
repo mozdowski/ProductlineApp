@@ -33,13 +33,8 @@ function SelectProductConditionInput({
         value={value.toString()}
         onChange={onChange}
         options={options}
-        type="text"
-        id="condition"
         name="condition"
-        placeholder="Stan"
-        className="conditionInput"
         error={error}
-        showFormSteps={''}
       />
     </div>
   );

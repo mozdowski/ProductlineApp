@@ -186,10 +186,16 @@ public class AllegroService : IAllegroService
         await this._allegroApiClient.CreateListingAsync(this._accessToken, allegroRequest);
     }
 
-    public async Task<AllegroProductParametersDtoResponse> GetProductParametersForCategory(string categoryId)
+    public async Task<string> GetProductParametersForCategory(string categoryId)
     {
-        var response = this._allegroApiClient.GetProductParametersForCategory(this._accessToken, categoryId);
-        return this._mapper.Map<AllegroProductParametersDtoResponse>(response);
+        var response = await this._allegroApiClient.GetProductParametersForCategory(this._accessToken, categoryId);
+        return response;
+        // return this._mapper.Map<AllegroProductParametersDtoResponse>(response);
+    }
+
+    public async Task<AllegroCatalogueProductDetailsResponse> GetCatalogueProductDetails(string productId)
+    {
+        return await this._allegroApiClient.CatalogueProductDetails(this._accessToken, productId);
     }
 
     private void CheckIfAuthorized()

@@ -63,5 +63,7 @@ public interface IAllegroApiClient
         string cursor = null,
         bool includeDrafts = false);
 
-    Task<AllegroProductParametersResponse> GetProductParametersForCategory(string accessToken, string categoryId);
+    Task<string> GetProductParametersForCategory(string accessToken, string categoryId);
+
+    Task<AllegroCatalogueProductDetailsResponse> CatalogueProductDetails(string accessToken, string productId);
 }
