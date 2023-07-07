@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Checkbox from '@mui/material/Checkbox';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -14,7 +15,7 @@ const MenuProps = {
     },
   },
 };
-const SelectStyle = {
+const MultiselectStyle = {
   width: '316px',
   height: '44px',
   color: '#757575',
@@ -29,28 +30,33 @@ const SelectStyle = {
   '& fieldset': {
     border: 'none',
   },
-  '& .MuiListItemText-primary': {
-    font: 'inherit',
-  },
 };
 
-interface FormSelectProps {
+interface MultipleSelectCheckmarksProps {
   name: string;
-  value: string;
-  onChange: (name: string, value: string) => void;
-  options: { label: string; value: string | number }[];
+  value: any;
+  onChange: (name: string, values: string[]) => void;
+  options: { label: string; value: any }[];
   error?: string;
+  [key: string]: any;
 }
 
-const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) => {
-  const [selectedValue, setSelectedValue] = React.useState<string>(value);
+const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
+  name,
+  value,
+  onChange,
+  options,
+  error,
+}) => {
+  const [selectedValues, setSelectedValues] = React.useState<string[]>(value);
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedValue>) => {
+  const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
     const {
       target: { value },
     } = event;
-    setSelectedValue(value);
-    onChange(name, selectedValue);
+    console.log(value);
+    console.log(selectedValues);
+    setSelectedValues(typeof value === 'string' ? value.split(',') : value);
   };
 
   return (
@@ -59,13 +65,16 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
         <Select
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
-          value={selectedValue}
+          multiple
+          value={selectedValues}
           onChange={handleChange}
+          renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
-          sx={{ ...SelectStyle, font: '12px Poppins, sans-serif' }}
+          sx={MultiselectStyle}
         >
           {options.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
+            <MenuItem key={option.value} value={option.label}>
+              <Checkbox checked={selectedValues.indexOf(option.label) > -1} />
               <ListItemText primary={option.label} />
             </MenuItem>
           ))}
@@ -73,19 +82,6 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
       </FormControl>
     </div>
   );
-
-  // return (
-  //   <div className="selectDiv">
-  //     <select value={value} onChange={handleChange} {...props}>
-  //       {options.map((option) => (
-  //         <option key={option.value} value={option.value}>
-  //           {option.label}
-  //         </option>
-  //       ))}
-  //     </select>
-  //     {error && <span className="error">{error}</span>}
-  //   </div>
-  // );
 };
 
-export { FormSelect };
+export default MultipleSelectCheckmarks;

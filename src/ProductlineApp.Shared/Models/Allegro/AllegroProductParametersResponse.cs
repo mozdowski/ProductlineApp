@@ -2,7 +2,7 @@ namespace ProductlineApp.Shared.Models.Allegro;
 
 public class AllegroProductParametersResponse
 {
-    public IEnumerable<AllegroProductParameter> Parameters { get; set; }
+    public List<AllegroProductParameter> Parameters { get; set; }
 
     public class AllegroProductParameter
     {
@@ -14,11 +14,15 @@ public class AllegroProductParametersResponse
 
         public bool Required { get; set; }
 
+        public object RequiredIf { get; set; }
+
+        public object DisplayedIf { get; set; }
+
         public string Unit { get; set; }
 
         public ParameterRestrictions Restrictions { get; set; }
 
-        public IEnumerable<DictionaryItem>? Dictionary { get; set; }
+        public List<DictionaryItem>? Dictionary { get; set; }
 
         public class ParameterRestrictions
         {

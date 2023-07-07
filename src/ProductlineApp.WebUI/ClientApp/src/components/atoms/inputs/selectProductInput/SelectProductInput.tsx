@@ -35,13 +35,8 @@ function SelectProductInput({
         value={value}
         onChange={onChange}
         options={options}
-        type="text"
-        id="product"
         name="product"
-        placeholder="Produkt"
-        className="selectProductInput"
         error={error}
-        showFormSteps={showFormSteps}
       />
     </div>
   );

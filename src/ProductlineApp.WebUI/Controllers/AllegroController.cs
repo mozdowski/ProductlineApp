@@ -32,10 +32,17 @@ public class AllegroController : ControllerBase
         return this.Ok();
     }
 
-    [HttpGet("product/categoryParameters")]
+    [HttpGet("product/categoryParameters/{categoryId}")]
     public async Task<IActionResult> GetCategoryParameters(string categoryId)
     {
         var result = await this._allegroService.GetProductParametersForCategory(categoryId);
+        return this.Ok(result);
+    }
+
+    [HttpGet("product/{productId}")]
+    public async Task<IActionResult> GetCatalogueProductDetails(string productId)
+    {
+        var result = await this._allegroService.GetCatalogueProductDetails(productId);
         return this.Ok(result);
     }
 }

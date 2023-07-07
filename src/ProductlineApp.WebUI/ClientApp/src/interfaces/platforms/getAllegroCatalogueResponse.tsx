@@ -37,7 +37,7 @@ interface Options {
   isGTIN: boolean;
 }
 
-interface Parameter {
+export interface Parameter {
   id: string;
   name: string;
   rangeValue: RangeValue;

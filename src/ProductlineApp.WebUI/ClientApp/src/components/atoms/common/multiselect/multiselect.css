@@ -1,0 +1,12 @@
+.multiselect {
+  width: 310px;
+  height: 40px;
+  color: #757575;
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  text-indent: 12px;
+}

@@ -4,14 +4,15 @@
 
 .searchButton {
   border-radius: 50px;
-  height: 40px;
-  width: 40px;
+  height: 44px;
+  width: 44px;
   background-color: var(--first-color);
   justify-content: center;
   text-align: center;
   display: flex;
   align-items: center;
   margin-left: 22px;
+  border: none;
 }
 
 .searchButton:hover {

@@ -1,5 +1,6 @@
 using ProductlineApp.Application.Common.Platforms.Allegro.DTO;
 using ProductlineApp.Application.Common.Services.Interfaces;
+using ProductlineApp.Shared.Models.Allegro;
 
 namespace ProductlineApp.Application.Common.Platforms.Allegro.Services;
 
@@ -9,5 +10,7 @@ public interface IAllegroService : IPlatformService
 
     Task CreateListingBasedOnAllegroProductAsync(AllegroCreateListingDtoRequest request);
 
-    Task<AllegroProductParametersDtoResponse> GetProductParametersForCategory(string categoryId);
+    Task<string> GetProductParametersForCategory(string categoryId);
+
+    Task<AllegroCatalogueProductDetailsResponse> GetCatalogueProductDetails(string productId);
 }
