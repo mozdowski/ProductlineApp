@@ -32,92 +32,81 @@ export enum ParamType {
 }
 
 const generateValidationSchema = (restrictionsList: ParameterRestrictions[]): Yup.Schema<any> => {
-  let schema = Yup.object();
+  const schemaObject: Record<string, Yup.AnySchema> = {};
 
-  restrictionsList.forEach((restrictions) => {
-    if (restrictions.min !== undefined) {
-      schema = schema.shape({
-        value: Yup.number().min(
-          restrictions.min,
-          `Wartość nie może być mniejsza niż ${restrictions.min}`,
-        ),
-      });
+  restrictionsList.forEach((restrictions, index) => {
+    const {
+      name,
+      min,
+      max,
+      range,
+      precision,
+      minLength,
+      maxLength,
+      allowedNumberOfValues,
+    } = restrictions;
+
+    let fieldSchema = Yup.mixed();
+
+    if (min !== undefined) {
+      fieldSchema = fieldSchema.test(`min-${name}`, `Wartość dla ${name} nie może być mniejsza niż ${min}`, (value: any) =>
+        value >= min
+      );
     }
 
-    if (restrictions.max !== undefined) {
-      schema = schema.shape({
-        value: Yup.number().max(
-          restrictions.max,
-          `Wartość nie może być większa niż ${restrictions.max}`,
-        ),
-      });
+    if (max !== undefined) {
+      fieldSchema = fieldSchema.test(`max-${name}`, `Wartość dla ${name} nie może być większa niż ${max}`, (value: any) =>
+        value <= max
+      );
     }
 
-    if (restrictions.range) {
-      schema = schema.shape({
-        value: Yup.number().test('is-range', 'Wartość poza dozwolonym przedziałem', (value) => {
-          const { min, max } = restrictions;
-          if (!value) return false;
-          return value >= min! && value <= max!;
-        }),
-      });
+    if (range && min && max) {
+      fieldSchema = fieldSchema.test(
+        `range-${name}`,
+        `Wartość dla ${name} poza dozwolonym przedziałem`,
+        (value: any) => value >= min && value <= max
+      );
     }
 
-    if (restrictions.precision !== undefined) {
-      schema = schema.shape({
-        value: Yup.number().test(
-          'is-precision',
-          'Wartość poza dozwoloną wartością precyzji',
-          (value) => {
-            const precisionFactor = Math.pow(10, restrictions.precision!);
-            if (!value) return false;
-            return Math.round(value * precisionFactor) / precisionFactor === value;
-          },
-        ),
-      });
+    if (precision !== undefined) {
+      fieldSchema = fieldSchema.test(
+        `precision-${name}`,
+        `Wartość dla ${name} poza dozwoloną wartością precyzji`,
+        (value: any) => Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision) === value
+      );
     }
 
-    if (restrictions.minLength !== undefined) {
-      schema = schema.shape({
-        value: Yup.string().min(
-          restrictions.minLength,
-          `Wymagane co najmniej ${restrictions.minLength} znaków`,
-        ),
-      });
+    if (minLength !== undefined) {
+      fieldSchema = fieldSchema.test(
+        `minLength-${name}`,
+        `Wymagane co najmniej ${minLength} znaków dla ${name}`,
+        (value: any) => value.length >= minLength
+      );
     }
 
-    if (restrictions.maxLength !== undefined) {
-      schema = schema.shape({
-        value: Yup.string().max(
-          restrictions.maxLength,
-          `Wymagane co najwyżej ${restrictions.maxLength} znaków`,
-        ),
-      });
+    if (maxLength !== undefined) {
+      fieldSchema = fieldSchema.test(
+        `maxLength-${name}`,
+        `Wymagane co najwyżej ${maxLength} znaków dla ${name}`,
+        (value: any) => value.length <= maxLength
+      );
     }
 
-    if (restrictions.allowedNumberOfValues !== undefined) {
-      schema = schema.shape({
-        value: Yup.array()
-          .of(Yup.string())
-          .test('is-allowed-number-of-values', 'Nieprawidłowa liczba wartości', (value) => {
-            return Array.isArray(value) && value.length === restrictions.allowedNumberOfValues;
-          }),
-      });
+    if (allowedNumberOfValues !== undefined) {
+      fieldSchema = fieldSchema.test(
+        `allowedNumberOfValues-${name}`,
+        `Nieprawidłowa liczba wartości dla ${name}`,
+        (value) => Array.isArray(value) && value.length === allowedNumberOfValues
+      );
     }
 
-    // if (restrictions.multipleChoices) {
-    //   schema = schema.shape({
-    //     value: Yup.array()
-    //       .of(Yup.string())
-    //       .test('is-multiple-choices', 'Niewłaściwy wybór', (value) => {
-    //         return Array.isArray(value) && value.length > 1;
-    //       }),
-    //   });
-    // }
+    schemaObject[name] = fieldSchema;
   });
 
+  const schema = Yup.object().shape(schemaObject);
   return schema;
 };
+
 
 const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
   productId,
@@ -134,7 +123,6 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
   const { auctionsService } = useAuctionsService();
   const [errors, setErrors] = useState<Partial<{ [index: string]: any }>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const formRef = useRef(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -151,7 +139,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         setCommonParameters(parametersSubset);
 
         setValidationSchema(
-          generateValidationSchema(commonParameters.map((param) => param.restrictions)),
+          generateValidationSchema(parametersSubset.map((param) => param.restrictions)),
         );
 
         initForm(parametersSubset, product);
@@ -165,8 +153,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
   }, []);
 
   const validateForm = async () => {
-    if (!formRef) return true;
-    if (!validationSchema) return true;
+    if (!validationSchema) return false;
     try {
       await validationSchema.validate(formFields, { abortEarly: false });
       setErrors({});
@@ -201,9 +188,6 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
       ...prevData,
       [name]: value,
     }));
-    console.log('=============');
-    console.log(formFields);
-    console.log(errors);
   };
 
   const initForm = (params: AllegroProductParameter[], productData: AllegroCatalogueProduct) => {
@@ -211,12 +195,11 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
       const name = param.name;
       const value = getInputDefaultValue(
         param.id,
+        param.name,
         param.type,
         productData,
-        param.restrictions.multipleChoices,
+        param.restrictions.multipleChoices
       );
-      console.log(name);
-      console.log(value);
       setFormFields((prevData) => ({
         ...prevData,
         [name]: value,
@@ -226,6 +209,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
   const getInputDefaultValue = (
     paramId: string,
+    name: string,
     type: string,
     productData?: AllegroCatalogueProduct,
     isMultiselect?: boolean,
@@ -238,9 +222,19 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         else return parameter?.valuesIds;
       }
       default: {
-        return parameter?.values[0];
+        return formFields[name] !== undefined ? formFields[name] : parameter?.values[0];
       }
     }
+  };
+
+  const handleNextPage = async () => {
+    const isValid = await validateForm();
+    console.log(isValid);
+    console.log(errors);
+    console.log(validationSchema);
+    if (!isValid) return;
+
+    onNextPage();
   };
 
   return (
@@ -267,6 +261,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
                   unit={parameter?.unit}
                   value={getInputDefaultValue(
                     parameter.id,
+                    parameter.name,
                     parameter.type,
                     product,
                     parameter.restrictions.multipleChoices,
@@ -285,7 +280,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         </div>
         <div className="addauctionAllegroButtons">
           <CancelButton pathTo={''} close={onCancel} />
-          <NextButton onClick={onNextPage} />
+          <NextButton onClick={handleNextPage} />
         </div>
       </div>
     </div>

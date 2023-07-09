@@ -1,24 +1,26 @@
 import React, { ChangeEvent } from 'react';
 
-interface FormInputProps<T> {
+interface FormInputProps {
   name: string;
-  value: T;
-  onChange: (name: string, value: T) => void;
+  value: any;
+  onChange: (name: string, value: any) => void;
   disabled?: boolean;
   error?: any;
   [key: string]: any;
 }
 
-const FormInput = <T extends string | number>({
+const FormInput: React.FC<FormInputProps> = ({
   name,
   value,
   onChange,
   disabled,
   error,
   ...props
-}: FormInputProps<T>) => {
+}) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    onChange(name, event.target.value as T);
+    console.log(name);
+    console.log(event.target.value);
+    onChange(name, event.target.value);
   };
 
   return (
