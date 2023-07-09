@@ -1,4 +1,66 @@
 .changePesonalDataSection {
   display: flex;
-  display: inline;
+  margin-top: 25px;
+  margin-bottom: 40px;
+}
+
+.unameLabel,
+.changeUsernameInput {
+  display: block;
+}
+
+.unameLabel {
+  margin-bottom: 19.5px;
+  margin-top: 19.5px;
+}
+
+.unameLabel {
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.changeUsernameInput {
+  margin-right: 41px;
+  width: 429px;
+  height: 40px;
+  color: #757575;
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  text-indent: 12px;
+}
+
+.emailLabel,
+.changeEmailInput {
+  display: block;
+}
+
+.emailLabel {
+  margin-bottom: 19.5px;
+  margin-top: 19.5px;
+}
+
+.emailLabel {
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.changeEmailInput {
+  width: 429px;
+  height: 40px;
+  color: #757575;
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 300;
+  background-color: #f8f8f8;
+  border: 1px solid #d8d8d8;
+  border-radius: 8px;
+  text-indent: 12px;
 }

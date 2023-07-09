@@ -2,7 +2,7 @@ import './css/emailInput.css';
 
 function EmailInput() {
   return (
-    <>
+    <div className="emailInputField">
       <label htmlFor="emial" className="emailLabel">
         Email
       </label>
@@ -13,7 +13,7 @@ function EmailInput() {
         placeholder="Email"
         className="emailInput"
       ></input>
-    </>
+    </div>
   );
 }
 

@@ -1,0 +1,15 @@
+.profileDetails {
+    background-color: var(--white-color);
+    padding: 20px 35px 35px 35px;
+    border-radius: 8px;
+    display: flow-root;
+    max-width: 911px;
+}
+
+.profileDetails h1 {
+    color: var(--letter-color);
+    font-family: var(--body-font);
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 40px;
+}

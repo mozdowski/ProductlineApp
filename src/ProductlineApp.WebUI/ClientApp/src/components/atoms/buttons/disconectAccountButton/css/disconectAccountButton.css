@@ -1,0 +1,33 @@
+.connectLink {
+  text-decoration: none;
+  margin-right: 14px;
+  margin-left: 11px;
+}
+
+.connectAccountButton {
+  border-radius: 8px;
+  height: 35px;
+  width: 102px;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 1px solid var(--settings-red-color);
+}
+
+.connectAccountButton p {
+  color: var(--settings-red-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.connectAccountButton:hover {
+  border: 1px solid var(--settings-red-color-hover);
+}
+
+.connectAccountButton:hover p {
+  color: var(--settings-red-color-hover);
+}

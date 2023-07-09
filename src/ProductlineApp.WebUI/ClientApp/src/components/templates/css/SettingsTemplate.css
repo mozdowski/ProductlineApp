@@ -8,8 +8,17 @@
   margin-left: 60px;
   margin-top: 30px;
   margin-right: 60px;
-  background-color: var(--white-color);
-  height: calc(100vh - 212px);
+  grid-template-columns: repeat(3, 472px);
+  /* height: calc(100vh - 212px); */
   border-radius: 8px;
-  position: relative;
+  /* position: relative; */
+  display: grid;
+  /* justify-items: start; */
+  /* justify-content: start; */
+  align-items: start;
+  gap: 41px;
+}
+
+.grid-col-span-2 {
+  grid-column: span 2;
 }
