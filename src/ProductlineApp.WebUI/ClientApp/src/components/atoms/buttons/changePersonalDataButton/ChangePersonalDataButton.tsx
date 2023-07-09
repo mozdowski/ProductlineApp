@@ -1,8 +1,8 @@
 import './css/changePersonalDataButton.css';
 
-function ChangePersonalDataButton({ setDisableEdit, disableEdit }: { setDisableEdit: any, disableEdit: boolean }) {
+function ChangePersonalDataButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="changePersonalDataButton" onClick={() => setDisableEdit(!disableEdit)}>
+    <div className="changePersonalDataButton" onClick={onClick}>
       <p>Zmień swoje dane</p>
     </div>
   );

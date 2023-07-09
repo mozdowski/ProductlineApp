@@ -1,8 +1,8 @@
 import './css/changePasswordButton.css';
 
-function ChangePasswordButton({ setShowField, showField }: { setShowField: any, showField: boolean }) {
+function ChangePasswordButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="changePasswordButton" onClick={() => setShowField(!showField)}>
+    <div className="changePasswordButton" onClick={onClick}>
       <p>Zmień hasło</p>
     </div>
   );

@@ -1,8 +1,8 @@
 import './css/deleteAccountButton.css';
 
-function DeleteAccountButton({ setShowField, showField }: { setShowField: any, showField: boolean }) {
+function DeleteAccountButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="deleteAccountButton" onClick={() => setShowField(!showField)}>
+    <div className="deleteAccountButton" onClick={onClick}>
       <p>Usuń konto</p>
     </div>
   );

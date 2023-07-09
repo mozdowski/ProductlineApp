@@ -4,7 +4,18 @@ import FormInput from '../../../atoms/common/formInput/formInput';
 import EyeVisible from '../../../../assets/icons/eyeVisible_icon.png';
 import EyeInvisible from '../../../../assets/icons/eyeInvisible_icon.png';
 import './css/changePassword.css';
+import * as Yup from 'yup';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
+
+
+const changePasswordSchema = Yup.object().shape({
+  newPassword: Yup.string()
+    .required('Nowe hasło jest wymagane')
+    .min(6, 'Hasło musi mieć co najmniej 6 znaków'),
+  oldPassword: Yup.string()
+    .oneOf([Yup.ref('password')], 'Hasło jest nie poprawne')
+    .required('Podanie starego hasła jest wymagane'),
+});
 
 export const ChangePassword = () => {
 
@@ -14,8 +25,38 @@ export const ChangePassword = () => {
   };
   const [showFields, setShowFields] = useState(true);
   const [showPasswordFields, setShowPasswordFields] = useState(false);
+  const [errors, setErrors] = useState<Partial<ChangePasswordForm>>({});
+  const [changePasswordForm, setPasswordForm] = useState<ChangePasswordForm>({
+    newPassword: '',
+    oldPassword: '',
+  });
 
-  const handleChange = (name: string, value: number | string) => { };
+
+  const handleClickShowFields = () => {
+    setShowFields(!showFields)
+  }
+
+  const handleChange = (name: string, value: number | string) => {
+    setPasswordForm((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = async (): Promise<boolean> => {
+    try {
+      await changePasswordSchema.validate(changePasswordForm, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (validationErrors: any) {
+      const errors: Partial<ChangePasswordForm> = {};
+      validationErrors.inner.forEach((error: any) => {
+        errors[error.path as keyof ChangePasswordForm] = error.message;
+      });
+      setErrors(errors);
+      return false;
+    }
+  };
 
   return (
     <div className="changePassword">
@@ -35,7 +76,7 @@ export const ChangePassword = () => {
               className="changePasswordOldPasswordInput"
               value={""}
               onChange={handleChange}
-              error={""}
+              error={errors.oldPassword}
             />
             <img
               className="resetPasswordImageEye1"
@@ -55,7 +96,7 @@ export const ChangePassword = () => {
               className="changePasswordNewPasswordInput"
               value={""}
               onChange={handleChange}
-              error={""}
+              error={errors.newPassword}
             />
             <img
               className="resetPasswordImageEye2"
@@ -65,7 +106,7 @@ export const ChangePassword = () => {
           </div>
         </div>
       }
-      {!showFields ? <ButtonsSection setShowButtons={setShowFields} showButtons={!showFields} /> : <ChangePasswordButton setShowField={setShowFields} showField={showFields} />}
+      {!showFields ? <ButtonsSection onClick={handleClickShowFields} /> : <ChangePasswordButton onClick={handleClickShowFields} />}
     </div >
   );
 };

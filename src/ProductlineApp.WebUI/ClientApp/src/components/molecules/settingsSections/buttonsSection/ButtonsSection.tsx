@@ -2,11 +2,11 @@ import CancelButton from '../../../atoms/buttons/cancelButton/CancelButton';
 import ConfirmChangePersonalDataButton from '../../../atoms/buttons/confirmChangePersonalDataButton/ConfirmAccountDataButton';
 import './css/settingsButtonsSection.css';
 
-function ButtonsSection({ setShowButtons, showButtons }: { setShowButtons?: any, showButtons?: boolean }) {
+function ButtonsSection({ onClick }: { onClick?: () => void }) {
   return (
     <div className="settingsButtonsSection">
-      <CancelButton setShowButtons={setShowButtons} showButtons={showButtons} />
-      <ConfirmChangePersonalDataButton setShowButtons={setShowButtons} showButtons={showButtons} />
+      <CancelButton onClick={onClick} />
+      <ConfirmChangePersonalDataButton onClick={onClick} />
     </div>
   );
 }

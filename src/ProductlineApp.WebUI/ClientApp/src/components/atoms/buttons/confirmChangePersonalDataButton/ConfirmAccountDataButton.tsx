@@ -1,7 +1,7 @@
 import './css/confirmAccountDataButton.css';
 
-function ConfirmAccountDataButton({ setShowButtons, showButtons }: { setShowButtons?: any, showButtons?: boolean }) {
-  return <input type="submit" className="confirmChangePersonalDataButton" value="Zatwierdz" onClick={() => setShowButtons(showButtons)}></ input>;
+function ConfirmAccountDataButton({ onClick }: { onClick?: () => void }) {
+  return <input type="submit" className="confirmChangePersonalDataButton" value="Zatwierdz" onClick={onClick}></ input>;
 }
 
 export default ConfirmAccountDataButton;

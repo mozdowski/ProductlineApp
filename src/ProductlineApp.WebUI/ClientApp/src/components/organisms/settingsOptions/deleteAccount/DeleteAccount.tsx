@@ -4,17 +4,27 @@ import EyeVisible from '../../../../assets/icons/eyeVisible_icon.png';
 import EyeInvisible from '../../../../assets/icons/eyeInvisible_icon.png';
 import './css/deleteAccount.css';
 import { useState } from 'react';
-import ConfrimButton from '../../../atoms/buttons/confirmButton/ConfirmButton';
-import CancelButton from '../../../atoms/buttons/cancelButton/CancelButton';
+import * as Yup from 'yup';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
+
+const deleteAcountPasswordSchema = Yup.object().shape({
+  password: Yup.string().required('Hasło jest wymagane'),
+  checkPassword: Yup.string().required('Podaj poprawne hasło')
+});
 
 export const DeleteAccount = () => {
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [showField, setShowField] = useState(true);
+  const [errors, setErrors] = useState<Partial<DeleteAccountForm>>({});
+
   const showPassword = () => {
     setPasswordVisible(!isPasswordVisible);
   };
+
+  const handleClickShowFields = () => {
+    setShowField(!showField)
+  }
 
   const handleChange = (name: string, value: number | string) => { };
 
@@ -33,7 +43,7 @@ export const DeleteAccount = () => {
               className="deleteAccountPasswordInput"
               value={""}
               onChange={handleChange}
-              error={""}
+              error={errors.password}
             />
             <img
               className="deleteAccountImageEye"
@@ -43,8 +53,7 @@ export const DeleteAccount = () => {
           </div>
         </div>
       }
-      {!showField ? <ButtonsSection setShowButtons={setShowField} showButtons={!showField} /> : <DeleteAccountButton setShowField={setShowField} showField={showField} />}
-
+      {!showField ? <ButtonsSection onClick={handleClickShowFields} /> : <DeleteAccountButton onClick={handleClickShowFields} />}
     </div>
   );
 };
