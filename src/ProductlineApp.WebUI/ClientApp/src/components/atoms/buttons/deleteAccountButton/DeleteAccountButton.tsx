@@ -1,8 +1,8 @@
 import './css/deleteAccountButton.css';
 
-function DeleteAccountButton() {
+function DeleteAccountButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="deleteAccountButton">
+    <div className="deleteAccountButton" onClick={onClick}>
       <p>Usuń konto</p>
     </div>
   );

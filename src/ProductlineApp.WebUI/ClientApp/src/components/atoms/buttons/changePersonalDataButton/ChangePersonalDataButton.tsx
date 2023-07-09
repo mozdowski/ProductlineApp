@@ -1,8 +1,8 @@
 import './css/changePersonalDataButton.css';
 
-function ChangePersonalDataButton() {
+function ChangePersonalDataButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="ChangePersonalDataButton">
+    <div className="changePersonalDataButton" onClick={onClick}>
       <p>Zmień swoje dane</p>
     </div>
   );

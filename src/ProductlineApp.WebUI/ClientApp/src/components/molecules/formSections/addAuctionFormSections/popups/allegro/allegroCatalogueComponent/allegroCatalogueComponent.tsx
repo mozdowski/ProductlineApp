@@ -138,7 +138,7 @@ const AllegroCatalogueComponent: React.FC<AllegroCatalogueComponentProps> = ({
       <div className="addAuctionAllAllegroButtons">
         <div className="addAuctionAllegroBackButton"></div>
         <div className="addauctionAllegroButtons">
-          <CancelButton close={onCancel} />
+          <CancelButton onClick={onCancel} />
           <NextButton onClick={handleOnClick} />
         </div>
       </div>

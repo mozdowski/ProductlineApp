@@ -2,7 +2,7 @@ import './css/usernameInput.css';
 
 function UsernameInput() {
   return (
-    <>
+    <div className="userNameField">
       <label htmlFor="uname" className="unameLabel">
         Nazwa uzytkownika
       </label>
@@ -13,7 +13,7 @@ function UsernameInput() {
         placeholder="Nazwa uzytkownika"
         className="unameInput"
       ></input>
-    </>
+    </div>
   );
 }
 

@@ -1,8 +1,8 @@
 import './css/changePasswordButton.css';
 
-function ChangePasswordButton() {
+function ChangePasswordButton({ onClick }: { onClick?: () => void }) {
   return (
-    <div className="changePasswordButton">
+    <div className="changePasswordButton" onClick={onClick}>
       <p>Zmień hasło</p>
     </div>
   );

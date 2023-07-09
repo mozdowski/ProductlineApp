@@ -11,6 +11,11 @@
   border: 1px solid var(--first-color);
 }
 
+.changeProfilePhotoButton input[type='file'] {
+  position: absolute;
+  opacity: 0;
+}
+
 .changeProfilePhotoButton p {
   color: var(--first-color);
   font-family: var(--body-font);
