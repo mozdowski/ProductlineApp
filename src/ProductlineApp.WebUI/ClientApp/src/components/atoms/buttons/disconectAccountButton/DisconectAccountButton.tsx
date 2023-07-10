@@ -6,7 +6,7 @@ function DisconectAccountButton() {
     <div className="disconectAccountButton">
       <p>Odłącz</p>
     </div>
-  )
+  );
 }
 
 export default DisconectAccountButton;

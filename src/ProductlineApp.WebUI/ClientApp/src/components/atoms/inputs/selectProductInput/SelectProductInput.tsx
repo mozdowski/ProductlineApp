@@ -1,31 +1,20 @@
-import { ProductSKU } from '../../../../interfaces/products/getProductsSKU';
+import { ProductAuctionData } from '../../../../interfaces/products/getProductsSKU';
 import { FormSelect } from '../../common/formSelect/formSelect';
 import './css/selectProductInput.css';
 
 function SelectProductInput({
   showFormSteps,
-  productsSKURecords,
+  products,
   value,
   onChange,
   error,
 }: {
   showFormSteps: any;
-  productsSKURecords: ProductSKU[];
-  value: string;
+  products: ProductAuctionData[];
+  value: string | undefined;
   onChange: (name: string, value: string) => void;
   error: any;
 }) {
-  const options: { label: string; value: string }[] = [];
-  for (const key in productsSKURecords) {
-    if (isNaN(Number(key))) {
-      const value = productsSKURecords[key];
-      options.push({
-        value: value.sku,
-        label: value.sku,
-      });
-    }
-  }
-
   return (
     <div className="selectProductInputField">
       <label htmlFor="selectProduct" className="selectProductLabel">
@@ -34,7 +23,10 @@ function SelectProductInput({
       <FormSelect
         value={value}
         onChange={onChange}
-        options={options}
+        options={products.map((product) => ({
+          label: product.sku,
+          value: product.id,
+        }))}
         name="product"
         error={error}
       />

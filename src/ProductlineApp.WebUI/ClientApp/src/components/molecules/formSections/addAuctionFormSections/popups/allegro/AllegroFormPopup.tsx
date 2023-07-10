@@ -15,7 +15,6 @@ import {
 interface AllegroFormPopupProps {
   openAllegroPopup: boolean;
   closeAllegroPopup: () => void;
-  errors: Partial<AuctionForm>;
 }
 
 enum PopupPages {
@@ -27,7 +26,6 @@ enum PopupPages {
 const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
   openAllegroPopup,
   closeAllegroPopup,
-  errors,
 }) => {
   const [currentPage, setCurrentPage] = useState<PopupPages>(PopupPages.ProductSelect);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
@@ -41,10 +39,12 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
     setCurrentPage(nextPageIndex as PopupPages);
 
     if (!data) return;
-    setParameters(data.map((x: {name: string, valueIds: string[]}) => ({
-      name: x.name,
-      valueIds: x.valueIds
-    })));
+    setParameters(
+      data.map((x: { name: string; valueIds: string[] }) => ({
+        name: x.name,
+        valueIds: x.valueIds,
+      })),
+    );
   };
 
   const handlePrevPage = () => {
@@ -81,8 +81,6 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
       shippingRateId: detailsForm.shippingRateId,
       quantity: detailsForm.quantity,
     };
-
-    
   };
 
   if (!openAllegroPopup) return null;

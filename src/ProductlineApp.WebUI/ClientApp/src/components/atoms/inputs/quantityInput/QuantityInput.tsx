@@ -7,7 +7,7 @@ function QuantityInput({
   error,
   disabled,
 }: {
-  value: number;
+  value: number | undefined;
   onChange: (name: string, value: number) => void;
   error: any;
   disabled: boolean;

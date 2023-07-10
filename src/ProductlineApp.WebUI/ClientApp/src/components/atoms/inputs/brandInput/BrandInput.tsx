@@ -8,7 +8,7 @@ function BrandInput({
   error,
   disabled,
 }: {
-  value: string;
+  value: string | undefined;
   onChange: (name: string, value: string) => void;
   error: any;
   disabled: boolean;

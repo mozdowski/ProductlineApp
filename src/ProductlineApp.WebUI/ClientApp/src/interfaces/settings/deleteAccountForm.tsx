@@ -1,3 +1,3 @@
-interface DeleteAccountForm {
-    password: string;
+export interface DeleteAccountForm {
+  password: string;
 }

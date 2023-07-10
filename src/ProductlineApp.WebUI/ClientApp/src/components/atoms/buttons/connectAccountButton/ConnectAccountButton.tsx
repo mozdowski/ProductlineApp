@@ -8,7 +8,7 @@ function ConnectAccountButton() {
         <p>Połącz</p>
       </div>
     </Link>
-  )
+  );
 }
 
 export default ConnectAccountButton;

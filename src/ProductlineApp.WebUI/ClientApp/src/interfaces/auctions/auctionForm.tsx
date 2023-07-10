@@ -1,5 +1,5 @@
 export interface AuctionForm {
-  sku: string;
+  product: string;
   brand: string;
   name: string;
   condition: number;

@@ -12,6 +12,7 @@ public class ProductMapper : Profile
         // this.CreateMap<ProductResponseMapperInput, ProductDtoResponse>();
 
         this.CreateMap<ProductResponseMapperInput, ProductDtoResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id.Value))
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product.Image.Url))
             .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand.Name))
             .ForMember(dest => dest.Condition, opt => opt.MapFrom(src => src.Product.Condition))

@@ -1,4 +1,4 @@
-interface ChangePersonalDetailsForm {
-    username: string;
-    email: string
+export interface ChangePersonalDetailsForm {
+  username: string;
+  email: string;
 }

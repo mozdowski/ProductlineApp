@@ -9,11 +9,10 @@ import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/B
 
 const deleteAcountPasswordSchema = Yup.object().shape({
   password: Yup.string().required('Hasło jest wymagane'),
-  checkPassword: Yup.string().required('Podaj poprawne hasło')
+  checkPassword: Yup.string().required('Podaj poprawne hasło'),
 });
 
 export const DeleteAccount = () => {
-
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [showField, setShowField] = useState(true);
   const [errors, setErrors] = useState<Partial<DeleteAccountForm>>({});
@@ -23,16 +22,16 @@ export const DeleteAccount = () => {
   };
 
   const handleClickShowFields = () => {
-    setShowField(!showField)
-  }
+    setShowField(!showField);
+  };
 
-  const handleChange = (name: string, value: number | string) => { };
+  const handleChange = (name: string, value: number | string) => {};
 
   return (
     <div className="deleteAccount">
       <h1>Usuń Konto</h1>
       <p className="info">Tutaj możesz usunąć konto</p>
-      {!showField &&
+      {!showField && (
         <div className="deleteAccountField">
           <div className="passwordField">
             <FormInput
@@ -41,7 +40,7 @@ export const DeleteAccount = () => {
               name="password"
               placeholder="Twoje hasło"
               className="deleteAccountPasswordInput"
-              value={""}
+              value={''}
               onChange={handleChange}
               error={errors.password}
             />
@@ -52,8 +51,12 @@ export const DeleteAccount = () => {
             />
           </div>
         </div>
-      }
-      {!showField ? <ButtonsSection onClick={handleClickShowFields} /> : <DeleteAccountButton onClick={handleClickShowFields} />}
+      )}
+      {!showField ? (
+        <ButtonsSection onClick={handleClickShowFields} />
+      ) : (
+        <DeleteAccountButton onClick={handleClickShowFields} />
+      )}
     </div>
   );
 };
