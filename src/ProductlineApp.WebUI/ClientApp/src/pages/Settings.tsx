@@ -6,7 +6,6 @@ export default function Settings() {
   const [image, setImage] = useState<File | null>(null);
   const { user } = useAuth();
 
-
   const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 

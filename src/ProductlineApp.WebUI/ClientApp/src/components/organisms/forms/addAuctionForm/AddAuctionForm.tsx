@@ -1,27 +1,24 @@
 import { ChangeEvent, useState } from 'react';
-import { AuctionForm } from '../../../../interfaces/auctions/auctionForm';
 import Photos from '../../../molecules/formSections/addAuctionFormSections/Photos/Photos';
 import ProductInfo from '../../../molecules/formSections/addAuctionFormSections/ProductInfo/ProductInfo';
 import AuctionPortals from '../../../molecules/formSections/addAuctionFormSections/auctionPortals/AuctionPortals';
 import ButtonsSection from '../../../molecules/formSections/addAuctionFormSections/buttonsSection/ButtonsSection';
 import SelectProduct from '../../../molecules/formSections/addAuctionFormSections/selectProduct/SelectProduct';
 import './css/addAuctionForm.css';
-import { ProductSKU } from '../../../../interfaces/products/getProductsSKU';
+import { ProductAuctionData } from '../../../../interfaces/products/getProductsSKU';
 
 export default function AddAuctionForm({
-  productsSKURecords,
-  photos,
+  products,
+  selectedProduct,
   onSubmit,
-  auctionForm,
-  onChange,
+  onProductChange,
   errors,
 }: {
-  productsSKURecords: ProductSKU[];
-  photos: string[];
+  products: ProductAuctionData[];
+  selectedProduct: ProductAuctionData | null;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  auctionForm: AuctionForm;
-  onChange: (name: string, value: string | number) => void;
-  errors: Partial<AuctionForm>;
+  onProductChange: (id: string) => void;
+  errors: any;
 }) {
   const [showFormSteps, setSelectedOption] = useState('');
 
@@ -35,21 +32,21 @@ export default function AddAuctionForm({
       <div className="addAuction">
         <div className="addAuctionFirstSection">
           <SelectProduct
-            productsSKURecords={productsSKURecords}
-            auctionForm={auctionForm}
+            products={products}
+            value={selectedProduct?.id}
             showFormSteps={(e: ChangeEvent<HTMLSelectElement>) => handleShowFormSteps(e)}
-            onChange={onChange}
+            onProductChange={onProductChange}
             errors={errors}
           />
           {showFormSteps != ' ' && (
-            <ProductInfo auctionForm={auctionForm} onChange={onChange} errors={errors} />
+            <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
           )}
         </div>
         <ButtonsSection />
         {showFormSteps != ' ' && (
           <div className="addAuctionSecondSection">
-            <Photos photos={photos} />
-            <AuctionPortals auctionForm={auctionForm} errors={errors} />
+            <Photos photos={selectedProduct ? selectedProduct.imageUrls : []} />
+            <AuctionPortals />
           </div>
         )}
       </div>

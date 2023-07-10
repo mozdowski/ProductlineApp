@@ -5,15 +5,7 @@ import EbayFormButton from '../../../../atoms/buttons/EbayFormButton/EbayFormBut
 import './css/auctionPortals.css';
 import AllegroFormPopup from '../popups/allegro/AllegroFormPopup';
 
-function AuctionPortals({
-  auctionForm,
-  //onChange,
-  errors,
-}: {
-  auctionForm: AuctionForm;
-  //onChange: (name: string, value: string | number) => void;
-  errors: Partial<AuctionForm>;
-}) {
+function AuctionPortals() {
   const [openAllegroPopup, setOpenAllegroFormPopup] = useState(false);
 
   return (
@@ -29,7 +21,6 @@ function AuctionPortals({
           <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
           <AllegroFormPopup
             openAllegroPopup={openAllegroPopup}
-            errors={errors}
             closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
           />
           <EbayFormButton />

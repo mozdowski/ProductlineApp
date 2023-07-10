@@ -3,7 +3,6 @@ import AllegroIcon from '../../../../assets/icons/allegro_a_logo_icon.svg';
 import EbayIcon from '../../../../assets/icons/ebay_icon_logo.svg';
 import ConnectAccountButton from '../../../atoms/buttons/connectAccountButton/ConnectAccountButton';
 
-
 function AuctionPortalsToConnectList() {
   return (
     <>

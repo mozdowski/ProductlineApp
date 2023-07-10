@@ -7,7 +7,7 @@ function ProductDescritionInput({
   error,
   disabled,
 }: {
-  value: string;
+  value: string | undefined;
   onChange: (name: string, value: string) => void;
   error: any;
   disabled: boolean;
@@ -18,7 +18,7 @@ function ProductDescritionInput({
         Opis produktu
       </label>
       <FormTextarea
-        value={value}
+        value={value ? value : ''}
         onChange={onChange}
         id="productDescription"
         name="description"

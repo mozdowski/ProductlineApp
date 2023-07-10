@@ -1,4 +1,3 @@
-import { AddProductRequest } from '../../../../../interfaces/products/addProductRequest';
 import { ProductForm } from '../../../../../interfaces/products/productForm';
 import BrandInput from '../../../../atoms/inputs/brandInput/BrandInput';
 import CategoryInput from '../../../../atoms/inputs/categoryInput/CatrgoryInput';

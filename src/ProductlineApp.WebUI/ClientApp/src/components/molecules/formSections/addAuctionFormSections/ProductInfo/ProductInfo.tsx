@@ -1,4 +1,4 @@
-import { AuctionForm } from '../../../../../interfaces/auctions/auctionForm';
+import { ProductAuctionData } from '../../../../../interfaces/products/getProductsSKU';
 import BrandInput from '../../../../atoms/inputs/brandInput/BrandInput';
 import ConditionInput from '../../../../atoms/inputs/conditionInput/ConditionInput';
 import PriceInput from '../../../../atoms/inputs/priceInput/PriceInput';
@@ -8,13 +8,11 @@ import QuantityInput from '../../../../atoms/inputs/quantityInput/QuantityInput'
 import './css/addAuction_ProductInfo.css';
 
 function ProductInfo({
-  auctionForm,
+  selectedProduct,
   onChange,
-  errors,
 }: {
-  auctionForm: AuctionForm;
+  selectedProduct: ProductAuctionData | null;
   onChange: (name: string, value: string | number) => void;
-  errors: Partial<AuctionForm>;
 }) {
   return (
     <>
@@ -27,34 +25,44 @@ function ProductInfo({
         </div>
         <div className="addAuctionInputs">
           <div className="firsLineInputs">
-            <BrandInput value={auctionForm.brand} onChange={onChange} error={''} disabled={true} />
-            <ProductNameInput
-              value={auctionForm.name}
+            <BrandInput
+              value={selectedProduct?.brand}
               onChange={onChange}
-              error={''}
+              error={null}
+              disabled={true}
+            />
+            <ProductNameInput
+              value={selectedProduct?.name}
+              onChange={onChange}
+              error={null}
               disabled={true}
             />
           </div>
           <div className="secondLineInputs">
             <ConditionInput
-              value={auctionForm.condition.toString()}
+              value={selectedProduct?.condition.toString()}
               onChange={onChange}
-              error={''}
+              error={null}
               disabled={true}
             />
             <QuantityInput
-              value={auctionForm.quantity}
+              value={selectedProduct?.quantity}
               onChange={onChange}
-              error={''}
+              error={null}
               disabled={true}
             />
-            <PriceInput value={auctionForm.price} onChange={onChange} error={''} disabled={true} />
+            <PriceInput
+              value={selectedProduct?.price}
+              onChange={onChange}
+              error={null}
+              disabled={true}
+            />
           </div>
           <div className="textAreaProductDescription">
             <ProductDescritionInput
-              value={auctionForm.description}
+              value={selectedProduct?.description}
               onChange={onChange}
-              error={''}
+              error={null}
               disabled={true}
             />
           </div>

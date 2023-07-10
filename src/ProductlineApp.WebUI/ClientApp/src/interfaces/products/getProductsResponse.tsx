@@ -5,7 +5,8 @@ export interface GetProductsResponse {
   products: ProductDtoResponse[];
 }
 
-interface ProductDtoResponse {
+export interface ProductDtoResponse {
+  id: string;
   sku: string;
   name: string;
   category: string;

@@ -1,6 +1,6 @@
 import './css/addAuction_Photos.css';
 
-function Photos({ photos }: { photos: string[] }) {
+function Photos({ photos }: { photos: string[] | [] }) {
   return (
     <>
       <div className="photosInfo">

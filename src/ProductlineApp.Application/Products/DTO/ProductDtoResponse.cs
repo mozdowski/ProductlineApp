@@ -4,6 +4,8 @@ namespace ProductlineApp.Application.Products.DTO;
 
 public class ProductDtoResponse
 {
+    public Guid Id { get; set; }
+
     public string Sku { get; set; }
 
     public string Name { get; set; }

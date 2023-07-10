@@ -7,7 +7,6 @@ import './css/changePassword.css';
 import * as Yup from 'yup';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
 
-
 const changePasswordSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('Nowe hasło jest wymagane')
@@ -18,7 +17,6 @@ const changePasswordSchema = Yup.object().shape({
 });
 
 export const ChangePassword = () => {
-
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const showPassword = () => {
     setPasswordVisible(!isPasswordVisible);
@@ -31,10 +29,9 @@ export const ChangePassword = () => {
     oldPassword: '',
   });
 
-
   const handleClickShowFields = () => {
-    setShowFields(!showFields)
-  }
+    setShowFields(!showFields);
+  };
 
   const handleChange = (name: string, value: number | string) => {
     setPasswordForm((prevData) => ({
@@ -62,7 +59,7 @@ export const ChangePassword = () => {
     <div className="changePassword">
       <h1>Zmień Hasło</h1>
       <p className="info">Tutaj możesz zmienić swoje hasło na nowe</p>
-      {!showFields &&
+      {!showFields && (
         <div className="changePasswordFields">
           <label htmlFor="password" className="changePasswordLabel1">
             Stare hasło
@@ -74,7 +71,7 @@ export const ChangePassword = () => {
               name="password"
               placeholder="Stare hasło"
               className="changePasswordOldPasswordInput"
-              value={""}
+              value={''}
               onChange={handleChange}
               error={errors.oldPassword}
             />
@@ -94,7 +91,7 @@ export const ChangePassword = () => {
               name="password"
               placeholder="Nowe hasło"
               className="changePasswordNewPasswordInput"
-              value={""}
+              value={''}
               onChange={handleChange}
               error={errors.newPassword}
             />
@@ -105,9 +102,12 @@ export const ChangePassword = () => {
             />
           </div>
         </div>
-      }
-      {!showFields ? <ButtonsSection onClick={handleClickShowFields} /> : <ChangePasswordButton onClick={handleClickShowFields} />}
-    </div >
+      )}
+      {!showFields ? (
+        <ButtonsSection onClick={handleClickShowFields} />
+      ) : (
+        <ChangePasswordButton onClick={handleClickShowFields} />
+      )}
+    </div>
   );
 };
-

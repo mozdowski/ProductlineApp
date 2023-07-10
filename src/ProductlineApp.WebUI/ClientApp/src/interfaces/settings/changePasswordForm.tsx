@@ -1,4 +1,4 @@
-interface ChangePasswordForm {
-    oldPassword: string;
-    newPassword: string;
+export interface ChangePasswordForm {
+  oldPassword: string;
+  newPassword: string;
 }

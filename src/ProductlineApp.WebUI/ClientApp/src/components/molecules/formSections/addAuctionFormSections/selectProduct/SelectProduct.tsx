@@ -1,21 +1,25 @@
 import { AuctionForm } from '../../../../../interfaces/auctions/auctionForm';
-import { ProductSKU } from '../../../../../interfaces/products/getProductsSKU';
+import { ProductAuctionData } from '../../../../../interfaces/products/getProductsSKU';
 import SelectProductInput from '../../../../atoms/inputs/selectProductInput/SelectProductInput';
 import './css/selectProduct.css';
 
 function SelectProduct({
   showFormSteps,
-  productsSKURecords,
-  auctionForm,
-  onChange,
+  products,
+  value,
+  onProductChange,
   errors,
 }: {
   showFormSteps: any;
-  productsSKURecords: ProductSKU[];
-  auctionForm: AuctionForm;
-  onChange: (name: string, value: string | number) => void;
+  products: ProductAuctionData[];
+  value: string | undefined;
+  onProductChange: (id: string) => void;
   errors: Partial<AuctionForm>;
 }) {
+  const handleProductChange = (name: string, value: string) => {
+    onProductChange(value);
+  };
+
   return (
     <>
       <div className="selectProduct">
@@ -27,13 +31,11 @@ function SelectProduct({
         </div>
         <div className="selectProducctInput">
           <SelectProductInput
-            productsSKURecords={productsSKURecords}
+            products={products}
             showFormSteps={showFormSteps}
-            value={auctionForm.sku}
-            onChange={function (name: string, value: string): void {
-              throw new Error('Function not implemented.');
-            }}
-            error={undefined}
+            value={value}
+            onChange={handleProductChange}
+            error={errors ? errors.product : null}
           />
         </div>
       </div>

@@ -1,29 +1,29 @@
 .connectAccountToPortals {
-    background-color: var(--white-color);
-    padding: 20px 35px 35px 35px;
-    border-radius: 8px;
-    width: 434px;
+  background-color: var(--white-color);
+  padding: 20px 35px 35px 35px;
+  border-radius: 8px;
+  width: 434px;
 }
 
 .connectAccountToPortals h1 {
-    color: var(--letter-color);
-    font-family: var(--body-font);
-    font-size: 16px;
-    font-weight: 600;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .connectAccountToPortals .info {
-    color: var(--grey-color);
-    font-family: var(--body-font);
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 30px;
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 30px;
 }
 
 .linkSeparator {
-    background-color: #E9EDF7;
-    width: 434px;
-    margin-top: 23px;
-    margin-bottom: 23px;
-    height: 1px;
+  background-color: #e9edf7;
+  width: 434px;
+  margin-top: 23px;
+  margin-bottom: 23px;
+  height: 1px;
 }

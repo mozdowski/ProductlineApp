@@ -195,7 +195,8 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     ) as AllegroProductParameter[];
 
     const additionalElements = parametersSet.filter(
-      (param: AllegroProductParameter) => param.required && !productSet.parameters.some(x => x.id === param.id),
+      (param: AllegroProductParameter) =>
+        param.required && !productSet.parameters.some((x) => x.id === param.id),
     ) as AllegroProductParameter[];
 
     console.log(parametersSet);
@@ -256,12 +257,14 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
     console.log(formFields);
 
-    onNextPage(Object.entries(formFields).map(([name, value]) => {
+    onNextPage(
+      Object.entries(formFields).map(([name, value]) => {
         return {
           name,
-          valueIds: Array.isArray(value) ? value : [value.toString()]
+          valueIds: Array.isArray(value) ? value : [value.toString()],
         };
-      }));
+      }),
+    );
   };
 
   return (
@@ -271,34 +274,33 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
           <CircularProgress />
         </div>
       )}
-              {commonParameters && commonParameters.length > 0 && !isLoading && (
-
-      <div className="allegroAuctionParameters">
-            {commonParameters.map((parameter, index) => (
-              <div key={index}>
-                <AllegroParameterInput
-                  id={parameter.id}
-                  name={parameter.name}
-                  type={parameter.type}
-                  isMultiselect={parameter.restrictions?.multipleChoices}
-                  options={parameter.dictionary?.map((item) => ({
-                    label: item.value,
-                    value: item.id,
-                  }))}
-                  unit={parameter?.unit}
-                  value={getInputDefaultValue(
-                    parameter.id,
-                    parameter.name,
-                    parameter.type,
-                    product,
-                    parameter.restrictions.multipleChoices,
-                  )}
-                  onChange={handleInputChange}
-                  error={errors[parameter.name]}
-                />
-              </div>
-            ))}
-      </div>
+      {commonParameters && commonParameters.length > 0 && !isLoading && (
+        <div className="allegroAuctionParameters">
+          {commonParameters.map((parameter, index) => (
+            <div key={index}>
+              <AllegroParameterInput
+                id={parameter.id}
+                name={parameter.name}
+                type={parameter.type}
+                isMultiselect={parameter.restrictions?.multipleChoices}
+                options={parameter.dictionary?.map((item) => ({
+                  label: item.value,
+                  value: item.id,
+                }))}
+                unit={parameter?.unit}
+                value={getInputDefaultValue(
+                  parameter.id,
+                  parameter.name,
+                  parameter.type,
+                  product,
+                  parameter.restrictions.multipleChoices,
+                )}
+                onChange={handleInputChange}
+                error={errors[parameter.name]}
+              />
+            </div>
+          ))}
+        </div>
       )}
 
       <div className="addAuctionAllAllegroButtons">

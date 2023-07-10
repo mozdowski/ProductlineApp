@@ -51,6 +51,10 @@ export class AuctionsService {
   public async getAllegoUserPolicies() {
     return this.httpService.get<AllegroUserPoliciesResponse>('/allegro/userPolicies');
   }
+
+  public async getProductsForAution(): Promise<GetProductsResponse> {
+    return this.httpService.get<GetProductsResponse>('/products');
+  }
 }
 
 export {};
