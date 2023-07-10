@@ -66,4 +66,10 @@ public interface IAllegroApiClient
     Task<string> GetProductParametersForCategory(string accessToken, string categoryId);
 
     Task<AllegroCatalogueProductDetailsResponse> CatalogueProductDetails(string accessToken, string productId);
+
+    Task<ShippingRatesResponse> GetShippingRates(string accessToken);
+
+    Task<ReturnPoliciesResponse> GetReturnPolicies(string accessToken);
+
+    Task<ImpliedWarrantiesResponse> GetImpliedWarranties(string accessToken);
 }

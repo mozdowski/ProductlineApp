@@ -65,11 +65,11 @@ public class RangeValue
 
 public class Parameter
 {
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
     public string Name { get; set; }
 
-    public List<string> Values { get; set; }
+    public List<string>? Values { get; set; }
 
     public List<string> ValuesIds { get; set; }
 }
@@ -144,6 +144,8 @@ public class Delivery
 
     public class ShippingRate
     {
+        public string Id { get; set; }
+
         public string Name { get; set; }
     }
 }

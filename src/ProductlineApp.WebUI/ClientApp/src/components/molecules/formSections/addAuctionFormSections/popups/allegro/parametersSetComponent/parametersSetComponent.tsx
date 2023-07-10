@@ -21,8 +21,14 @@ interface ParametersSetComponentProps {
   productId: string;
   categoryId: string;
   onPrevPage: () => void;
-  onNextPage: () => void;
+  onNextPage: (data: any) => void;
   onCancel: () => void;
+}
+
+interface ValidationModel {
+  name: string;
+  type: string;
+  restrictions: ParameterRestrictions;
 }
 
 export enum ParamType {
@@ -31,72 +37,76 @@ export enum ParamType {
   DICTIONARY = 'dictionary',
 }
 
-const generateValidationSchema = (restrictionsList: ParameterRestrictions[]): Yup.Schema<any> => {
+const generateValidationSchema = (validationModels: ValidationModel[]): Yup.Schema<any> => {
   const schemaObject: Record<string, Yup.AnySchema> = {};
 
-  restrictionsList.forEach((restrictions, index) => {
-    const {
-      name,
-      min,
-      max,
-      range,
-      precision,
-      minLength,
-      maxLength,
-      allowedNumberOfValues,
-    } = restrictions;
+  validationModels.forEach((validationModel, index) => {
+    const { name, type, restrictions } = validationModel;
+
+    const { min, max, range, precision, minLength, maxLength, allowedNumberOfValues } =
+      restrictions;
 
     let fieldSchema = Yup.mixed();
 
     if (min !== undefined) {
-      fieldSchema = fieldSchema.test(`min-${name}`, `Wartość dla ${name} nie może być mniejsza niż ${min}`, (value: any) =>
-        value >= min
+      fieldSchema = fieldSchema.test(
+        `min-${name}`,
+        `Wartość  nie może być mniejsza niż ${min}`,
+        (value: any) => (value as number) >= min,
       );
     }
 
     if (max !== undefined) {
-      fieldSchema = fieldSchema.test(`max-${name}`, `Wartość dla ${name} nie może być większa niż ${max}`, (value: any) =>
-        value <= max
+      fieldSchema = fieldSchema.test(
+        `max-${name}`,
+        `Wartość nie może być większa niż ${max}`,
+        (value: any) => (value as number) <= max,
       );
     }
 
     if (range && min && max) {
       fieldSchema = fieldSchema.test(
         `range-${name}`,
-        `Wartość dla ${name} poza dozwolonym przedziałem`,
-        (value: any) => value >= min && value <= max
+        `Wartość poza dozwolonym przedziałem`,
+        (value: any) => (value as number) >= min && (value as number) <= max,
       );
     }
 
     if (precision !== undefined) {
       fieldSchema = fieldSchema.test(
         `precision-${name}`,
-        `Wartość dla ${name} poza dozwoloną wartością precyzji`,
-        (value: any) => Math.round(value * Math.pow(10, precision)) / Math.pow(10, precision) === value
+        `Wartość poza dozwoloną wartością precyzji`,
+        (value: any) => {
+          const regex = new RegExp(`^-?\\d+(\\.\\d{1,${precision}})?$`);
+          return regex.test(value.toString());
+        },
+        // (value: any) => Math.round((value as number) * Math.pow(10, precision)) / Math.pow(10, precision) === value as number
       );
     }
 
     if (minLength !== undefined) {
       fieldSchema = fieldSchema.test(
         `minLength-${name}`,
-        `Wymagane co najmniej ${minLength} znaków dla ${name}`,
-        (value: any) => value.length >= minLength
+        `Wymagane co najmniej ${minLength} znaków`,
+        (value: any) => value.length >= minLength,
       );
     }
 
     if (maxLength !== undefined) {
       fieldSchema = fieldSchema.test(
         `maxLength-${name}`,
-        `Wymagane co najwyżej ${maxLength} znaków dla ${name}`,
-        (value: any) => value.length <= maxLength
+        `Wymagane co najwyżej ${maxLength} znaków`,
+        (value: any) => value.length <= maxLength,
       );
     }
 
     if (allowedNumberOfValues !== undefined) {
       fieldSchema = fieldSchema.test(
         `allowedNumberOfValues-${name}`,
-        `Nieprawidłowa liczba wartości dla ${name}`,
-        (value) => Array.isArray(value) && value.length === allowedNumberOfValues
+        `Nieprawidłowa liczba wartości`,
+        (value) =>
+          type === 'string' && (value as string).split(' ').length <= allowedNumberOfValues,
+        // (value) => Array.isArray(value) && value.length === allowedNumberOfValues
       );
     }
 
@@ -106,7 +116,6 @@ const generateValidationSchema = (restrictionsList: ParameterRestrictions[]): Yu
   const schema = Yup.object().shape(schemaObject);
   return schema;
 };
-
 
 const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
   productId,
@@ -139,7 +148,16 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         setCommonParameters(parametersSubset);
 
         setValidationSchema(
-          generateValidationSchema(parametersSubset.map((param) => param.restrictions)),
+          generateValidationSchema(
+            parametersSubset.map((param: AllegroProductParameter) => {
+              const validationModel: ValidationModel = {
+                name: param.name,
+                type: param.type,
+                restrictions: param.restrictions,
+              };
+              return validationModel;
+            }),
+          ),
         );
 
         initForm(parametersSubset, product);
@@ -177,8 +195,13 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     ) as AllegroProductParameter[];
 
     const additionalElements = parametersSet.filter(
-      (param: AllegroProductParameter) => param.required,
+      (param: AllegroProductParameter) => param.required && !productSet.parameters.some(x => x.id === param.id),
     ) as AllegroProductParameter[];
+
+    console.log(parametersSet);
+    console.log(productSet);
+    console.log(commonElements);
+    console.log(additionalElements);
 
     return [...commonElements, ...additionalElements];
   };
@@ -198,7 +221,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         param.name,
         param.type,
         productData,
-        param.restrictions.multipleChoices
+        param.restrictions.multipleChoices,
       );
       setFormFields((prevData) => ({
         ...prevData,
@@ -229,12 +252,16 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
   const handleNextPage = async () => {
     const isValid = await validateForm();
-    console.log(isValid);
-    console.log(errors);
-    console.log(validationSchema);
     if (!isValid) return;
 
-    onNextPage();
+    console.log(formFields);
+
+    onNextPage(Object.entries(formFields).map(([name, value]) => {
+        return {
+          name,
+          valueIds: Array.isArray(value) ? value : [value.toString()]
+        };
+      }));
   };
 
   return (
@@ -244,9 +271,9 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
           <CircularProgress />
         </div>
       )}
+              {commonParameters && commonParameters.length > 0 && !isLoading && (
+
       <div className="allegroAuctionParameters">
-        {commonParameters && commonParameters.length > 0 && !isLoading && (
-          <>
             {commonParameters.map((parameter, index) => (
               <div key={index}>
                 <AllegroParameterInput
@@ -271,9 +298,9 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
                 />
               </div>
             ))}
-          </>
-        )}
       </div>
+      )}
+
       <div className="addAuctionAllAllegroButtons">
         <div className="addAuctionAllegroBackButton">
           <BackButton onClick={onPrevPage} />

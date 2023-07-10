@@ -36,7 +36,7 @@ const SelectStyle = {
 
 interface FormSelectProps {
   name: string;
-  value: string;
+  value: any;
   onChange: (name: string, value: string) => void;
   options: { label: string; value: string | number }[];
   error?: string;
@@ -50,7 +50,7 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
       target: { value },
     } = event;
     setSelectedValue(value);
-    onChange(name, selectedValue);
+    onChange(name, value);
   };
 
   return (

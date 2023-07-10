@@ -18,8 +18,6 @@ const FormInput: React.FC<FormInputProps> = ({
   ...props
 }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    console.log(name);
-    console.log(event.target.value);
     onChange(name, event.target.value);
   };
 

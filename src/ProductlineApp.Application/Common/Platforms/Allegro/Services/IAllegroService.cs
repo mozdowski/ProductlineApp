@@ -13,4 +13,10 @@ public interface IAllegroService : IPlatformService
     Task<string> GetProductParametersForCategory(string categoryId);
 
     Task<AllegroCatalogueProductDetailsResponse> GetCatalogueProductDetails(string productId);
+
+    Task<ShippingRatesResponse> GetShippingRates();
+
+    Task<ReturnPoliciesResponse> GetReturnPolicies();
+
+    Task<ImpliedWarrantiesResponse> GetImpliedWarranties();
 }

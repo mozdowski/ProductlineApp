@@ -1,13 +1,16 @@
 import './css/allegroFormPopup.css';
 import AllegroLogo from '../../../../../../assets/icons/allegroLogo_icon.svg';
-import CancelButton from '../../../../../atoms/buttons/cancelButton/CancelButton';
-import ConfrimButton from '../../../../../atoms/buttons/confirmButton/ConfirmButton';
 import { AuctionForm } from '../../../../../../interfaces/auctions/auctionForm';
 import { useState } from 'react';
-import NextButton from '../../../../../atoms/buttons/nextButton/nextButton';
 import AllegroCatalogueComponent from './allegroCatalogueComponent/allegroCatalogueComponent';
 import ParametersSetComponent from './parametersSetComponent/parametersSetComponent';
-import BackButton from '../../../../../atoms/buttons/backButton/backButton';
+import AllegroListingDetails, {
+  AllegroListingDetailsFormData,
+} from './allegroListingDetails/allegroListingDetails';
+import {
+  CreateAllegroAuction,
+  Parameter,
+} from '../../../../../../interfaces/auctions/createAllegroAuction';
 
 interface AllegroFormPopupProps {
   openAllegroPopup: boolean;
@@ -29,11 +32,19 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
   const [currentPage, setCurrentPage] = useState<PopupPages>(PopupPages.ProductSelect);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [selelectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
+  const [parameters, setParameters] = useState<Parameter[]>([]);
+  const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
 
-  const handleNextPage = () => {
+  const handleNextPage = (data?: any) => {
     const totalPages = Object.keys(PopupPages).length / 2;
     const nextPageIndex = (currentPage + 1) % totalPages;
     setCurrentPage(nextPageIndex as PopupPages);
+
+    if (!data) return;
+    setParameters(data.map((x: {name: string, valueIds: string[]}) => ({
+      name: x.name,
+      valueIds: x.valueIds
+    })));
   };
 
   const handlePrevPage = () => {
@@ -46,6 +57,32 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
     if (!id || !categoryId) return;
     setSelectedProductId(id);
     setSelectedCategoryId(categoryId);
+  };
+
+  const handleConfirm = (detailsForm: AllegroListingDetailsFormData) => {
+    const allegroListingData: CreateAllegroAuction = {
+      name: detailsForm.name,
+      allegroProductId: selectedProductId as string,
+      description: '',
+      impliedWarrantyId: detailsForm.impliedWarrantyId,
+      returnPolicyId: detailsForm.returnPolicyId,
+      price: detailsForm.price,
+      location: {
+        city: detailsForm.locationCity,
+        countryCode: detailsForm.locationCountryCode,
+        postCode: detailsForm.locationPostCode,
+        province: detailsForm.locationProvince,
+      },
+      productId: '',
+      parameters: parameters,
+      duration: detailsForm.duration,
+      republish: detailsForm.republish,
+      imagesUrls: [],
+      shippingRateId: detailsForm.shippingRateId,
+      quantity: detailsForm.quantity,
+    };
+
+    
   };
 
   if (!openAllegroPopup) return null;
@@ -81,10 +118,17 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
                 onCancel={closeAllegroPopup}
               />
             )}
+          {currentPage === PopupPages.ListingDetails && (
+            <AllegroListingDetails
+              onConfirm={handleConfirm}
+              onPrevPage={handlePrevPage}
+              onCancel={closeAllegroPopup}
+            />
+          )}
         </div>
       </div>
     </div>
   );
 };
-
+AllegroListingDetails;
 export default AllegroFormPopup;

@@ -36,9 +36,6 @@ export default function Products() {
       setHeight(ref.current.clientHeight);
     }
   }, []);
-  // const countRows = Math.round((height - (65 + 49 + 61)) / 64);
-  // console.log('height ' + height);
-  // console.log('liczba wierszy ' + countRows);
 
   return (
     <>

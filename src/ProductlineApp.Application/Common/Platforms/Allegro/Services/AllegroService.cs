@@ -198,6 +198,21 @@ public class AllegroService : IAllegroService
         return await this._allegroApiClient.CatalogueProductDetails(this._accessToken, productId);
     }
 
+    public async Task<ShippingRatesResponse> GetShippingRates()
+    {
+        return await this._allegroApiClient.GetShippingRates(this._accessToken);
+    }
+
+    public async Task<ReturnPoliciesResponse> GetReturnPolicies()
+    {
+        return await this._allegroApiClient.GetReturnPolicies(this._accessToken);
+    }
+
+    public async Task<ImpliedWarrantiesResponse> GetImpliedWarranties()
+    {
+        return await this._allegroApiClient.GetImpliedWarranties(this._accessToken);
+    }
+
     private void CheckIfAuthorized()
     {
         if (this._accessToken == null)
