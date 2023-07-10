@@ -375,6 +375,57 @@ public class AllegroApiClient : IAllegroApiClient
         return response.Data;
     }
 
+    public async Task<ShippingRatesResponse> GetShippingRates(string accessToken)
+    {
+        var request = new RestRequest($"sale/shipping-rates")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<ShippingRatesResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Failed to get shipping rates: {response.StatusCode}");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<ReturnPoliciesResponse> GetReturnPolicies(string accessToken)
+    {
+        var request = new RestRequest($"after-sales-service-conditions/return-policies")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<ReturnPoliciesResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Failed to get return policies: {response.StatusCode}");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<ImpliedWarrantiesResponse> GetImpliedWarranties(string accessToken)
+    {
+        var request = new RestRequest($"after-sales-service-conditions/implied-warranties")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<ImpliedWarrantiesResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Failed to get implied warranties: {response.StatusCode}");
+        }
+
+        return response.Data;
+    }
+
     private async Task<string> GetCategoryNameById(string accessToken, string categoryId)
     {
         var request = new RestRequest($"sale/categories/{categoryId}")

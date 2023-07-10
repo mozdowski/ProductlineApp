@@ -30,7 +30,7 @@ public class AllegroCreateListingDtoRequest
 
     public IEnumerable<string> ImagesUrls { get; set; }
 
-    public Delivery Delivery { get; set; }
+    public string ShippingRateId { get; set; }
 
     public int Quantity { get; set; }
 

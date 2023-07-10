@@ -93,8 +93,6 @@ const AllegroCatalogueComponent: React.FC<AllegroCatalogueComponentProps> = ({
 
   const handleOnClick = async () => {
     const isValid = await validateForm();
-    console.log(isValid);
-    console.log(errors);
     if (!isValid) return;
 
     onNextPage();

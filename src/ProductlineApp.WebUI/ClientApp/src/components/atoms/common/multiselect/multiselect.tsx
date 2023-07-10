@@ -54,9 +54,15 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
     const {
       target: { value },
     } = event;
-    console.log(value);
-    console.log(selectedValues);
-    setSelectedValues(typeof value === 'string' ? value.split(',') : value);
+
+    const values = typeof value === 'string' ? value.split(',') : value;
+    const selectedOptions = options.filter((option) => values.some((v) => v === option.label));
+
+    onChange(
+      name,
+      selectedOptions.map((x) => x.value),
+    );
+    setSelectedValues(values);
   };
 
   return (
@@ -79,6 +85,7 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
             </MenuItem>
           ))}
         </Select>
+        {error && <span className="error">{error}</span>}
       </FormControl>
     </div>
   );

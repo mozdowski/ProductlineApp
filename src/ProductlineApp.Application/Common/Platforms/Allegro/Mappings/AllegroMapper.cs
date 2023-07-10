@@ -150,7 +150,7 @@ public class AllegroMapper : Profile
                     {
                         Items = new List<Item2>
                         {
-                            new Item2 { Type = "TEXT", Content = src.Description },
+                            new Item2 { Type = "TEXT", Content = $"<p>{src.Description}</p>" },
                         },
                     },
                 },
@@ -163,7 +163,16 @@ public class AllegroMapper : Profile
                 Status = "ACTIVE",
                 Republish = src.Republish,
             }))
-            .ForMember(dest => dest.Delivery, opt => opt.MapFrom(src => src.Delivery))
+            .ForMember(dest => dest.Delivery, opt => opt.MapFrom(src => new Delivery
+                {
+                    HandlingTime = "PT24H",
+                    ShipmentDate = DateTime.Today.AddDays(2),
+                    ShippingRates = new Delivery.ShippingRate()
+                    {
+                        Id = src.ShippingRateId,
+                    },
+                    AdditionalInfo = "brak",
+                }))
             .ForMember(dest => dest.Payments, opt => opt.MapFrom(src => new Payments()
             {
                 Invoice = Payments.PaymentInvoice.VAT.ToString(),

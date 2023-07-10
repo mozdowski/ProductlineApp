@@ -1,3 +1,4 @@
+import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
 import { GetAllegroCatalogueProductDetailsResponse } from '../../interfaces/platforms/getAllegroCatalogueProductDetailsResponse';
@@ -45,6 +46,10 @@ export class AuctionsService {
     return this.httpService.get<AllegroProductParametersResponse>(
       '/allegro/product/categoryParameters/' + categoryId,
     );
+  }
+
+  public async getAllegoUserPolicies() {
+    return this.httpService.get<AllegroUserPoliciesResponse>('/allegro/userPolicies');
   }
 }
 

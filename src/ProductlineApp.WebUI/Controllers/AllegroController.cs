@@ -45,4 +45,21 @@ public class AllegroController : ControllerBase
         var result = await this._allegroService.GetCatalogueProductDetails(productId);
         return this.Ok(result);
     }
+
+    [HttpGet("userPolicies")]
+    public async Task<IActionResult> GetUserPolicies()
+    {
+        var impliesWarranties = this._allegroService.GetImpliedWarranties();
+        var shippingRates = this._allegroService.GetShippingRates();
+        var retunPolicies = this._allegroService.GetReturnPolicies();
+
+        await Task.WhenAll(impliesWarranties, shippingRates, retunPolicies);
+
+        return this.Ok(new
+        {
+            ImpliesWarranties = impliesWarranties.Result.ImpliedWarranties,
+            ShippingRates = shippingRates.Result.ShippingRates,
+            RetunPolicies = retunPolicies.Result.ReturnPolicies,
+        });
+    }
 }
