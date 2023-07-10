@@ -12,7 +12,7 @@ export const ProfileDetails = ({
   UserImage: any;
 }) => {
   return (
-    <div className="profileDetails">
+    <div className="profileDetails grid-col-span-2">
       <h1>Szczegóły Profilu</h1>
       <ChangeProfilePhotoSection image={image} showImage={showImage} UserImage={UserImage} />
       <ChangePersonalDataSection />

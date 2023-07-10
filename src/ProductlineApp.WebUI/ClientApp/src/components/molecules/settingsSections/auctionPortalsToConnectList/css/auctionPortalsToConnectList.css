@@ -1,0 +1,41 @@
+.auctionPortalsToConnectList {
+  width: 364px;
+}
+
+.auctionPortalsToConnectList .allegroConnectorLink {
+  display: flex;
+  align-items: center;
+}
+
+.auctionPortalsToConnectList .allegroConnectorLink img {
+  width: 16px;
+  height: 16px;
+}
+
+.auctionPortalsToConnectList .allegroConnectorLink h3 {
+  margin-left: 57px;
+  margin-right: 212px;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.auctionPortalsToConnectList .ebayConnectorLink {
+  display: flex;
+  align-items: center;
+}
+
+.auctionPortalsToConnectList .ebayConnectorLink img {
+  width: 36px;
+  height: 36px;
+}
+
+.auctionPortalsToConnectList .ebayConnectorLink h3 {
+  margin-left: 35px;
+  margin-right: 227px;
+  color: var(--letter-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+}
