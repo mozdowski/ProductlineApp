@@ -1,3 +1,5 @@
+import { ProductCondition } from '../../../../../enums/productCondition';
+import { mapProductConditionToString } from '../../../../../helpers/mappers';
 import { ProductAuctionData } from '../../../../../interfaces/products/getProductsSKU';
 import BrandInput from '../../../../atoms/inputs/brandInput/BrandInput';
 import ConditionInput from '../../../../atoms/inputs/conditionInput/ConditionInput';
@@ -40,7 +42,11 @@ function ProductInfo({
           </div>
           <div className="secondLineInputs">
             <ConditionInput
-              value={selectedProduct?.condition.toString()}
+              value={
+                selectedProduct
+                  ? mapProductConditionToString(selectedProduct?.condition as ProductCondition)
+                  : undefined
+              }
               onChange={onChange}
               error={null}
               disabled={true}

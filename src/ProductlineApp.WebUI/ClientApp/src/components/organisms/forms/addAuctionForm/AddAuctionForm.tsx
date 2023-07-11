@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, HtmlHTMLAttributes, useState } from 'react';
 import Photos from '../../../molecules/formSections/addAuctionFormSections/Photos/Photos';
 import ProductInfo from '../../../molecules/formSections/addAuctionFormSections/ProductInfo/ProductInfo';
 import AuctionPortals from '../../../molecules/formSections/addAuctionFormSections/auctionPortals/AuctionPortals';
@@ -6,18 +6,21 @@ import ButtonsSection from '../../../molecules/formSections/addAuctionFormSectio
 import SelectProduct from '../../../molecules/formSections/addAuctionFormSections/selectProduct/SelectProduct';
 import './css/addAuctionForm.css';
 import { ProductAuctionData } from '../../../../interfaces/products/getProductsSKU';
+import { CreateAllegroAuction } from '../../../../interfaces/auctions/createAllegroAuction';
 
 export default function AddAuctionForm({
   products,
   selectedProduct,
   onSubmit,
   onProductChange,
+  onAllegroFormSubmit,
   errors,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onProductChange: (id: string) => void;
+  onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
   errors: any;
 }) {
   const [showFormSteps, setSelectedOption] = useState('');
@@ -30,7 +33,7 @@ export default function AddAuctionForm({
   return (
     <>
       <div className="addAuction">
-        <div className="addAuctionFirstSection">
+        <form className="addAuctionFirstSection" onSubmit={onSubmit}>
           <SelectProduct
             products={products}
             value={selectedProduct?.id}
@@ -41,12 +44,12 @@ export default function AddAuctionForm({
           {showFormSteps != ' ' && (
             <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
           )}
-        </div>
-        <ButtonsSection />
-        {showFormSteps != ' ' && (
+          <ButtonsSection />
+        </form>
+        {showFormSteps != ' ' && selectedProduct && selectedProduct?.id !== '' && (
           <div className="addAuctionSecondSection">
             <Photos photos={selectedProduct ? selectedProduct.imageUrls : []} />
-            <AuctionPortals />
+            <AuctionPortals onAllegroFormSubmit={onAllegroFormSubmit} />
           </div>
         )}
       </div>

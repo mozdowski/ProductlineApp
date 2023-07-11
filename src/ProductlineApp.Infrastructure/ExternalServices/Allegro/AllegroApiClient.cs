@@ -343,7 +343,7 @@ public class AllegroApiClient : IAllegroApiClient
 
     public async Task<string> GetProductParametersForCategory(string accessToken, string categoryId)
     {
-        var request = new RestRequest($"sale/categories/{categoryId}/product-parameters")
+        var request = new RestRequest($"sale/categories/{categoryId}/parameters")
         {
             Authenticator = new JwtAuthenticator(accessToken),
         };

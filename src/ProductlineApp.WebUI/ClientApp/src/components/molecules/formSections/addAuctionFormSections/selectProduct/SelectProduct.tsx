@@ -14,7 +14,7 @@ function SelectProduct({
   products: ProductAuctionData[];
   value: string | undefined;
   onProductChange: (id: string) => void;
-  errors: Partial<AuctionForm>;
+  errors: any;
 }) {
   const handleProductChange = (name: string, value: string) => {
     onProductChange(value);

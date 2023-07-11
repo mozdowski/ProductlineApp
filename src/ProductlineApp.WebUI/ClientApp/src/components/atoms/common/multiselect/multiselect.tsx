@@ -34,7 +34,7 @@ const MultiselectStyle = {
 
 interface MultipleSelectCheckmarksProps {
   name: string;
-  value: any;
+  value: string;
   onChange: (name: string, values: string[]) => void;
   options: { label: string; value: any }[];
   error?: string;
@@ -48,7 +48,7 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
   options,
   error,
 }) => {
-  const [selectedValues, setSelectedValues] = React.useState<string[]>(value);
+  const [selectedValues, setSelectedValues] = React.useState<string[]>([value]);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
     const {
@@ -58,8 +58,11 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
     const values = typeof value === 'string' ? value.split(',') : value;
     const selectedOptions = options.filter((option) => values.some((v) => v === option.label));
 
+    console.log(selectedOptions);
+
     onChange(
       name,
+      //   selectedOptions.map((x) => x.label),
       selectedOptions.map((x) => x.value),
     );
     setSelectedValues(values);

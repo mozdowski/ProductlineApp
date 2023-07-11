@@ -109,7 +109,7 @@ public class AllegroMapper : Profile
                     Product = new AllegroListingProduct()
                     {
                         Id = src.AllegroProductId,
-                        Parameters = src.Parameters,
+                        Parameters = src.ProductParameters,
                     },
                     Quantity = new Quantity()
                     {
@@ -119,7 +119,7 @@ public class AllegroMapper : Profile
             }))
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
             // .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category { Id = src.CategoryId }))
-            .ForMember(dest => dest.Parameters, opt => opt.Ignore())
+            .ForMember(dest => dest.Parameters, opt => opt.MapFrom(src => src.ListingParameters))
             .ForMember(dest => dest.B2b, opt => opt.MapFrom(src => new B2b()
                 {
                     BuyableOnlyByBusiness = false,

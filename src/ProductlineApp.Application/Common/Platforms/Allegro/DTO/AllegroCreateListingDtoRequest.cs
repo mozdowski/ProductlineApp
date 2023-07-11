@@ -4,6 +4,8 @@ namespace ProductlineApp.Application.Common.Platforms.Allegro.DTO;
 
 public class AllegroCreateListingDtoRequest
 {
+    public Guid ListingId { get; set; }
+
     public string Name { get; set; }
 
     public string AllegroProductId { get; set; }
@@ -22,7 +24,9 @@ public class AllegroCreateListingDtoRequest
 
     public Guid ProductId { get; set; }
 
-    public List<Parameter> Parameters;
+    public List<Parameter> ListingParameters { get; set; }
+
+    public List<Parameter> ProductParameters { get; set; }
 
     public AllegroDurationPeriods Duration { get; set; }
 

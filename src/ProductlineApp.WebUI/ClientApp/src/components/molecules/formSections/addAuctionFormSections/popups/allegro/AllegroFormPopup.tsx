@@ -1,6 +1,5 @@
 import './css/allegroFormPopup.css';
 import AllegroLogo from '../../../../../../assets/icons/allegroLogo_icon.svg';
-import { AuctionForm } from '../../../../../../interfaces/auctions/auctionForm';
 import { useState } from 'react';
 import AllegroCatalogueComponent from './allegroCatalogueComponent/allegroCatalogueComponent';
 import ParametersSetComponent from './parametersSetComponent/parametersSetComponent';
@@ -15,6 +14,13 @@ import {
 interface AllegroFormPopupProps {
   openAllegroPopup: boolean;
   closeAllegroPopup: () => void;
+  onSubmit: (form: CreateAllegroAuction) => void;
+}
+
+export interface ParameterResponseModel {
+  name: string;
+  valueIds?: string[];
+  values?: string[];
 }
 
 enum PopupPages {
@@ -26,23 +32,39 @@ enum PopupPages {
 const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
   openAllegroPopup,
   closeAllegroPopup,
+  onSubmit,
 }) => {
   const [currentPage, setCurrentPage] = useState<PopupPages>(PopupPages.ProductSelect);
   const [selectedProductId, setSelectedProductId] = useState<string | null>(null);
   const [selelectedCategoryId, setSelectedCategoryId] = useState<string | null>(null);
-  const [parameters, setParameters] = useState<Parameter[]>([]);
-  const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
+  const [prodParameters, setProdParameters] = useState<Parameter[]>([]);
+  const [listParameters, setListParameters] = useState<Parameter[]>([]);
 
-  const handleNextPage = (data?: any) => {
+  // const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
+
+  const handleNextPage = (
+    productParameters?: ParameterResponseModel[],
+    listingParameters?: ParameterResponseModel[],
+  ) => {
     const totalPages = Object.keys(PopupPages).length / 2;
     const nextPageIndex = (currentPage + 1) % totalPages;
     setCurrentPage(nextPageIndex as PopupPages);
 
-    if (!data) return;
-    setParameters(
-      data.map((x: { name: string; valueIds: string[] }) => ({
+    if (!productParameters || !listingParameters) return;
+
+    setProdParameters(
+      productParameters.map((x) => ({
         name: x.name,
-        valueIds: x.valueIds,
+        values: x.values,
+        valuesIds: x.valueIds,
+      })),
+    );
+
+    setListParameters(
+      listingParameters.map((x) => ({
+        name: x.name,
+        values: x.values,
+        valuesIds: x.valueIds,
       })),
     );
   };
@@ -61,6 +83,7 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
 
   const handleConfirm = (detailsForm: AllegroListingDetailsFormData) => {
     const allegroListingData: CreateAllegroAuction = {
+      listingId: '',
       name: detailsForm.name,
       allegroProductId: selectedProductId as string,
       description: '',
@@ -74,13 +97,19 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
         province: detailsForm.locationProvince,
       },
       productId: '',
-      parameters: parameters,
+      productParameters: prodParameters,
+      listingParameters: listParameters,
       duration: detailsForm.duration,
       republish: detailsForm.republish,
       imagesUrls: [],
       shippingRateId: detailsForm.shippingRateId,
       quantity: detailsForm.quantity,
     };
+
+    console.log(allegroListingData);
+
+    onSubmit(allegroListingData);
+    closeAllegroPopup();
   };
 
   if (!openAllegroPopup) return null;

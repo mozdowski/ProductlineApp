@@ -7,6 +7,7 @@ import AllegroParameterInput from '../../../../../../atoms/inputs/allegroParamet
 import { useAuctionsService } from '../../../../../../../hooks/auctions/useAuctionsService';
 import {
   AllegroProductParameter,
+  DictionaryItem,
   ParameterRestrictions,
 } from '../../../../../../../interfaces/platforms/allegroProductParametersResponse';
 import { toast } from 'react-toastify';
@@ -16,12 +17,16 @@ import './parametersSetComponent.css';
 import BackButton from '../../../../../../atoms/buttons/backButton/backButton';
 import CancelButton from '../../../../../../atoms/buttons/cancelButton/CancelButton';
 import NextButton from '../../../../../../atoms/buttons/nextButton/nextButton';
+import { ParameterResponseModel } from '../AllegroFormPopup';
 
 interface ParametersSetComponentProps {
   productId: string;
   categoryId: string;
   onPrevPage: () => void;
-  onNextPage: (data: any) => void;
+  onNextPage: (
+    productParameters: ParameterResponseModel[],
+    listingParameters: ParameterResponseModel[],
+  ) => void;
   onCancel: () => void;
 }
 
@@ -47,6 +52,8 @@ const generateValidationSchema = (validationModels: ValidationModel[]): Yup.Sche
       restrictions;
 
     let fieldSchema = Yup.mixed();
+
+    fieldSchema.test('is-required', 'Pole wymagane', (value: any) => value);
 
     if (min !== undefined) {
       fieldSchema = fieldSchema.test(
@@ -199,11 +206,6 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         param.required && !productSet.parameters.some((x) => x.id === param.id),
     ) as AllegroProductParameter[];
 
-    console.log(parametersSet);
-    console.log(productSet);
-    console.log(commonElements);
-    console.log(additionalElements);
-
     return [...commonElements, ...additionalElements];
   };
 
@@ -223,6 +225,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         param.type,
         productData,
         param.restrictions.multipleChoices,
+        param.dictionary,
       );
       setFormFields((prevData) => ({
         ...prevData,
@@ -237,15 +240,20 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     type: string,
     productData?: AllegroCatalogueProduct,
     isMultiselect?: boolean,
+    dict?: DictionaryItem[],
   ) => {
     const parameter = productData?.parameters.find((x) => x.id === paramId);
-    if (!parameter) return '';
+
     switch (type as ParamType) {
       case ParamType.DICTIONARY: {
-        if (isMultiselect) return parameter?.valuesLabels;
-        else return parameter?.valuesIds;
+        if (!parameter && dict && dict.length > 0) {
+          return dict[0].id;
+        }
+        const value = formFields[name] !== undefined ? formFields[name] : parameter?.valuesIds[0];
+        return value;
       }
       default: {
+        if (!parameter) return '';
         return formFields[name] !== undefined ? formFields[name] : parameter?.values[0];
       }
     }
@@ -257,14 +265,46 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
     console.log(formFields);
 
-    onNextPage(
-      Object.entries(formFields).map(([name, value]) => {
-        return {
-          name,
-          valueIds: Array.isArray(value) ? value : [value.toString()],
-        };
-      }),
-    );
+    const productParameters: ParameterResponseModel[] = [];
+    const listingParameters: ParameterResponseModel[] = [];
+
+    commonParameters.forEach((x) => {
+      const name = x.name;
+      const values = Array.isArray(formFields[x.name])
+        ? formFields[x.name]
+        : [formFields[x.name].toString()];
+      if (x.options && x.options.describesProduct) {
+        productParameters.push({
+          name: name,
+          values: (x.type as ParamType) !== ParamType.DICTIONARY ? values : undefined,
+          valueIds: (x.type as ParamType) === ParamType.DICTIONARY ? values : undefined,
+        });
+      } else {
+        listingParameters.push({
+          name: name,
+          values: (x.type as ParamType) !== ParamType.DICTIONARY ? values : undefined,
+          valueIds: (x.type as ParamType) === ParamType.DICTIONARY ? values : undefined,
+        });
+      }
+    });
+
+    onNextPage(productParameters, listingParameters);
+
+    // onNextPage(
+    //     commonParameters.map((param) => {
+    //         const productParameters = {
+
+    //         }
+
+    //         formFields[param.name]
+    //     })
+    //   Object.entries(formFields).map(([name, value]) => {
+    //     return {
+    //       name,
+    //       valueIds: Array.isArray(value) ? value : [value.toString()],
+    //     };
+    //   }),
+    // );
   };
 
   return (
@@ -294,6 +334,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
                   parameter.type,
                   product,
                   parameter.restrictions.multipleChoices,
+                  parameter.dictionary,
                 )}
                 onChange={handleInputChange}
                 error={errors[parameter.name]}

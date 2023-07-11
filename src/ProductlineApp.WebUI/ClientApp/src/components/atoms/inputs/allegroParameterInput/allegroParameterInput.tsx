@@ -59,7 +59,7 @@ const AllegroParameterInput: React.FC<AllegroParameterInput> = ({
               {name}
             </label>
             <FormSelect
-              value={value[0]}
+              value={value}
               onChange={onChange}
               options={options}
               name={name}
