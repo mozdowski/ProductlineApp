@@ -1,4 +1,5 @@
 import { AuctionForm } from '../../interfaces/auctions/auctionForm';
+import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
 import { ProductsRecord } from '../../interfaces/products/ProductsPageInteface';
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
 import { ProductAuctionData } from '../../interfaces/products/getProductsSKU';
@@ -13,14 +14,16 @@ import './css/AddAuctionTemplate.css';
 export default function AddAuctionTemplate({
   products,
   selectedProduct,
-  onSubmit,
   onProductChange,
+  onSubmit,
+  onAllegroFormSubmit,
   errors,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
-  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onProductChange: (id: string) => void;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
+  onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
   errors: any;
 }) {
   return (
@@ -31,8 +34,9 @@ export default function AddAuctionTemplate({
           <AddAuctionForm
             products={products}
             selectedProduct={selectedProduct}
-            onSubmit={onSubmit}
             onProductChange={onProductChange}
+            onSubmit={onSubmit}
+            onAllegroFormSubmit={onAllegroFormSubmit}
             errors={errors}
           />
         </div>

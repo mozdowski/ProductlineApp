@@ -1,4 +1,7 @@
 import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
+import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
+import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
+import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
 import { GetAllegroCatalogueProductDetailsResponse } from '../../interfaces/platforms/getAllegroCatalogueProductDetailsResponse';
@@ -54,6 +57,16 @@ export class AuctionsService {
 
   public async getProductsForAution(): Promise<GetProductsResponse> {
     return this.httpService.get<GetProductsResponse>('/products');
+  }
+
+  public async createListingTemplate(
+    data: CreateListingTemplateRequest,
+  ): Promise<CreateListingTemplateResponse> {
+    return this.httpService.post<CreateListingTemplateResponse>('/listings/createTemplate', data);
+  }
+
+  public async createAllegroListing(data: CreateAllegroAuction): Promise<void> {
+    return this.httpService.post<void>('/allegro/createListing', data);
   }
 }
 

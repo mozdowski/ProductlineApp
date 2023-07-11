@@ -71,6 +71,7 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
           ))}
         </Select>
       </FormControl>
+      {error && <span className="error">{error}</span>}
     </div>
   );
 

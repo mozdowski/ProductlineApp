@@ -3,6 +3,7 @@ using MediatR;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 using ProductlineApp.Application.Common.Platforms.Allegro.DTO;
+using ProductlineApp.Application.Listing.Commands;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Application.User.Commands;
@@ -183,7 +184,16 @@ public class AllegroService : IAllegroService
     {
         this.CheckIfAuthorized();
         var allegroRequest = this._mapper.Map<AllegroCreateListingRequest>(request);
-        await this._allegroApiClient.CreateListingAsync(this._accessToken, allegroRequest);
+        var listingId = await this._allegroApiClient.CreateListingAsync(this._accessToken, allegroRequest);
+
+        var command = new AddListingInstance.Command(
+            this._currentUser.UserId.Value,
+            request.ListingId,
+            this.PlatformId.Value,
+            listingId,
+            null,
+            null);
+        await this._mediator.Send(command);
     }
 
     public async Task<string> GetProductParametersForCategory(string categoryId)

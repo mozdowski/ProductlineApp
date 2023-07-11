@@ -71,7 +71,7 @@ public class Parameter
 
     public List<string>? Values { get; set; }
 
-    public List<string> ValuesIds { get; set; }
+    public List<string>? ValuesIds { get; set; }
 }
 
 public class AllegroListingProduct

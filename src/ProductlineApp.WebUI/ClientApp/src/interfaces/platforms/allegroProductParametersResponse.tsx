@@ -7,9 +7,15 @@ export interface AllegroProductParameter {
   name: string;
   type: string;
   required: boolean;
+  requiredForProduct: boolean;
   unit: string;
   restrictions: ParameterRestrictions;
   dictionary?: DictionaryItem[];
+  options?: CategoryParameterOptions;
+}
+
+interface CategoryParameterOptions {
+  describesProduct?: boolean;
 }
 
 export interface ParameterRestrictions {
@@ -23,7 +29,7 @@ export interface ParameterRestrictions {
   multipleChoices?: boolean;
 }
 
-interface DictionaryItem {
+export interface DictionaryItem {
   id: string;
   value: string;
 }

@@ -1,4 +1,5 @@
 export interface CreateAllegroAuction {
+  listingId: string;
   name: string;
   allegroProductId: string;
   description: string;
@@ -7,7 +8,8 @@ export interface CreateAllegroAuction {
   price: number;
   location: Location;
   productId: string;
-  parameters: Parameter[];
+  productParameters: Parameter[];
+  listingParameters: Parameter[];
   duration: AllegroDurationPeriods;
   republish: boolean;
   imagesUrls: string[];
@@ -27,7 +29,7 @@ export interface Parameter {
   id?: string;
   name: string;
   values?: string[];
-  valuesIds: string[];
+  valuesIds?: string[];
 }
 
 export enum AllegroDurationPeriods {
