@@ -39,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name: res.username,
         email: res.email,
         authToken: res.token,
-        avatar: res.avatar
+        avatar: res.avatar,
       };
 
       setUser(userResponse);
@@ -59,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name: res.username,
         email: res.email,
         authToken: res.token,
-        avatar: res.avatar
+        avatar: res.avatar,
       };
 
       setUser(userResponse);

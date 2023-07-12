@@ -6,17 +6,20 @@ import EyeInvisible from '../../../../assets/icons/eyeInvisible_icon.png';
 import './css/changePassword.css';
 import * as Yup from 'yup';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
+import { ChangePasswordForm } from '../../../../interfaces/settings/changePasswordForm';
 
 const changePasswordSchema = Yup.object().shape({
   newPassword: Yup.string()
     .required('Nowe hasło jest wymagane')
     .min(6, 'Hasło musi mieć co najmniej 6 znaków'),
-  oldPassword: Yup.string()
-    .oneOf([Yup.ref('password')], 'Hasło jest nie poprawne')
-    .required('Podanie starego hasła jest wymagane'),
+  oldPassword: Yup.string().required('Podanie starego hasła jest wymagane'),
 });
 
-export const ChangePassword = () => {
+export const ChangePassword = ({
+  onPasswordChange,
+}: {
+  onPasswordChange: (data: ChangePasswordForm) => void;
+}) => {
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const showPassword = () => {
     setPasswordVisible(!isPasswordVisible);
@@ -29,11 +32,20 @@ export const ChangePassword = () => {
     oldPassword: '',
   });
 
-  const handleClickShowFields = () => {
+  const handlePasswordChange = async () => {
+    setShowFields(!showFields);
+
+    const isValid = await validateForm();
+    if (!isValid) return;
+
+    onPasswordChange(changePasswordForm);
+  };
+
+  const handleFieldsVisibility = () => {
     setShowFields(!showFields);
   };
 
-  const handleChange = (name: string, value: number | string) => {
+  const handleChange = (name: string, value: string) => {
     setPasswordForm((prevData) => ({
       ...prevData,
       [name]: value,
@@ -67,11 +79,11 @@ export const ChangePassword = () => {
           <div className="passwordField">
             <FormInput
               type={!isPasswordVisible ? 'password' : 'text'}
-              id="password"
-              name="password"
+              id="oldPassword"
+              name="oldPassword"
               placeholder="Stare hasło"
               className="changePasswordOldPasswordInput"
-              value={''}
+              value={changePasswordForm.oldPassword}
               onChange={handleChange}
               error={errors.oldPassword}
             />
@@ -87,11 +99,11 @@ export const ChangePassword = () => {
           <div className="passwordField">
             <FormInput
               type={!isPasswordVisible ? 'password' : 'text'}
-              id="password"
-              name="password"
+              id="newPassword"
+              name="newPassword"
               placeholder="Nowe hasło"
               className="changePasswordNewPasswordInput"
-              value={''}
+              value={changePasswordForm.newPassword}
               onChange={handleChange}
               error={errors.newPassword}
             />
@@ -104,9 +116,9 @@ export const ChangePassword = () => {
         </div>
       )}
       {!showFields ? (
-        <ButtonsSection onClick={handleClickShowFields} />
+        <ButtonsSection onClick={handleFieldsVisibility} onConfirm={handlePasswordChange} />
       ) : (
-        <ChangePasswordButton onClick={handleClickShowFields} />
+        <ChangePasswordButton onClick={handleFieldsVisibility} />
       )}
     </div>
   );

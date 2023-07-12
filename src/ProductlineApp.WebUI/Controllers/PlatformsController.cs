@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Listing.DTO;
-using ProductlineApp.Domain.Aggregates.User.Entities;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Shared.Enums;
@@ -55,7 +54,7 @@ public class PlatformsController : ControllerBase
         });
     }
 
-    [HttpPut("auth/gainToken/{platformId:guid}")]
+    [HttpPost("auth/gainToken/{platformId:guid}")]
     public async Task<IActionResult> GainAccessToken([FromBody] GainAccessTokenRequest request, Guid platformId)
     {
         var platformService = this._platformServiceDispatcher.Dispatch(platformId);

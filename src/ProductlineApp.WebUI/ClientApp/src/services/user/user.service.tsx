@@ -1,5 +1,7 @@
 import { GainAccessTokenRequest } from '../../interfaces/platforms/gainAccessTokenRequest';
 import { PlatformAuthUrl } from '../../interfaces/platforms/platformsAuthUrlResponse';
+import { ChangePasswordRequest } from '../../interfaces/user/changePasswordRequest';
+import { DisconnectPlatformRequest } from '../../interfaces/user/disconnectPlatformRequest';
 import HttpService from '../common/http.service';
 
 export class UserService {
@@ -10,11 +12,19 @@ export class UserService {
   }
 
   public async gainAccessToken(platformId: string, data: GainAccessTokenRequest): Promise<void> {
-    return this.httpService.put<void>('/platforms/auth/gainToken/' + platformId, data);
+    return this.httpService.post<void>('/platforms/auth/gainToken/' + platformId, data);
   }
 
   public async getUserConnections(): Promise<string[]> {
     return this.httpService.get<string[]>('/user/platformConnections');
+  }
+
+  public async disconnectPlatformConnection(data: DisconnectPlatformRequest): Promise<void> {
+    return this.httpService.post<void>('/user/disconnectPlatform', data);
+  }
+
+  public async changePassword(data: ChangePasswordRequest): Promise<void> {
+    return this.httpService.post<void>('/user/changePassword', data);
   }
 }
 

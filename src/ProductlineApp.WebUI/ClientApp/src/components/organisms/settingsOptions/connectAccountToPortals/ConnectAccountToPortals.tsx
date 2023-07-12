@@ -9,7 +9,7 @@ export const ConnectAccountToPortals = ({
   userConnections,
 }: {
   platformsAuthUrl: PlatformAuthUrl[];
-  onDisconnect: (platformName: string) => void;
+  onDisconnect: (platformId: string) => void;
   userConnections: string[];
 }) => {
   return (

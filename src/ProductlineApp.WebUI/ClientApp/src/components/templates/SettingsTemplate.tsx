@@ -6,6 +6,7 @@ import { DeleteAccount } from '../organisms/settingsOptions/deleteAccount/Delete
 import { ConnectAccountToPortals } from '../organisms/settingsOptions/connectAccountToPortals/ConnectAccountToPortals';
 import { PlatformAuthUrl } from '../../interfaces/platforms/platformsAuthUrlResponse';
 import { Platform } from '../../interfaces/platforms/platform';
+import { ChangePasswordForm } from '../../interfaces/settings/changePasswordForm';
 
 export default function SettingsTemplate({
   image,
@@ -14,13 +15,15 @@ export default function SettingsTemplate({
   platformsAuthUrl,
   onDisconnect,
   userConnections,
+  onPasswordChange,
 }: {
   image: any;
   showImage: any;
   UserImage: any;
   platformsAuthUrl: PlatformAuthUrl[];
-  onDisconnect: (platformName: string) => void;
+  onDisconnect: (platformId: string) => void;
   userConnections: string[];
+  onPasswordChange: (data: ChangePasswordForm) => void;
 }) {
   return (
     <>
@@ -35,7 +38,7 @@ export default function SettingsTemplate({
               userConnections={userConnections}
             />
           )}
-          <ChangePassword />
+          <ChangePassword onPasswordChange={onPasswordChange} />
           <DeleteAccount />
         </div>
       </div>

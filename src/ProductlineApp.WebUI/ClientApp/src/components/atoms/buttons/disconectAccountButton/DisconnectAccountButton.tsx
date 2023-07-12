@@ -2,14 +2,14 @@ import './css/disconnectAccountButton.css';
 
 function DisconnectAccountButton({
   onDisconnect,
-  name,
+  id,
 }: {
-  onDisconnect: (platformName: string) => void;
-  name: string;
+  onDisconnect: (platformId: string) => void;
+  id: string;
 }) {
   return (
-    <a className="disconnectLink" onClick={() => onDisconnect(name)} id={name}>
-      <div className='disconnectAccountButton'>
+    <a className="disconnectLink" onClick={() => onDisconnect(id)} id={id}>
+      <div className="disconnectAccountButton">
         <p>Odłącz</p>
       </div>
     </a>

@@ -1,6 +1,7 @@
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { useAuthContext } from './useAuthContext';
 import { User } from '../../interfaces/auth/user';
+import { toast } from 'react-toastify';
 
 export const useAuth = () => {
   const authContext = useAuthContext();
@@ -38,12 +39,12 @@ export const useAuth = () => {
       const expirationDate = exp ? new Date(exp * 1000) : null;
 
       if (sub != user?.id) {
-        console.error('Unauthorized');
+        toast.error('Brak autoryzacji');
         return false;
       }
 
       if (expirationDate && expirationDate < new Date()) {
-        console.error('Token wygasl');
+        toast.error('Token wygasl');
         return false;
       }
 
