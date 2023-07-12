@@ -56,12 +56,12 @@ public class AllegroService : IAllegroService
 
     public string GetAuthorizationUrl()
     {
-        return this._allegroApiClient.GetAuthorizationUrl();
+        return this._allegroApiClient.GetAuthorizationUrl(this.PlatformId.Value.ToString());
     }
 
     public async Task GainAccessTokenAsync(string code)
     {
-        var response = await this._allegroApiClient.GetAccessTokenAsync(code);
+        var response = await this._allegroApiClient.GetAccessTokenAsync(code, this.PlatformId.Value.ToString());
 
         if (response is null)
             throw new NullReferenceException("Retrieved access token as null");
@@ -81,7 +81,7 @@ public class AllegroService : IAllegroService
 
     public async Task RefreshAccessTokenAsync(UserId userId, string refreshToken)
     {
-        var response = await this._allegroApiClient.GetRefreshTokenAsync(refreshToken);
+        var response = await this._allegroApiClient.GetRefreshTokenAsync(refreshToken, this.PlatformId.Value.ToString());
 
         if (response is null)
             throw new NullReferenceException("Retrieved accees token as null");

@@ -30,6 +30,19 @@ public class PlatformsController : ControllerBase
         this._userContext = userContext;
     }
 
+    [HttpGet("auth/url")]
+    public async Task<IActionResult> GetAuthorizationUrlForAll()
+    {
+        var platforms = await this._platformRepository.GetAllAsync();
+
+        return this.Ok(platforms.Select(x => new
+        {
+            PlatformId = x.Id.Value,
+            PlatformName = Enum.Parse<PlatformNames>(x.Name.ToUpper()),
+            AuthUrl = this._platformServiceDispatcher.Dispatch(x.Id.Value).GetAuthorizationUrl(),
+        }));
+    }
+
     [HttpGet("auth/url/{platformId:guid}")]
     public IActionResult GetAuthorizationUrl(Guid platformId)
     {

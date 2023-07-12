@@ -16,6 +16,8 @@ import { AuctionsProvider } from '../../providers/auctionsProvider';
 import { OrdersProvider } from '../../providers/ordersProvider';
 import AddProduct from '../../pages/AddProduct';
 import AddAuction from '../../pages/AddAuction';
+import { UserProvider } from '../../providers/userProvider';
+import PLatformRedirect from './platformRedirect';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -95,7 +97,19 @@ const RoutingWrapper = () => {
           path="/settings"
           element={
             <ProtectedRoute>
-              <Settings />
+              <UserProvider>
+                <Settings />
+              </UserProvider>
+            </ProtectedRoute>
+          }
+        ></Route>
+        <Route
+          path="/platform-redirect/:platformId"
+          element={
+            <ProtectedRoute>
+              <UserProvider>
+                <PLatformRedirect />
+              </UserProvider>
             </ProtectedRoute>
           }
         ></Route>

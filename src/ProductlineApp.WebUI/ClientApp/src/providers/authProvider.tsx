@@ -10,8 +10,13 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+const getUserFromLocalStorage = (): User | null => {
+  const userFromLocalStorage = localStorage.getItem('user');
+  return userFromLocalStorage ? JSON.parse(userFromLocalStorage) : null;
+};
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
   const authService = new AuthService();
 
   useEffect(() => {
@@ -34,7 +39,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name: res.username,
         email: res.email,
         authToken: res.token,
-        avatar: res.avatar,
+        avatar: res.avatar
       };
 
       setUser(userResponse);
@@ -54,7 +59,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         name: res.username,
         email: res.email,
         authToken: res.token,
-        avatar: res.avatar,
+        avatar: res.avatar
       };
 
       setUser(userResponse);

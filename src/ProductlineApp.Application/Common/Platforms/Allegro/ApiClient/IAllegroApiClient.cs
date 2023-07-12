@@ -4,11 +4,11 @@ namespace ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 
 public interface IAllegroApiClient
 {
-    string GetAuthorizationUrl();
+    string GetAuthorizationUrl(string platformId);
 
-    Task<AllegroTokenResponse> GetAccessTokenAsync(string code);
+    Task<AllegroTokenResponse> GetAccessTokenAsync(string code, string platformId);
 
-    Task<AllegroTokenResponse> GetRefreshTokenAsync(string accessToken);
+    Task<AllegroTokenResponse> GetRefreshTokenAsync(string accessToken, string platformId);
 
     Task<AllegroOrdersResponse> GetOrdersAsync(
         string accessToken,

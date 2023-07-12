@@ -46,9 +46,7 @@ if (app.Environment.IsDevelopment())
 //
 //     if (app.Environment.IsDevelopment())
 //     {
-// #pragma warning disable S1075 // URIs should not be hardcoded
 //         spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
-// #pragma warning restore S1075 // URIs should not be hardcoded
 //     }
 // });
 

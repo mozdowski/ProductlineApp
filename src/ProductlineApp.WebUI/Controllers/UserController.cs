@@ -34,4 +34,10 @@ public class UserController : ControllerBase
 
         return this.Ok(result);
     }
+
+    [HttpGet("platformConnections")]
+    public async Task<IActionResult> GetPlatformConnections()
+    {
+        return this.Ok(this._currentUser.PlatformTokens.Keys.Select(x => x.Value.ToString()).ToList());
+    }
 }
