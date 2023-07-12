@@ -12,7 +12,7 @@ function AuctionPortalsToConnectList({
   userConnections,
 }: {
   platformsAuthUrl: PlatformAuthUrl[];
-  onDisconnect: (platformName: string) => void;
+  onDisconnect: (platformId: string) => void;
   userConnections: string[];
 }) {
   const allegroPlatform = platformsAuthUrl.find((x) => x.platformName === PlatformEnum.ALLEGRO);
@@ -21,27 +21,34 @@ function AuctionPortalsToConnectList({
   return (
     <>
       <div className="auctionPortalsToConnectList">
-        <div className="allegroConnectorLink">
-          <img src={AllegroIcon} />
-          <h3>Allegro</h3>
-          {allegroPlatform && !userConnections.includes(allegroPlatform?.platformId) && (
-            <ConnectAccountButton authUrl={allegroPlatform.authUrl} />
-          )}
-          {(!allegroPlatform || userConnections.includes(allegroPlatform?.platformId)) && (
-            <DisconnectAccountButton onDisconnect={onDisconnect} name={'allegro'} />
-          )}
-        </div>
+        {allegroPlatform && (
+          <div className="allegroConnectorLink">
+            <img src={AllegroIcon} />
+            <h3>Allegro</h3>
+            {!userConnections.includes(allegroPlatform?.platformId) && (
+              <ConnectAccountButton authUrl={allegroPlatform.authUrl} />
+            )}
+            {userConnections.includes(allegroPlatform?.platformId) && (
+              <DisconnectAccountButton
+                onDisconnect={onDisconnect}
+                id={allegroPlatform.platformId}
+              />
+            )}
+          </div>
+        )}
         <div className="linkSeparator"></div>
-        <div className="ebayConnectorLink">
-          <img src={EbayIcon} />
-          <h3>Ebay</h3>
-          {ebayPlatform && !userConnections.includes(ebayPlatform?.platformId) && (
-            <ConnectAccountButton authUrl={ebayPlatform.authUrl} />
-          )}
-          {(!ebayPlatform || userConnections.includes(ebayPlatform?.platformId)) && (
-            <DisconnectAccountButton onDisconnect={onDisconnect} name={'ebay'} />
-          )}
-        </div>
+        {ebayPlatform && (
+          <div className="ebayConnectorLink">
+            <img src={EbayIcon} />
+            <h3>Ebay</h3>
+            {!userConnections.includes(ebayPlatform?.platformId) && (
+              <ConnectAccountButton authUrl={ebayPlatform.authUrl} />
+            )}
+            {userConnections.includes(ebayPlatform?.platformId) && (
+              <DisconnectAccountButton onDisconnect={onDisconnect} id={ebayPlatform.platformId} />
+            )}
+          </div>
+        )}
       </div>
     </>
   );
