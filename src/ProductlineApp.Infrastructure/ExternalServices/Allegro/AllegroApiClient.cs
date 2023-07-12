@@ -28,14 +28,14 @@ public class AllegroApiClient : IAllegroApiClient
         this._restClient.AddDefaultHeader("Accept", "application/vnd.allegro.public.v1+json");
     }
 
-    public string GetAuthorizationUrl()
+    public string GetAuthorizationUrl(string platformId)
     {
         var uriBuilder = new UriBuilder(this._allegroConfiguration.AuthUri);
         var queryParams = new Dictionary<string, string>
         {
             { "client_id", this._allegroConfiguration.ClientId },
             { "response_type", "code" },
-            { "redirect_uri", this._allegroConfiguration.RedirectUri },
+            { "redirect_uri", $"{this._allegroConfiguration.RedirectUri}/{platformId}" },
         };
 
         string queryString = string.Join("&", queryParams.Select(x => $"{x.Key}={x.Value}"));
@@ -45,7 +45,7 @@ public class AllegroApiClient : IAllegroApiClient
         return uriBuilder.ToString();
     }
 
-    public async Task<AllegroTokenResponse> GetAccessTokenAsync(string code)
+    public async Task<AllegroTokenResponse> GetAccessTokenAsync(string code, string platformId)
     {
         var authHeader = new AuthenticationHeaderValue(
             "Basic",
@@ -57,7 +57,7 @@ public class AllegroApiClient : IAllegroApiClient
         {
             new KeyValuePair<string, string>("grant_type", "authorization_code"),
             new KeyValuePair<string, string>("code", code),
-            new KeyValuePair<string, string>("redirect_uri", this._allegroConfiguration.RedirectUri),
+            new KeyValuePair<string, string>("redirect_uri", $"{this._allegroConfiguration.RedirectUri}/{platformId}"),
         });
 
         this._httpClient.DefaultRequestHeaders.Authorization = authHeader;
@@ -72,7 +72,7 @@ public class AllegroApiClient : IAllegroApiClient
         return JsonConvert.DeserializeObject<AllegroTokenResponse>(responseContent);
     }
 
-    public async Task<AllegroTokenResponse> GetRefreshTokenAsync(string refreshToken)
+    public async Task<AllegroTokenResponse> GetRefreshTokenAsync(string refreshToken, string platformId)
     {
         var authHeader = new AuthenticationHeaderValue(
             "Basic",
@@ -84,7 +84,7 @@ public class AllegroApiClient : IAllegroApiClient
         {
             new KeyValuePair<string, string>("grant_type", "refresh_token"),
             new KeyValuePair<string, string>("refresh_token", refreshToken),
-            new KeyValuePair<string, string>("redirect_uri", this._allegroConfiguration.RedirectUri),
+            new KeyValuePair<string, string>("redirect_uri", $"{this._allegroConfiguration.RedirectUri}/{platformId}"),
         });
 
         this._httpClient.DefaultRequestHeaders.Authorization = authHeader;

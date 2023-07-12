@@ -60,6 +60,7 @@ public class LoginQuery
                 user.Email,
                 token,
                 user.Avatar?.Url.ToString());
+            // user.PlatformConnections.Select(x => x.PlatformId.Value.ToString()).ToList());
         }
     }
 }

@@ -23,14 +23,14 @@ public class EbayApiClient : IEbayApiClient
         // this._restClient.AddDefaultHeader("Content-Language", ebayConfiguration.ContentLanguage);
     }
 
-    public string GetAuthorizationUrl()
+    public string GetAuthorizationUrl(string platformId)
     {
         var uriBuilder = new UriBuilder(this._ebayConfiguration.AuthUri);
         var queryParams = new Dictionary<string, string>
         {
             { "client_id", this._ebayConfiguration.ClientId },
             { "response_type", "code" },
-            { "redirect_uri", this._ebayConfiguration.RedirectUri },
+            { "redirect_uri", $"{this._ebayConfiguration.RedirectUri}/{platformId}" },
             { "scope", this._ebayConfiguration.Scopes },
         };
 
@@ -41,7 +41,7 @@ public class EbayApiClient : IEbayApiClient
         return uriBuilder.ToString();
     }
 
-    public async Task<EbayTokenResponse> GetAccessTokenAsync(string code)
+    public async Task<EbayTokenResponse> GetAccessTokenAsync(string code, string platformId)
     {
         var request = new RestRequest(this._ebayConfiguration.OAuth2TokenUri, Method.Post)
         {
@@ -56,7 +56,7 @@ public class EbayApiClient : IEbayApiClient
 
         request.AddParameter("grant_type", "authorization_code");
         request.AddParameter("code", code);
-        request.AddParameter("redirect_uri", this._ebayConfiguration.RedirectUri);
+        request.AddParameter("redirect_uri", $"{this._ebayConfiguration.RedirectUri}/{platformId}");
 
         var response = await this._restClient.ExecuteAsync<EbayTokenResponse>(request);
 
@@ -68,7 +68,7 @@ public class EbayApiClient : IEbayApiClient
         return response.Data;
     }
 
-    public async Task<EbayTokenResponse> GetRefreshTokenAsync(string refreshToken)
+    public async Task<EbayTokenResponse> GetRefreshTokenAsync(string refreshToken, string platformId)
     {
         var request = new RestRequest(this._ebayConfiguration.OAuth2TokenUri, Method.Post)
         {
@@ -81,7 +81,7 @@ public class EbayApiClient : IEbayApiClient
 
         request.AddParameter("grant_type", "refresh_token");
         request.AddParameter("refresh_token", refreshToken);
-        request.AddParameter("redirect_uri", this._ebayConfiguration.RedirectUri);
+        request.AddParameter("redirect_uri", $"{this._ebayConfiguration.RedirectUri}/{platformId}");
 
         var response = await this._restClient.ExecuteAsync<EbayTokenResponse>(request);
 

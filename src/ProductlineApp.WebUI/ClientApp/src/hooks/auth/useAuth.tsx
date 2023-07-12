@@ -1,5 +1,6 @@
 import jwtDecode, { JwtPayload } from 'jwt-decode';
 import { useAuthContext } from './useAuthContext';
+import { User } from '../../interfaces/auth/user';
 
 export const useAuth = () => {
   const authContext = useAuthContext();
@@ -11,11 +12,15 @@ export const useAuth = () => {
   const { user, register, login, logout } = authContext;
 
   const isAuthenticated = () => {
-    if (user?.authToken == undefined) {
-      return false;
+    const userFromLocalStorage = localStorage.getItem('user');
+    let parsedUser: User | null = null;
+    if (userFromLocalStorage) {
+      parsedUser = JSON.parse(userFromLocalStorage);
     }
 
-    const isTokenValid = verifyToken(user.authToken);
+    if (!parsedUser || parsedUser.authToken == undefined) return false;
+
+    const isTokenValid = verifyToken(parsedUser.authToken, parsedUser);
 
     if (!isTokenValid) {
       logout();
@@ -25,7 +30,7 @@ export const useAuth = () => {
     return isTokenValid;
   };
 
-  const verifyToken = (token: string): boolean => {
+  const verifyToken = (token: string, user: User): boolean => {
     try {
       const decodedToken: JwtPayload = jwtDecode(token);
       const { sub, exp } = decodedToken;
