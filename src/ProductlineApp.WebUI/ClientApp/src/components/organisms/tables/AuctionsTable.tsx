@@ -9,10 +9,14 @@ export default function AuctionsTable({
   auctionRecords,
   isSelectedTypeAuctions,
   handleClickTypeAuctionsButton,
+  onEditAuction,
+  onWithdrawAuction
 }: {
   auctionRecords: AuctionsRecord[];
   isSelectedTypeAuctions: any;
   handleClickTypeAuctionsButton: any;
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
 }) {
   return (
     <>
@@ -22,7 +26,7 @@ export default function AuctionsTable({
       />
       <table className="auctions">
         <AuctionsTableHeader />
-        <AuctionsTableBody auctionRecords={auctionRecords} />
+        <AuctionsTableBody auctionRecords={auctionRecords} onEditAuction={onEditAuction} onWithdrawAuction={onWithdrawAuction} />
       </table>
       <TableFooter />
     </>

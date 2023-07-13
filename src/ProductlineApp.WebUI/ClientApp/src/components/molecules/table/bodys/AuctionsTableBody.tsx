@@ -16,7 +16,7 @@ export default function openCollapse(init: any) {
   return { isOpen, toggle };
 }
 
-export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: AuctionsRecord[] }) => {
+export const AuctionsTableBody = ({ auctionRecords, onEditAuction, onWithdrawAuction }: { auctionRecords: AuctionsRecord[], onEditAuction: (auctionId: string) => void, onWithdrawAuction: (auctionId: string) => void }) => {
   const { isOpen, toggle } = openCollapse(false);
 
   return (
@@ -26,7 +26,7 @@ export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: Auctions
           <td>
             <CollapseTableButton isOpen={isOpen} toggle={toggle} />
           </td>
-          {auctionRecords.map((auction, key) => (
+          {auctionRecords.map((auction, key) => auction && (
             <React.Fragment key={key}>
               <td>{auction?.auctionID}</td>
               <td>{auction?.sku}</td>
@@ -41,14 +41,14 @@ export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: Auctions
               <td>{auction?.price} zł</td>
               <td>{auction?.quantity}</td>
               <td>{auction?.daysToEnd ? auction?.daysToEnd : '-'}</td>
+              <td>
+                <div className="auctionsButtonsAction">
+                <img className="editAuctionIcon" src={EditIcon} onClick={() => onEditAuction(auction.auctionID)}/>
+                <img className="backAuctionIcon" src={BackAuctionIcon} onClick={() => onWithdrawAuction(auction.auctionID)}/>
+              </div>
+          </td>
             </React.Fragment>
           ))}
-          <td>
-            <div className="auctionsButtonsAction">
-              <img className="editAuctionIcon" src={EditIcon} />
-              <img className="backAuctionIcon" src={BackAuctionIcon} />
-            </div>
-          </td>
         </tr>
         {isOpen && <CollapseAuctionDetails isOpen={isOpen} auctionRecords={auctionRecords} />}
       </tbody>

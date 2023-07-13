@@ -426,6 +426,23 @@ public class AllegroApiClient : IAllegroApiClient
         return response.Data;
     }
 
+    public async Task<AllegroOfferProductResponse> GetOfferProductDetails(string accessToken, string offerId)
+    {
+        var request = new RestRequest($"sale/product-offers/{offerId}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<AllegroOfferProductResponse>(request);
+
+        if (response.StatusCode != HttpStatusCode.OK)
+        {
+            throw new Exception($"Failed to get offer product details: {response.StatusCode}");
+        }
+
+        return response.Data;
+    }
+
     private async Task<string> GetCategoryNameById(string accessToken, string categoryId)
     {
         var request = new RestRequest($"sale/categories/{categoryId}")

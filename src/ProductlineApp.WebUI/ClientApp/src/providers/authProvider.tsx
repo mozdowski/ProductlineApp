@@ -5,6 +5,7 @@ import { AuthContextProps } from '../interfaces/auth/authContextProps';
 import { AuthService } from '../services/auth/auth.service';
 import { LoginRequest } from '../interfaces/auth/loginRequest';
 import { RegisterRequest } from '../interfaces/auth/registerRequest';
+import { UserService } from '../services/user/user.service';
 
 interface AuthProviderProps {
   children: ReactNode;

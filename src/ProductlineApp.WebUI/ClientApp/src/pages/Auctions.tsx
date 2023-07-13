@@ -60,6 +60,14 @@ export default function Auctions() {
     }
   }, [selectedAuctionPortal]);
 
+  const handleEditAuction = async (auctionId: string) => {
+    throw new Error('not implemented');
+  }
+
+  const handleWithdrawAuction = (auctionId: string) => {
+    throw new Error('not implemented');
+  }
+
   return (
     <>
       <Outlet />
@@ -71,6 +79,8 @@ export default function Auctions() {
         handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         isSelectedTypeAuctions={isSelectedTypeAuctions}
         handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+        onEditAuction={handleEditAuction}
+        onWithdrawAuction={handleWithdrawAuction}
       />
     </>
   );

@@ -7,6 +7,7 @@ import { useAuctionsService } from '../hooks/auctions/useAuctionsService';
 import { ProductAuctionData } from '../interfaces/products/getProductsSKU';
 import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../interfaces/auctions/createListingTemplateRequest';
+import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
@@ -14,26 +15,22 @@ const validationSchema = Yup.object().shape({
 
 export default function AddAuction() {
   const navigate = useNavigate();
+  const { selectedProduct, setSelectedProduct } = useSelectedProduct();
   const { auctionsService } = useAuctionsService();
   const [products, setProducts] = useState<ProductAuctionData[]>();
-  const [selectedProduct, setSelectedProduct] = useState<ProductAuctionData>({
-    id: '',
-    imageUrls: [],
-    sku: '',
-    brand: '',
-    name: '',
-    condition: 0,
-    quantity: 0,
-    price: 0,
-    description: '',
-  });
   const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
   const [errors, setErrors] = useState<any>({});
+  const [platformConnections, setPlatformConnections] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const productsResponse = await auctionsService.getProductsForAution();
+        const [productsResponse, connections] = await Promise.all([
+          auctionsService.getProductsForAution(),
+          auctionsService.getPlatformConnections(),
+        ]);
+
+        setPlatformConnections(connections);
         setProducts(
           productsResponse.products.map((product) => ({
             id: product.id,
@@ -68,6 +65,13 @@ export default function AddAuction() {
 
   const handleProductChange = (id: string) => {
     if (!id) return;
+
+    if (allegroListingForm) {
+      allegroListingForm.description = selectedProduct.description;
+      allegroListingForm.productId = selectedProduct.id;
+      allegroListingForm.imagesUrls = selectedProduct.imageUrls;
+    }
+
     setSelectedProduct(products?.find((x) => x.id === id) as ProductAuctionData);
   };
 
@@ -129,10 +133,6 @@ export default function AddAuction() {
   };
 
   const handleAllegroForm = (form: CreateAllegroAuction) => {
-    form.description = selectedProduct.description;
-    form.productId = selectedProduct.id;
-    form.imagesUrls = selectedProduct.imageUrls;
-
     setAllegroListingForm(form);
   };
 
@@ -146,6 +146,7 @@ export default function AddAuction() {
           errors={errors}
           onAllegroFormSubmit={handleAllegroForm}
           products={products as ProductAuctionData[]}
+          platformConnections={platformConnections}
         />
       )}
     </>
