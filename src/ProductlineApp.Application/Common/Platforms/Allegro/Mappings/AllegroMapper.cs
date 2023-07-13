@@ -181,6 +181,108 @@ public class AllegroMapper : Profile
             {
                 Id = src.ProductId.ToString(),
             }));
+
+        this.CreateMap<AllegroOfferProductDtoResponse, AllegroOfferProductResponse>()
+            .ForMember(dest => dest.ProductSet, opt => opt.MapFrom(src => new List<ProductSet>()
+            {
+                new ProductSet()
+                {
+                    Product = new AllegroListingProduct()
+                    {
+                        Id = src.AllegroProductId,
+                        Parameters = src.ProductParameters,
+                    },
+                    Quantity = new Quantity()
+                    {
+                        Value = 1,
+                    },
+                },
+            }))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => new Category { Id = src.CategoryId }))
+            .ForMember(dest => dest.Parameters, opt => opt.MapFrom(src => src.ListingParameters))
+            .ForMember(dest => dest.B2b, opt => opt.MapFrom(src => new B2b()
+            {
+                BuyableOnlyByBusiness = false,
+            }))
+            .ForMember(dest => dest.Stock, opt => opt.MapFrom(src => new Stock()
+            {
+                Available = src.Quantity,
+                Unit = "UNIT",
+            }))
+            .ForMember(dest => dest.Language, opt => opt.MapFrom(src => "pl-PL"))
+            .ForMember(dest => dest.AfterSalesServices, opt => opt.MapFrom(src => new AfterSalesServices
+            {
+                ImpliedWarranty = new ImpliedWarranty { Id = src.ImpliedWarrantyId },
+                ReturnPolicy = new ReturnPolicy { Id = src.ReturnPolicyId },
+            }))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.SellingMode, opt => opt.MapFrom(src => new SellingMode
+            {
+                Format = "BUY_NOW",
+                Price = new Price { Amount = src.Price, Currency = "PLN" },
+            }))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => new Description
+            {
+                Sections = new List<Section>
+                {
+                    new Section
+                    {
+                        Items = new List<Item2>
+                        {
+                            new Item2 { Type = "TEXT", Content = $"<p>{src.Description}</p>" },
+                        },
+                    },
+                },
+            }))
+            .ForMember(dest => dest.Images, opt => opt.MapFrom(src => src.ImagesUrls))
+            .ForMember(dest => dest.Publication, opt => opt.MapFrom(src => new Publication
+            {
+                Duration = src.Duration.ToString(),
+                StartingAt = src.StartingAt,
+                Status = "ACTIVE",
+                Republish = src.Republish,
+            }))
+            .ForMember(dest => dest.Delivery, opt => opt.MapFrom(src => new Delivery
+            {
+                HandlingTime = "PT24H",
+                ShipmentDate = DateTime.Today.AddDays(2),
+                ShippingRates = new Delivery.ShippingRate()
+                {
+                    Id = src.ShippingRateId,
+                },
+                AdditionalInfo = "brak",
+            }))
+            .ForMember(dest => dest.Payments, opt => opt.MapFrom(src => new Payments()
+            {
+                Invoice = Payments.PaymentInvoice.VAT.ToString(),
+            }))
+            .ForMember(dest => dest.External, opt => opt.MapFrom(src => new External()
+            {
+                Id = src.ProductId.ToString(),
+            }));
+
+        this.CreateMap<AllegroOfferProductResponse, AllegroOfferProductDtoResponse>()
+            .ForMember(dest => dest.ListingId, opt => opt.Ignore())
+            .ForMember(dest => dest.AllegroProductId, opt => opt.MapFrom(src => src.ProductSet.FirstOrDefault().Product.Id))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description.Sections.FirstOrDefault().Items.FirstOrDefault().Content))
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Category.Id))
+            .ForMember(dest => dest.ImpliedWarrantyId, opt => opt.MapFrom(src => src.AfterSalesServices.ImpliedWarranty.Id))
+            .ForMember(dest => dest.ReturnPolicyId, opt => opt.MapFrom(src => src.AfterSalesServices.ReturnPolicy.Id))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.SellingMode.Price.Amount))
+            .ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Location))
+            .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => Guid.Parse(src.External.Id)))
+            .ForMember(dest => dest.ListingParameters, opt => opt.MapFrom(src => src.Parameters))
+            .ForMember(dest => dest.ProductParameters, opt => opt.MapFrom(src => src.ProductSet.FirstOrDefault().Product.Parameters))
+            // .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => Enum.Parse<AllegroDurationPeriods>(src.Publication.Duration)))
+            .ForMember(dest => dest.Republish, opt => opt.MapFrom(src => src.Publication.Republish))
+            .ForMember(dest => dest.ImagesUrls, opt => opt.MapFrom(src => src.Images))
+            .ForMember(dest => dest.ShippingRateId, opt => opt.MapFrom(src => src.Delivery.ShippingRates.Id))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.ProductSet.FirstOrDefault().Quantity.Value))
+            .ForMember(dest => dest.StartingAt, opt => opt.MapFrom(src => src.Publication.StartingAt))
+            .ReverseMap();
     }
 
     private static OrderStatus MapToOrderStatus(string mainStatus, string fullfilmentStatus)

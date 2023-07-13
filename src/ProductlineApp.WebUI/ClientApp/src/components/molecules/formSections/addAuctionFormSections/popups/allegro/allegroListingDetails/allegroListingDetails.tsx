@@ -10,30 +10,8 @@ import { useAuctionsService } from '../../../../../../../hooks/auctions/useAucti
 import { AllegroUserPoliciesResponse } from '../../../../../../../interfaces/auctions/allegroUserPoliciesResponse';
 import './allegroListingDetails.css';
 import ConfrimButton from '../../../../../../atoms/buttons/confirmButton/ConfirmButton';
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Nazwa jest wymagana'),
-  impliedWarrantyId: Yup.string().required('Pole wymagane'),
-  returnPolicyId: Yup.string().required('Pole wymagane'),
-  price: Yup.number()
-    .typeError('Nieprawidłowy format ceny')
-    .required('Pole wymagane')
-    .positive('Wartość musi być większa od 0')
-    .moreThan(0, 'Wartość musi być większa od 0')
-    .nullable(),
-  locationCity: Yup.string().required('Pole wymagane'),
-  locationCountryCode: Yup.string().required('Pole wymagane'),
-  locationPostCode: Yup.string().required('Pole wymagane'),
-  locationProvince: Yup.string().required('Pole wymagane'),
-  duration: Yup.string().required('Pole wymagane'),
-  republish: Yup.string().required('Pole wymagane'),
-  shippingRateId: Yup.string().required('Pole wymagane'),
-  quantity: Yup.number()
-    .typeError('Nieprawidłowy format')
-    .integer()
-    .required('Pole wymagane')
-    .positive('Wartość musi być większa od 0'),
-});
+import { useSelectedProduct } from '../../../../../../../hooks/auctions/useSelectedProduct';
+import { AllegroOfferProductDetailsResponse } from '../../../../../../../interfaces/auctions/allegroOfferProductDetailsResponse';
 
 export interface AllegroListingDetailsFormData {
   name: string;
@@ -83,26 +61,29 @@ interface AllegroListingDetailsProps {
   onPrevPage: () => void;
   onConfirm: (formData: AllegroListingDetailsFormData) => void;
   onCancel: () => void;
+  initValues?: AllegroOfferProductDetailsResponse;
 }
 
 const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
   onPrevPage,
   onConfirm,
   onCancel,
+  initValues,
 }) => {
+  const { selectedProduct } = useSelectedProduct();
   const [formData, setFormData] = useState<AllegroListingDetailsFormData>({
-    name: '',
-    impliedWarrantyId: '',
-    returnPolicyId: '',
-    price: 0,
-    locationCity: '',
-    locationCountryCode: '',
-    locationPostCode: '',
-    locationProvince: '',
-    duration: AllegroDurationPeriods.P10D,
-    republish: true,
-    shippingRateId: '',
-    quantity: 1,
+    name: initValues ? initValues.name : selectedProduct.name,
+    impliedWarrantyId: initValues ? initValues.impliedWarrantyId : '',
+    returnPolicyId: initValues ? initValues.returnPolicyId : '',
+    price: initValues ? initValues.price : selectedProduct.price,
+    locationCity: initValues ? initValues.location.city : '',
+    locationCountryCode: initValues ? initValues.location.countryCode : '',
+    locationPostCode: initValues ? initValues.location.postCode : '',
+    locationProvince: initValues ? initValues.location.province : '',
+    duration: initValues ? initValues.duration : AllegroDurationPeriods.P10D,
+    republish: initValues ? initValues.republish : true,
+    shippingRateId: initValues ? initValues.shippingRateId: '',
+    quantity: initValues ? initValues.quantity : selectedProduct.quantity,
   });
   const [errors, setErrors] = useState<Partial<AllegroListingDetailsFormData>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -131,6 +112,31 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       setIsLoading(false);
     });
   }, []);
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Nazwa jest wymagana'),
+    impliedWarrantyId: Yup.string().required('Pole wymagane'),
+    returnPolicyId: Yup.string().required('Pole wymagane'),
+    price: Yup.number()
+      .typeError('Nieprawidłowy format ceny')
+      .required('Pole wymagane')
+      .positive('Wartość musi być większa od 0')
+      .moreThan(0, 'Wartość musi być większa od 0')
+      .nullable(),
+    locationCity: Yup.string().required('Pole wymagane'),
+    locationCountryCode: Yup.string().required('Pole wymagane'),
+    locationPostCode: Yup.string().required('Pole wymagane'),
+    locationProvince: Yup.string().required('Pole wymagane'),
+    duration: Yup.string().required('Pole wymagane'),
+    republish: Yup.string().required('Pole wymagane'),
+    shippingRateId: Yup.string().required('Pole wymagane'),
+    quantity: Yup.number()
+      .typeError('Nieprawidłowy format')
+      .integer()
+      .required('Pole wymagane')
+      .positive('Wartość musi być większa od 0')
+      .max(selectedProduct.quantity, 'Wartość większa niz zdefiniowana dla produktu'),
+  });
 
   const validateForm = async () => {
     if (!validationSchema) return false;
@@ -394,7 +400,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
             <BackButton onClick={onPrevPage} />
           </div>
           <div className="addauctionAllegroButtons">
-            <CancelButton pathTo={''} close={onCancel} />
+            <CancelButton pathTo={''} onClick={onCancel} />
             <ConfrimButton />
           </div>
         </div>

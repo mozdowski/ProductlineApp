@@ -1,3 +1,4 @@
+import { AllegroOfferProductDetailsResponse } from '../../interfaces/auctions/allegroOfferProductDetailsResponse';
 import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
@@ -67,6 +68,14 @@ export class AuctionsService {
 
   public async createAllegroListing(data: CreateAllegroAuction): Promise<void> {
     return this.httpService.post<void>('/allegro/createListing', data);
+  }
+
+  public async getPlatformConnections(): Promise<string[]> {
+    return this.httpService.get<string[]>('/user/platformConnections');
+  }
+
+  public async getAllegroOfferProductDetails(offerId: string): Promise<AllegroOfferProductDetailsResponse> {
+    return this.httpService.get<AllegroOfferProductDetailsResponse>('/allegro/offerProductDetails/' + offerId);
   }
 }
 

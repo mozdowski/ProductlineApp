@@ -5,6 +5,7 @@ import ConnectAccountButton from '../../../atoms/buttons/connectAccountButton/Co
 import { PlatformAuthUrl } from '../../../../interfaces/platforms/platformsAuthUrlResponse';
 import { PlatformEnum } from '../../../../enums/platform.enum';
 import DisconnectAccountButton from '../../../atoms/buttons/disconectAccountButton/DisconnectAccountButton';
+import { usePlatforms } from '../../../../hooks/platforms/usePlatforms';
 
 function AuctionPortalsToConnectList({
   platformsAuthUrl,
@@ -15,8 +16,7 @@ function AuctionPortalsToConnectList({
   onDisconnect: (platformId: string) => void;
   userConnections: string[];
 }) {
-  const allegroPlatform = platformsAuthUrl.find((x) => x.platformName === PlatformEnum.ALLEGRO);
-  const ebayPlatform = platformsAuthUrl.find((x) => x.platformName === PlatformEnum.EBAY);
+  const { allegroPlatform, ebayPlatform } = usePlatforms();
 
   return (
     <>

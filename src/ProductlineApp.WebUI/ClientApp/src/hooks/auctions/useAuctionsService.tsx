@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { AuctionsContext } from '../../context/auctionsContext';
+import { AuctionsContext } from '../../context/auctions/auctionsContext';
 
 export const useAuctionsService = () => {
   const auctionsContext = useContext(AuctionsContext);

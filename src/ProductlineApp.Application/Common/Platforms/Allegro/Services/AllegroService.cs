@@ -223,6 +223,12 @@ public class AllegroService : IAllegroService
         return await this._allegroApiClient.GetImpliedWarranties(this._accessToken);
     }
 
+    public async Task<AllegroOfferProductDtoResponse> GetOfferProductDetails(string offerId)
+    {
+        var response = await this._allegroApiClient.GetOfferProductDetails(this._accessToken, offerId);
+        return this._mapper.Map<AllegroOfferProductDtoResponse>(response);
+    }
+
     private void CheckIfAuthorized()
     {
         if (this._accessToken == null)

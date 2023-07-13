@@ -72,4 +72,6 @@ public interface IAllegroApiClient
     Task<ReturnPoliciesResponse> GetReturnPolicies(string accessToken);
 
     Task<ImpliedWarrantiesResponse> GetImpliedWarranties(string accessToken);
+
+    Task<AllegroOfferProductResponse> GetOfferProductDetails(string accessToken, string offerId);
 }

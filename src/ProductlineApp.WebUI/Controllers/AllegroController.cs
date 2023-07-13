@@ -62,4 +62,11 @@ public class AllegroController : ControllerBase
             RetunPolicies = retunPolicies.Result.ReturnPolicies,
         });
     }
+
+    [HttpGet("offerProductDetails/{offerId}")]
+    public async Task<IActionResult> GetOfferProductDetails(string offerId)
+    {
+        var result = await this._allegroService.GetOfferProductDetails(offerId);
+        return this.Ok(result);
+    }
 }

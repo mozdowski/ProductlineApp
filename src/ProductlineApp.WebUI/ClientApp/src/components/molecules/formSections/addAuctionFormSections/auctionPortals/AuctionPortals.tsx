@@ -1,17 +1,20 @@
 import { useState } from 'react';
-import { AuctionForm } from '../../../../../interfaces/auctions/auctionForm';
 import AllegroFormButton from '../../../../atoms/buttons/AllegroFormButton/AllegroFormButton';
 import EbayFormButton from '../../../../atoms/buttons/EbayFormButton/EbayFormButton';
 import './css/auctionPortals.css';
 import AllegroFormPopup from '../popups/allegro/AllegroFormPopup';
 import { CreateAllegroAuction } from '../../../../../interfaces/auctions/createAllegroAuction';
+import { usePlatforms } from '../../../../../hooks/platforms/usePlatforms';
 
 function AuctionPortals({
   onAllegroFormSubmit,
+  platformConnections,
 }: {
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
+  platformConnections: string[];
 }) {
   const [openAllegroPopup, setOpenAllegroFormPopup] = useState(false);
+  const { allegroPlatform, ebayPlatform } = usePlatforms();
 
   return (
     <>
@@ -23,13 +26,19 @@ function AuctionPortals({
           <p>Portale aukcyjne</p>
         </div>
         <div className="addAuctionPortalsInputs">
-          <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
-          <AllegroFormPopup
-            openAllegroPopup={openAllegroPopup}
-            closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
-            onSubmit={onAllegroFormSubmit}
-          />
-          <EbayFormButton />
+          {allegroPlatform && platformConnections.includes(allegroPlatform.platformId) && (
+            <>
+              <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
+              <AllegroFormPopup
+                openAllegroPopup={openAllegroPopup}
+                closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
+                onSubmit={onAllegroFormSubmit}
+              />
+            </>
+          )}
+          {ebayPlatform && platformConnections.includes(ebayPlatform.platformId) && (
+            <EbayFormButton />
+          )}
         </div>
       </div>
     </>

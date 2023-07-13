@@ -18,6 +18,7 @@ export default function AddAuctionTemplate({
   onSubmit,
   onAllegroFormSubmit,
   errors,
+  platformConnections,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -25,6 +26,7 @@ export default function AddAuctionTemplate({
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
   errors: any;
+  platformConnections: string[];
 }) {
   return (
     <>
@@ -38,6 +40,7 @@ export default function AddAuctionTemplate({
             onSubmit={onSubmit}
             onAllegroFormSubmit={onAllegroFormSubmit}
             errors={errors}
+            platformConnections={platformConnections}
           />
         </div>
       </div>
