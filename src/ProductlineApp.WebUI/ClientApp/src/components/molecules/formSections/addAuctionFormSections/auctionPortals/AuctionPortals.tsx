@@ -5,6 +5,7 @@ import './css/auctionPortals.css';
 import AllegroFormPopup from '../popups/allegro/AllegroFormPopup';
 import { CreateAllegroAuction } from '../../../../../interfaces/auctions/createAllegroAuction';
 import { usePlatforms } from '../../../../../hooks/platforms/usePlatforms';
+import EbayFormPopup from '../popups/ebay/ebayFormPopup';
 
 function AuctionPortals({
   onAllegroFormSubmit,
@@ -14,6 +15,7 @@ function AuctionPortals({
   platformConnections: string[];
 }) {
   const [openAllegroPopup, setOpenAllegroFormPopup] = useState(false);
+  const [openEbayPopup, setOpenEbayFormPopup] = useState(false);
   const { allegroPlatform, ebayPlatform } = usePlatforms();
 
   return (
@@ -38,7 +40,12 @@ function AuctionPortals({
             </>
           )}
           {ebayPlatform && platformConnections.includes(ebayPlatform.platformId) && (
-            <EbayFormButton />
+            <>
+              <EbayFormButton setOpenEbayFormPopup={setOpenEbayFormPopup} />
+              {openEbayPopup && (
+                <EbayFormPopup closePopup={() => setOpenEbayFormPopup(false)} onSubmit={() => {}} />
+              )}
+            </>
           )}
         </div>
       </div>
