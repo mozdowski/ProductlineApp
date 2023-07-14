@@ -59,4 +59,6 @@ tbody tr:nth-child(odd) {
 /* buttons Action */
 .ordersButtonsAction .editOrderIcon {
   cursor: pointer;
+  width: 22px;
+  height: 22px;
 }

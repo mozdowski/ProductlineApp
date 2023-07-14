@@ -13,7 +13,7 @@
   display: contents;
 }
 
-.nextButton {
+.paginationNextButton {
   width: 31px;
   height: 31px;
   border-radius: 8px;
@@ -25,12 +25,12 @@
   cursor: pointer;
 }
 
-.nextButton.activePage {
+.paginationNextButton.activePage {
   background-color: var(--buttonPaginationBgActivePage);
   color: #ffffff;
 }
 
-.nextButton p {
+.paginationNextButton p {
   font-family: var(--body-font);
   font-size: 12px;
   font-weight: 500;

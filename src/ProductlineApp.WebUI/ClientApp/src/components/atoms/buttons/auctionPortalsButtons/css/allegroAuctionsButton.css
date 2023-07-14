@@ -1,0 +1,41 @@
+.allegroButton {
+  border-radius: 8px;
+  height: 35px;
+  width: 45px;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  margin-right: 11px;
+  box-sizing: border-box;
+}
+
+.allegroButton .iconAuctionsAllegro {
+  width: 11.15px;
+  height: 12.83px;
+  background-size: cover;
+}
+
+.allegroButton .allegroAuctionsIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon.svg');
+  color: var(--grey-color);
+}
+
+.allegroButton:hover {
+  border: 1px solid var(--first-color);
+  color: var(--first-color);
+}
+
+.allegroButton:hover .allegroAuctionsIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+}
+
+.allegroButton.selected {
+  border: 1px solid var(--first-color);
+  color: var(--first-color);
+}
+
+.allegroButton.selected .allegroAuctionsIcon {
+  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+}

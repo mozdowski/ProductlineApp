@@ -7,6 +7,7 @@ import EbayAuctionsButton from '../atoms/buttons/auctionPortalsButtons/EbayAucti
 import OlxAuctionsButton from '../atoms/buttons/auctionPortalsButtons/OlxAuctionsButton';
 import { Platform } from '../../interfaces/platforms/platform';
 import { PlatformEnum } from '../../enums/platform.enum';
+import AllegroAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AllegroAuctionsButton';
 
 export default function AuctionsTemplate({
   auctionRecords,
@@ -30,16 +31,10 @@ export default function AuctionsTemplate({
           selectedAuctionPortal={selectedAuctionPortal}
           handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         />
-        <AmazonAuctionsButton
-          id={PlatformEnum.AMAZON}
+        <AllegroAuctionsButton
+          id={PlatformEnum.ALLEGRO}
           selectedAuctionPortal={selectedAuctionPortal}
-          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
-        />
-        <OlxAuctionsButton
-          id={PlatformEnum.OLX}
-          selectedAuctionPortal={selectedAuctionPortal}
-          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
-        />
+          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton} />
       </div>
       <div className="content">
         <div className="tableAuctions">

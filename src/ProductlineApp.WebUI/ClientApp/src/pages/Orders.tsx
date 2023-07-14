@@ -16,13 +16,15 @@ export default function Orders() {
   useEffect(() => {
     ordersService.getOrdersList().then((res) => {
       const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
-        OrderID: order.orderId,
-        OrderDate: new Date(order.creationDate),
-        ShipToDate: new Date(order.maxDeliveryDate as Date),
-        Client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
-        Price: order.totalPrice,
-        Quantity: order.quantity,
-        Status: mapOrderStatusToString(order.status),
+        orderID: order.orderId,
+        orderDate: new Date(order.creationDate),
+        shipToDate: new Date(order.maxDeliveryDate as Date),
+        client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
+        price: order.totalPrice,
+        quantity: order.quantity,
+        status: mapOrderStatusToString(order.status),
+        shippingAddress: order.shippingAddress,
+        items: order.items
       }));
       setOrders(orderRecords);
     });

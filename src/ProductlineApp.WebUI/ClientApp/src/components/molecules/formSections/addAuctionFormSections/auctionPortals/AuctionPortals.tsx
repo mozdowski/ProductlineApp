@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { AuctionForm } from '../../../../../interfaces/auctions/auctionForm';
 import AllegroFormButton from '../../../../atoms/buttons/AllegroFormButton/AllegroFormButton';
 import EbayFormButton from '../../../../atoms/buttons/EbayFormButton/EbayFormButton';
 import './css/auctionPortals.css';

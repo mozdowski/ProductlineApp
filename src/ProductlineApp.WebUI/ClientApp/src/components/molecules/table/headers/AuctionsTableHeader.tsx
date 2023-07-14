@@ -13,7 +13,6 @@ export const AuctionsTableHeader = () => {
         <th>Kategoria</th>
         <th>Cena</th>
         <th>Ilość</th>
-        <th>Dni do wygaśnięcia</th>
         <th>Akcje</th>
       </tr>
     </thead>

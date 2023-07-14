@@ -1,4 +1,4 @@
-tr > td.productDetails.open {
+tr>td.details.open {
   background-color: #fff;
   width: 100%;
   max-height: 100px;
@@ -35,7 +35,7 @@ tr > td.productDetails.open {
   padding: 10px 10px;
 }
 
-.productDetails {
+.details {
   display: flex;
   font-family: var(--body-font);
   color: var(--letter-color);
@@ -43,14 +43,15 @@ tr > td.productDetails.open {
 }
 
 .productConditionSection {
-  margin-left: 55px;
+  padding-left: 25px;
   display: inline-flex;
   align-items: center;
+  font-family: var(--body-font);
 }
 
 .productConditionSection h1 {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   margin-right: 7px;
 }
 

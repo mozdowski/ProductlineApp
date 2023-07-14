@@ -1,10 +1,7 @@
-import React, { useCallback, useState } from 'react';
-import { CollapseTableButton } from '../../../atoms/buttons/collapseTableButton/CollapseTableButton';
-import { CollapseAuctionDetails } from './CollapseAuctionDetails';
-import EditIcon from '../../../../assets/icons/edit_icon.svg';
-import BackAuctionIcon from '../../../../assets/icons/backAuction_icon.png';
+import { useCallback, useState } from 'react';
 import './css/AuctionsTableBody.css';
 import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInteface';
+import { AuctionsTableRow } from '../rows/auctionsTableRow';
 
 export default function openCollapse(init: any) {
   const [isOpen, setOpenState] = useState(init);
@@ -22,35 +19,9 @@ export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: Auctions
   return (
     <>
       <tbody>
-        <tr className="AuctionsTableRow">
-          <td>
-            <CollapseTableButton isOpen={isOpen} toggle={toggle} />
-          </td>
-          {auctionRecords.map((auction, key) => (
-            <React.Fragment key={key}>
-              <td>{auction?.auctionID}</td>
-              <td>{auction?.sku}</td>
-              <td>{auction?.brand}</td>
-              <td>
-                <div className="productName">
-                  <img className="productImage" src={auction?.productImageUrl}></img>
-                  <p>{auction?.productName}</p>
-                </div>
-              </td>
-              <td>{auction?.category}</td>
-              <td>{auction?.price} zł</td>
-              <td>{auction?.quantity}</td>
-              <td>{auction?.daysToEnd ? auction?.daysToEnd : '-'}</td>
-            </React.Fragment>
-          ))}
-          <td>
-            <div className="auctionsButtonsAction">
-              <img className="editAuctionIcon" src={EditIcon} />
-              <img className="backAuctionIcon" src={BackAuctionIcon} />
-            </div>
-          </td>
-        </tr>
-        {isOpen && <CollapseAuctionDetails isOpen={isOpen} auctionRecords={auctionRecords} />}
+        {auctionRecords.map((auction, key) => (
+          <AuctionsTableRow key={key} auction={auction} />
+        ))}
       </tbody>
     </>
   );

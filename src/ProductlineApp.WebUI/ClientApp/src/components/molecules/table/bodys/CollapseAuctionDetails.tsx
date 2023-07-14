@@ -1,18 +1,20 @@
 import React from 'react';
 import './css/CollapseAuctionDetails.css';
-import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInteface';
 
 export const CollapseAuctionDetails = ({
-  isOpen,
-  auctionRecords,
+  daysToEnd
 }: {
-  isOpen: any;
-  auctionRecords: AuctionsRecord[];
+  daysToEnd: number | undefined
 }) => {
   return (
     <tr className="auctionDetailsWrapper">
       <td></td>
-      <td></td>
+      <td colSpan={2}>
+        <div className="auctonDaysToEndSection">
+          <h1>Wygasa za: </h1>
+          <h2>{daysToEnd}</h2>
+        </div>
+      </td>
       <td></td>
       <td></td>
       <td></td>
