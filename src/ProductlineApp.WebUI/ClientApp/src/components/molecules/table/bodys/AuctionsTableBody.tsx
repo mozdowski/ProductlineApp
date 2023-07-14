@@ -16,7 +16,17 @@ export default function openCollapse(init: any) {
   return { isOpen, toggle };
 }
 
-export const AuctionsTableBody = ({ auctionRecords, onEditAuction, onWithdrawAuction }: { auctionRecords: AuctionsRecord[], onEditAuction: (auctionId: string) => void, onWithdrawAuction: (auctionId: string) => void }) => {
+export const AuctionsTableBody = ({
+  auctionRecords,
+  onEditAuction,
+  onWithdrawAuction,
+  showActiveAuctions,
+}: {
+  auctionRecords: AuctionsRecord[];
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
+  showActiveAuctions: boolean;
+}) => {
   const { isOpen, toggle } = openCollapse(false);
 
   return (
@@ -26,29 +36,41 @@ export const AuctionsTableBody = ({ auctionRecords, onEditAuction, onWithdrawAuc
           <td>
             <CollapseTableButton isOpen={isOpen} toggle={toggle} />
           </td>
-          {auctionRecords.map((auction, key) => auction && (
-            <React.Fragment key={key}>
-              <td>{auction?.auctionID}</td>
-              <td>{auction?.sku}</td>
-              <td>{auction?.brand}</td>
-              <td>
-                <div className="productName">
-                  <img className="productImage" src={auction?.productImageUrl}></img>
-                  <p>{auction?.productName}</p>
-                </div>
-              </td>
-              <td>{auction?.category}</td>
-              <td>{auction?.price} zł</td>
-              <td>{auction?.quantity}</td>
-              <td>{auction?.daysToEnd ? auction?.daysToEnd : '-'}</td>
-              <td>
-                <div className="auctionsButtonsAction">
-                <img className="editAuctionIcon" src={EditIcon} onClick={() => onEditAuction(auction.auctionID)}/>
-                <img className="backAuctionIcon" src={BackAuctionIcon} onClick={() => onWithdrawAuction(auction.auctionID)}/>
-              </div>
-          </td>
-            </React.Fragment>
-          ))}
+          {auctionRecords.map(
+            (auction, key) =>
+              auction &&
+              auction.isActive == showActiveAuctions && (
+                <React.Fragment key={key}>
+                  <td>{auction?.auctionID}</td>
+                  <td>{auction?.sku}</td>
+                  <td>{auction?.brand}</td>
+                  <td>
+                    <div className="productName">
+                      <img className="productImage" src={auction?.productImageUrl}></img>
+                      <p>{auction?.productName}</p>
+                    </div>
+                  </td>
+                  <td>{auction?.category}</td>
+                  <td>{auction?.price} zł</td>
+                  <td>{auction?.quantity}</td>
+                  <td>{auction?.daysToEnd ? auction?.daysToEnd : '-'}</td>
+                  <td>
+                    <div className="auctionsButtonsAction">
+                      <img
+                        className="editAuctionIcon"
+                        src={EditIcon}
+                        onClick={() => onEditAuction(auction.auctionID)}
+                      />
+                      <img
+                        className="backAuctionIcon"
+                        src={BackAuctionIcon}
+                        onClick={() => onWithdrawAuction(auction.auctionID)}
+                      />
+                    </div>
+                  </td>
+                </React.Fragment>
+              ),
+          )}
         </tr>
         {isOpen && <CollapseAuctionDetails isOpen={isOpen} auctionRecords={auctionRecords} />}
       </tbody>

@@ -443,6 +443,57 @@ public class AllegroApiClient : IAllegroApiClient
         return response.Data;
     }
 
+    public async Task UpdateOffer(string accessToken, string offerId, AllegroUpdateOfferRequest requestBody)
+    {
+        var request = new RestRequest($"/sale/product-offers/{offerId}", Method.Patch)
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        request.AddJsonBody(requestBody, "application/vnd.allegro.public.v1+json");
+
+        var response = await this._restClient.ExecuteAsync(request);
+
+        if (!response.IsSuccessful)
+        {
+            throw new Exception($"Failed to update listing: {response.StatusCode} - {response.Content}");
+        }
+    }
+
+    public async Task OfferRenewal(string accessToken, string commandId, AllegroOfferRenewalRequest requestBody)
+    {
+        var request = new RestRequest($"sale/offer-publication-commands/{commandId}", Method.Put)
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        request.AddJsonBody(requestBody, "application/vnd.allegro.public.v1+json");
+
+        var response = await this._restClient.ExecuteAsync(request);
+
+        if (!response.IsSuccessful)
+        {
+            throw new Exception($"Failed to publish an offer: {response.StatusCode} - {response.Content}");
+        }
+    }
+
+    public async Task WithdrawOffer(string accessToken, string commandId, AllegroWithdrawOfferRequest requestBody)
+    {
+        var request = new RestRequest($"sale/offer-publication-commands/{commandId}", Method.Put)
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        request.AddJsonBody(requestBody, "application/vnd.allegro.public.v1+json");
+
+        var response = await this._restClient.ExecuteAsync(request);
+
+        if (!response.IsSuccessful)
+        {
+            throw new Exception($"Failed to withdraw an offer: {response.StatusCode} - {response.Content}");
+        }
+    }
+
     private async Task<string> GetCategoryNameById(string accessToken, string categoryId)
     {
         var request = new RestRequest($"sale/categories/{categoryId}")
@@ -469,9 +520,9 @@ public class AllegroApiClient : IAllegroApiClient
 
         var response = await this._restClient.ExecuteAsync<AllegroOfferDetailsResponse>(request);
 
-        if (response.StatusCode != HttpStatusCode.OK)
+        if (response.StatusCode != HttpStatusCode.OK || response.Data?.Description is null)
         {
-            throw new Exception($"Failed to get offer description: {response.StatusCode}");
+            return string.Empty;
         }
 
         var textDescriptionContent = string.Join(" ", response.Data.Description.Sections

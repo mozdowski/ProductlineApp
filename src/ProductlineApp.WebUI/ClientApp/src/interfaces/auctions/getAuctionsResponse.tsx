@@ -16,5 +16,5 @@ interface Auction {
   price: number;
   quantity: number;
   daysToExpire?: number;
-  isActive: number;
+  isActive: boolean;
 }

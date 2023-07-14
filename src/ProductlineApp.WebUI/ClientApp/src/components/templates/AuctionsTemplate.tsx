@@ -12,15 +12,15 @@ export default function AuctionsTemplate({
   selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   handleClickTypeAuctionsButton,
-  isSelectedTypeAuctions,
+  showActiveAuctions,
   onEditAuction,
   onWithdrawAuction,
 }: {
-  auctionRecords: AuctionsRecord[];
-  selectedAuctionPortal: PlatformEnum;
+  auctionRecords?: AuctionsRecord[];
+  selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  isSelectedTypeAuctions: any;
+  showActiveAuctions: boolean;
   onEditAuction: (auctionId: string) => void;
   onWithdrawAuction: (auctionId: string) => void;
 }) {
@@ -34,12 +34,7 @@ export default function AuctionsTemplate({
           handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         />
         <AmazonAuctionsButton
-          id={PlatformEnum.AMAZON}
-          selectedAuctionPortal={selectedAuctionPortal}
-          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
-        />
-        <OlxAuctionsButton
-          id={PlatformEnum.OLX}
+          id={PlatformEnum.ALLEGRO}
           selectedAuctionPortal={selectedAuctionPortal}
           handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         />
@@ -48,7 +43,7 @@ export default function AuctionsTemplate({
         <div className="tableAuctions">
           <AuctionsTable
             auctionRecords={auctionRecords}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
             onEditAuction={onEditAuction}
             onWithdrawAuction={onWithdrawAuction}

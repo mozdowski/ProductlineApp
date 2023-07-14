@@ -1,9 +1,11 @@
+import { AllegroAuctionRenewalRequest } from '../../interfaces/auctions/allegroAuctionRenewalRequest';
 import { AllegroOfferProductDetailsResponse } from '../../interfaces/auctions/allegroOfferProductDetailsResponse';
 import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
 import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
+import { WithdrawAuctionRequest } from '../../interfaces/auctions/withdrawAuctionRequest';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
 import { GetAllegroCatalogueProductDetailsResponse } from '../../interfaces/platforms/getAllegroCatalogueProductDetailsResponse';
 import { GetAllegroCalalogueResponse } from '../../interfaces/platforms/getAllegroCatalogueResponse';
@@ -74,8 +76,24 @@ export class AuctionsService {
     return this.httpService.get<string[]>('/user/platformConnections');
   }
 
-  public async getAllegroOfferProductDetails(offerId: string): Promise<AllegroOfferProductDetailsResponse> {
-    return this.httpService.get<AllegroOfferProductDetailsResponse>('/allegro/offerProductDetails/' + offerId);
+  public async getAllegroOfferProductDetails(
+    offerId: string,
+  ): Promise<AllegroOfferProductDetailsResponse> {
+    return this.httpService.get<AllegroOfferProductDetailsResponse>(
+      '/allegro/offerProductDetails/' + offerId,
+    );
+  }
+
+  public async updateAllegroAuction(offerId: string, data: CreateAllegroAuction): Promise<void> {
+    return this.httpService.post<void>('/allegro/updateListing/' + offerId, data);
+  }
+
+  public async withdrawAllegroAuction(data: WithdrawAuctionRequest): Promise<void> {
+    return this.httpService.post<void>('/allegro/withdrawListing', data);
+  }
+
+  public async allegroAuctionRenewal(data: AllegroAuctionRenewalRequest): Promise<void> {
+    return this.httpService.post<void>('/allegro/listingRenewal', data);
   }
 }
 

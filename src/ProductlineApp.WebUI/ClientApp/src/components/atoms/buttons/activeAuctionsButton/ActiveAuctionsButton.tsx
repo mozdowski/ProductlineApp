@@ -1,22 +1,18 @@
 import './css/ActiveAuctionsButton.css';
 
 function ActiveAuctionsButton({
-  isSelectedTypeAuctions,
+  showActiveAuctions,
   handleClickTypeAuctionsButton,
   id,
 }: {
-  isSelectedTypeAuctions: any;
+  showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
   id: string;
 }) {
   return (
     <div
       id={id}
-      className={
-        isSelectedTypeAuctions === 'active'
-          ? 'activeAuctionsButton selected'
-          : 'activeAuctionsButton'
-      }
+      className={showActiveAuctions ? 'activeAuctionsButton selected' : 'activeAuctionsButton'}
       onClick={handleClickTypeAuctionsButton}
     >
       <p>Aktywne</p>

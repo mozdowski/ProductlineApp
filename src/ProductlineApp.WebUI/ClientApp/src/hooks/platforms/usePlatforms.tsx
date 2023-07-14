@@ -33,9 +33,13 @@ export const usePlatforms = () => {
     fetchData();
   }, []);
 
+  const getPlatformByName = (name: PlatformEnum): PlatformAuthUrl => {
+    return platforms.find((x) => x.platformName === name) as PlatformAuthUrl;
+  };
+
   const { getPlatformsAsync } = platformsContext;
 
-  return { platforms, allegroPlatform, ebayPlatform };
+  return { platforms, allegroPlatform, ebayPlatform, getPlatformByName };
 };
 
 export {};

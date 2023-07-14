@@ -12,6 +12,7 @@ import './allegroListingDetails.css';
 import ConfrimButton from '../../../../../../atoms/buttons/confirmButton/ConfirmButton';
 import { useSelectedProduct } from '../../../../../../../hooks/auctions/useSelectedProduct';
 import { AllegroOfferProductDetailsResponse } from '../../../../../../../interfaces/auctions/allegroOfferProductDetailsResponse';
+import { FormTextarea } from '../../../../../../atoms/common/formTextArea/formTextArea';
 
 export interface AllegroListingDetailsFormData {
   name: string;
@@ -26,6 +27,7 @@ export interface AllegroListingDetailsFormData {
   republish: boolean;
   shippingRateId: string;
   quantity: number;
+  description: string;
 }
 
 const getDurationLabel = (duration: AllegroDurationPeriods): string => {
@@ -70,20 +72,45 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
   onCancel,
   initValues,
 }) => {
-  const { selectedProduct } = useSelectedProduct();
+  let product = {
+    name: '',
+    price: 0,
+    quantity: 0,
+    description: '',
+  };
+
+  if (initValues) {
+    product.name = initValues.name;
+    product.price = initValues.price;
+    product.quantity = initValues.quantity;
+    product.description = initValues.description;
+  } else {
+    const { selectedProduct } = useSelectedProduct();
+    product.name = selectedProduct.name;
+    product.price = selectedProduct.price;
+    product.description = selectedProduct.description;
+  }
+
+  //   const { selectedProduct } = useSelectedProduct();
+  const parser = new DOMParser();
+
   const [formData, setFormData] = useState<AllegroListingDetailsFormData>({
-    name: initValues ? initValues.name : selectedProduct.name,
+    name: initValues ? initValues.name : product.name,
     impliedWarrantyId: initValues ? initValues.impliedWarrantyId : '',
     returnPolicyId: initValues ? initValues.returnPolicyId : '',
-    price: initValues ? initValues.price : selectedProduct.price,
+    price: initValues ? initValues.price : product.price,
     locationCity: initValues ? initValues.location.city : '',
     locationCountryCode: initValues ? initValues.location.countryCode : '',
     locationPostCode: initValues ? initValues.location.postCode : '',
     locationProvince: initValues ? initValues.location.province : '',
     duration: initValues ? initValues.duration : AllegroDurationPeriods.P10D,
     republish: initValues ? initValues.republish : true,
-    shippingRateId: initValues ? initValues.shippingRateId: '',
-    quantity: initValues ? initValues.quantity : selectedProduct.quantity,
+    shippingRateId: initValues ? initValues.shippingRateId : '',
+    quantity: initValues ? initValues.quantity : product.quantity,
+    description: parser.parseFromString(
+      initValues ? initValues.description : product.description,
+      'text/html',
+    ).body.textContent as string,
   });
   const [errors, setErrors] = useState<Partial<AllegroListingDetailsFormData>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -122,6 +149,17 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       .required('Pole wymagane')
       .positive('Wartość musi być większa od 0')
       .moreThan(0, 'Wartość musi być większa od 0')
+      .test(
+        'is-doubled-price',
+        'Cena nie moze byc wieksza niz ' + product.price * 3,
+        (value: any) => {
+          if (!initValues) {
+            return true;
+          } else {
+            return value <= product.price * 3;
+          }
+        },
+      )
       .nullable(),
     locationCity: Yup.string().required('Pole wymagane'),
     locationCountryCode: Yup.string().required('Pole wymagane'),
@@ -134,8 +172,9 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       .typeError('Nieprawidłowy format')
       .integer()
       .required('Pole wymagane')
-      .positive('Wartość musi być większa od 0')
-      .max(selectedProduct.quantity, 'Wartość większa niz zdefiniowana dla produktu'),
+      .positive('Wartość musi być większa od 0'),
+    //   .max(product.quantity, 'Wartość większa niz zdefiniowana dla produktu'),
+    description: Yup.string().required('Pole wymagane'),
   });
 
   const validateForm = async () => {
@@ -375,20 +414,35 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
                 />
               </div>
             </div>
+            {!initValues && (
+              <div className="allegroProductParameter">
+                <div className="allegroParameterField">
+                  <label htmlFor={'duration'} className="allegroParameterLabel">
+                    Czas trwania
+                  </label>
+                  <FormSelect
+                    value={formData.duration.valueOf().toString()}
+                    onChange={handleChange}
+                    options={durations.map((option) => ({
+                      label: getDurationLabel(option),
+                      value: option.toString(),
+                    }))}
+                    name={'duration'}
+                    error={undefined}
+                  />
+                </div>
+              </div>
+            )}
             <div className="allegroProductParameter">
               <div className="allegroParameterField">
-                <label htmlFor={'duration'} className="allegroParameterLabel">
-                  Czas trwania
+                <label htmlFor={'description'} className="allegroParameterLabel">
+                  Opis
                 </label>
-                <FormSelect
-                  value={formData.duration.valueOf().toString()}
+                <FormTextarea
+                  value={formData.description}
                   onChange={handleChange}
-                  options={durations.map((option) => ({
-                    label: getDurationLabel(option),
-                    value: option.toString(),
-                  }))}
-                  name={'duration'}
-                  error={undefined}
+                  name={'description'}
+                  error={errors.description}
                 />
               </div>
             </div>

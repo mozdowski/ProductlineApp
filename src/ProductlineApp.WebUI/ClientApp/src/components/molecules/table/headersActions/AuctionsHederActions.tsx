@@ -6,10 +6,10 @@ import EndAuctionButton from '../../../atoms/buttons/endAuctionsButton/EndAuctio
 import AddAuctionButton from '../../../atoms/buttons/addAuctionButton/AddAuctionButton';
 
 export const AuctionsHederActions = ({
-  isSelectedTypeAuctions,
+  showActiveAuctions,
   handleClickTypeAuctionsButton,
 }: {
-  isSelectedTypeAuctions: any;
+  showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
 }) => {
   return (
@@ -18,12 +18,12 @@ export const AuctionsHederActions = ({
         <div className="changeTypeAuctionsButtons">
           <ActiveAuctionButton
             id={'active'}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
           />
           <EndAuctionButton
             id={'ended'}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionButton={handleClickTypeAuctionsButton}
           />
         </div>

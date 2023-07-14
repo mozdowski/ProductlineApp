@@ -130,7 +130,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
   onPrevPage,
   onNextPage,
   onCancel,
-  initValues
+  initValues,
 }) => {
   const [formFields, setFormFields] = useState<{ [index: string]: any }>({});
   const [product, setProduct] = useState<AllegroCatalogueProduct>();
@@ -217,32 +217,40 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     }));
   };
 
-  const initForm = (params: AllegroProductParameter[], productData: AllegroCatalogueProduct, initialValues?: AllegroBasicParameter[]) => {
+  const initForm = (
+    params: AllegroProductParameter[],
+    productData: AllegroCatalogueProduct,
+    initialValues?: AllegroBasicParameter[],
+  ) => {
     if (initialValues) {
-        initialValues.forEach((param) => {
-            const name = param.name;
-            const value = param.valuesIds ? param.valuesIds : (param.values && param.values.length > 0) ? param.values[0] : '';
-            setFormFields((prevData) => ({
-              ...prevData,
-              [name]: value,
-            }));
-        });
+      initialValues.forEach((param) => {
+        const name = param.name;
+        const value = param.valuesIds
+          ? param.valuesIds
+          : param.values && param.values.length > 0
+          ? param.values[0]
+          : '';
+        setFormFields((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      });
     } else {
-        params.forEach((param) => {
-            const name = param.name;
-            const value = getInputDefaultValue(
-              param.id,
-              param.name,
-              param.type,
-              productData,
-              param.restrictions.multipleChoices,
-              param.dictionary,
-            );
-            setFormFields((prevData) => ({
-              ...prevData,
-              [name]: value,
-            }));
-          });
+      params.forEach((param) => {
+        const name = param.name;
+        const value = getInputDefaultValue(
+          param.id,
+          param.name,
+          param.type,
+          productData,
+          param.restrictions.multipleChoices,
+          param.dictionary,
+        );
+        setFormFields((prevData) => ({
+          ...prevData,
+          [name]: value,
+        }));
+      });
     }
   };
 
@@ -261,7 +269,12 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         if (!parameter && dict && dict.length > 0) {
           return dict[0].id;
         }
-        const value = formFields[name] !== undefined ? formFields[name] : isMultiselect ? parameter?.valuesLabels : parameter?.valuesIds[0];
+        const value =
+          formFields[name] !== undefined
+            ? formFields[name]
+            : isMultiselect
+            ? parameter?.valuesLabels
+            : parameter?.valuesIds[0];
         return value;
       }
       default: {
@@ -332,9 +345,11 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
       )}
 
       <div className="addAuctionAllAllegroButtons">
-        {!initValues && <div className="addAuctionAllegroBackButton">
-          <BackButton onClick={onPrevPage} />
-        </div>}
+        {!initValues && (
+          <div className="addAuctionAllegroBackButton">
+            <BackButton onClick={onPrevPage} />
+          </div>
+        )}
         <div className="addauctionAllegroButtons">
           <CancelButton pathTo={''} onClick={onCancel} />
           <NextButton onClick={handleNextPage} />
