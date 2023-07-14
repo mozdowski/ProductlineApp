@@ -1,8 +1,12 @@
 import './css/ebayFormButton.css';
 
-function EbayFormButton() {
+function EbayFormButton({
+  setOpenEbayFormPopup,
+}: {
+  setOpenEbayFormPopup: (open: boolean) => void;
+}) {
   return (
-    <div className="ebayPortalButton">
+    <div className="ebayPortalButton" onClick={() => setOpenEbayFormPopup(true)}>
       <span className="iconPortalEbay ebayIcon" />
       <p>Ebay</p>
     </div>

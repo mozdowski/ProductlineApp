@@ -58,12 +58,6 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
     options.filter((x) => (value as string[]).some((v) => v === x.value)),
   );
 
-  console.log('==========');
-  console.log(selectedOptions);
-  console.log(value);
-  console.log(options);
-  console.log(options.filter((x) => (value as string[]).some((v) => v === x.value)));
-
   const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },

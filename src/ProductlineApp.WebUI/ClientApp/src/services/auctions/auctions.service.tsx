@@ -4,6 +4,7 @@ import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUs
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
 import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
+import { EbayCategoryTreeResponse } from '../../interfaces/auctions/ebayCategoryTreeResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { WithdrawAuctionRequest } from '../../interfaces/auctions/withdrawAuctionRequest';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
@@ -94,6 +95,10 @@ export class AuctionsService {
 
   public async allegroAuctionRenewal(data: AllegroAuctionRenewalRequest): Promise<void> {
     return this.httpService.post<void>('/allegro/listingRenewal', data);
+  }
+
+  public async getEbayCategoryTree(): Promise<EbayCategoryTreeResponse> {
+    return this.httpService.get<EbayCategoryTreeResponse>('/ebay/categories/tree');
   }
 }
 
