@@ -3,13 +3,15 @@ using MediatR;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using System.Security.Authentication;
+using ProductlineApp.Application.Security;
+using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 
 namespace ProductlineApp.Application.Authentication.Commands;
 
 public class ChangePasswordCommand
 {
     public record Command(
-        string Email,
+        Guid UserId,
         string OldPassword,
         string NewPassword) : ICommand;
 
@@ -17,7 +19,7 @@ public class ChangePasswordCommand
     {
         public Validator()
         {
-            this.RuleFor(x => x.Email).NotEmpty().EmailAddress();
+            this.RuleFor(x => x.UserId).NotEmpty().NotEqual(Guid.Empty);
             this.RuleFor(x => x.NewPassword).NotEmpty();
             this.RuleFor(x => x.OldPassword).NotEmpty().NotEqual(x => x.NewPassword);
         }
@@ -26,24 +28,36 @@ public class ChangePasswordCommand
     public class Handler : ICommandHandler<Command>
     {
         private readonly IUserRepository _userRepository;
+        private readonly IPasswordHasher _passwordHasher;
 
-        public Handler(IUserRepository userRepository)
+        public Handler(
+            IUserRepository userRepository,
+            IPasswordHasher passwordHasher)
         {
             this._userRepository = userRepository;
+            this._passwordHasher = passwordHasher;
         }
 
         public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
         {
-            var user = await this._userRepository.GetUserByEmailAsync(request.Email);
+            var userId = UserId.Create(request.UserId);
+            var (user, oldSalt) = await this._userRepository.GetByIdWithSaltAsync(userId);
 
             if (user is null)
             {
-                throw new InvalidCredentialException("Invalid email or password");
+                throw new InvalidCredentialException("Invalid user");
             }
 
+            if (!this._passwordHasher.VerifyPassword(request.OldPassword, user.Password, oldSalt))
+            {
+                throw new InvalidCredentialException("Incorrect password");
+            }
+
+            var (hashedNewPassword, newSalt) = this._passwordHasher.HashPassword(request.NewPassword);
+
             user.ChangePassword(
-                request.OldPassword,
-                request.NewPassword);
+                hashedNewPassword,
+                newSalt);
 
             await this._userRepository.UpdateUserAsync(user);
 

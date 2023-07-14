@@ -1,12 +1,11 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Authentication.Commands;
-using ProductlineApp.Application.Authentication.Queries;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.User.Commands;
-using ProductlineApp.Shared.Models.Authentication.Requests.Auth;
+using ProductlineApp.WebUI.DTO;
+using ProductlineApp.WebUI.DTO.Platforms;
 
 namespace ProductlineApp.WebUI.Controllers;
 
@@ -33,5 +32,34 @@ public class UserController : ControllerBase
         var result = await this._mediator.Send(command);
 
         return this.Ok(result);
+    }
+
+    [HttpGet("platformConnections")]
+    public async Task<IActionResult> GetPlatformConnections()
+    {
+        return this.Ok(this._currentUser.PlatformTokens.Keys.Select(x => x.Value.ToString()).ToList());
+    }
+
+    [HttpPost("disconnectPlatform")]
+    public async Task<IActionResult> GainAccessToken([FromBody] DisconnectPlatformRequest request)
+    {
+        var command = new DisconnectPlatformCommand.Command(
+            request.PlatformId,
+            this._currentUser.UserId.GetValueOrDefault());
+        await this._mediator.Send(command);
+
+        return this.Ok();
+    }
+
+    [HttpPost("changePassword")]
+    public async Task<IActionResult> Login([FromBody] ChangePasswordRequest request)
+    {
+        var command = new ChangePasswordCommand.Command(
+            this._currentUser.UserId.GetValueOrDefault(),
+            request.OldPassword,
+            request.NewPassword);
+        await this._mediator.Send(command);
+
+        return this.Ok();
     }
 }

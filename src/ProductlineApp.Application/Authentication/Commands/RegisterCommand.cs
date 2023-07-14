@@ -5,7 +5,6 @@ using ProductlineApp.Application.Authentication.DTO;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Application.Security;
 using ProductlineApp.Application.User.Commands;
-using ProductlineApp.Application.User.DTO;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 
 namespace ProductlineApp.Application.Authentication.Commands;

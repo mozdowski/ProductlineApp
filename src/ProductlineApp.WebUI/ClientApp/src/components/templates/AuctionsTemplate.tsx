@@ -5,7 +5,6 @@ import AuctionsTable from '../organisms/tables/AuctionsTable';
 import AmazonAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AmazonAuctionsButton';
 import EbayAuctionsButton from '../atoms/buttons/auctionPortalsButtons/EbayAuctionsButton';
 import OlxAuctionsButton from '../atoms/buttons/auctionPortalsButtons/OlxAuctionsButton';
-import { Platform } from '../../interfaces/platforms/platform';
 import { PlatformEnum } from '../../enums/platform.enum';
 import AllegroAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AllegroAuctionsButton';
 
@@ -14,13 +13,17 @@ export default function AuctionsTemplate({
   selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   handleClickTypeAuctionsButton,
-  isSelectedTypeAuctions,
+  showActiveAuctions,
+  onEditAuction,
+  onWithdrawAuction,
 }: {
-  auctionRecords: AuctionsRecord[];
-  selectedAuctionPortal: PlatformEnum;
+  auctionRecords?: AuctionsRecord[];
+  selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  isSelectedTypeAuctions: any;
+  showActiveAuctions: boolean;
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
 }) {
   return (
     <>
@@ -40,8 +43,10 @@ export default function AuctionsTemplate({
         <div className="tableAuctions">
           <AuctionsTable
             auctionRecords={auctionRecords}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+            onEditAuction={onEditAuction}
+            onWithdrawAuction={onWithdrawAuction}
           />
         </div>
       </div>

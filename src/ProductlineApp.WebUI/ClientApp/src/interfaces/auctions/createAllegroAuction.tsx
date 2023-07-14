@@ -8,8 +8,8 @@ export interface CreateAllegroAuction {
   price: number;
   location: Location;
   productId: string;
-  productParameters: Parameter[];
-  listingParameters: Parameter[];
+  productParameters: AllegroBasicParameter[];
+  listingParameters: AllegroBasicParameter[];
   duration: AllegroDurationPeriods;
   republish: boolean;
   imagesUrls: string[];
@@ -25,7 +25,7 @@ export interface Location {
   province: string;
 }
 
-export interface Parameter {
+export interface AllegroBasicParameter {
   id?: string;
   name: string;
   values?: string[];

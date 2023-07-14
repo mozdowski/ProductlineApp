@@ -24,7 +24,6 @@ public class AllegroService : IAllegroService
     private readonly IMediator _mediator;
     private readonly ICurrentUserContext _currentUser;
     private readonly string? _accessToken;
-    private readonly IPlatformRepository _platformRepository;
     private readonly IProductRepository _productRepository;
 
     public AllegroService(
@@ -39,7 +38,6 @@ public class AllegroService : IAllegroService
         this._mapper = mapper;
         this._mediator = mediator;
         this._currentUser = currentUser;
-        this._platformRepository = platformRepository;
         this._productRepository = productRepository;
 
         var platformId = platformRepository.GetIdByNameAsync(PlatformNames.ALLEGRO.ToString().ToLower()).GetAwaiter().GetResult();
@@ -56,12 +54,12 @@ public class AllegroService : IAllegroService
 
     public string GetAuthorizationUrl()
     {
-        return this._allegroApiClient.GetAuthorizationUrl();
+        return this._allegroApiClient.GetAuthorizationUrl(this.PlatformId.Value.ToString());
     }
 
     public async Task GainAccessTokenAsync(string code)
     {
-        var response = await this._allegroApiClient.GetAccessTokenAsync(code);
+        var response = await this._allegroApiClient.GetAccessTokenAsync(code, this.PlatformId.Value.ToString());
 
         if (response is null)
             throw new NullReferenceException("Retrieved access token as null");
@@ -81,7 +79,7 @@ public class AllegroService : IAllegroService
 
     public async Task RefreshAccessTokenAsync(UserId userId, string refreshToken)
     {
-        var response = await this._allegroApiClient.GetRefreshTokenAsync(refreshToken);
+        var response = await this._allegroApiClient.GetRefreshTokenAsync(refreshToken, this.PlatformId.Value.ToString());
 
         if (response is null)
             throw new NullReferenceException("Retrieved accees token as null");
@@ -132,7 +130,7 @@ public class AllegroService : IAllegroService
                 continue;
             }
 
-            mappedOffer.ProductName = product.Name;
+            // mappedOffer.ProductName = product.Name;
             mappedOffer.ProductImageUrl = product.Image.Url.ToString();
             mappedOffer.Sku = product.Sku;
             mappedOffer.Brand = product.Brand.Name;
@@ -221,6 +219,68 @@ public class AllegroService : IAllegroService
     public async Task<ImpliedWarrantiesResponse> GetImpliedWarranties()
     {
         return await this._allegroApiClient.GetImpliedWarranties(this._accessToken);
+    }
+
+    public async Task<AllegroOfferProductDtoResponse> GetOfferProductDetails(string offerId)
+    {
+        var response = await this._allegroApiClient.GetOfferProductDetails(this._accessToken, offerId);
+        return this._mapper.Map<AllegroOfferProductDtoResponse>(response);
+    }
+
+    public async Task UpdateListing(string offerId, AllegroUpdateListingDtoRequest request)
+    {
+        var requestBody = this._mapper.Map<AllegroUpdateOfferRequest>(request);
+        await this._allegroApiClient.UpdateOffer(this._accessToken, offerId, requestBody);
+    }
+
+    public async Task WithdrawListing(string offerId)
+    {
+        var requestBody = new AllegroWithdrawOfferRequest
+        {
+            OfferCriteria = new List<AllegroWithdrawOfferRequest.WithdrawOfferCriteria>
+            {
+                new AllegroWithdrawOfferRequest.WithdrawOfferCriteria
+                {
+                    Offers = new List<AllegroWithdrawOfferRequest.Offer>
+                    {
+                        new AllegroWithdrawOfferRequest.Offer
+                        {
+                            Id = offerId,
+                        },
+                    },
+                },
+            },
+            Publication = new AllegroWithdrawOfferRequest.WithdrawPublication(),
+        };
+
+        var commandId = Guid.NewGuid();
+
+        await this._allegroApiClient.WithdrawOffer(this._accessToken, commandId.ToString(), requestBody);
+    }
+
+    public async Task ListingRenewal(string offerId)
+    {
+        var requestBody = new AllegroOfferRenewalRequest()
+        {
+            OfferCriteria = new List<AllegroOfferRenewalRequest.RenewalOfferCriteria>
+            {
+                new AllegroOfferRenewalRequest.RenewalOfferCriteria()
+                {
+                    Offers = new List<AllegroOfferRenewalRequest.Offer>
+                    {
+                        new AllegroOfferRenewalRequest.Offer
+                        {
+                            Id = offerId,
+                        },
+                    },
+                },
+            },
+            Publication = new AllegroOfferRenewalRequest.RenewalPublication(),
+        };
+
+        var commandId = Guid.NewGuid();
+
+        await this._allegroApiClient.OfferRenewal(this._accessToken, commandId.ToString(), requestBody);
     }
 
     private void CheckIfAuthorized()

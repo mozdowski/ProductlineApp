@@ -78,7 +78,7 @@ public sealed class User : AggregateRoot<UserId>
 
     public void AddPlatformConnection(PlatformId platformId, string accessToken, string refreshToken, int expiresIn, int? refreshTokenExpiresIn)
     {
-        if (this._platformConnections.Any(pc => pc.PlatformId == platformId))
+        if (this._platformConnections.Any(pc => pc.PlatformId.Value == platformId.Value))
         {
             throw new ArgumentException($"User already has a connection to the platform with id {platformId}");
         }
@@ -114,18 +114,16 @@ public sealed class User : AggregateRoot<UserId>
         this._platformConnections.Remove(connection);
     }
 
-    public void ChangePassword(string oldPassword, string newPassword)
+    public void ChangePassword(string newPassword, string newSalt)
     {
-        if (string.IsNullOrEmpty(oldPassword) || string.IsNullOrEmpty(newPassword))
+        if (string.IsNullOrEmpty(newPassword))
             throw new ArgumentException("Password cannot be null or empty");
 
-        if (oldPassword.Equals(newPassword))
-            throw new InvalidCredentialException("New password is the same as an old one");
-
-        if (this.Password.Equals(oldPassword))
-            throw new InvalidCredentialException("Old password is incorrect");
+        if (string.IsNullOrEmpty(newSalt))
+            throw new ArgumentException("salt cannot be empty");
 
         this.Password = newPassword;
+        this.Salt = newSalt;
     }
 
     public void UpdateAvatar(Image avatar)

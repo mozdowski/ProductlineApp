@@ -5,13 +5,19 @@ import { AuthContextProps } from '../interfaces/auth/authContextProps';
 import { AuthService } from '../services/auth/auth.service';
 import { LoginRequest } from '../interfaces/auth/loginRequest';
 import { RegisterRequest } from '../interfaces/auth/registerRequest';
+import { UserService } from '../services/user/user.service';
 
 interface AuthProviderProps {
   children: ReactNode;
 }
 
+const getUserFromLocalStorage = (): User | null => {
+  const userFromLocalStorage = localStorage.getItem('user');
+  return userFromLocalStorage ? JSON.parse(userFromLocalStorage) : null;
+};
+
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(getUserFromLocalStorage());
   const authService = new AuthService();
 
   useEffect(() => {

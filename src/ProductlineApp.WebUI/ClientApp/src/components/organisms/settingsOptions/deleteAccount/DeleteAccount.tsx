@@ -6,6 +6,7 @@ import './css/deleteAccount.css';
 import { useState } from 'react';
 import * as Yup from 'yup';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
+import { DeleteAccountForm } from '../../../../interfaces/settings/deleteAccountForm';
 
 const deleteAcountPasswordSchema = Yup.object().shape({
   password: Yup.string().required('Hasło jest wymagane'),
@@ -24,6 +25,8 @@ export const DeleteAccount = () => {
   const handleClickShowFields = () => {
     setShowField(!showField);
   };
+
+  const handleConfirm = () => {};
 
   const handleChange = (name: string, value: number | string) => {};
 
@@ -53,7 +56,7 @@ export const DeleteAccount = () => {
         </div>
       )}
       {!showField ? (
-        <ButtonsSection onClick={handleClickShowFields} />
+        <ButtonsSection onClick={handleClickShowFields} onConfirm={handleConfirm} />
       ) : (
         <DeleteAccountButton onClick={handleClickShowFields} />
       )}

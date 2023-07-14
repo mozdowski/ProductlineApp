@@ -12,4 +12,5 @@ export interface AuctionsRecord {
   quantity: number;
   daysToEnd: number | undefined;
   productImageUrl: string;
+  isActive: boolean;
 }

@@ -92,6 +92,12 @@ public class UserRepository : IUserRepository
         return (user, user?.Salt);
     }
 
+    public async Task<(User? User, string? Salt)> GetByIdWithSaltAsync(UserId id)
+    {
+        var user = await this._dbContext.Users.FirstOrDefaultAsync(x => x.Id.Equals(id));
+        return (user, user?.Salt);
+    }
+
     public async Task<IEnumerable<PlatformConnection>> GetAllPlatformConnectionsAsync()
     {
         return await this._dbContext.Users

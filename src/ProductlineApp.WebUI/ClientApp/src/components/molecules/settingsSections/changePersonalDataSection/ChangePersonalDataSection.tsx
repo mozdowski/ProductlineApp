@@ -4,6 +4,7 @@ import './css/changePersonalDataSection.css';
 import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/ButtonsSection';
 import FormInput from '../../../atoms/common/formInput/formInput';
 import * as Yup from 'yup';
+import { ChangePersonalDetailsForm } from '../../../../interfaces/settings/changePersonalDetailsForm';
 
 const changePersonalDetailsSchema = Yup.object().shape({
   username: Yup.string().required('Nazwa użytkownika jest wymagana'),
@@ -17,6 +18,8 @@ function ChangePersonalDataSection() {
   const handleClickEditFields = () => {
     setDisableEdit(!disableEdit);
   };
+
+  const handleConfirm = () => {};
 
   return (
     <>
@@ -57,7 +60,7 @@ function ChangePersonalDataSection() {
         </div>
       </form>
       {!disableEdit ? (
-        <ButtonsSection onClick={handleClickEditFields} />
+        <ButtonsSection onClick={handleClickEditFields} onConfirm={handleConfirm} />
       ) : (
         <ChangePersonalDataButton onClick={handleClickEditFields} />
       )}

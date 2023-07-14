@@ -7,7 +7,7 @@ function EbayAuctionsButton({
   handleClickTypeAuctionPortalButton,
   id,
 }: {
-  selectedAuctionPortal: PlatformEnum;
+  selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   id: PlatformEnum;
 }) {
