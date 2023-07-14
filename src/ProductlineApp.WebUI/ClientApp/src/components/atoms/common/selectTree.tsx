@@ -24,7 +24,7 @@ const TreeSelectStyle = {
 interface TreeSelectProps {
   options: TreeSelectOption[];
   value: string;
-  onChange: (value: string) => void;
+  onChange: (id: string, name: string) => void;
 }
 
 const TreeSelect: React.FC<TreeSelectProps> = ({ options, value, onChange }) => {
@@ -33,7 +33,7 @@ const TreeSelect: React.FC<TreeSelectProps> = ({ options, value, onChange }) => 
 
   const handleTreeViewClick = (event: any, optionLabel: string) => {
     event.stopPropagation();
-    onChange(event.target.value);
+    onChange(event.target.value.toString(), optionLabel);
     setSelectedOption(optionLabel);
     setIsOpen(false);
   };
