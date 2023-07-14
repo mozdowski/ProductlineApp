@@ -74,4 +74,10 @@ public interface IAllegroApiClient
     Task<ImpliedWarrantiesResponse> GetImpliedWarranties(string accessToken);
 
     Task<AllegroOfferProductResponse> GetOfferProductDetails(string accessToken, string offerId);
+
+    Task UpdateOffer(string accessToken, string offerId, AllegroUpdateOfferRequest requestBody);
+
+    Task WithdrawOffer(string accessToken, string commandId, AllegroWithdrawOfferRequest requestBody);
+
+    Task OfferRenewal(string accessToken, string commandId, AllegroOfferRenewalRequest requestBody);
 }

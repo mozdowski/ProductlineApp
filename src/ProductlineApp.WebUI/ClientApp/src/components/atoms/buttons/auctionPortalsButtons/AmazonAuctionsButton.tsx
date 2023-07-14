@@ -1,4 +1,4 @@
-import AmazonIcon from '../../../../assets/icons/amazon_icon1.svg';
+import AllegroIcon from '../../../../assets/icons/allegro_a_logo_icon.svg';
 import './css/amazonAuctionsButton.css';
 import { PlatformEnum } from '../../../../enums/platform.enum';
 
@@ -7,7 +7,7 @@ function AmazonAuctionsButton({
   handleClickTypeAuctionPortalButton,
   id,
 }: {
-  selectedAuctionPortal: PlatformEnum;
+  selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   id: PlatformEnum;
 }) {
@@ -15,11 +15,11 @@ function AmazonAuctionsButton({
     <div
       id={id + ''}
       className={
-        selectedAuctionPortal === PlatformEnum.AMAZON ? 'amazonButton selected' : 'amazonButton'
+        selectedAuctionPortal === PlatformEnum.ALLEGRO ? 'amazonButton selected' : 'amazonButton'
       }
-      onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.AMAZON)}
+      onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.ALLEGRO)}
     >
-      <img className="amazonIcon" src={AmazonIcon} />
+      <img className="amazonIcon" src={AllegroIcon} />
     </div>
   );
 }

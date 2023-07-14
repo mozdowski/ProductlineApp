@@ -29,11 +29,12 @@ function AuctionPortals({
           {allegroPlatform && platformConnections.includes(allegroPlatform.platformId) && (
             <>
               <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
-              <AllegroFormPopup
-                openAllegroPopup={openAllegroPopup}
-                closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
-                onSubmit={onAllegroFormSubmit}
-              />
+              {openAllegroPopup && (
+                <AllegroFormPopup
+                  closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
+                  onSubmit={onAllegroFormSubmit}
+                />
+              )}
             </>
           )}
           {ebayPlatform && platformConnections.includes(ebayPlatform.platformId) && (

@@ -47,7 +47,7 @@ public class LoginQuery
                 throw new InvalidCredentialException("Invalid email or password");
             }
 
-            if (salt is not null && !this._passwordHasher.VerifyPassword(request.Password, user.Password, salt))
+            if (salt is null || !this._passwordHasher.VerifyPassword(request.Password, user.Password, salt))
             {
                 throw new InvalidCredentialException($"Invalid email or password for userId: {user.Id}");
             }

@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Common.Platforms.Allegro.DTO;
 using ProductlineApp.Application.Common.Platforms.Allegro.Services;
+using ProductlineApp.WebUI.DTO;
 
 namespace ProductlineApp.WebUI.Controllers;
 
@@ -68,5 +69,26 @@ public class AllegroController : ControllerBase
     {
         var result = await this._allegroService.GetOfferProductDetails(offerId);
         return this.Ok(result);
+    }
+
+    [HttpPost("updateListing/{offerId}")]
+    public async Task<IActionResult> UpdateListing(string offerId, [FromBody] AllegroUpdateListingDtoRequest request)
+    {
+        await this._allegroService.UpdateListing(offerId, request);
+        return this.Ok();
+    }
+
+    [HttpPost("withdrawListing")]
+    public async Task<IActionResult> WithdrawListing([FromBody] WithdrawAllegroListingDtoRequest request)
+    {
+        await this._allegroService.WithdrawListing(request.OfferId);
+        return this.Ok();
+    }
+
+    [HttpPost("listingRenewal")]
+    public async Task<IActionResult> ListingRenewal([FromBody] AllegroListingRenewalDtoRequest request)
+    {
+        await this._allegroService.ListingRenewal(request.OfferId);
+        return this.Ok();
     }
 }
