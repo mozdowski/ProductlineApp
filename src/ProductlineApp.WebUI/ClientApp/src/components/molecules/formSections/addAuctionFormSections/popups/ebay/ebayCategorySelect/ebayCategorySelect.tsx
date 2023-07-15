@@ -8,6 +8,7 @@ import { useAuctionsService } from '../../../../../../../hooks/auctions/useAucti
 import TreeSelect from '../../../../../../atoms/common/selectTree';
 import CancelButton from '../../../../../../atoms/buttons/cancelButton/CancelButton';
 import NextButton from '../../../../../../atoms/buttons/nextButton/nextButton';
+import { CircularProgress } from '@mui/material';
 
 interface EbayCategory {
   id: string;
@@ -49,6 +50,7 @@ interface EbayCategorySelectProps {
 const EbayCategorySelect: React.FC<EbayCategorySelectProps> = ({ onCancel, onNext }) => {
   const { auctionsService } = useAuctionsService();
   const [categoryTree, setCategoryTree] = useState<TreeSelectOption[]>([]);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [selelectedCategory, setSelelectedCategory] = useState<EbayCategory>({
     id: '',
     name: '',
@@ -56,10 +58,12 @@ const EbayCategorySelect: React.FC<EbayCategorySelectProps> = ({ onCancel, onNex
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const ebayCategoryTreeResponse = await auctionsService.getEbayCategoryTree();
       const categoryTree = mapEbayCategoryTreeResponseToTreeSelectOptions(ebayCategoryTreeResponse);
 
       setCategoryTree(categoryTree);
+      setIsLoading(false);
     };
 
     fetchData();
@@ -74,16 +78,22 @@ const EbayCategorySelect: React.FC<EbayCategorySelectProps> = ({ onCancel, onNex
   };
 
   const handleNext = () => {
+    
     onNext(selelectedCategory.id);
   };
 
   return (
     <div className="ebayPopupBody">
-      <TreeSelect
+                {isLoading && (
+        <div className="loadingCircle">
+          <CircularProgress />
+        </div>
+      )}
+      {!isLoading && <TreeSelect
         value={selelectedCategory.name}
         options={categoryTree}
         onChange={handleCategoryChange}
-      />
+      />}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton"></div>
         <div className="addAuctionEbayButtons">

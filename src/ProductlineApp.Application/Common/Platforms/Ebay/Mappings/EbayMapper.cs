@@ -93,7 +93,11 @@ public class EbayMapper : Profile
             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.LocalizedAspectName))
             .ForMember(dest => dest.DataType, opt => opt.MapFrom(src => src.AspectConstraint.AspectDataType))
             .ForMember(dest => dest.IsRequired, opt => opt.MapFrom(src => src.AspectConstraint.AspectRequired))
-            .ForMember(dest => dest.Values, opt => opt.MapFrom(src => src.AspectValues == null ? null : src.AspectValues.Select(v => v.LocalizedValue)));
+            .ForMember(dest => dest.Values,
+                opt => opt.MapFrom(src =>
+                    src.AspectValues == null ? null : src.AspectValues.Select(v => v.LocalizedValue)))
+            .ForMember(dest => dest.Mode, opt => opt.MapFrom(src => src.AspectConstraint.AspectMode))
+            .ForMember(dest => dest.IsSingleValue, opt => opt.MapFrom(src => src.AspectConstraint.ItemToAspectCardinality == "SINGLE"));
 
         this.CreateMap<EbayCategoryTreeResponse, EbayCategoryTreeDto>();
 

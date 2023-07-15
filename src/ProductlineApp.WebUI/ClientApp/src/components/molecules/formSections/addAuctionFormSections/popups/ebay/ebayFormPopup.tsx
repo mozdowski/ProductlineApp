@@ -3,6 +3,8 @@ import EbayLogo from '../../../../../../assets/icons/ebay_icon.svg';
 import { useAuctionsService } from '../../../../../../hooks/auctions/useAuctionsService';
 import EbayCategorySelect from './ebayCategorySelect/ebayCategorySelect';
 import { useState } from 'react';
+import EbayParametersSetComponent from './ebayParametersSetComponent/ebayParametersSetComponent';
+import AutocompleteComboBox from '../../../../../atoms/common/autocomplete/autocomplete';
 
 interface EbayFormPopupProps {
   closePopup: () => void;
@@ -47,6 +49,11 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
     handleNextPage();
   };
 
+  const handleAspectsSelect = (aspects: { [index: string]: any }) => {
+    console.log(aspects);
+    handleNextPage();
+  }
+
   return (
     <div className="overlayEbayPopup">
       <div
@@ -58,13 +65,16 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
         <div className="ebayPopupSectionLabel">
           <img src={EbayLogo} className="ebayBrandIcon" />
           {currentPage === PopupPages.Category && <p>Wybierz kategorie z katalogu Ebay</p>}
+          {currentPage === PopupPages.ParametersSet && <p>Dostosuj parametry produktu</p>}
         </div>
         {currentPage === PopupPages.Category && (
           <EbayCategorySelect onNext={handleCategorySelect} onCancel={handleCancel} />
         )}
-        {currentPage === PopupPages.ParametersSet && (
-          <EbayCategorySelect onNext={handleCategorySelect} onCancel={handleCancel} />
+        {selectedCategoryid && currentPage === PopupPages.ParametersSet && (
+          <EbayParametersSetComponent categoryId={selectedCategoryid} onCancel={handleCancel} onPrev={handlePrevPage} onNext={handleAspectsSelect}/>
         )}
+        {/* {selectedCategoryid && currentPage === PopupPages.ListingDetails && (
+        )} */}
       </div>
     </div>
   );

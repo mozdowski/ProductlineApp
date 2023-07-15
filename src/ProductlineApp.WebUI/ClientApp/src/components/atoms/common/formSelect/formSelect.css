@@ -2,3 +2,15 @@
   width: 316px;
   height: 44px;
 }
+
+.formSelectError {
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    margin-left: 8px;
+}
+
+.formSelect {
+    display: flex;
+    flex-direction: column;
+}
