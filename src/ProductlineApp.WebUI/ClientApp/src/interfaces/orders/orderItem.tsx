@@ -7,4 +7,5 @@ export interface OrderItem {
   deliveryCost: number;
   totalPrice: number;
   fulfillmentStatus: string;
+  imageUrl: string;
 }

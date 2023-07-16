@@ -5,11 +5,28 @@ import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
 import { mapProductConditionToString } from '../helpers/mappers';
 import { Outlet } from 'react-router-dom';
 
-export default function Products() {
+export default function Products(this: any) {
   const ref = useRef<HTMLInputElement>(null);
   const { productsService } = useProductsService();
   const [height, setHeight] = useState(0);
   const [products, setProducts] = useState<ProductsRecord[]>([]);
+  const [searchValue, setSearchValue] = useState("");
+
+  const searchTableProducts = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchValue(e.target.value)
+  }
+
+  const searchProducts = products.filter(product => {
+    return (
+      product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+      product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
+      product.productName.toLowerCase().indexOf(searchValue) >= 0 ||
+      product.category.toLowerCase().indexOf(searchValue) >= 0 ||
+      product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+      product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+      product.listingStatus.toString().indexOf(searchValue) >= 0
+    )
+  });
 
   useEffect(() => {
     productsService.getProductList().then((res) => {
@@ -29,7 +46,7 @@ export default function Products() {
       }));
       setProducts(productsRecords);
     });
-  }, []);
+  }, [searchValue, searchProducts]);
 
   useLayoutEffect(() => {
     if (ref.current != null) {
@@ -40,7 +57,7 @@ export default function Products() {
   return (
     <>
       <Outlet />
-      <ProductsTemplate productRecords={products} />
+      <ProductsTemplate productRecords={searchProducts} searchValue={searchValue} onChange={searchTableProducts} />
     </>
   );
 }
