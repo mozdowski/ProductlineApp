@@ -5,29 +5,33 @@ import ImplementedOrdersButton from '../../../atoms/buttons/implementedOrdersBut
 import NotImpementedOrdersButton from '../../../atoms/buttons/notImplementedOrdersButton/NotImplementedOrdersButton';
 
 export const OrdersHederActions = ({
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: boolean;
   handleClickTypeOrdersButton: any;
+  searchValue: string;
+  onChange: (e: any) => void
 }) => {
   return (
     <>
       <div className="OrdersTableButtons">
         <div className="changeTypeOrdersButtons">
-          <ImplementedOrdersButton
-            isSelectedTypeOrders={isSelectedTypeOrders}
-            handleClickTypeOrdersButton={handleClickTypeOrdersButton}
-            id={'implemented'}
-          />
           <NotImpementedOrdersButton
-            isSelectedTypeOrders={isSelectedTypeOrders}
+            showNoImplementedOrders={showNoImplementedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             id={'notImplemented'}
           />
+          <ImplementedOrdersButton
+            showNoImplementedOrders={showNoImplementedOrders}
+            handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+            id={'implemented'}
+          />
         </div>
         <div className="OrdersTableActionButtons">
-          <Searchbar />
+          <Searchbar searchValue={searchValue} onChange={onChange} />
         </div>
       </div>
     </>

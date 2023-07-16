@@ -5,34 +5,56 @@ import { useOrdersService } from '../hooks/orders/useOrdersService';
 import { mapOrderStatusToString } from '../helpers/mappers';
 
 export default function Orders() {
-  const [isSelectedTypeOrders, SetisSelectedTypeOrders] = useState('');
-  const handleClickTypeOrdersButton = (e: any) => {
-    SetisSelectedTypeOrders(e.target.id);
-  };
-
+  const [showNoImplementedOrders, setShowNoImplementedOrders] = useState<boolean>(true);
+  const [searchValue, setSearchValue] = useState("");
   const [orders, setOrders] = useState<OrdersRecord[]>([]);
   const { ordersService } = useOrdersService();
+
+  const handleClickTypeOrdersButton = (e: any) => {
+    const setNoImplemented = e.target.id == 'notImplemented';
+    setShowNoImplementedOrders(setNoImplemented);
+  };
+
+  const searchTableOrders = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchValue(e.target.value)
+  }
+
+  const searchOrders = orders.filter(order => {
+    return (
+      order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
+      order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
+      order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
+      order.client.toLowerCase().indexOf(searchValue) >= 0 ||
+      order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+      order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+      order.status.indexOf(searchValue) >= 0
+    )
+  });
 
   useEffect(() => {
     ordersService.getOrdersList().then((res) => {
       const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
-        OrderID: order.orderId,
-        OrderDate: new Date(order.creationDate),
-        ShipToDate: new Date(order.maxDeliveryDate as Date),
-        Client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
-        Price: order.totalPrice,
-        Quantity: order.quantity,
-        Status: mapOrderStatusToString(order.status),
+        orderID: order.orderId,
+        orderDate: new Date(order.creationDate),
+        shipToDate: new Date(order.maxDeliveryDate as Date),
+        client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
+        price: order.totalPrice,
+        quantity: order.quantity,
+        status: mapOrderStatusToString(order.status),
+        shippingAddress: order.shippingAddress,
+        items: order.items
       }));
       setOrders(orderRecords);
     });
-  }, []);
+  }, [searchValue]);
 
   return (
     <OrdersTemplate
-      orderRecords={orders}
-      isSelectedTypeOrders={isSelectedTypeOrders}
+      orderRecords={searchOrders}
       handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+      showNoImplementedOrders={showNoImplementedOrders}
+      searchValue={searchValue}
+      onChange={searchTableOrders}
     />
   );
 }

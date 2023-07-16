@@ -11,9 +11,14 @@
   box-sizing: border-box;
 }
 
-.ebayButton .ebayIcon {
+.ebayButton .iconAuctionsEbay {
   width: 32px;
-  height: 13px;
+  height: 12.83px;
+  background-size: cover;
+}
+
+.ebayButton .ebayAuctionsIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon.svg');
   color: var(--grey-color);
 }
 
@@ -22,7 +27,15 @@
   color: var(--first-color);
 }
 
+.ebayButton:hover .ebayAuctionsIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
+}
+
 .ebayButton.selected {
   border: 1px solid var(--first-color);
   color: var(--first-color);
+}
+
+.ebayButton.selected .ebayAuctionsIcon {
+  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
 }

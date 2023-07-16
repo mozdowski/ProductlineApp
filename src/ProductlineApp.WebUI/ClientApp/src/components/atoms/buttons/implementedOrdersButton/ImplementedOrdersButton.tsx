@@ -1,22 +1,18 @@
 import './css/impementedOrdersButton.css';
 
 function ImpementedOrdersButton({
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
   id,
 }: {
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: boolean;
   handleClickTypeOrdersButton: any;
   id: string;
 }) {
   return (
     <div
       id={id}
-      className={
-        isSelectedTypeOrders === 'implemented'
-          ? 'implementedOrdersButton selected'
-          : 'implementedOrdersButton'
-      }
+      className={showNoImplementedOrders ? "implementedOrdersButton selected" : "implementedOrdersButton"}
       onClick={handleClickTypeOrdersButton}
     >
       <p>Zrealizowane</p>

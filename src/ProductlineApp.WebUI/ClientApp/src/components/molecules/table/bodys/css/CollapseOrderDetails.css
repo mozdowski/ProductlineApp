@@ -1,60 +1,159 @@
-tr > td.productDetails.open {
+tr>td.details.open {
   background-color: #fff;
   width: 100%;
   max-height: 100px;
   padding: 10px 10px;
 }
 
-.productDetailsWrapper td:nth-child(1) {
+.orderDetailsWrapper td:nth-child(1) {
   max-width: 30px;
 }
 
-.productDetailsWrapper td:nth-child(3),
-.productDetailsWrapper td:nth-child(4),
-.productDetailsWrapper td:nth-child(5),
-.productDetailsWrapper td:nth-child(6),
-.productDetailsWrapper td:nth-child(8) {
+.orderDetailsWrapper td:nth-child(3),
+.orderDetailsWrapper td:nth-child(4),
+.orderDetailsWrapper td:nth-child(5),
+.orderDetailsWrapper td:nth-child(6),
+.orderDetailsWrapper td:nth-child(8) {
   max-width: 80px;
 }
 
-.productDetailsWrapper td:nth-child(2) {
+.orderDetailsWrapper td:nth-child(2) {
   max-width: 43px;
+  vertical-align: top
 }
 
-.productDetailsWrapper td:nth-child(9) {
+.orderDetailsWrapper td:nth-child(9) {
   max-width: 37px;
 }
 
-.productDetailsWrapper {
+.orderDetailsWrapper {
   height: 64px;
   text-align: center;
 }
 
-.productDetailsWrapper.open {
+.orderDetailsWrapper.open {
   max-height: 100px;
   padding: 10px 10px;
 }
 
-.productDetails {
+.details {
   display: flex;
   font-family: var(--body-font);
   color: var(--letter-color);
   justify-content: space-between;
 }
 
-.productConditionSection {
-  margin-left: 55px;
+.orderItems {
+  text-align: left;
+  align-items: center;
+  margin-top: 20px;
+  font-family: var(--body-font);
+}
+
+.orderShipingAddress {
+  text-align: left;
+  align-items: center;
+  font-family: var(--body-font);
+}
+
+.orderItems .orderItemDetails {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.orderItems .orderItemDetails .orderItemImage {
+  width: 35px;
+  height: 35px;
+  background-color: blueviolet;
+  border-radius: 8px;
+}
+
+.orderItems .orderItemDetails h1 {
+  font-size: 12px;
+  font-weight: 600;
+  margin-right: 7px;
+  margin-left: 25px;
+}
+
+.orderItems .orderItemDetails h2 {
+  font-size: 12px;
+  font-weight: 400;
+}
+
+.orderItems .orderItemsSectionLabel,
+.orderShipingAddress .orderShipingAddressSectionLabel {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+ul.orderShipingAddressData,
+ul.orderItemsList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.orderShipingAddress {
+  margin-top: 20px;
+  float: right;
+  margin-right: 50px;
+}
+
+.orderItems .orderItemsList li {
+  margin-bottom: 15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(1) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(2) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(3) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(4) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(5) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(6) {
+  display: inline-flex;
+  align-items: center;
+  margin-bottom: -15px;
+}
+
+.orderShipingAddress .orderShipingAddressData li :nth-child(7) {
   display: inline-flex;
   align-items: center;
 }
 
-.productConditionSection h1 {
-  font-size: 14px;
-  font-weight: 700;
+
+.orderShipingAddress .orderShipingAddressData li h1 {
+  font-size: 12px;
+  font-weight: 600;
   margin-right: 7px;
 }
 
-.productConditionSection h2 {
-  font-size: 14px;
+.orderShipingAddress .orderShipingAddressData li h2 {
+  font-size: 12px;
   font-weight: 400;
 }

@@ -19,7 +19,7 @@ function ChangePersonalDataSection() {
     setDisableEdit(!disableEdit);
   };
 
-  const handleConfirm = () => {};
+  const handleConfirm = () => { };
 
   return (
     <>
@@ -37,7 +37,7 @@ function ChangePersonalDataSection() {
               className="changeUsernameInput"
               disabled={disableEdit}
               value={''}
-              onChange={() => {}}
+              onChange={() => { }}
               error={errors.username}
             />
           </div>
@@ -53,7 +53,7 @@ function ChangePersonalDataSection() {
               className="changeEmailInput"
               disabled={disableEdit}
               value={''}
-              onChange={() => {}}
+              onChange={() => { }}
               error={errors.email}
             />
           </div>

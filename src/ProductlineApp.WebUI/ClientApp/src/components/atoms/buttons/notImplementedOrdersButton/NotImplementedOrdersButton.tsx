@@ -1,22 +1,18 @@
 import './css/notImpementedOrdersButton.css';
 
 function NotImpementedOrdersButton({
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
   id,
 }: {
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: boolean;
   handleClickTypeOrdersButton: any;
   id: string;
 }) {
   return (
     <div
       id={id}
-      className={
-        isSelectedTypeOrders === 'notImplemented'
-          ? 'notImplementedOrdersButton selected'
-          : 'notImplementedOrdersButton'
-      }
+      className={showNoImplementedOrders ? 'notImplementedOrdersButton selected' : 'notImplementedOrdersButton'}
       onClick={handleClickTypeOrdersButton}
     >
       <p>Niezrealizowane</p>

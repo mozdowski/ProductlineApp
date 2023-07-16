@@ -24,6 +24,8 @@ export const mapOrderStatusToString = (status: OrderStatus): string => {
       return 'Anulowany';
     case OrderStatus.RETURNED:
       return 'Zwrocony';
+    case OrderStatus.COMPLETED:
+      return 'Zakończone';
     default:
       return '';
   }

@@ -8,9 +8,13 @@ import AddAuctionButton from '../../../atoms/buttons/addAuctionButton/AddAuction
 export const AuctionsHederActions = ({
   showActiveAuctions,
   handleClickTypeAuctionsButton,
+  searchValue,
+  onChange
 }: {
   showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
+  searchValue: any;
+  onChange: (e: any) => void
 }) => {
   return (
     <>
@@ -28,7 +32,7 @@ export const AuctionsHederActions = ({
           />
         </div>
         <div className="AuctionsTableActionButtons">
-          <Searchbar />
+          <Searchbar searchValue={searchValue} onChange={onChange} />
           <AddAuctionButton />
         </div>
       </div>

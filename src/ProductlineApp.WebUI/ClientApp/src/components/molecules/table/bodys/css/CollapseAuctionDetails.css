@@ -1,60 +1,62 @@
-tr > td.productDetails.open {
+tr>td.details.open {
   background-color: #fff;
   width: 100%;
   max-height: 100px;
   padding: 10px 10px;
 }
 
-.productDetailsWrapper td:nth-child(1) {
+.auctionDetailsWrapper td:nth-child(1) {
   max-width: 30px;
 }
 
-.productDetailsWrapper td:nth-child(3),
-.productDetailsWrapper td:nth-child(4),
-.productDetailsWrapper td:nth-child(5),
-.productDetailsWrapper td:nth-child(6),
-.productDetailsWrapper td:nth-child(8) {
+.auctionDetailsWrapper td:nth-child(3),
+.auctionDetailsWrapper td:nth-child(4),
+.auctionDetailsWrapper td:nth-child(5),
+.auctionDetailsWrapper td:nth-child(6),
+.auctionDetailsWrapper td:nth-child(8) {
   max-width: 80px;
 }
 
-.productDetailsWrapper td:nth-child(2) {
+.auctionDetailsWrapper td:nth-child(2) {
   max-width: 43px;
 }
 
-.productDetailsWrapper td:nth-child(9) {
+.auctionDetailsWrapper td:nth-child(9) {
   max-width: 37px;
 }
 
-.productDetailsWrapper {
+.auctionDetailsWrapper {
   height: 64px;
-  text-align: center;
 }
 
-.productDetailsWrapper.open {
+.auctionDetailsWrapper.open {
   max-height: 100px;
   padding: 10px 10px;
 }
 
-.productDetails {
+.details {
   display: flex;
   font-family: var(--body-font);
   color: var(--letter-color);
   justify-content: space-between;
 }
 
-.productConditionSection {
-  margin-left: 55px;
+.auctonDaysToEndSection {
+  padding-left: 70px;
   display: inline-flex;
   align-items: center;
+  float: left;
+  font-family: var(--body-font);
 }
 
-.productConditionSection h1 {
+
+.auctonDaysToEndSection h1 {
   font-size: 14px;
-  font-weight: 700;
+  font-weight: 600;
   margin-right: 7px;
 }
 
-.productConditionSection h2 {
+.auctonDaysToEndSection h2 {
   font-size: 14px;
   font-weight: 400;
 }

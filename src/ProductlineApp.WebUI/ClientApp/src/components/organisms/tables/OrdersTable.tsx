@@ -7,22 +7,28 @@ import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
 
 export default function OrdersTable({
   orderRecords,
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
   orderRecords: OrdersRecord[];
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: boolean;
   handleClickTypeOrdersButton: any;
+  searchValue: string,
+  onChange: (e: any) => void
 }) {
   return (
     <>
       <OrdersHederActions
-        isSelectedTypeOrders={isSelectedTypeOrders}
+        showNoImplementedOrders={showNoImplementedOrders}
         handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+        searchValue={searchValue}
+        onChange={onChange}
       />
       <table className="orders">
         <OrdersTableHeader />
-        <OrdersTableBody orderRecords={orderRecords} />
+        <OrdersTableBody orderRecords={orderRecords} showNoImplementedOrders={"Zakończone"} />
       </table>
       <TableFooter />
     </>

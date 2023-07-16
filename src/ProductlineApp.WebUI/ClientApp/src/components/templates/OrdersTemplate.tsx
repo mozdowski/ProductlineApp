@@ -5,12 +5,16 @@ import OrdersTable from '../organisms/tables/OrdersTable';
 
 export default function OrdersTemplate({
   orderRecords,
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
   orderRecords: OrdersRecord[];
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: boolean;
   handleClickTypeOrdersButton: any;
+  searchValue: string,
+  onChange: (e: any) => void
 }) {
   return (
     <>
@@ -19,8 +23,10 @@ export default function OrdersTemplate({
         <div className="tableOrders">
           <OrdersTable
             orderRecords={orderRecords}
-            isSelectedTypeOrders={isSelectedTypeOrders}
+            showNoImplementedOrders={showNoImplementedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+            searchValue={searchValue}
+            onChange={onChange}
           />
         </div>
       </div>

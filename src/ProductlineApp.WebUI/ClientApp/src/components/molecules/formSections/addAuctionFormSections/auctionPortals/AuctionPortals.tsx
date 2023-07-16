@@ -43,7 +43,7 @@ function AuctionPortals({
             <>
               <EbayFormButton setOpenEbayFormPopup={setOpenEbayFormPopup} />
               {openEbayPopup && (
-                <EbayFormPopup closePopup={() => setOpenEbayFormPopup(false)} onSubmit={() => {}} />
+                <EbayFormPopup closePopup={() => setOpenEbayFormPopup(false)} onSubmit={() => { }} />
               )}
             </>
           )}

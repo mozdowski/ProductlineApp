@@ -4,4 +4,5 @@ export enum OrderStatus {
   DELIVERED,
   RETURNED,
   CANCELLED,
+  COMPLETED
 }

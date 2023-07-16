@@ -26,8 +26,7 @@ export const CollapseProductDetails = ({
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td>
+      <td colSpan={2}>
         <ProductAuctionLinksSection platformsListedOn={platformsListedOn} />
       </td>
     </tr>
