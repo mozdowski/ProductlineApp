@@ -6,11 +6,15 @@ import EndAuctionButton from '../../../atoms/buttons/endAuctionsButton/EndAuctio
 import AddAuctionButton from '../../../atoms/buttons/addAuctionButton/AddAuctionButton';
 
 export const AuctionsHederActions = ({
-  isSelectedTypeAuctions,
+  showActiveAuctions,
   handleClickTypeAuctionsButton,
+  searchValue,
+  onChange
 }: {
-  isSelectedTypeAuctions: any;
+  showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
+  searchValue: any;
+  onChange: (e: any) => void
 }) => {
   return (
     <>
@@ -18,17 +22,17 @@ export const AuctionsHederActions = ({
         <div className="changeTypeAuctionsButtons">
           <ActiveAuctionButton
             id={'active'}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
           />
           <EndAuctionButton
             id={'ended'}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
+            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionButton={handleClickTypeAuctionsButton}
           />
         </div>
         <div className="AuctionsTableActionButtons">
-          <Searchbar />
+          <Searchbar searchValue={searchValue} onChange={onChange} />
           <AddAuctionButton />
         </div>
       </div>

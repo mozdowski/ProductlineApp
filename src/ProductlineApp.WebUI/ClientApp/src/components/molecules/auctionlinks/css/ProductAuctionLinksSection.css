@@ -1,4 +1,6 @@
 .productExposedOnSection {
+  float: right;
   display: inline-flex;
+  margin-right: 60px;
   align-items: center;
 }

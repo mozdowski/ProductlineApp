@@ -42,6 +42,10 @@ export const OrdersTableRow = ({
         <td>
           <div className="ordersButtonsAction">
             <img className="editOrderIcon" src={EditIcon} />
+            {order.status === "Zakończone" ?
+              <div className='assignedOrderButton'>
+                <span className="assignOrderIcon assignTableIcon" />
+              </div> : ""}
           </div>
         </td>
       </tr>

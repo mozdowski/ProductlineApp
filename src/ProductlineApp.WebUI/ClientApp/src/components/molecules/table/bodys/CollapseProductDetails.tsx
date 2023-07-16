@@ -17,7 +17,7 @@ export const CollapseProductDetails = ({
       <td></td>
       <td>
         <div className="productConditionSection">
-          <h1>Stan: </h1>
+          <h1>Stan:</h1>
           <h2>{condition}</h2>
         </div>
       </td>
@@ -26,8 +26,7 @@ export const CollapseProductDetails = ({
       <td></td>
       <td></td>
       <td></td>
-      <td></td>
-      <td>
+      <td colSpan={2}>
         <ProductAuctionLinksSection platformsListedOn={platformsListedOn} />
       </td>
     </tr>

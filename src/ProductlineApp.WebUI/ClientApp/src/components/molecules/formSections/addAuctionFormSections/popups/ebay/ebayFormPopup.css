@@ -1,0 +1,64 @@
+.overlayEbayPopup {
+  background-color: rgba(0, 0, 0, 0.5);
+  left: 0px;
+  top: 0px;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+
+.ebayPopup {
+  max-width: 730px;
+  min-width: 500px;
+  background-color: var(--white-color);
+  border-radius: 8px;
+  padding: 35px 35px 35px 35px;
+}
+
+.ebayPopup .ebayPopupBody .ebayAuctionInputsRow {
+  display: flex;
+}
+
+.ebayPopup .ebayPopupBody .addAuctionEbayButtons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  float: right;
+  right: 35px;
+  bottom: 35px;
+}
+
+.ebayBrandIcon {
+  width: 100px;
+  height: 45px;
+}
+
+.ebayAuctionParameters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  overflow: scroll;
+  overflow-x: hidden;
+  height: 450px;
+}
+
+.ebayAuctionParameters .productParameter {
+  width: 50%;
+  margin-top: 25px;
+}
+
+.addAuctionAllEbayButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+}
+
+.addAuctionEbayBackButton {
+  display: flex;
+  align-items: center;
+}

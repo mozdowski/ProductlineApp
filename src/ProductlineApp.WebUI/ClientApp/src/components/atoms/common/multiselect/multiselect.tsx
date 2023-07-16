@@ -34,7 +34,7 @@ const MultiselectStyle = {
 
 interface MultipleSelectCheckmarksProps {
   name: string;
-  value: string;
+  value: string | string[];
   onChange: (name: string, values: string[]) => void;
   options: { label: string; value: any }[];
   error?: string;
@@ -48,9 +48,17 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
   options,
   error,
 }) => {
-  const [selectedValues, setSelectedValues] = React.useState<string[]>([value]);
+  value = Array.isArray(value) ? value : [value];
 
-  const handleChange = (event: SelectChangeEvent<typeof selectedValues>) => {
+  //   const [selectedValues, setSelectedValues] = React.useState<string[]>(
+  //     Array.isArray(value) ? value : [value],
+  //   );
+
+  const [selectedOptions, setSelectedOptions] = React.useState<typeof options>(
+    options.filter((x) => (value as string[]).some((v) => v === x.value)),
+  );
+
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
@@ -58,14 +66,12 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
     const values = typeof value === 'string' ? value.split(',') : value;
     const selectedOptions = options.filter((option) => values.some((v) => v === option.label));
 
-    console.log(selectedOptions);
-
     onChange(
       name,
-      //   selectedOptions.map((x) => x.label),
       selectedOptions.map((x) => x.value),
     );
-    setSelectedValues(values);
+    // setSelectedValues(values);
+    setSelectedOptions(selectedOptions);
   };
 
   return (
@@ -75,7 +81,7 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
           labelId="demo-multiple-checkbox-label"
           id="demo-multiple-checkbox"
           multiple
-          value={selectedValues}
+          value={selectedOptions.map((x) => x.label)}
           onChange={handleChange}
           renderValue={(selected) => selected.join(', ')}
           MenuProps={MenuProps}
@@ -83,7 +89,7 @@ const MultipleSelectCheckmarks: React.FC<MultipleSelectCheckmarksProps> = ({
         >
           {options.map((option) => (
             <MenuItem key={option.value} value={option.label}>
-              <Checkbox checked={selectedValues.indexOf(option.label) > -1} />
+              <Checkbox checked={selectedOptions.map((x) => x.label).indexOf(option.label) > -1} />
               <ListItemText primary={option.label} />
             </MenuItem>
           ))}

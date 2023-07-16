@@ -26,6 +26,8 @@ public interface IUserRepository : IRepositoryBase
 
     Task<(User? User, string? Salt)> GetByEmailWithSaltAsync(string email);
 
+    Task<(User? User, string? Salt)> GetByIdWithSaltAsync(UserId id);
+
     Task<IEnumerable<PlatformConnection>> GetAllPlatformConnectionsAsync();
 
     Task<IEnumerable<User>> GetUsersBatchAsync(int pageNumber, int pageSize);

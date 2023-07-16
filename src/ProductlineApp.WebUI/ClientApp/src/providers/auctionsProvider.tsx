@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { useAuth } from '../hooks/auth/useAuth';
 import { AuctionsService } from '../services/auctions/auctions.service';
-import { AuctionsContext } from '../context/auctionsContext';
+import { AuctionsContext } from '../context/auctions/auctionsContext';
 
 interface AuctionsProviderProps {
   children: ReactNode;

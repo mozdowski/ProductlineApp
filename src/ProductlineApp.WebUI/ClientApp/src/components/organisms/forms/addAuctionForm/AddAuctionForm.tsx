@@ -15,6 +15,7 @@ export default function AddAuctionForm({
   onProductChange,
   onAllegroFormSubmit,
   errors,
+  platformConnections,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -22,6 +23,7 @@ export default function AddAuctionForm({
   onProductChange: (id: string) => void;
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
   errors: any;
+  platformConnections: string[];
 }) {
   const [showFormSteps, setSelectedOption] = useState('');
 
@@ -42,14 +44,17 @@ export default function AddAuctionForm({
             errors={errors}
           />
           {showFormSteps != ' ' && (
-            <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
+            <ProductInfo selectedProduct={selectedProduct} onChange={() => { }} />
           )}
           <ButtonsSection />
         </form>
         {showFormSteps != ' ' && selectedProduct && selectedProduct?.id !== '' && (
           <div className="addAuctionSecondSection">
             <Photos photos={selectedProduct ? selectedProduct.imageUrls : []} />
-            <AuctionPortals onAllegroFormSubmit={onAllegroFormSubmit} />
+            <AuctionPortals
+              onAllegroFormSubmit={onAllegroFormSubmit}
+              platformConnections={platformConnections}
+            />
           </div>
         )}
       </div>

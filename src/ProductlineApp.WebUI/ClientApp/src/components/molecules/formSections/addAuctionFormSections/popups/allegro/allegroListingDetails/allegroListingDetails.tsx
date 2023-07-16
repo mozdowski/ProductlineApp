@@ -10,30 +10,9 @@ import { useAuctionsService } from '../../../../../../../hooks/auctions/useAucti
 import { AllegroUserPoliciesResponse } from '../../../../../../../interfaces/auctions/allegroUserPoliciesResponse';
 import './allegroListingDetails.css';
 import ConfrimButton from '../../../../../../atoms/buttons/confirmButton/ConfirmButton';
-
-const validationSchema = Yup.object().shape({
-  name: Yup.string().required('Nazwa jest wymagana'),
-  impliedWarrantyId: Yup.string().required('Pole wymagane'),
-  returnPolicyId: Yup.string().required('Pole wymagane'),
-  price: Yup.number()
-    .typeError('Nieprawidłowy format ceny')
-    .required('Pole wymagane')
-    .positive('Wartość musi być większa od 0')
-    .moreThan(0, 'Wartość musi być większa od 0')
-    .nullable(),
-  locationCity: Yup.string().required('Pole wymagane'),
-  locationCountryCode: Yup.string().required('Pole wymagane'),
-  locationPostCode: Yup.string().required('Pole wymagane'),
-  locationProvince: Yup.string().required('Pole wymagane'),
-  duration: Yup.string().required('Pole wymagane'),
-  republish: Yup.string().required('Pole wymagane'),
-  shippingRateId: Yup.string().required('Pole wymagane'),
-  quantity: Yup.number()
-    .typeError('Nieprawidłowy format')
-    .integer()
-    .required('Pole wymagane')
-    .positive('Wartość musi być większa od 0'),
-});
+import { useSelectedProduct } from '../../../../../../../hooks/auctions/useSelectedProduct';
+import { AllegroOfferProductDetailsResponse } from '../../../../../../../interfaces/auctions/allegroOfferProductDetailsResponse';
+import { FormTextarea } from '../../../../../../atoms/common/formTextArea/formTextArea';
 
 export interface AllegroListingDetailsFormData {
   name: string;
@@ -48,6 +27,7 @@ export interface AllegroListingDetailsFormData {
   republish: boolean;
   shippingRateId: string;
   quantity: number;
+  description: string;
 }
 
 const getDurationLabel = (duration: AllegroDurationPeriods): string => {
@@ -83,26 +63,54 @@ interface AllegroListingDetailsProps {
   onPrevPage: () => void;
   onConfirm: (formData: AllegroListingDetailsFormData) => void;
   onCancel: () => void;
+  initValues?: AllegroOfferProductDetailsResponse;
 }
 
 const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
   onPrevPage,
   onConfirm,
   onCancel,
+  initValues,
 }) => {
-  const [formData, setFormData] = useState<AllegroListingDetailsFormData>({
+  let product = {
     name: '',
-    impliedWarrantyId: '',
-    returnPolicyId: '',
     price: 0,
-    locationCity: '',
-    locationCountryCode: '',
-    locationPostCode: '',
-    locationProvince: '',
-    duration: AllegroDurationPeriods.P10D,
-    republish: true,
-    shippingRateId: '',
-    quantity: 1,
+    quantity: 0,
+    description: '',
+  };
+
+  if (initValues) {
+    product.name = initValues.name;
+    product.price = initValues.price;
+    product.quantity = initValues.quantity;
+    product.description = initValues.description;
+  } else {
+    const { selectedProduct } = useSelectedProduct();
+    product.name = selectedProduct.name;
+    product.price = selectedProduct.price;
+    product.description = selectedProduct.description;
+  }
+
+  //   const { selectedProduct } = useSelectedProduct();
+  const parser = new DOMParser();
+
+  const [formData, setFormData] = useState<AllegroListingDetailsFormData>({
+    name: initValues ? initValues.name : product.name,
+    impliedWarrantyId: initValues ? initValues.impliedWarrantyId : '',
+    returnPolicyId: initValues ? initValues.returnPolicyId : '',
+    price: initValues ? initValues.price : product.price,
+    locationCity: initValues ? initValues.location.city : '',
+    locationCountryCode: initValues ? initValues.location.countryCode : '',
+    locationPostCode: initValues ? initValues.location.postCode : '',
+    locationProvince: initValues ? initValues.location.province : '',
+    duration: initValues ? initValues.duration : AllegroDurationPeriods.P10D,
+    republish: initValues ? initValues.republish : true,
+    shippingRateId: initValues ? initValues.shippingRateId : '',
+    quantity: initValues ? initValues.quantity : product.quantity,
+    description: parser.parseFromString(
+      initValues ? initValues.description : product.description,
+      'text/html',
+    ).body.textContent as string,
   });
   const [errors, setErrors] = useState<Partial<AllegroListingDetailsFormData>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -131,6 +139,43 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       setIsLoading(false);
     });
   }, []);
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string().required('Nazwa jest wymagana'),
+    impliedWarrantyId: Yup.string().required('Pole wymagane'),
+    returnPolicyId: Yup.string().required('Pole wymagane'),
+    price: Yup.number()
+      .typeError('Nieprawidłowy format ceny')
+      .required('Pole wymagane')
+      .positive('Wartość musi być większa od 0')
+      .moreThan(0, 'Wartość musi być większa od 0')
+      .test(
+        'is-doubled-price',
+        'Cena nie moze byc wieksza niz ' + product.price * 3,
+        (value: any) => {
+          if (!initValues) {
+            return true;
+          } else {
+            return value <= product.price * 3;
+          }
+        },
+      )
+      .nullable(),
+    locationCity: Yup.string().required('Pole wymagane'),
+    locationCountryCode: Yup.string().required('Pole wymagane'),
+    locationPostCode: Yup.string().required('Pole wymagane'),
+    locationProvince: Yup.string().required('Pole wymagane'),
+    duration: Yup.string().required('Pole wymagane'),
+    republish: Yup.string().required('Pole wymagane'),
+    shippingRateId: Yup.string().required('Pole wymagane'),
+    quantity: Yup.number()
+      .typeError('Nieprawidłowy format')
+      .integer()
+      .required('Pole wymagane')
+      .positive('Wartość musi być większa od 0'),
+    //   .max(product.quantity, 'Wartość większa niz zdefiniowana dla produktu'),
+    description: Yup.string().required('Pole wymagane'),
+  });
 
   const validateForm = async () => {
     if (!validationSchema) return false;
@@ -369,20 +414,35 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
                 />
               </div>
             </div>
+            {!initValues && (
+              <div className="allegroProductParameter">
+                <div className="allegroParameterField">
+                  <label htmlFor={'duration'} className="allegroParameterLabel">
+                    Czas trwania
+                  </label>
+                  <FormSelect
+                    value={formData.duration.valueOf().toString()}
+                    onChange={handleChange}
+                    options={durations.map((option) => ({
+                      label: getDurationLabel(option),
+                      value: option.toString(),
+                    }))}
+                    name={'duration'}
+                    error={undefined}
+                  />
+                </div>
+              </div>
+            )}
             <div className="allegroProductParameter">
               <div className="allegroParameterField">
-                <label htmlFor={'duration'} className="allegroParameterLabel">
-                  Czas trwania
+                <label htmlFor={'description'} className="allegroParameterLabel">
+                  Opis
                 </label>
-                <FormSelect
-                  value={formData.duration.valueOf().toString()}
+                <FormTextarea
+                  value={formData.description}
                   onChange={handleChange}
-                  options={durations.map((option) => ({
-                    label: getDurationLabel(option),
-                    value: option.toString(),
-                  }))}
-                  name={'duration'}
-                  error={undefined}
+                  name={'description'}
+                  error={errors.description}
                 />
               </div>
             </div>
@@ -394,7 +454,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
             <BackButton onClick={onPrevPage} />
           </div>
           <div className="addauctionAllegroButtons">
-            <CancelButton pathTo={''} close={onCancel} />
+            <CancelButton pathTo={''} onClick={onCancel} />
             <ConfrimButton />
           </div>
         </div>

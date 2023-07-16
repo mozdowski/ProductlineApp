@@ -4,25 +4,32 @@ import { OrdersRecord } from '../../../interfaces/orders/OrdersPageInteface';
 import { OrdersHederActions } from '../../molecules/table/headersActions/OrdersHederActions';
 import { OrdersTableHeader } from '../../molecules/table/headers/OrdersTableHeader';
 import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
+import { OrderStatus } from '../../../enums/orderStatus.enum';
 
 export default function OrdersTable({
   orderRecords,
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
   orderRecords: OrdersRecord[];
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
+  searchValue: string,
+  onChange: (e: any) => void
 }) {
   return (
     <>
       <OrdersHederActions
-        isSelectedTypeOrders={isSelectedTypeOrders}
+        showNoImplementedOrders={showNoImplementedOrders}
         handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+        searchValue={searchValue}
+        onChange={onChange}
       />
       <table className="orders">
         <OrdersTableHeader />
-        <OrdersTableBody orderRecords={orderRecords} />
+        <OrdersTableBody orderRecords={orderRecords} showNoImplementedOrders={showNoImplementedOrders} />
       </table>
       <TableFooter />
     </>

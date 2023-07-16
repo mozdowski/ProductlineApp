@@ -13,14 +13,22 @@ export default function openCollapse(init: any) {
   return { isOpen, toggle };
 }
 
-export const AuctionsTableBody = ({ auctionRecords }: { auctionRecords: AuctionsRecord[] }) => {
-  const { isOpen, toggle } = openCollapse(false);
-
+export const AuctionsTableBody = ({
+  auctionRecords,
+  onEditAuction,
+  onWithdrawAuction,
+  showActiveAuctions,
+}: {
+  auctionRecords: AuctionsRecord[],
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
+  showActiveAuctions: boolean;
+}) => {
   return (
     <>
       <tbody>
-        {auctionRecords.map((auction, key) => (
-          <AuctionsTableRow key={key} auction={auction} />
+        {auctionRecords.map((auction, key) => auction && auction.isActive == showActiveAuctions && (
+          <AuctionsTableRow key={key} auction={auction} onEditAuction={onEditAuction} onWithdrawAuction={onWithdrawAuction} />
         ))}
       </tbody>
     </>

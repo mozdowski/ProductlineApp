@@ -4,11 +4,11 @@ namespace ProductlineApp.Application.Common.Platforms.Ebay.ApiClient;
 
 public interface IEbayApiClient
 {
-    string GetAuthorizationUrl();
+    string GetAuthorizationUrl(string platformId);
 
-    Task<EbayTokenResponse> GetAccessTokenAsync(string code);
+    Task<EbayTokenResponse> GetAccessTokenAsync(string code, string platformId);
 
-    Task<EbayTokenResponse> GetRefreshTokenAsync(string refreshToken);
+    Task<EbayTokenResponse> GetRefreshTokenAsync(string refreshToken, string platformId);
 
     Task CreateOrReplaceInventoryItem(string accessToken, string sku, EbayCreateOrReplaceInventoryRequest requestBody);
 

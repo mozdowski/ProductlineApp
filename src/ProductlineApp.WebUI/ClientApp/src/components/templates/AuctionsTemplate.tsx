@@ -14,13 +14,21 @@ export default function AuctionsTemplate({
   selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   handleClickTypeAuctionsButton,
-  isSelectedTypeAuctions,
+  onEditAuction,
+  onWithdrawAuction,
+  showActiveAuctions,
+  searchValue,
+  onChange
 }: {
   auctionRecords: AuctionsRecord[];
   selectedAuctionPortal: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  isSelectedTypeAuctions: any;
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
+  showActiveAuctions: boolean;
+  searchValue: string;
+  onChange: (e: any) => void
 }) {
   return (
     <>
@@ -40,9 +48,12 @@ export default function AuctionsTemplate({
         <div className="tableAuctions">
           <AuctionsTable
             auctionRecords={auctionRecords}
-            isSelectedTypeAuctions={isSelectedTypeAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
-          />
+            onEditAuction={onEditAuction}
+            onWithdrawAuction={onWithdrawAuction}
+            showActiveAuctions={showActiveAuctions}
+            searchValue={searchValue}
+            onChange={onChange} />
         </div>
       </div>
     </>

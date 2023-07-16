@@ -4,11 +4,11 @@ namespace ProductlineApp.Application.Common.Platforms.Allegro.ApiClient;
 
 public interface IAllegroApiClient
 {
-    string GetAuthorizationUrl();
+    string GetAuthorizationUrl(string platformId);
 
-    Task<AllegroTokenResponse> GetAccessTokenAsync(string code);
+    Task<AllegroTokenResponse> GetAccessTokenAsync(string code, string platformId);
 
-    Task<AllegroTokenResponse> GetRefreshTokenAsync(string accessToken);
+    Task<AllegroTokenResponse> GetRefreshTokenAsync(string accessToken, string platformId);
 
     Task<AllegroOrdersResponse> GetOrdersAsync(
         string accessToken,
@@ -72,4 +72,12 @@ public interface IAllegroApiClient
     Task<ReturnPoliciesResponse> GetReturnPolicies(string accessToken);
 
     Task<ImpliedWarrantiesResponse> GetImpliedWarranties(string accessToken);
+
+    Task<AllegroOfferProductResponse> GetOfferProductDetails(string accessToken, string offerId);
+
+    Task UpdateOffer(string accessToken, string offerId, AllegroUpdateOfferRequest requestBody);
+
+    Task WithdrawOffer(string accessToken, string commandId, AllegroWithdrawOfferRequest requestBody);
+
+    Task OfferRenewal(string accessToken, string commandId, AllegroOfferRenewalRequest requestBody);
 }

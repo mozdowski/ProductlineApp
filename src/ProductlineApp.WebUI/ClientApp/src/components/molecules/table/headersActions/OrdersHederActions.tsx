@@ -3,31 +3,36 @@ import './css/OrdersHederActions.css';
 import Searchbar from '../../../atoms/inputs/searchbarInput/Searchbar';
 import ImplementedOrdersButton from '../../../atoms/buttons/implementedOrdersButton/ImplementedOrdersButton';
 import NotImpementedOrdersButton from '../../../atoms/buttons/notImplementedOrdersButton/NotImplementedOrdersButton';
+import { OrderStatus } from '../../../../enums/orderStatus.enum';
 
 export const OrdersHederActions = ({
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
+  searchValue: string;
+  onChange: (e: any) => void
 }) => {
   return (
     <>
       <div className="OrdersTableButtons">
         <div className="changeTypeOrdersButtons">
-          <ImplementedOrdersButton
-            isSelectedTypeOrders={isSelectedTypeOrders}
-            handleClickTypeOrdersButton={handleClickTypeOrdersButton}
-            id={'implemented'}
-          />
           <NotImpementedOrdersButton
-            isSelectedTypeOrders={isSelectedTypeOrders}
+            showNoImplementedOrders={showNoImplementedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             id={'notImplemented'}
           />
+          <ImplementedOrdersButton
+            showNoImplementedOrders={showNoImplementedOrders}
+            handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+            id={'implemented'}
+          />
         </div>
         <div className="OrdersTableActionButtons">
-          <Searchbar />
+          <Searchbar searchValue={searchValue} onChange={onChange} />
         </div>
       </div>
     </>

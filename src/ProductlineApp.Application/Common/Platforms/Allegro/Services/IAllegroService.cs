@@ -19,4 +19,12 @@ public interface IAllegroService : IPlatformService
     Task<ReturnPoliciesResponse> GetReturnPolicies();
 
     Task<ImpliedWarrantiesResponse> GetImpliedWarranties();
+
+    Task<AllegroOfferProductDtoResponse> GetOfferProductDetails(string offerId);
+
+    Task UpdateListing(string offerId, AllegroUpdateListingDtoRequest request);
+
+    Task WithdrawListing(string offerId);
+
+    Task ListingRenewal(string offerId);
 }

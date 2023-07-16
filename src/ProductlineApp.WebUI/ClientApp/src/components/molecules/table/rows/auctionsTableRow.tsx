@@ -9,9 +9,13 @@ import { CollapseAuctionDetails } from '../bodys/CollapseAuctionDetails';
 export const AuctionsTableRow = ({
   key,
   auction,
+  onEditAuction,
+  onWithdrawAuction,
 }: {
   auction: AuctionsRecord;
   key: string | number;
+  onEditAuction: (auctionId: string) => void;
+  onWithdrawAuction: (auctionId: string) => void;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
 
@@ -23,7 +27,11 @@ export const AuctionsTableRow = ({
     <React.Fragment key={key}>
       <tr className="AuctionsTableRow">
         <td>
-          <CollapseTableButton isOpen={isOpen} toggle={toggle} />
+          {auction.isActive ?
+            <CollapseTableButton isOpen={isOpen} toggle={toggle} />
+            :
+            ""
+          }
         </td>
         <td>{auction?.auctionID}</td>
         <td>{auction?.sku}</td>
@@ -39,14 +47,18 @@ export const AuctionsTableRow = ({
         <td>{auction?.quantity}</td>
         <td>
           <div className="auctionsButtonsAction">
-            <img className="editAuctionIcon" src={EditIcon} />
-            <img className="backAuctionIcon" src={BackAuctionIcon} />
+            <img className="editAuctionIcon" src={EditIcon} onClick={() => onEditAuction(auction.auctionID)} />
+            <img className="backAuctionIcon" src={BackAuctionIcon} onClick={() => onWithdrawAuction(auction.auctionID)} />
           </div>
         </td>
       </tr>
       {isOpen && (
         <React.Fragment key="details">
-          <CollapseAuctionDetails daysToEnd={auction?.daysToEnd} />
+          {auction.isActive ?
+            <CollapseAuctionDetails daysToEnd={auction?.daysToEnd} />
+            :
+            " "
+          }
         </React.Fragment>
       )}
     </React.Fragment>

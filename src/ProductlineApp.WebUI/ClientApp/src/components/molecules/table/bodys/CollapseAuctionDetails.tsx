@@ -9,10 +9,10 @@ export const CollapseAuctionDetails = ({
   return (
     <tr className="auctionDetailsWrapper">
       <td></td>
-      <td colSpan={2}>
+      <td>
         <div className="auctonDaysToEndSection">
           <h1>Wygasa za: </h1>
-          <h2>{daysToEnd}</h2>
+          <h2>{daysToEnd === null ? "-" : daysToEnd + " dni"}</h2>
         </div>
       </td>
       <td></td>
