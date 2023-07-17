@@ -105,32 +105,19 @@ public class ListingController : ControllerBase
     //
     //     return this.Ok();
     // }
-
-    [HttpPost("{listingId:guid}/publish/{listingInstanceId:guid}")]
-    public async Task<IActionResult> PublishListingInstance(Guid listingId, Guid listingInstanceId)
-    {
-        var platformId = await this.GetPlatformIdByListingInstance(listingId, listingInstanceId);
-        var platformService = this._platformServiceDispatcher.Dispatch(platformId);
-
-        await platformService.PublishListingAsync(
-            ListingId.Create(listingId),
-            ListingInstanceId.Create(listingInstanceId));
-
-        return this.Ok();
-    }
-
-    [HttpPost("{listingId:guid}/withdraw/{listingInstanceId:guid}")]
-    public async Task<IActionResult> WithdrawListingInstance(Guid listingId, Guid listingInstanceId)
-    {
-        var platformId = await this.GetPlatformIdByListingInstance(listingId, listingInstanceId);
-        var platformService = this._platformServiceDispatcher.Dispatch(platformId);
-
-        await platformService.WithdrawListingAsync(
-            ListingId.Create(listingId),
-            ListingInstanceId.Create(listingInstanceId));
-
-        return this.Ok();
-    }
+    //
+    // [HttpPost("{listingId:guid}/publish/{listingInstanceId:guid}")]
+    // public async Task<IActionResult> PublishListingInstance(Guid listingId, Guid listingInstanceId)
+    // {
+    //     var platformId = await this.GetPlatformIdByListingInstance(listingId, listingInstanceId);
+    //     var platformService = this._platformServiceDispatcher.Dispatch(platformId);
+    //
+    //     await platformService.PublishListingAsync(
+    //         ListingId.Create(listingId),
+    //         ListingInstanceId.Create(listingInstanceId));
+    //
+    //     return this.Ok();
+    // }
 
     [HttpGet("getPlatformsWithListings")]
     public async Task<IActionResult> GetPlatformsWithListings()

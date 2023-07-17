@@ -72,6 +72,17 @@ public class ListingRepository : IListingRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<ListingInstance>> GetByPlatformId(UserId userId, PlatformId platformId)
+    {
+        return await this._dbContext.Listings
+            .AsNoTracking()
+            .Include(x => x.Instances)
+            .Where(x => x.OwnerId == userId)
+            .SelectMany(x => x.Instances)
+            .Where(x => x.PlatformId == platformId)
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId)
     {
         return await this._dbContext.Listings
@@ -107,6 +118,14 @@ public class ListingRepository : IListingRepository
         .SelectMany(x => x.Instances)
         .Select(x => x.PlatformId)
         .ToListAsync();
+    }
+
+    public async Task<ListingInstance> GetByPlatformListingId(string platformListingId)
+    {
+        return await this._dbContext.Listings
+            .AsNoTracking()
+            .SelectMany(x => x.Instances)
+            .FirstAsync(x => x.PlatformListingId == platformListingId);
     }
 
     public async Task<ListingInstance> GetListingInstanceById(ListingInstanceId listingInstanceId)

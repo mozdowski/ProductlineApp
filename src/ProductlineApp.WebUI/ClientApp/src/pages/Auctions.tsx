@@ -10,11 +10,12 @@ import AllegroFormPopup from '../components/molecules/formSections/addAuctionFor
 import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuction';
 import { toast } from 'react-toastify';
 import { WithdrawAuctionRequest } from '../interfaces/auctions/withdrawAuctionRequest';
+import EbayFormPopup from '../components/molecules/formSections/addAuctionFormSections/popups/ebay/ebayFormPopup';
+import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 
 export default function Auctions() {
   const { platforms, getPlatformByName } = usePlatforms();
   const [selectedAuctionPortal, setSelectedAuctionPortal] = useState<PlatformAuthUrl | undefined>();
-  const [isEditPopupOpen, setIsEditPopupOpen] = useState<boolean>(false);
   const [editAuctionValues, setEditAuctionValues] = useState<any>(undefined);
   const [selectedAuctionId, setSelectedAuctionId] = useState<string>();
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
@@ -30,9 +31,6 @@ export default function Auctions() {
   const handleClickTypeAuctionsButton = (e: any) => {
     const setActive = e.target.id == 'active';
     setShowActiveAuctions(setActive);
-
-    // if (!auctions || auctions.length === 0) return;
-    // setAuctions(auctions.filter(x => x.isActive == setActive));
   };
 
   const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -62,7 +60,7 @@ export default function Auctions() {
     setAuctions(undefined);
     auctionsService.getPlatformAuctionsList(selectedAuctionPortal.platformId).then((res) => {
       const auctionsRecords: AuctionsRecord[] = res.listings.map((auction) => ({
-        auctionID: auction.listingId,
+        auctionID: auction.platformListingId,
         sku: auction.sku,
         brand: auction.brand,
         productName: auction.productName,
@@ -72,12 +70,14 @@ export default function Auctions() {
         daysToEnd: auction.daysToExpire,
         productImageUrl: auction.productImageUrl,
         isActive: auction.isActive,
+        listingId: auction.listingId,
+        listingInstanceId: auction.listingInstanceId,
       }));
       setAuctions(auctionsRecords);
     });
   }, [selectedAuctionPortal, refreshRecords, searchValue]);
 
-  const handleEditAuction = async (auctionId: string) => {
+  const handleEditAuction = async (auctionId: string): Promise<boolean> => {
     setSelectedAuctionId(auctionId);
     switch (selectedAuctionPortal?.platformName) {
       case PlatformEnum.ALLEGRO: {
@@ -86,50 +86,87 @@ export default function Auctions() {
         break;
       }
       case PlatformEnum.EBAY: {
+        const ebayData = await fetchEbayData(auctionId);
+        setEditAuctionValues(ebayData);
         break;
       }
     }
+    return true;
   };
 
-  const handleWithdrawAuction = async (auctionId: string) => {
+  const handleWithdrawAuction = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ): Promise<boolean> => {
     setSelectedAuctionId(auctionId);
-    switch (selectedAuctionPortal?.platformName) {
-      case PlatformEnum.ALLEGRO: {
-        const res = await withdrawAllegroAuction(auctionId);
-        break;
-      }
-      case PlatformEnum.EBAY: {
-        break;
-      }
-    }
-  };
 
-  const withdrawAllegroAuction = async (auctionId: string) => {
     const data: WithdrawAuctionRequest = {
-      offerId: auctionId,
+      listingId: listingId,
+      listingInstanceiD: listingInstanceId,
     };
+
     try {
-      const res = await auctionsService.withdrawAllegroAuction(data);
-      toast.success('Pomyślnie wycofano ofertę Allegro');
-    } catch {
-      toast.error('Błąd podczas wycofywania oferty Allegro');
+      await toast.promise(
+        auctionsService.withdrawAuction(selectedAuctionPortal?.platformId as string, data),
+        {
+          pending: 'Trwa wycofywanie oferty...',
+          success: `Pomyślnie wycofano ofertę ${auctionId}`,
+          error: 'Błąd podczas wycofywania oferty',
+        },
+      );
+      setRefreshRecords(!refreshRecords);
+    } catch (error) {
+      console.error('Błąd podczas wycofywania oferty:', error);
     }
+
+    return true;
   };
 
   const fetchAllegroData = (auctionId: string) => {
     return auctionsService.getAllegroOfferProductDetails(auctionId);
   };
 
+  const fetchEbayData = (auctionId: string) => {
+    return auctionsService.getEbayAuctionDetails(auctionId);
+  };
+
   const handleAllegoAuctionEdit = async (data: CreateAllegroAuction) => {
     if (!selectedAuctionId) return;
+
     try {
-      const res = await auctionsService.updateAllegroAuction(selectedAuctionId, data);
-      toast.success('Zaktualizowano aukcję Allegro');
-    } catch {
-      toast.error('Błąd podczas aktualizowania aukcji Allegro');
+      await toast.promise(auctionsService.updateAllegroAuction(selectedAuctionId, data), {
+        pending: 'Trwa aktualizowanie aukcji Allegro...',
+        success: 'Zaktualizowano aukcję Allegro',
+        error: 'Błąd podczas aktualizowania aukcji Allegro',
+      });
+    } catch (error) {
+      console.error('Błąd podczas aktualizowania aukcji Allegro:', error);
     }
+
+    refreshRecordsState();
+  };
+
+  const handleEbayAuctionEdit = async (ebayForm: CreateEbayAuctionRequest) => {
+    if (!selectedAuctionId) return;
+
+    try {
+      await toast.promise(auctionsService.updateEbayAuction(selectedAuctionId, ebayForm), {
+        pending: 'Trwa aktualizowanie aukcji Ebay...',
+        success: 'Zaktualizowano aukcję Ebay',
+        error: 'Błąd podczas aktualizowania aukcji Ebay',
+      });
+    } catch (error) {
+      console.error('Błąd podczas aktualizowania aukcji Ebay:', error);
+    }
+
+    refreshRecordsState();
+  };
+
+  const refreshRecordsState = () => {
     setEditAuctionValues(undefined);
-    setRefreshRecords(!refreshRecords);
+    setSelectedAuctionId('');
+    setRefreshRecords((prev) => !prev);
   };
 
   return (
@@ -146,12 +183,23 @@ export default function Auctions() {
         onChange={searchTableAuctions}
         searchValue={searchValue}
       />
-      {editAuctionValues && selectedAuctionPortal?.platformName === PlatformEnum.ALLEGRO && (
-        <AllegroFormPopup
-          closeAllegroPopup={() => setIsEditPopupOpen(false)}
-          onSubmit={handleAllegoAuctionEdit}
-          initialFormValues={editAuctionValues}
-        />
+      {editAuctionValues && (
+        <>
+          {selectedAuctionPortal?.platformName === PlatformEnum.ALLEGRO && (
+            <AllegroFormPopup
+              closeAllegroPopup={() => setEditAuctionValues(undefined)}
+              onSubmit={handleAllegoAuctionEdit}
+              initialFormValues={editAuctionValues}
+            />
+          )}
+          {selectedAuctionPortal?.platformName === PlatformEnum.EBAY && (
+            <EbayFormPopup
+              closePopup={() => setEditAuctionValues(undefined)}
+              onSubmit={handleEbayAuctionEdit}
+              initialFormValues={editAuctionValues}
+            />
+          )}
+        </>
       )}
     </>
   );

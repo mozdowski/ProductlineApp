@@ -109,11 +109,15 @@ export default function AddAuction() {
     };
 
     try {
-      const createListingTemplateResponse = await auctionsService.createListingTemplate(
-        listingTemplateBody,
+      const createListingTemplateResponse = await toast.promise(
+        auctionsService.createListingTemplate(listingTemplateBody),
+        {
+          pending: 'Tworzenie szablonu aukcji...',
+          success: 'Stworzono szablon aukcji',
+          error: 'Błąd podczas dodawania szablonu aukcji',
+        },
       );
       listingId = createListingTemplateResponse.listingId;
-      toast.success('Stworzono szablon aukcji');
     } catch {
       toast.error('Błąd podczas dodawania szablonu aukcji');
       return;
@@ -124,8 +128,11 @@ export default function AddAuction() {
       allegroListingBody.listingId = listingId;
 
       try {
-        const allegroResponse = await auctionsService.createAllegroListing(allegroListingBody);
-        toast.success('Dodano aukcję na Allegro');
+        await toast.promise(auctionsService.createAllegroListing(allegroListingBody), {
+          pending: 'Dodawanie aukcji na Allegro...',
+          success: 'Dodano aukcję na Allegro',
+          error: 'Błąd podczas dodawania aukcji na Allegro',
+        });
       } catch {
         toast.error('Błąd podczas dodawania aukcji na Allegro');
       }
@@ -136,8 +143,11 @@ export default function AddAuction() {
       ebayListingBody.listingId = listingId;
 
       try {
-        const ebayResponse = await auctionsService.createEbayListing(ebayListingBody);
-        toast.success('Dodano aukcję na Ebay');
+        await toast.promise(auctionsService.createEbayListing(ebayListingBody), {
+          pending: 'Dodawanie aukcji na Ebay...',
+          success: 'Dodano aukcję na Ebay',
+          error: 'Błąd podczas dodawania aukcji na Ebay',
+        });
       } catch {
         toast.error('Błąd podczas dodawania aukcji na Ebay');
       }

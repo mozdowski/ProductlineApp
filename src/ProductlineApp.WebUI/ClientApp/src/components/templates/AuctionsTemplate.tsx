@@ -24,8 +24,12 @@ export default function AuctionsTemplate({
   selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  onEditAuction: (auctionId: string) => void;
-  onWithdrawAuction: (auctionId: string) => void;
+  onEditAuction: (auctionId: string) => Promise<boolean>;
+  onWithdrawAuction: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
   showActiveAuctions: boolean;
   searchValue: string;
   onChange: (e: any) => void;

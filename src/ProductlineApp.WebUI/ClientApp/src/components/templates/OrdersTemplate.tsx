@@ -10,12 +10,14 @@ export default function OrdersTemplate({
   handleClickTypeOrdersButton,
   searchValue,
   onChange,
+  markOrderAsCompleted,
 }: {
-  orderRecords: OrdersRecord[];
+  orderRecords?: OrdersRecord[];
   showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
   searchValue: string;
   onChange: (e: any) => void;
+  markOrderAsCompleted: (orderId: string) => void;
 }) {
   return (
     <>
@@ -28,6 +30,7 @@ export default function OrdersTemplate({
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             searchValue={searchValue}
             onChange={onChange}
+            markOrderAsCompleted={markOrderAsCompleted}
           />
         </div>
       </div>

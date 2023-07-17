@@ -6,6 +6,7 @@ using RestSharp;
 using RestSharp.Authenticators;
 using System.Net;
 using Newtonsoft.Json;
+using ProductlineApp.Application.Common.Platforms.Ebay.DTO;
 
 namespace ProductlineApp.Infrastructure.ExternalServices.Ebay;
 
@@ -163,7 +164,6 @@ public class EbayApiClient : IEbayApiClient
         {
             Authenticator = new JwtAuthenticator(accessToken),
         };
-        request.AddHeader("Content-Language", this._ebayConfiguration.ContentLanguage);
 
         var response = await this._restClient.ExecuteAsync(request);
 
@@ -322,6 +322,41 @@ public class EbayApiClient : IEbayApiClient
         if (!response.IsSuccessful || response.Data is null)
         {
             throw new Exception($"Failed to get return policies: {response.StatusCode} - {response.Content}");
+        }
+
+        return response.Data;
+    }
+
+    public async Task UpdateOffer(string accessToken, string offerId, EbayUpdateOfferRequest requestBody)
+    {
+        var request = new RestRequest($"sell/inventory/v1/offer/{offerId}", Method.Put)
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        request.AddHeader("Content-Language", this._ebayConfiguration.ContentLanguage);
+        request.AddJsonBody(requestBody, ContentType.Json);
+
+        var response = await this._restClient.ExecuteAsync(request);
+
+        if (!response.IsSuccessful)
+        {
+            throw new Exception($"Failed to create the offer: {response.StatusCode} - {response.Content}");
+        }
+    }
+
+    public async Task<EbayProductDetailsResponse> GetProductDetails(string accessToken, string sku)
+    {
+        var request = new RestRequest($"sell/inventory/v1/inventory_item/{sku}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<EbayProductDetailsResponse>(request);
+
+        if (!response.IsSuccessful || response.Data is null)
+        {
+            throw new Exception($"Failed to get ebay product details: {response.StatusCode} - {response.Content}");
         }
 
         return response.Data;

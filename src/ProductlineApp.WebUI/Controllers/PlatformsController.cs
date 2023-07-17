@@ -3,9 +3,11 @@ using Microsoft.AspNetCore.Mvc;
 using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Listing.DTO;
+using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.Repository;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 using ProductlineApp.Shared.Enums;
+using ProductlineApp.WebUI.DTO;
 using ProductlineApp.WebUI.DTO.Platforms;
 
 namespace ProductlineApp.WebUI.Controllers;
@@ -95,5 +97,29 @@ public class PlatformsController : ControllerBase
                 Name = Enum.Parse<PlatformNames>(p.Name.ToUpper()),
             }),
         });
+    }
+
+    [HttpPost("withdrawListing/{platformId:guid}")]
+    public async Task<IActionResult> WithdrawListingInstance(Guid platformId, [FromBody] WithdrawListingDtoRequest request)
+    {
+        var platformService = this._platformServiceDispatcher.Dispatch(platformId);
+
+        await platformService.WithdrawListingAsync(
+            ListingId.Create(request.ListingId),
+            ListingInstanceId.Create(request.ListingInstanceId));
+
+        return this.Ok();
+    }
+
+    [HttpPost("publishListing/{platformId:guid}")]
+    public async Task<IActionResult> PublishListingInstance(Guid platformId, [FromBody] WithdrawListingDtoRequest request)
+    {
+        var platformService = this._platformServiceDispatcher.Dispatch(platformId);
+
+        await platformService.PublishListingAsync(
+            ListingId.Create(request.ListingId),
+            ListingInstanceId.Create(request.ListingInstanceId));
+
+        return this.Ok();
     }
 }

@@ -3,11 +3,12 @@ import OrdersTemplate from '../components/templates/OrdersTemplate';
 import { OrdersRecord } from '../interfaces/orders/OrdersPageInteface';
 import { useOrdersService } from '../hooks/orders/useOrdersService';
 import { mapOrderStatusToString } from '../helpers/mappers';
+import { toast } from 'react-toastify';
 
 export default function Orders() {
   const [showNoImplementedOrders, setShowNoImplementedOrders] = useState<boolean>();
   const [searchValue, setSearchValue] = useState('');
-  const [orders, setOrders] = useState<OrdersRecord[]>([]);
+  const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);
   const { ordersService } = useOrdersService();
 
   const handleClickTypeOrdersButton = (e: any) => {
@@ -19,17 +20,28 @@ export default function Orders() {
     setSearchValue(e.target.value);
   };
 
-  const searchOrders = orders.filter((order) => {
-    return (
-      order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
-      order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
-      order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
-      order.client.toLowerCase().indexOf(searchValue) >= 0 ||
-      order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      order.status.indexOf(searchValue) >= 0
-    );
-  });
+  const handleMarkOrderAsCompleted = async (orderId: string) => {
+    try {
+      const res = await ordersService.markOrderAsCompleted(orderId);
+      toast.success('Zamówienie zrealizowane');
+    } catch {
+      toast.error('Błąd podczas zamykania zamówiena');
+    }
+  };
+
+  const searchOrders = orders
+    ? orders.filter((order) => {
+        return (
+          order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
+          order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
+          order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
+          order.client.toLowerCase().indexOf(searchValue) >= 0 ||
+          order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          order.statusText.indexOf(searchValue) >= 0
+        );
+      })
+    : undefined;
 
   useEffect(() => {
     ordersService.getOrdersList().then((res) => {
@@ -40,7 +52,8 @@ export default function Orders() {
         client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
         price: order.totalPrice,
         quantity: order.quantity,
-        status: mapOrderStatusToString(order.status),
+        statusText: mapOrderStatusToString(order.status),
+        status: order.status,
         shippingAddress: order.shippingAddress,
         items: order.items,
       }));
@@ -55,6 +68,7 @@ export default function Orders() {
       searchValue={searchValue}
       onChange={searchTableOrders}
       showNoImplementedOrders={showNoImplementedOrders}
+      markOrderAsCompleted={handleMarkOrderAsCompleted}
     />
   );
 }

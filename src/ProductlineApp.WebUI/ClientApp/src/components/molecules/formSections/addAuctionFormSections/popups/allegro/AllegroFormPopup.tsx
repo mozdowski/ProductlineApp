@@ -48,7 +48,7 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
   const [prodParameters, setProdParameters] = useState<AllegroBasicParameter[]>([]);
   const [listParameters, setListParameters] = useState<AllegroBasicParameter[]>([]);
 
-  let product = {
+  const product = {
     id: '',
     imageUrls: [''],
     description: '',
@@ -149,6 +149,7 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
           <img src={AllegroLogo} className="allegroBrandIcon" />
           {currentPage === PopupPages.ProductSelect && <p>Wybierz produkt z katalogu Allegro</p>}
           {currentPage === PopupPages.ParametersSet && <p>Dostosuj parametry produktu</p>}
+          {currentPage === PopupPages.ListingDetails && <p>Dostosuj parametry oferty</p>}
         </div>
         <div className="allegroPopupBody">
           {currentPage === PopupPages.ProductSelect && (

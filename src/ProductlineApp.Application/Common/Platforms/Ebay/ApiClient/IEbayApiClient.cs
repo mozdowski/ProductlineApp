@@ -1,3 +1,4 @@
+using ProductlineApp.Application.Common.Platforms.Ebay.DTO;
 using ProductlineApp.Shared.Models.Ebay;
 
 namespace ProductlineApp.Application.Common.Platforms.Ebay.ApiClient;
@@ -43,4 +44,8 @@ public interface IEbayApiClient
     Task<EbayPaymentPoliciesResponse> GetPaymentPolicies(string accessToken, string marketplaceId);
 
     Task<EbayReturnPoliciesResponse> GetReturnPolicies(string accessToken, string marketplaceId);
+
+    Task UpdateOffer(string accessToken, string offerId, EbayUpdateOfferRequest requestBody);
+
+    Task<EbayProductDetailsResponse> GetProductDetails(string accessToken, string sku);
 }

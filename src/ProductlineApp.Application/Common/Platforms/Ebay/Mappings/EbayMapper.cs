@@ -2,12 +2,12 @@ using AutoMapper;
 using ProductlineApp.Application.Common.Platforms.Ebay.DTO;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.Order.DTO;
-using ProductlineApp.Shared.Models.Common;
-using ProductlineApp.Shared.Models.Ebay;
-using System.Globalization;
 using ProductlineApp.Domain.Aggregates.Order.ValueObjects;
 using ProductlineApp.Domain.ValueObjects;
 using ProductlineApp.Shared.Enums;
+using ProductlineApp.Shared.Models.Common;
+using ProductlineApp.Shared.Models.Ebay;
+using System.Globalization;
 
 namespace ProductlineApp.Application.Common.Platforms.Ebay.Mappings;
 
@@ -53,7 +53,9 @@ public class EbayMapper : Profile
             .ForMember(x => x.Title, opt => opt.Ignore())
             .ForMember(x => x.Price, opt => opt.MapFrom(x => decimal.Parse(x.PricingSummary.Price.Value, NumberStyles.AllowDecimalPoint, CultureInfo.InvariantCulture)))
             .ForMember(x => x.Quantity, opt => opt.MapFrom(x => x.AvailableQuantity))
-            .ForMember(x => x.ListingId, opt => opt.MapFrom(x => x.Listing.ListingId))
+            .ForMember(x => x.PlatformListingId, opt => opt.MapFrom(x => x.OfferId))
+            .ForMember(x => x.ListingInstanceId, opt => opt.Ignore())
+            .ForMember(x => x.ListingId, opt => opt.Ignore())
             .ForMember(x => x.Description, opt => opt.MapFrom(x => x.ListingDescription))
             .ForMember(x => x.PlatformListingUrl, opt => opt.Ignore())
             .ForMember(x => x.IsActive, opt => opt.MapFrom(x => x.Status == "PUBLISHED" && x.Listing.ListingStatus == "ACTIVE"))
@@ -64,20 +66,32 @@ public class EbayMapper : Profile
             .ForMember(x => x.ProductName, opt => opt.Ignore())
             .ForMember(x => x.ProductImageUrl, opt => opt.Ignore());
 
-        // this.CreateMap<Product, ListingDtoResponse>()
-        //     .ForMember(x => x.Title, opt => opt.MapFrom(x => x.Name))
-        //     .ForMember(x => x.Price, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.Quantity, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.ListingId, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.Description, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.PlatformListingUrl, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.IsActive, opt => opt.DoNotUseDestinationValue())
-        //     .ForMember(x => x.Sku, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.Category, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.DaysToExpire, opt => opt.UseDestinationValue())
-        //     .ForMember(x => x.ProductId, opt => opt.MapFrom(x => x.Id.Value))
-        //     .ForMember(x => x.ProductName, opt => opt.MapFrom(x => x.Name))
-        //     .ForMember(x => x.ProductImage, opt => opt.MapFrom(x => x.Image));
+        this.CreateMap<EbayOfferDtoRequest, EbayUpdateOfferRequest>()
+            .ForMember(dest => dest.AvailableQuantity, opt => opt.MapFrom(src => src.Quantity))
+            .ForMember(
+                dest => dest.QuantityLimitPerBuyer,
+                opt => opt.MapFrom(src => src.QuantityLimitPerBuyer ?? 0))
+            .ForMember(
+                dest => dest.PricingSummary,
+                opt => opt.MapFrom(src => new EbayUpdateOfferRequest.PricingSummaryObject
+                {
+                    Price = new EbayUpdateOfferRequest.Price
+                    {
+                        Value = src.Price,
+                        Currency = "PLN",
+                    },
+                }))
+            .ForMember(
+                dest => dest.ListingPolicies,
+                opt => opt.MapFrom(src => new EbayUpdateOfferRequest.ListingPoliciesObject
+                {
+                    FulfillmentPolicyId = src.FulfillmentPolicyId,
+                    PaymentPolicyId = src.PaymentPolicyId,
+                    ReturnPolicyId = src.ReturnPolicyId,
+                }))
+            .ForMember(dest => dest.ListingDescription, opt => opt.MapFrom(x => x.ListingDescription))
+            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(x => x.CategoryId))
+            .ForMember(dest => dest.MerchantLocationKey, opt => opt.MapFrom(x => x.LocationKey));
 
         this.CreateMap<EbaySuggestedCategoriesResponse, PlatformCategoriesListDto>()
             .ForMember(dest => dest.Categories, opt => opt.MapFrom(src => src.CategorySuggestions.Select(cs => cs.Category)));
