@@ -5,7 +5,15 @@ import { TableFooter } from '../../molecules/table/footers/TableFooter';
 import { ProductsHederActions } from '../../molecules/table/headersActions/ProductsHederActions';
 import { ProductsRecord } from '../../../interfaces/products/ProductsPageInteface';
 
-export default function ProductsTable({ productRecords, searchValue, onChange }: { productRecords: ProductsRecord[], searchValue: string, onChange: (e: any) => void }) {
+export default function ProductsTable({
+  productRecords,
+  searchValue,
+  onChange,
+}: {
+  productRecords: ProductsRecord[];
+  searchValue: string;
+  onChange: (e: any) => void;
+}) {
   return (
     <>
       <ProductsHederActions searchValue={searchValue} onChange={onChange} />

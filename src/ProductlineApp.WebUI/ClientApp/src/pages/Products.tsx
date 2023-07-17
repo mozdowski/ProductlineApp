@@ -10,13 +10,13 @@ export default function Products(this: any) {
   const { productsService } = useProductsService();
   const [height, setHeight] = useState(0);
   const [products, setProducts] = useState<ProductsRecord[]>([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
-  const searchTableProducts = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchValue(e.target.value)
-  }
+  const searchTableProducts = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchValue(e.target.value);
+  };
 
-  const searchProducts = products.filter(product => {
+  const searchProducts = products.filter((product) => {
     return (
       product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
       product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
@@ -25,7 +25,7 @@ export default function Products(this: any) {
       product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
       product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
       product.listingStatus.toString().indexOf(searchValue) >= 0
-    )
+    );
   });
 
   useEffect(() => {
@@ -57,7 +57,11 @@ export default function Products(this: any) {
   return (
     <>
       <Outlet />
-      <ProductsTemplate productRecords={searchProducts} searchValue={searchValue} onChange={searchTableProducts} />
+      <ProductsTemplate
+        productRecords={searchProducts}
+        searchValue={searchValue}
+        onChange={searchTableProducts}
+      />
     </>
   );
 }

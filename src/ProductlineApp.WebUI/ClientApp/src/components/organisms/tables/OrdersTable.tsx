@@ -11,13 +11,13 @@ export default function OrdersTable({
   showNoImplementedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
 }: {
   orderRecords: OrdersRecord[];
   showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
-  searchValue: string,
-  onChange: (e: any) => void
+  searchValue: string;
+  onChange: (e: any) => void;
 }) {
   return (
     <>
@@ -29,7 +29,10 @@ export default function OrdersTable({
       />
       <table className="orders">
         <OrdersTableHeader />
-        <OrdersTableBody orderRecords={orderRecords} showNoImplementedOrders={showNoImplementedOrders} />
+        <OrdersTableBody
+          orderRecords={orderRecords}
+          showNoImplementedOrders={showNoImplementedOrders}
+        />
       </table>
       <TableFooter />
     </>

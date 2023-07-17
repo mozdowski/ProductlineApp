@@ -9,12 +9,12 @@ export const OrdersHederActions = ({
   showNoImplementedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
 }: {
   showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
   searchValue: string;
-  onChange: (e: any) => void
+  onChange: (e: any) => void;
 }) => {
   return (
     <>

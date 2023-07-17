@@ -13,7 +13,9 @@ function ImpementedOrdersButton({
   return (
     <div
       id={id}
-      className={showNoImplementedOrders ? "implementedOrdersButton selected" : "implementedOrdersButton"}
+      className={
+        showNoImplementedOrders ? 'implementedOrdersButton selected' : 'implementedOrdersButton'
+      }
       onClick={handleClickTypeOrdersButton}
     >
       <p>Zrealizowane</p>
