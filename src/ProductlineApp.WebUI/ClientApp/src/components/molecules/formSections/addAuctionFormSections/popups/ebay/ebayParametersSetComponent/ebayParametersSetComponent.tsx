@@ -10,24 +10,25 @@ import { CircularProgress } from '@mui/material';
 import BackButton from '../../../../../../atoms/buttons/backButton/backButton';
 import FormInput from '../../../../../../atoms/common/formInput/formInput';
 import AutocompleteComboBox from '../../../../../../atoms/common/autocomplete/autocomplete';
+import MultipleSelectCheckmarks from '../../../../../../atoms/common/multiselect/multiselect';
 
 interface EbayParametersSetComponentProps {
   categoryId: string;
   onCancel: () => void;
-  onNext: (data: { [index: string]: any }) => void;
+  onNext: (data: Record<string, string[]>) => void;
   onPrev: () => void;
 }
 
 enum EbayAspectMode {
-    FREE_TEXT='FREE_TEXT',
-    SELECTION_ONLY='SELECTION_ONLY',
+  FREE_TEXT = 'FREE_TEXT',
+  SELECTION_ONLY = 'SELECTION_ONLY',
 }
 
 const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
   categoryId,
   onCancel,
   onNext,
-  onPrev
+  onPrev,
 }) => {
   const { auctionsService } = useAuctionsService();
   const [categoryAspects, setCategoryAspects] = useState<EbayCategoryAspect[]>([]);
@@ -36,59 +37,59 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [validationSchema, setValidationSchema] = useState<Yup.ObjectSchema<any> | null>(null);
 
-useEffect(() => {
-  const fetchData = async () => {
-    setIsLoading(true);
-    const aspectsResponse = await auctionsService.getEbayCategoryAspects(categoryId);
-    setCategoryAspects(aspectsResponse.platformAspects);
-    initForm(aspectsResponse.platformAspects);
-    setIsLoading(false);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const aspectsResponse = await auctionsService.getEbayCategoryAspects(categoryId);
+      setCategoryAspects(aspectsResponse.platformAspects);
+      initForm(aspectsResponse.platformAspects);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
+  const initForm = (aspects: EbayCategoryAspect[]) => {
+    const schemaObject: Record<string, Yup.AnySchema> = {};
+
+    aspects.forEach((x) => {
+      const mode = x.mode as EbayAspectMode;
+      const value = x.isRequired && mode === EbayAspectMode.SELECTION_ONLY ? '0' : '';
+      setParametersForm((prev) => ({
+        ...prev,
+        [x.name]: value,
+      }));
+
+      if (x.isRequired) {
+        const fieldSchema = Yup.mixed().test(
+          `is-required-${x.name}`,
+          'Wartość wymagana',
+          (value) => value !== '',
+        );
+        schemaObject[x.name] = fieldSchema;
+      }
+    });
+
+    setValidationSchema(Yup.object().shape(schemaObject));
   };
 
-  fetchData();
-}, []);
-
-const initForm = (aspects: EbayCategoryAspect[]) => {
-  const schemaObject: Record<string, Yup.AnySchema> = {};
-
-  aspects.forEach((x) => {
-    const mode = x.mode as EbayAspectMode;
-    const value = x.isRequired && mode === EbayAspectMode.SELECTION_ONLY ? '0' : '';
-    setParametersForm((prev) => ({
-      ...prev,
-      [x.name]: value,
-    }));
-
-    if (x.isRequired) {
-      const fieldSchema = Yup.mixed().test(
-        `is-required-${x.name}`,
-        'Wartość wymagana',
-        (value) => value !== ''
-      );
-      schemaObject[x.name] = fieldSchema;
+  const validateForm = async () => {
+    if (!validationSchema) return true;
+    try {
+      await validationSchema.validate(parametersForm, { abortEarly: false });
+      setErrors({});
+      return true;
+    } catch (validationErrors: any) {
+      const errors: Partial<{ [index: string]: any }> = {};
+      validationErrors.inner.forEach((error: any) => {
+        errors[error.path as keyof { [index: string]: any }] = error.message;
+      });
+      setErrors(errors);
+      return false;
     }
-  });
+  };
 
-  setValidationSchema(Yup.object().shape(schemaObject));
-};
-
-const validateForm = async () => {
-  if (!validationSchema) return true;
-  try {
-    await validationSchema.validate(parametersForm, { abortEarly: false });
-    setErrors({});
-    return true;
-  } catch (validationErrors: any) {
-    const errors: Partial<{ [index: string]: any }> = {};
-    validationErrors.inner.forEach((error: any) => {
-      errors[error.path as keyof { [index: string]: any }] = error.message;
-    });
-    setErrors(errors);
-    return false;
-  }
-};
-
-  const handleChange = (name: string, value: string) => {
+  const handleChange = (name: string, value: string | string[]) => {
     if (!name || !value) return;
 
     setParametersForm((prev) => ({
@@ -97,76 +98,87 @@ const validateForm = async () => {
     }));
   };
 
+  const prepareAspectsForRequest = (): Record<string, any> => {
+    const filteredObj: Record<string, string[]> = {};
+
+    categoryAspects.forEach((x) => {
+      if (parametersForm[x.name]) {
+        const value = parametersForm[x.name];
+        const values = Array.isArray(value) ? value : [value];
+
+        filteredObj[x.name] =
+          (x.mode as EbayAspectMode) === EbayAspectMode.FREE_TEXT
+            ? values
+            : values.map((index) => x.values[index]);
+      }
+    });
+
+    return filteredObj;
+  };
+
   const handleNext = async () => {
     const isValid = await validateForm();
     if (!isValid) return;
 
-    const parametersFormValuesStringified = categoryAspects.map(x => {
-        if (!parametersForm[x.name]) return;
-        else {
-            return ({
-                name: x.name,
-                value: x.values[parametersForm[x.name]]
-            });
-        }
-    })
+    const aspects = prepareAspectsForRequest();
 
-    onNext(parametersFormValuesStringified.filter(x => x));
+    onNext(aspects);
   };
 
   const renderComponentForAspect = (aspect: EbayCategoryAspect) => {
     const mode = aspect.mode as EbayAspectMode;
 
     if (mode === EbayAspectMode.FREE_TEXT) {
-        return (
-            <AutocompleteComboBox
-                value={parametersForm[aspect.name]}
-                onChange={handleChange}
-                placeholder={aspect.name}
-                options={aspect.values.map((option, index) => ({
-                    label: option,
-                    value: index,
-                }))}
-                name={aspect.name}
-                error={errors[aspect.name]}
-            />
-        );
+      return (
+        <AutocompleteComboBox
+          value={parametersForm[aspect.name]}
+          onChange={handleChange}
+          placeholder={aspect.name}
+          options={aspect.values.map((option, index) => ({
+            label: option,
+            value: index,
+          }))}
+          name={aspect.name}
+          error={errors[aspect.name]}
+        />
+      );
     } else {
-        if (aspect.isSingleValue) {
-            return (<FormSelect
-                value={parametersForm[aspect.name]}
-                onChange={handleChange}
-                options={aspect.values.map((option, index) => ({
-                    label: option,
-                    value: index,
-                }))}
-                name={aspect.name}
-                error={errors[aspect.name]}
-            />)
-        } else {
-            <AutocompleteComboBox
-                value={parametersForm[aspect.name]}
-                onChange={handleChange}
-                placeholder={aspect.name}
-                options={aspect.values.map((option, index) => ({
-                    label: option,
-                    value: index,
-                }))}
-                name={aspect.name}
-                error={errors[aspect.name]}
-            />
-        }
+      if (aspect.isSingleValue) {
+        return (
+          <FormSelect
+            value={parametersForm[aspect.name]}
+            onChange={handleChange}
+            options={aspect.values.map((option, index) => ({
+              label: option,
+              value: index,
+            }))}
+            name={aspect.name}
+            error={errors[aspect.name]}
+          />
+        );
+      } else {
+        <MultipleSelectCheckmarks
+          value={parametersForm[aspect.name]}
+          onChange={handleChange}
+          options={aspect.values.map((option, index) => ({
+            label: option,
+            value: index,
+          }))}
+          name={aspect.name}
+          error={errors[aspect.name]}
+        />;
+      }
     }
   };
 
   return (
     <div className="ebayPopupBody">
-        {isLoading && (
+      {isLoading && (
         <div className="loadingCircle">
           <CircularProgress />
         </div>
       )}
-        {categoryAspects && categoryAspects.length > 0 && !isLoading && (
+      {categoryAspects && categoryAspects.length > 0 && !isLoading && (
         <div className="ebayAuctionParameters">
           {categoryAspects.map((aspect, index) => (
             <div className="ebayProductParameter" key={index}>
@@ -180,7 +192,7 @@ const validateForm = async () => {
       )}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton">
-            <BackButton onClick={onPrev} />
+          <BackButton onClick={onPrev} />
         </div>
         <div className="addAuctionEbayButtons">
           <CancelButton onClick={onCancel} />

@@ -70,4 +70,12 @@ public class EbayController : ControllerBase
 
         return this.Ok(response);
     }
+
+    [HttpGet("userPolicies")]
+    public async Task<IActionResult> GetUserPolicies()
+    {
+        var response = await this._ebayService.GetUserPolicies();
+
+        return this.Ok(response);
+    }
 }

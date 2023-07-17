@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductlineApp.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using ProductlineApp.Infrastructure.Persistance;
 namespace ProductlineApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductlineDbContext))]
-    partial class ProductlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230717103845_ChangedImgVarchar")]
+    partial class ChangedImgVarchar
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,19 +204,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("816066a8-0840-4a81-92ff-7dc91b7ccb09"),
-                            CreatedAt = new DateTime(2023, 7, 17, 10, 45, 6, 172, DateTimeKind.Utc).AddTicks(2210),
+                            Id = new Guid("e39a5a2f-0407-45ad-b6e6-86362d7c27fb"),
+                            CreatedAt = new DateTime(2023, 7, 17, 10, 38, 45, 428, DateTimeKind.Utc).AddTicks(2440),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 17, 10, 45, 6, 312, DateTimeKind.Utc).AddTicks(7550),
+                            LastModified = new DateTime(2023, 7, 17, 10, 38, 45, 561, DateTimeKind.Utc).AddTicks(5100),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("2c036535-b02b-4652-9004-bd325f516f06"),
-                            CreatedAt = new DateTime(2023, 7, 17, 10, 45, 6, 172, DateTimeKind.Utc).AddTicks(2230),
+                            Id = new Guid("111c6f32-4695-46a7-a366-cafd3a853214"),
+                            CreatedAt = new DateTime(2023, 7, 17, 10, 38, 45, 428, DateTimeKind.Utc).AddTicks(2460),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 17, 10, 45, 6, 312, DateTimeKind.Utc).AddTicks(7610),
+                            LastModified = new DateTime(2023, 7, 17, 10, 38, 45, 561, DateTimeKind.Utc).AddTicks(5180),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -521,7 +524,7 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                             b1.Property<string>("Url")
                                 .IsRequired()
-                                .HasColumnType("varchar(800)")
+                                .HasColumnType("varchar(500)")
                                 .HasColumnName("ImageUrl");
 
                             b1.HasKey("ProductId", "Id");

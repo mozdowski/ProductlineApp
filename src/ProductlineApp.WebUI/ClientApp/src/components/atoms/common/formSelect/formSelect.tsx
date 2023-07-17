@@ -55,7 +55,7 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
   };
 
   return (
-    <div className='formSelect'>
+    <div className="formSelect">
       <FormControl>
         <Select
           labelId="demo-multiple-checkbox-label"

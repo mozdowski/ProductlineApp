@@ -78,22 +78,23 @@ const EbayCategorySelect: React.FC<EbayCategorySelectProps> = ({ onCancel, onNex
   };
 
   const handleNext = () => {
-    
     onNext(selelectedCategory.id);
   };
 
   return (
     <div className="ebayPopupBody">
-                {isLoading && (
+      {isLoading && (
         <div className="loadingCircle">
           <CircularProgress />
         </div>
       )}
-      {!isLoading && <TreeSelect
-        value={selelectedCategory.name}
-        options={categoryTree}
-        onChange={handleCategoryChange}
-      />}
+      {!isLoading && (
+        <TreeSelect
+          value={selelectedCategory.name}
+          options={categoryTree}
+          onChange={handleCategoryChange}
+        />
+      )}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton"></div>
         <div className="addAuctionEbayButtons">

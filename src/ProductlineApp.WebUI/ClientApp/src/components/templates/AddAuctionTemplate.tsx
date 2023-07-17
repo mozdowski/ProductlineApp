@@ -1,14 +1,8 @@
-import { AuctionForm } from '../../interfaces/auctions/auctionForm';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
-import { ProductsRecord } from '../../interfaces/products/ProductsPageInteface';
-import { AddProductRequest } from '../../interfaces/products/addProductRequest';
+import { CreateEbayAuctionRequest } from '../../interfaces/auctions/createEbayAuctionRequest';
 import { ProductAuctionData } from '../../interfaces/products/getProductsSKU';
-import { ProductForm } from '../../interfaces/products/productForm';
-import Photos from '../molecules/formSections/addProductFormSections/Photos/Photos';
 import AddAuctionForm from '../organisms/forms/addAuctionForm/AddAuctionForm';
-import AddProductForm from '../organisms/forms/addProductForm/AddProductForm';
 import AddAuctionPageHeader from '../organisms/pageHeaders/AddAuctionPageHeader';
-import AddProductPageHeader from '../organisms/pageHeaders/AddProductPageHeader';
 import './css/AddAuctionTemplate.css';
 
 export default function AddAuctionTemplate({
@@ -17,6 +11,7 @@ export default function AddAuctionTemplate({
   onProductChange,
   onSubmit,
   onAllegroFormSubmit,
+  onEbayFormSubmit,
   errors,
   platformConnections,
 }: {
@@ -25,6 +20,7 @@ export default function AddAuctionTemplate({
   onProductChange: (id: string) => void;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
+  onEbayFormSubmit: (form: CreateEbayAuctionRequest) => void;
   errors: any;
   platformConnections: string[];
 }) {
@@ -39,6 +35,7 @@ export default function AddAuctionTemplate({
             onProductChange={onProductChange}
             onSubmit={onSubmit}
             onAllegroFormSubmit={onAllegroFormSubmit}
+            onEbayFormSubmit={onEbayFormSubmit}
             errors={errors}
             platformConnections={platformConnections}
           />

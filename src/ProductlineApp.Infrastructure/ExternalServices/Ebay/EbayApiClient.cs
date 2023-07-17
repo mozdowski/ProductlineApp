@@ -276,6 +276,57 @@ public class EbayApiClient : IEbayApiClient
         return jsonResponse["categorySubtreeNode"]?["category"]?["categoryName"]?.ToString() ?? string.Empty;
     }
 
+    public async Task<EbayFulfillmentPoliciesResponse> GetFulfillmentPolicies(string accessToken, string marketplaceId)
+    {
+        var request = new RestRequest($"sell/account/v1/fulfillment_policy?marketplace_id={marketplaceId}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<EbayFulfillmentPoliciesResponse>(request);
+
+        if (!response.IsSuccessful || response.Data is null)
+        {
+            throw new Exception($"Failed to get fulfillment policies: {response.StatusCode} - {response.Content}");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<EbayPaymentPoliciesResponse> GetPaymentPolicies(string accessToken, string marketplaceId)
+    {
+        var request = new RestRequest($"sell/account/v1/payment_policy?marketplace_id={marketplaceId}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<EbayPaymentPoliciesResponse>(request);
+
+        if (!response.IsSuccessful || response.Data is null)
+        {
+            throw new Exception($"Failed to get payment policies: {response.StatusCode} - {response.Content}");
+        }
+
+        return response.Data;
+    }
+
+    public async Task<EbayReturnPoliciesResponse> GetReturnPolicies(string accessToken, string marketplaceId)
+    {
+        var request = new RestRequest($"sell/account/v1/return_policy?marketplace_id={marketplaceId}")
+        {
+            Authenticator = new JwtAuthenticator(accessToken),
+        };
+
+        var response = await this._restClient.ExecuteAsync<EbayReturnPoliciesResponse>(request);
+
+        if (!response.IsSuccessful || response.Data is null)
+        {
+            throw new Exception($"Failed to get return policies: {response.StatusCode} - {response.Content}");
+        }
+
+        return response.Data;
+    }
+
     public async Task<IEnumerable<EbayOrderResponse>> GetOrders(string accessToken, IEnumerable<string> orderIds)
     {
         // bool hasMore = true;

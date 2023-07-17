@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TextField, Autocomplete } from '@mui/material';
-import './autocomplete.css'
+import './autocomplete.css';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -23,10 +23,19 @@ const AutocompleteStyle = {
   backgroundColor: '#f8f8f8',
   border: '1px solid #d8d8d8',
   borderRadius: '8px',
-  padding: 'inherit',
-  margin: 'auto',
   '& fieldset': {
     border: 'none',
+  },
+};
+
+const TextfieldStyle = {
+  width: '100%',
+  '& input': {
+    height: '12px',
+    color: '#757575',
+    fontFamily: 'Poppins, sans-serif',
+    fontSize: '12px',
+    fontWeight: 300,
   },
 };
 
@@ -47,23 +56,22 @@ const AutocompleteComboBox: React.FC<AutocompleteComboBoxProps> = ({
   options,
   error,
 }) => {
-
   const handleChange = (event: any, value: any) => {
-    console.log(value);
+    onChange(name, value);
   };
 
   return (
-    <div className='autocompleteContainer'>
-        <Autocomplete
-            sx={AutocompleteStyle}
-            id={name}
-            freeSolo
-            value={value}
-            onChange={handleChange}
-            options={options.map((option) => option.label)}
-            renderInput={(params) => <TextField {...params} label={placeholder} />}
+    <div className="autocompleteContainer">
+      <Autocomplete
+        sx={AutocompleteStyle}
+        id={name}
+        freeSolo
+        value={value}
+        onChange={handleChange}
+        options={options.map((option) => option.label)}
+        renderInput={(params) => <TextField sx={TextfieldStyle} {...params} />}
       />
-            {error && <span className="autocompleteError">{error}</span>}
+      {error && <span className="autocompleteError">{error}</span>}
     </div>
   );
 };

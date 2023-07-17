@@ -34,7 +34,7 @@ public class EbayServiceMapper : Profile
             {
                 Title = src.Name,
                 Description = src.Description,
-                ImageUrls = new List<string> { src.Image.Url.ToString() }.Concat(src.Gallery.Select(i => i.Url.ToString())).ToList(),
+                ImageUrls = new List<string> { src.Image.GetUrlStringWithoutQueryParams() }.Concat(src.Gallery.Select(i => i.GetUrlStringWithoutQueryParams())).ToList(),
             }))
             .ForMember(dest => dest.Condition, opt => opt.MapFrom(src => "NEW"))
             .ForMember(dest => dest.Availability, opt => opt.MapFrom(src => new EbayCreateOrReplaceInventoryRequest.AvailabilityObject

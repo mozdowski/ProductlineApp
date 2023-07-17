@@ -2,10 +2,12 @@ import { AllegroAuctionRenewalRequest } from '../../interfaces/auctions/allegroA
 import { AllegroOfferProductDetailsResponse } from '../../interfaces/auctions/allegroOfferProductDetailsResponse';
 import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
+import { CreateEbayAuctionRequest } from '../../interfaces/auctions/createEbayAuctionRequest';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
 import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
 import { EbayCategoryAspectsResponse } from '../../interfaces/auctions/ebayCategoryAspectsResponse';
 import { EbayCategoryTreeResponse } from '../../interfaces/auctions/ebayCategoryTreeResponse';
+import { EbayUserPoliciesResponse } from '../../interfaces/auctions/ebayUserPoliciesResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { WithdrawAuctionRequest } from '../../interfaces/auctions/withdrawAuctionRequest';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
@@ -106,6 +108,14 @@ export class AuctionsService {
     return this.httpService.get<EbayCategoryAspectsResponse>(
       `/ebay/aspectsForCategory/${categoryId}`,
     );
+  }
+
+  public async getEbayUserPolicies(): Promise<EbayUserPoliciesResponse> {
+    return this.httpService.get<EbayUserPoliciesResponse>('/ebay/userPolicies');
+  }
+
+  public async createEbayListing(data: CreateEbayAuctionRequest): Promise<void> {
+    return this.httpService.post<void>('/ebay/createListing', data);
   }
 }
 

@@ -18,4 +18,6 @@ public interface IEbayService : IPlatformService
     Task<EbayCategoryTreeDto> GetCategories();
 
     Task<EbayLocationsDtoResponse> GetLocations();
+
+    Task<EbayUserPolicies> GetUserPolicies();
 }

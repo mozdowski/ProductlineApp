@@ -8,6 +8,7 @@ import { ProductAuctionData } from '../interfaces/products/getProductsSKU';
 import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../interfaces/auctions/createListingTemplateRequest';
 import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
+import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
@@ -19,6 +20,7 @@ export default function AddAuction() {
   const { auctionsService } = useAuctionsService();
   const [products, setProducts] = useState<ProductAuctionData[]>();
   const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
+  const [ebayListingForm, setEbayListingForm] = useState<CreateEbayAuctionRequest | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
 
@@ -129,11 +131,27 @@ export default function AddAuction() {
       }
     }
 
+    if (ebayListingForm) {
+      const ebayListingBody: CreateEbayAuctionRequest = ebayListingForm;
+      ebayListingBody.listingId = listingId;
+
+      try {
+        const ebayResponse = await auctionsService.createEbayListing(ebayListingBody);
+        toast.success('Dodano aukcję na Ebay');
+      } catch {
+        toast.error('Błąd podczas dodawania aukcji na Ebay');
+      }
+    }
+
     navigate('/auctions');
   };
 
   const handleAllegroForm = (form: CreateAllegroAuction) => {
     setAllegroListingForm(form);
+  };
+
+  const handleEbayForm = (form: CreateEbayAuctionRequest) => {
+    setEbayListingForm(form);
   };
 
   return (
@@ -147,6 +165,7 @@ export default function AddAuction() {
           onAllegroFormSubmit={handleAllegroForm}
           products={products as ProductAuctionData[]}
           platformConnections={platformConnections}
+          onEbayFormSubmit={handleEbayForm}
         />
       )}
     </>
