@@ -66,11 +66,63 @@ tbody tr:nth-child(odd) {
 }
 
 /* buttons Action */
+
+.productsButtonsAction {
+  display: inline-flex;
+}
+
 .productsButtonsAction .editProductIcon {
   margin-right: 8px;
   cursor: pointer;
+  width: 22px;
+  height: 22px;
 }
 
 .productsButtonsAction .deleteProductIcon {
   cursor: pointer;
+  width: 22px;
+  height: 22px;
+}
+
+.canceleDeleteProductButton .canceleDeleteProductIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  background-size: cover;
+}
+
+.canceleDeleteProductButton {
+  align-items: center;
+  display: flex;
+}
+
+.canceleDeleteProductButton .cancelTableIcon {
+  background-image: url('../../../../../assets/icons/cancelTable_icon.svg');
+}
+
+.canceleDeleteProductButton:hover .cancelTableIcon {
+  background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
+}
+
+
+
+.acceptDeleteProductButton .acceptDeleteProductIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  margin-left: 8px;
+  background-size: cover;
+}
+
+.acceptDeleteProductButton {
+  align-items: center;
+  display: flex;
+}
+
+.acceptDeleteProductButton .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon.svg');
+}
+
+.acceptDeleteProductButton:hover .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }

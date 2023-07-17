@@ -57,6 +57,33 @@ tbody tr:nth-child(odd) {
 }
 
 /* buttons Action */
+.ordersButtonsAction {
+  display: inline-flex;
+}
+
 .ordersButtonsAction .editOrderIcon {
   cursor: pointer;
+  width: 22px;
+  height: 22px;
+}
+
+.assignedOrderButton .assignOrderIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  margin-left: 8px;
+  background-size: cover;
+}
+
+.assignedOrderButton {
+  align-items: center;
+  display: flex;
+}
+
+.assignedOrderButton .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon.svg');
+}
+
+.assignedOrderButton:hover .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }

@@ -5,24 +5,30 @@ import AuctionsTable from '../organisms/tables/AuctionsTable';
 import AmazonAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AmazonAuctionsButton';
 import EbayAuctionsButton from '../atoms/buttons/auctionPortalsButtons/EbayAuctionsButton';
 import OlxAuctionsButton from '../atoms/buttons/auctionPortalsButtons/OlxAuctionsButton';
+import { Platform } from '../../interfaces/platforms/platform';
 import { PlatformEnum } from '../../enums/platform.enum';
+import AllegroAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AllegroAuctionsButton';
 
 export default function AuctionsTemplate({
   auctionRecords,
   selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
   handleClickTypeAuctionsButton,
-  showActiveAuctions,
   onEditAuction,
   onWithdrawAuction,
+  showActiveAuctions,
+  searchValue,
+  onChange
 }: {
-  auctionRecords?: AuctionsRecord[];
-  selectedAuctionPortal?: PlatformEnum;
+  auctionRecords: AuctionsRecord[];
+  selectedAuctionPortal: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  showActiveAuctions: boolean;
   onEditAuction: (auctionId: string) => void;
   onWithdrawAuction: (auctionId: string) => void;
+  showActiveAuctions: boolean;
+  searchValue: string;
+  onChange: (e: any) => void
 }) {
   return (
     <>
@@ -33,21 +39,21 @@ export default function AuctionsTemplate({
           selectedAuctionPortal={selectedAuctionPortal}
           handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         />
-        <AmazonAuctionsButton
+        <AllegroAuctionsButton
           id={PlatformEnum.ALLEGRO}
           selectedAuctionPortal={selectedAuctionPortal}
-          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
-        />
+          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton} />
       </div>
       <div className="content">
         <div className="tableAuctions">
           <AuctionsTable
             auctionRecords={auctionRecords}
-            showActiveAuctions={showActiveAuctions}
             handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
             onEditAuction={onEditAuction}
             onWithdrawAuction={onWithdrawAuction}
-          />
+            showActiveAuctions={showActiveAuctions}
+            searchValue={searchValue}
+            onChange={onChange} />
         </div>
       </div>
     </>

@@ -1,9 +1,8 @@
 import React from 'react';
 import './css/ProductAuctionLinksSection.css';
 import EbayLink from '../../atoms/links/EbayLink';
-import OlxLink from '../../atoms/links/OlxLink';
-import AmazonLink from '../../atoms/links/AmazonLink';
 import { PlatformEnum } from '../../../enums/platform.enum';
+import AllegroLink from '../../atoms/links/AllegroLink';
 
 function ProductAuctionLinksSection({ platformsListedOn }: { platformsListedOn: PlatformEnum[] }) {
   return (
@@ -11,8 +10,7 @@ function ProductAuctionLinksSection({ platformsListedOn }: { platformsListedOn: 
       {platformsListedOn.map((item, key) => (
         <>
           {item === PlatformEnum.EBAY && <EbayLink />}
-          {item === PlatformEnum.OLX && <OlxLink />}
-          {item === PlatformEnum.AMAZON && <AmazonLink />}
+          {item === PlatformEnum.ALLEGRO && <AllegroLink />}
         </>
       ))}
     </div>

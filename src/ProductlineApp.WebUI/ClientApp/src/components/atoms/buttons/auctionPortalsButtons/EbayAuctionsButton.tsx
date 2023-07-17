@@ -17,7 +17,7 @@ function EbayAuctionsButton({
       className={selectedAuctionPortal === PlatformEnum.EBAY ? 'ebayButton selected' : 'ebayButton'}
       onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.EBAY)}
     >
-      <img className="ebayIcon" src={EbayIcon} />
+      <span className="iconAuctionsEbay ebayAuctionsIcon" />
     </div>
   );
 }

@@ -18,6 +18,9 @@ export default function Auctions() {
   const [editAuctionValues, setEditAuctionValues] = useState<any>(undefined);
   const [selectedAuctionId, setSelectedAuctionId] = useState<string>();
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
+  const { auctionsService } = useAuctionsService();
+  const [auctions, setAuctions] = useState<AuctionsRecord[]>();
+  const [searchValue, setSearchValue] = useState("");
 
   const handleClickTypeAuctionPortalButton = (platformName: PlatformEnum) => {
     setSelectedAuctionPortal(getPlatformByName(platformName));
@@ -32,8 +35,21 @@ export default function Auctions() {
     // setAuctions(auctions.filter(x => x.isActive == setActive));
   };
 
-  const { auctionsService } = useAuctionsService();
-  const [auctions, setAuctions] = useState<AuctionsRecord[] | undefined>(undefined);
+  const searchTableAuctions = (e: { target: { value: React.SetStateAction<string>; }; }) => {
+    setSearchValue(e.target.value)
+  }
+
+  const searchAuctions = auctions?.filter(auction => {
+    return (
+      auction.auctionID.toLowerCase().indexOf(searchValue) >= 0 ||
+      auction.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+      auction.brand.toLowerCase().indexOf(searchValue) >= 0 ||
+      auction.productName.toLowerCase().indexOf(searchValue) >= 0 ||
+      auction.category.toLowerCase().indexOf(searchValue) >= 0 ||
+      auction.price.toString().indexOf(searchValue) >= 0 ||
+      auction.quantity.toString().indexOf(searchValue) >= 0
+    )
+  });
 
   useEffect(() => {
     if (platforms) {
@@ -59,7 +75,7 @@ export default function Auctions() {
       }));
       setAuctions(auctionsRecords);
     });
-  }, [selectedAuctionPortal, refreshRecords]);
+  }, [selectedAuctionPortal, refreshRecords, searchValue]);
 
   const handleEditAuction = async (auctionId: string) => {
     setSelectedAuctionId(auctionId);
@@ -120,13 +136,15 @@ export default function Auctions() {
     <>
       <Outlet />
       <AuctionsTemplate
-        auctionRecords={auctions}
+        auctionRecords={searchAuctions}
         selectedAuctionPortal={selectedAuctionPortal?.platformName}
         handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         showActiveAuctions={showActiveAuctions}
         handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
         onEditAuction={handleEditAuction}
         onWithdrawAuction={handleWithdrawAuction}
+        onChange={searchTableAuctions}
+        searchValue={searchValue}
       />
       {editAuctionValues && selectedAuctionPortal?.platformName === PlatformEnum.ALLEGRO && (
         <AllegroFormPopup

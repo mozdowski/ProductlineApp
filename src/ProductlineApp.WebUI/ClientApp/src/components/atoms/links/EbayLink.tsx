@@ -5,7 +5,9 @@ import './css/EbayLink.css';
 function EbayLink() {
   return (
     <a href="https://www.ebay.pl" target="_blank" rel="noopener noreferrer" className="ebayLink">
-      <img src={EbayIcon} className="ebayIcon"></img>
+      <div className="ebayLinkProductButton">
+        <span className="ebayLinkProductIcon ebayProductLinkIcon" />
+      </div>
     </a>
   );
 }

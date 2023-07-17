@@ -2,15 +2,20 @@ import './css/OrdersTemplate.css';
 import { OrdersRecord } from '../../interfaces/orders/OrdersPageInteface';
 import OrdersPageHeader from '../organisms/pageHeaders/OrdersPageHeader';
 import OrdersTable from '../organisms/tables/OrdersTable';
+import { OrderStatus } from '../../enums/orderStatus.enum';
 
 export default function OrdersTemplate({
   orderRecords,
-  isSelectedTypeOrders,
+  showNoImplementedOrders,
   handleClickTypeOrdersButton,
+  searchValue,
+  onChange
 }: {
   orderRecords: OrdersRecord[];
-  isSelectedTypeOrders: any;
+  showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
+  searchValue: string,
+  onChange: (e: any) => void
 }) {
   return (
     <>
@@ -19,8 +24,10 @@ export default function OrdersTemplate({
         <div className="tableOrders">
           <OrdersTable
             orderRecords={orderRecords}
-            isSelectedTypeOrders={isSelectedTypeOrders}
+            showNoImplementedOrders={showNoImplementedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
+            searchValue={searchValue}
+            onChange={onChange}
           />
         </div>
       </div>
