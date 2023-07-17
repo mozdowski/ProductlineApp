@@ -37,8 +37,10 @@ public interface IEbayApiClient
     Task<IEnumerable<EbayLocationsResponse.LocationItem>> GetMerchantLocationKeys(string accessToken);
 
     Task<string> GetCategoryNameById(string accessToken, string categoryId);
-    // update offer
-    // publish offer
-    // withdraw offer
-    // bulk CRUD
+
+    Task<EbayFulfillmentPoliciesResponse> GetFulfillmentPolicies(string accessToken, string marketplaceId);
+
+    Task<EbayPaymentPoliciesResponse> GetPaymentPolicies(string accessToken, string marketplaceId);
+
+    Task<EbayReturnPoliciesResponse> GetReturnPolicies(string accessToken, string marketplaceId);
 }

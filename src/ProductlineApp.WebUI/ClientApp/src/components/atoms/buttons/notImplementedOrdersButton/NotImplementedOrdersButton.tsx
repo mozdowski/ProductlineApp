@@ -13,7 +13,11 @@ function NotImpementedOrdersButton({
   return (
     <div
       id={id}
-      className={showNoImplementedOrders ? 'notImplementedOrdersButton selected' : 'notImplementedOrdersButton'}
+      className={
+        showNoImplementedOrders
+          ? 'notImplementedOrdersButton selected'
+          : 'notImplementedOrdersButton'
+      }
       onClick={handleClickTypeOrdersButton}
     >
       <p>Niezrealizowane</p>

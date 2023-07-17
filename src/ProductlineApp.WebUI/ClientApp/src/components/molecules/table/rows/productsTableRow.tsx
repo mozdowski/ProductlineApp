@@ -6,7 +6,6 @@ import { CollapseProductDetails } from '../bodys/CollapseProductDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import DeleteProductIcon from '../../../../assets/icons/delete_icon.svg';
 
-
 export const ProductsTableRow = ({
   key,
   product,
@@ -14,7 +13,6 @@ export const ProductsTableRow = ({
   product: ProductsRecord;
   key: string | number;
 }) => {
-
   const [isOpen, setOpenState] = useState<boolean>(false);
 
   const [allowDelete, setAllowDelete] = useState(true);
@@ -26,7 +24,6 @@ export const ProductsTableRow = ({
   const toggle = useCallback(() => {
     setOpenState((state: boolean) => !state);
   }, [setOpenState]);
-
 
   return (
     <React.Fragment key={key}>
@@ -46,8 +43,9 @@ export const ProductsTableRow = ({
         <td>{product.price} zł</td>
         <td>{product.quantity}</td>
         <td
-          className={`productStatus ${product.isListed && 'productExposed'} ${!product.isListed && 'productNotExposed'
-            }`}
+          className={`productStatus ${product.isListed && 'productExposed'} ${
+            !product.isListed && 'productNotExposed'
+          }`}
         >
           {product.listingStatus}
         </td>
@@ -55,17 +53,28 @@ export const ProductsTableRow = ({
           <div className="productsButtonsAction">
             {!allowDelete ? (
               <>
-                <div className='canceleDeleteProductButton'>
-                  <span className="canceleDeleteProductIcon cancelTableIcon" onClick={handleClickAllowDelete} />
+                <div className="canceleDeleteProductButton">
+                  <span
+                    className="canceleDeleteProductIcon cancelTableIcon"
+                    onClick={handleClickAllowDelete}
+                  />
                 </div>
-                <div className='acceptDeleteProductButton'>
-                  <span className="acceptDeleteProductIcon assignTableIcon" onClick={handleClickAllowDelete} />
+                <div className="acceptDeleteProductButton">
+                  <span
+                    className="acceptDeleteProductIcon assignTableIcon"
+                    onClick={handleClickAllowDelete}
+                  />
                 </div>
               </>
             ) : (
               <>
                 <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
-                <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
+                <img
+                  className="deleteProductIcon"
+                  src={DeleteProductIcon}
+                  alt="Delete Icon"
+                  onClick={handleClickAllowDelete}
+                />
               </>
             )}
           </div>

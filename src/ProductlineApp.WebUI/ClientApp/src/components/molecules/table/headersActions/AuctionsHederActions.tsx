@@ -9,12 +9,12 @@ export const AuctionsHederActions = ({
   showActiveAuctions,
   handleClickTypeAuctionsButton,
   searchValue,
-  onChange
+  onChange,
 }: {
   showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
   searchValue: any;
-  onChange: (e: any) => void
+  onChange: (e: any) => void;
 }) => {
   return (
     <>

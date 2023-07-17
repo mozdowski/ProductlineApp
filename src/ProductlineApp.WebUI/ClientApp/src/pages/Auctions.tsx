@@ -20,7 +20,7 @@ export default function Auctions() {
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
   const { auctionsService } = useAuctionsService();
   const [auctions, setAuctions] = useState<AuctionsRecord[]>();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
 
   const handleClickTypeAuctionPortalButton = (platformName: PlatformEnum) => {
     setSelectedAuctionPortal(getPlatformByName(platformName));
@@ -35,11 +35,11 @@ export default function Auctions() {
     // setAuctions(auctions.filter(x => x.isActive == setActive));
   };
 
-  const searchTableAuctions = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchValue(e.target.value)
-  }
+  const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchValue(e.target.value);
+  };
 
-  const searchAuctions = auctions?.filter(auction => {
+  const searchAuctions = auctions?.filter((auction) => {
     return (
       auction.auctionID.toLowerCase().indexOf(searchValue) >= 0 ||
       auction.sku.toLowerCase().indexOf(searchValue) >= 0 ||
@@ -48,7 +48,7 @@ export default function Auctions() {
       auction.category.toLowerCase().indexOf(searchValue) >= 0 ||
       auction.price.toString().indexOf(searchValue) >= 0 ||
       auction.quantity.toString().indexOf(searchValue) >= 0
-    )
+    );
   });
 
   useEffect(() => {

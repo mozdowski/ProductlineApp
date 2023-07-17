@@ -181,7 +181,7 @@ public class EbayService : IEbayService
             this._currentUser.UserId.Value,
             request.ListingId,
             this.PlatformId.Value,
-            listingId,
+            ebayOfferId,
             null,
             null);
         await this._mediator.Send(command);
@@ -242,6 +242,46 @@ public class EbayService : IEbayService
         return new EbayLocationsDtoResponse()
         {
             Locations = mappedLocations,
+        };
+    }
+
+    public async Task<EbayUserPolicies> GetUserPolicies()
+    {
+        var marketplaceId = "EBAY_PL";
+
+        var fulfillmentPoliciesTask = this._ebayApiClient.GetFulfillmentPolicies(this._accessToken, marketplaceId);
+        var returnPoliciesTask = this._ebayApiClient.GetReturnPolicies(this._accessToken, marketplaceId);
+        var paymentPoliciesTask = this._ebayApiClient.GetPaymentPolicies(this._accessToken, marketplaceId);
+        var locationKeysTask = this._ebayApiClient.GetMerchantLocationKeys(this._accessToken);
+
+        await Task.WhenAll(fulfillmentPoliciesTask, returnPoliciesTask, paymentPoliciesTask, locationKeysTask);
+
+        return new EbayUserPolicies()
+        {
+            FulfillmentPolicies = fulfillmentPoliciesTask.Result.FulfillmentPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+                {
+                    Id = x.FulfillmentPolicyId,
+                    Name = x.Name,
+                }),
+            ReturnPolicies = returnPoliciesTask.Result.ReturnPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+            {
+                Id = x.ReturnPolicyId,
+                Name = x.Name,
+            }),
+            PaymentPolicies = paymentPoliciesTask.Result.PaymentPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+                {
+                    Id = x.PaymentPolicyId,
+                    Name = x.Name,
+                }),
+            LocationKeys = locationKeysTask.Result.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+            {
+                Id = x.MerchantLocationKey,
+                Name = x.Name,
+            }),
         };
     }
 

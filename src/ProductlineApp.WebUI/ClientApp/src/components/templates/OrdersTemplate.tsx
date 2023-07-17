@@ -9,13 +9,13 @@ export default function OrdersTemplate({
   showNoImplementedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
 }: {
   orderRecords: OrdersRecord[];
   showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
-  searchValue: string,
-  onChange: (e: any) => void
+  searchValue: string;
+  onChange: (e: any) => void;
 }) {
   return (
     <>

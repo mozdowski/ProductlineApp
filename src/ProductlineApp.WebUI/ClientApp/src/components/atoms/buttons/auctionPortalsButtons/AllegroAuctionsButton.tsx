@@ -14,7 +14,9 @@ function AllegroAuctionsButton({
   return (
     <div
       id={id + ''}
-      className={selectedAuctionPortal === PlatformEnum.ALLEGRO ? 'allegroButton selected' : 'allegroButton'}
+      className={
+        selectedAuctionPortal === PlatformEnum.ALLEGRO ? 'allegroButton selected' : 'allegroButton'
+      }
       onClick={() => handleClickTypeAuctionPortalButton(PlatformEnum.ALLEGRO)}
     >
       <span className="iconAuctionsAllegro allegroAuctionsIcon" />

@@ -44,7 +44,7 @@
 
   overflow: scroll;
   overflow-x: hidden;
-  height: 450px;
+  max-height: 450px;
 }
 
 .allegroAuctionParameters .productParameter {

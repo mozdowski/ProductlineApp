@@ -6,7 +6,7 @@ import { mapOrderStatusToString } from '../helpers/mappers';
 
 export default function Orders() {
   const [showNoImplementedOrders, setShowNoImplementedOrders] = useState<boolean>();
-  const [searchValue, setSearchValue] = useState("");
+  const [searchValue, setSearchValue] = useState('');
   const [orders, setOrders] = useState<OrdersRecord[]>([]);
   const { ordersService } = useOrdersService();
 
@@ -15,11 +15,11 @@ export default function Orders() {
     setShowNoImplementedOrders(setNoImplemented);
   };
 
-  const searchTableOrders = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchValue(e.target.value)
-  }
+  const searchTableOrders = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchValue(e.target.value);
+  };
 
-  const searchOrders = orders.filter(order => {
+  const searchOrders = orders.filter((order) => {
     return (
       order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
       order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
@@ -28,7 +28,7 @@ export default function Orders() {
       order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
       order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
       order.status.indexOf(searchValue) >= 0
-    )
+    );
   });
 
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function Orders() {
         quantity: order.quantity,
         status: mapOrderStatusToString(order.status),
         shippingAddress: order.shippingAddress,
-        items: order.items
+        items: order.items,
       }));
       setOrders(orderRecords);
     });
@@ -54,6 +54,7 @@ export default function Orders() {
       handleClickTypeOrdersButton={handleClickTypeOrdersButton}
       searchValue={searchValue}
       onChange={searchTableOrders}
-      showNoImplementedOrders={showNoImplementedOrders} />
+      showNoImplementedOrders={showNoImplementedOrders}
+    />
   );
 }

@@ -2,7 +2,7 @@ import './css/AuctionsTable.css';
 import { TableFooter } from '../../molecules/table/footers/TableFooter';
 import { AuctionsRecord } from '../../../interfaces/auctions/AuctionsPageInteface';
 import { AuctionsHederActions } from '../../molecules/table/headersActions/AuctionsHederActions';
-import { AuctionsTableHeader } from '../../molecules/table/headers/AuctionsTableHeader'
+import { AuctionsTableHeader } from '../../molecules/table/headers/AuctionsTableHeader';
 import { AuctionsTableBody } from '../../molecules/table/bodys/AuctionsTableBody';
 import { CircularProgress } from '@mui/material';
 
@@ -13,7 +13,7 @@ export default function AuctionsTable({
   onEditAuction,
   onWithdrawAuction,
   searchValue,
-  onChange
+  onChange,
 }: {
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
@@ -21,14 +21,15 @@ export default function AuctionsTable({
   onEditAuction: (auctionId: string) => void;
   onWithdrawAuction: (auctionId: string) => void;
   searchValue: string;
-  onChange: (e: any) => void
+  onChange: (e: any) => void;
 }) {
   return (
     <>
       <AuctionsHederActions
         showActiveAuctions={showActiveAuctions}
         handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
-        searchValue={searchValue} onChange={onChange}
+        searchValue={searchValue}
+        onChange={onChange}
       />
       <table className="auctions">
         <AuctionsTableHeader />
