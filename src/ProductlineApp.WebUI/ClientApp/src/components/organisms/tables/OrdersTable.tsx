@@ -4,6 +4,7 @@ import { OrdersRecord } from '../../../interfaces/orders/OrdersPageInteface';
 import { OrdersHederActions } from '../../molecules/table/headersActions/OrdersHederActions';
 import { OrdersTableHeader } from '../../molecules/table/headers/OrdersTableHeader';
 import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
+import { CircularProgress } from '@mui/material';
 import { OrderStatus } from '../../../enums/orderStatus.enum';
 
 export default function OrdersTable({
@@ -12,12 +13,14 @@ export default function OrdersTable({
   handleClickTypeOrdersButton,
   searchValue,
   onChange,
+  markOrderAsCompleted,
 }: {
-  orderRecords: OrdersRecord[];
+  orderRecords?: OrdersRecord[];
   showNoImplementedOrders: any;
   handleClickTypeOrdersButton: any;
   searchValue: string;
   onChange: (e: any) => void;
+  markOrderAsCompleted: (orderId: string) => void;
 }) {
   return (
     <>
@@ -32,8 +35,10 @@ export default function OrdersTable({
         <OrdersTableBody
           orderRecords={orderRecords}
           showNoImplementedOrders={showNoImplementedOrders}
+          markOrderAsCompleted={markOrderAsCompleted}
         />
       </table>
+      {!orderRecords && <CircularProgress />}
       <TableFooter />
     </>
   );

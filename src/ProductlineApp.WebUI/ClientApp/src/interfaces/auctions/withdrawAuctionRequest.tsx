@@ -1,3 +1,4 @@
 export interface WithdrawAuctionRequest {
-  offerId: string;
+  listingId: string;
+  listingInstanceiD: string;
 }

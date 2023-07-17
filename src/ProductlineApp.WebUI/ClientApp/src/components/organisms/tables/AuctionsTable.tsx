@@ -18,8 +18,12 @@ export default function AuctionsTable({
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
   handleClickTypeAuctionsButton: any;
-  onEditAuction: (auctionId: string) => void;
-  onWithdrawAuction: (auctionId: string) => void;
+  onEditAuction: (auctionId: string) => Promise<boolean>;
+  onWithdrawAuction: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
   searchValue: string;
   onChange: (e: any) => void;
 }) {

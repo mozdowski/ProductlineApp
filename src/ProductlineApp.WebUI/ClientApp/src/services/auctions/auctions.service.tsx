@@ -5,6 +5,7 @@ import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuc
 import { CreateEbayAuctionRequest } from '../../interfaces/auctions/createEbayAuctionRequest';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
 import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
+import { EbayAuctionDetailsResponse } from '../../interfaces/auctions/ebayAuctionDetailsResponse';
 import { EbayCategoryAspectsResponse } from '../../interfaces/auctions/ebayCategoryAspectsResponse';
 import { EbayCategoryTreeResponse } from '../../interfaces/auctions/ebayCategoryTreeResponse';
 import { EbayUserPoliciesResponse } from '../../interfaces/auctions/ebayUserPoliciesResponse';
@@ -92,8 +93,8 @@ export class AuctionsService {
     return this.httpService.post<void>('/allegro/updateListing/' + offerId, data);
   }
 
-  public async withdrawAllegroAuction(data: WithdrawAuctionRequest): Promise<void> {
-    return this.httpService.post<void>('/allegro/withdrawListing', data);
+  public async withdrawAuction(platformId: string, data: WithdrawAuctionRequest): Promise<void> {
+    return this.httpService.post<void>(`/platforms/withdrawListing/${platformId}`, data);
   }
 
   public async allegroAuctionRenewal(data: AllegroAuctionRenewalRequest): Promise<void> {
@@ -116,6 +117,18 @@ export class AuctionsService {
 
   public async createEbayListing(data: CreateEbayAuctionRequest): Promise<void> {
     return this.httpService.post<void>('/ebay/createListing', data);
+  }
+
+  public async withdrawEbayAuction(data: WithdrawAuctionRequest): Promise<void> {
+    return this.httpService.post<void>('/ebay/withdrawListing', data);
+  }
+
+  public async getEbayAuctionDetails(auctionId: string): Promise<EbayAuctionDetailsResponse> {
+    return this.httpService.get<EbayAuctionDetailsResponse>(`/ebay/offerDetails/${auctionId}`);
+  }
+
+  public async updateEbayAuction(auctionId: string, data: CreateEbayAuctionRequest): Promise<void> {
+    return this.httpService.post<void>(`/ebay/updateOffer/${auctionId}`, data);
   }
 }
 

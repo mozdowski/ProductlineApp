@@ -8,7 +8,7 @@ export default function ProductsTemplate({
   searchValue,
   onChange,
 }: {
-  productRecords: ProductsRecord[];
+  productRecords?: ProductsRecord[];
   searchValue: string;
   onChange: (e: any) => void;
 }) {

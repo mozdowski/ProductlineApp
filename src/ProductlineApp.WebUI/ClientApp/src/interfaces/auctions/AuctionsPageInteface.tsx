@@ -13,4 +13,6 @@ export interface AuctionsRecord {
   daysToEnd: number | undefined;
   productImageUrl: string;
   isActive: boolean;
+  listingId: string;
+  listingInstanceId: string;
 }

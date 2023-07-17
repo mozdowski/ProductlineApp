@@ -89,7 +89,7 @@ public class AllegroMapper : Profile
         this.CreateMap<AllegroUserOffersResponse.Offer, ListingDtoResponse>()
             .ForMember(dest => dest.Title, opt => opt.MapFrom(src => src.Name))
             .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
-            .ForMember(dest => dest.ListingId, opt => opt.MapFrom(src => src.Id))
+            .ForMember(dest => dest.PlatformListingId, opt => opt.MapFrom(src => src.Id))
             .ForMember(dest => dest.PlatformListingUrl, opt => opt.Ignore())
             .ForMember(dest => dest.ProductId, opt => opt.MapFrom(src => string.IsNullOrEmpty(src.External.Id) ? Guid.Empty : Guid.Parse(src.External.Id)))
             .ForMember(dest => dest.Sku, opt => opt.Ignore())

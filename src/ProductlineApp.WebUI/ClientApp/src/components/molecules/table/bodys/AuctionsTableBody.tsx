@@ -20,8 +20,12 @@ export const AuctionsTableBody = ({
   showActiveAuctions,
 }: {
   auctionRecords: AuctionsRecord[];
-  onEditAuction: (auctionId: string) => void;
-  onWithdrawAuction: (auctionId: string) => void;
+  onEditAuction: (auctionId: string) => Promise<boolean>;
+  onWithdrawAuction: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
   showActiveAuctions: boolean;
 }) => {
   return (

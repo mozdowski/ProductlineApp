@@ -78,4 +78,20 @@ public class EbayController : ControllerBase
 
         return this.Ok(response);
     }
+
+    [HttpGet("offerDetails/{offerId}")]
+    public async Task<IActionResult> GetOfferDetails(string offerId)
+    {
+        var response = await this._ebayService.GetOfferDetails(offerId);
+
+        return this.Ok(response);
+    }
+
+    [HttpPost("updateOffer/{offerId}")]
+    public async Task<IActionResult> UpdateOffer(string offerId, [FromBody] EbayListingDtoRequest request)
+    {
+        await this._ebayService.UpdateListingAsync(offerId, request);
+
+        return this.Ok();
+    }
 }

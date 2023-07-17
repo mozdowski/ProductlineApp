@@ -6,6 +6,8 @@ interface Auction {
   title: string;
   description: string;
   listingId: string;
+  platformListingId: string;
+  listingInstanceId: string;
   platformListingUrl?: string;
   productId: string;
   sku: string;

@@ -7,5 +7,6 @@
         DELIVERED,
         RETURNED,
         CANCELLED,
+        COMPLETED,
     }
 }

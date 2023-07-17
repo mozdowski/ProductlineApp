@@ -8,7 +8,11 @@ public class ListingDtoResponse
 
     public string Description { get; set; }
 
-    public string ListingId { get; set; }
+    public Guid ListingInstanceId { get; set; }
+
+    public Guid ListingId { get; set; }
+
+    public string PlatformListingId { get; set; }
 
     public string? PlatformListingUrl { get; set; }
 

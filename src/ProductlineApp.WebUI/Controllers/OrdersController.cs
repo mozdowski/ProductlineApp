@@ -19,18 +19,15 @@ public class OrdersController : ControllerBase
     private readonly IPlatformServiceDispatcher _platformServiceDispatcher;
     private readonly ICurrentUserContext _currentUser;
     private readonly IMediator _mediator;
-    private readonly IMapper _mapper;
 
     public OrdersController(
         IPlatformServiceDispatcher platformServiceDispatcher,
         ICurrentUserContext currentUser,
-        IMediator mediator,
-        IMapper mapper)
+        IMediator mediator)
     {
         this._platformServiceDispatcher = platformServiceDispatcher;
         this._currentUser = currentUser;
         this._mediator = mediator;
-        this._mapper = mapper;
     }
 
     [HttpGet]
@@ -107,6 +104,15 @@ public class OrdersController : ControllerBase
             this._currentUser.UserId.GetValueOrDefault(),
             orderId,
             document);
+        await this._mediator.Send(command);
+
+        return this.Ok();
+    }
+
+    [HttpPost("markCompleted/{orderId:guid}")]
+    public async Task<IActionResult> MarkOrderAsCompleted(Guid orderId)
+    {
+        var command = new MarkOrderAsCompletedCommand.Command(orderId);
         await this._mediator.Send(command);
 
         return this.Ok();

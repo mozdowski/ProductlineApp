@@ -1,5 +1,5 @@
 import './ebayFormPopup.css';
-import EbayLogo from '../../../../../../assets/icons/ebay_icon.svg';
+import EbayLogo from '../../../../../../assets/icons/ebayLink_icon:hover.svg';
 import EbayCategorySelect from './ebayCategorySelect/ebayCategorySelect';
 import { useState } from 'react';
 import EbayParametersSetComponent from './ebayParametersSetComponent/ebayParametersSetComponent';
@@ -8,10 +8,12 @@ import {
   CreateEbayAuctionRequest,
   EbayOfferDetails,
 } from '../../../../../../interfaces/auctions/createEbayAuctionRequest';
+import { EbayAuctionDetailsResponse } from '../../../../../../interfaces/auctions/ebayAuctionDetailsResponse';
 
 interface EbayFormPopupProps {
   closePopup: () => void;
   onSubmit: (ebayForm: CreateEbayAuctionRequest) => void;
+  initialFormValues?: EbayAuctionDetailsResponse;
 }
 
 enum PopupPages {
@@ -20,9 +22,17 @@ enum PopupPages {
   ListingDetails,
 }
 
-const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) => {
-  const [selectedCategoryid, setSelectedCategoryId] = useState<string>('');
-  const [currentPage, setCurrentPage] = useState<PopupPages>(PopupPages.Category);
+const EbayFormPopup: React.FC<EbayFormPopupProps> = ({
+  closePopup,
+  onSubmit,
+  initialFormValues,
+}) => {
+  const [selectedCategoryid, setSelectedCategoryId] = useState<string>(
+    initialFormValues ? initialFormValues.offerDetails.categoryId : '',
+  );
+  const [currentPage, setCurrentPage] = useState<PopupPages>(
+    initialFormValues ? PopupPages.ParametersSet : PopupPages.Category,
+  );
   const [aspects, setAspects] = useState<Record<string, string[]>>({});
 
   const handleNextPage = () => {
@@ -54,7 +64,7 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
 
   const handleConfirm = (detailsForm: EbayOfferDetails) => {
     const ebayForm: CreateEbayAuctionRequest = {
-      listingId: '',
+      listingId: initialFormValues ? initialFormValues.listingId : '',
       aspects: aspects,
       offerDetails: detailsForm,
     };
@@ -75,6 +85,7 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
           <img src={EbayLogo} className="ebayBrandIcon" />
           {currentPage === PopupPages.Category && <p>Wybierz kategorie z katalogu Ebay</p>}
           {currentPage === PopupPages.ParametersSet && <p>Dostosuj parametry produktu</p>}
+          {currentPage === PopupPages.ListingDetails && <p>Dostosuj parametry oferty</p>}
         </div>
         {currentPage === PopupPages.Category && (
           <EbayCategorySelect onNext={handleCategorySelect} onCancel={handleCancel} />
@@ -85,6 +96,7 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
             onCancel={handleCancel}
             onPrev={handlePrevPage}
             onNext={handleAspectsSelect}
+            initAspects={initialFormValues ? initialFormValues.aspects : undefined}
           />
         )}
         {selectedCategoryid && currentPage === PopupPages.ListingDetails && (
@@ -93,6 +105,7 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({ closePopup, onSubmit }) =
             onConfirm={handleConfirm}
             onCancel={handleCancel}
             categoryId={selectedCategoryid}
+            initValues={initialFormValues ? initialFormValues.offerDetails : undefined}
           />
         )}
       </div>

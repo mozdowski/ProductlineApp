@@ -4,13 +4,14 @@ import { ProductsTableBody } from '../../molecules/table/bodys/ProductsTableBody
 import { TableFooter } from '../../molecules/table/footers/TableFooter';
 import { ProductsHederActions } from '../../molecules/table/headersActions/ProductsHederActions';
 import { ProductsRecord } from '../../../interfaces/products/ProductsPageInteface';
+import { CircularProgress } from '@mui/material';
 
 export default function ProductsTable({
   productRecords,
   searchValue,
   onChange,
 }: {
-  productRecords: ProductsRecord[];
+  productRecords?: ProductsRecord[];
   searchValue: string;
   onChange: (e: any) => void;
 }) {
@@ -21,6 +22,7 @@ export default function ProductsTable({
         <ProductsTableHeader />
         <ProductsTableBody productRecords={productRecords} />
       </table>
+      {!productRecords && <CircularProgress />}
       <TableFooter />
     </>
   );

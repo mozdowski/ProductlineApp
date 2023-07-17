@@ -29,7 +29,7 @@ interface EbayListingDetailsProps {
   onConfirm: (offerDetails: EbayOfferDetails) => void;
   onCancel: () => void;
   categoryId: string;
-  initValues?: any;
+  initValues?: EbayOfferDetails;
 }
 
 const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
@@ -39,7 +39,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
   categoryId,
   initValues,
 }) => {
-  let product = {
+  const product = {
     price: 0,
     quantity: 0,
     description: '',
@@ -48,7 +48,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
   if (initValues) {
     product.price = initValues.price;
     product.quantity = initValues.quantity;
-    product.description = initValues.description;
+    product.description = initValues.listingDescription;
   } else {
     const { selectedProduct } = useSelectedProduct();
     product.price = selectedProduct.price;
@@ -57,7 +57,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
   }
 
   const [formData, setFormData] = useState<EbayListingDetailsFormData>({
-    description: initValues ? initValues.description : product.description,
+    description: initValues ? initValues.listingDescription : product.description,
     quantity: initValues ? initValues.quantity : product.quantity,
     quantityLimitPerBuyer: initValues ? initValues.quantity : undefined,
     price: initValues ? initValues.price : product.price,

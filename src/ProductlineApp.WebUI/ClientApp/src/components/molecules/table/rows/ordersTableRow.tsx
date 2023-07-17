@@ -4,8 +4,17 @@ import React from 'react';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import { OrdersRecord } from '../../../../interfaces/orders/OrdersPageInteface';
 import { CollapseOrderDetails } from '../bodys/CollapseOrderDetails';
+import { OrderStatus } from '../../../../enums/orderStatus.enum';
 
-export const OrdersTableRow = ({ key, order }: { order: OrdersRecord; key: string | number }) => {
+export const OrdersTableRow = ({
+  key,
+  order,
+  markOrderAsCompleted,
+}: {
+  order: OrdersRecord;
+  key: string | number;
+  markOrderAsCompleted: (orderId: string) => void;
+}) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
 
   const toggle = useCallback(() => {
@@ -36,11 +45,11 @@ export const OrdersTableRow = ({ key, order }: { order: OrdersRecord; key: strin
         <td>{order.client}</td>
         <td>{order.price} zł</td>
         <td>{order.quantity}</td>
-        <td className="orderStatus complete">{order.status}</td>
+        <td className="orderStatus complete">{order.statusText}</td>
         <td>
           <div className="ordersButtonsAction">
             <img className="editOrderIcon" src={EditIcon} />
-            {order.status === 'Zakończone' ? (
+            {order.status === OrderStatus.COMPLETED ? (
               <div className="assignedOrderButton">
                 <span className="assignOrderIcon assignTableIcon" />
               </div>

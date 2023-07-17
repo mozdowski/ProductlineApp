@@ -8,7 +8,6 @@ import * as Yup from 'yup';
 import { FormSelect } from '../../../../../../atoms/common/formSelect/formSelect';
 import { CircularProgress } from '@mui/material';
 import BackButton from '../../../../../../atoms/buttons/backButton/backButton';
-import FormInput from '../../../../../../atoms/common/formInput/formInput';
 import AutocompleteComboBox from '../../../../../../atoms/common/autocomplete/autocomplete';
 import MultipleSelectCheckmarks from '../../../../../../atoms/common/multiselect/multiselect';
 
@@ -17,6 +16,7 @@ interface EbayParametersSetComponentProps {
   onCancel: () => void;
   onNext: (data: Record<string, string[]>) => void;
   onPrev: () => void;
+  initAspects?: Record<string, string[]>;
 }
 
 enum EbayAspectMode {
@@ -29,6 +29,7 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
   onCancel,
   onNext,
   onPrev,
+  initAspects,
 }) => {
   const { auctionsService } = useAuctionsService();
   const [categoryAspects, setCategoryAspects] = useState<EbayCategoryAspect[]>([]);
@@ -57,7 +58,7 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
       const value = x.isRequired && mode === EbayAspectMode.SELECTION_ONLY ? '0' : '';
       setParametersForm((prev) => ({
         ...prev,
-        [x.name]: value,
+        [x.name]: initAspects ? initAspects[x.name] : value,
       }));
 
       if (x.isRequired) {
@@ -192,7 +193,7 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
       )}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton">
-          <BackButton onClick={onPrev} />
+          {!initAspects && <BackButton onClick={onPrev} />}
         </div>
         <div className="addAuctionEbayButtons">
           <CancelButton onClick={onCancel} />
