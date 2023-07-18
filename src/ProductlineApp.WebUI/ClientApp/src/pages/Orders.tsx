@@ -6,14 +6,13 @@ import { mapOrderStatusToString } from '../helpers/mappers';
 import { toast } from 'react-toastify';
 
 export default function Orders() {
-  const [showNoImplementedOrders, setShowNoImplementedOrders] = useState<boolean>();
+  const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState('');
   const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);
   const { ordersService } = useOrdersService();
 
-  const handleClickTypeOrdersButton = (e: any) => {
-    const setNoImplemented = e.target.value == 'notImplemented';
-    setShowNoImplementedOrders(setNoImplemented);
+  const handleClickTypeOrdersButton = (showCompleted: boolean) => {
+    setShowCompletedOrders(showCompleted);
   };
 
   const searchTableOrders = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -27,6 +26,7 @@ export default function Orders() {
     } catch {
       toast.error('Błąd podczas zamykania zamówiena');
     }
+    setShowCompletedOrders(false);
   };
 
   const searchOrders = orders
@@ -67,7 +67,7 @@ export default function Orders() {
       handleClickTypeOrdersButton={handleClickTypeOrdersButton}
       searchValue={searchValue}
       onChange={searchTableOrders}
-      showNoImplementedOrders={showNoImplementedOrders}
+      showCompletedOrders={showCompletedOrders}
       markOrderAsCompleted={handleMarkOrderAsCompleted}
     />
   );

@@ -49,12 +49,13 @@ export const OrdersTableRow = ({
         <td>
           <div className="ordersButtonsAction">
             <img className="editOrderIcon" src={EditIcon} />
-            {order.status === OrderStatus.COMPLETED ? (
-              <div className="assignedOrderButton">
+            {order.status !== OrderStatus.COMPLETED && (
+              <div
+                className="assignedOrderButton"
+                onClick={() => markOrderAsCompleted(order.orderID)}
+              >
                 <span className="assignOrderIcon assignTableIcon" />
               </div>
-            ) : (
-              ''
             )}
           </div>
         </td>

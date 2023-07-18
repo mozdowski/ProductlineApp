@@ -6,20 +6,28 @@ import { mapOrderStatusToString } from '../../../../helpers/mappers';
 
 export const OrdersTableBody = ({
   orderRecords,
-  showNoImplementedOrders,
+  showCompletedOrders,
   markOrderAsCompleted,
 }: {
   orderRecords?: OrdersRecord[];
-  showNoImplementedOrders: any;
+  showCompletedOrders: boolean;
   markOrderAsCompleted: (orderId: string) => void;
 }) => {
   return (
     <>
       <tbody>
         {orderRecords &&
-          orderRecords.map((order, key) => (
-            <OrdersTableRow key={key} order={order} markOrderAsCompleted={markOrderAsCompleted} />
-          ))}
+          orderRecords.map(
+            (order, key) =>
+              order &&
+              showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
+                <OrdersTableRow
+                  key={key}
+                  order={order}
+                  markOrderAsCompleted={markOrderAsCompleted}
+                />
+              ),
+          )}
       </tbody>
     </>
   );

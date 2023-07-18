@@ -1,22 +1,21 @@
-import { OrderStatus } from '../../../../enums/orderStatus.enum';
 import './css/impementedOrdersButton.css';
 
 function ImpementedOrdersButton({
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   id,
 }: {
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
   id: string;
 }) {
   return (
     <div
       id={id}
       className={
-        showNoImplementedOrders ? 'implementedOrdersButton selected' : 'implementedOrdersButton'
+        showCompletedOrders ? 'implementedOrdersButton selected' : 'implementedOrdersButton'
       }
-      onClick={handleClickTypeOrdersButton}
+      onClick={() => handleClickTypeOrdersButton(true)}
     >
       <p>Zrealizowane</p>
     </div>
