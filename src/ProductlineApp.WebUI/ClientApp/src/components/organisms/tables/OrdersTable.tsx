@@ -9,15 +9,15 @@ import { OrderStatus } from '../../../enums/orderStatus.enum';
 
 export default function OrdersTable({
   orderRecords,
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   searchValue,
   onChange,
   markOrderAsCompleted,
 }: {
   orderRecords?: OrdersRecord[];
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
   searchValue: string;
   onChange: (e: any) => void;
   markOrderAsCompleted: (orderId: string) => void;
@@ -25,7 +25,7 @@ export default function OrdersTable({
   return (
     <>
       <OrdersHederActions
-        showNoImplementedOrders={showNoImplementedOrders}
+        showCompletedOrders={showCompletedOrders}
         handleClickTypeOrdersButton={handleClickTypeOrdersButton}
         searchValue={searchValue}
         onChange={onChange}
@@ -34,7 +34,7 @@ export default function OrdersTable({
         <OrdersTableHeader />
         <OrdersTableBody
           orderRecords={orderRecords}
-          showNoImplementedOrders={showNoImplementedOrders}
+          showCompletedOrders={showCompletedOrders}
           markOrderAsCompleted={markOrderAsCompleted}
         />
       </table>

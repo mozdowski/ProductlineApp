@@ -2,23 +2,21 @@ import { OrderStatus } from '../../../../enums/orderStatus.enum';
 import './css/notImpementedOrdersButton.css';
 
 function NotImpementedOrdersButton({
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   id,
 }: {
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
   id: string;
 }) {
   return (
     <div
       id={id}
       className={
-        showNoImplementedOrders
-          ? 'notImplementedOrdersButton selected'
-          : 'notImplementedOrdersButton'
+        !showCompletedOrders ? 'notImplementedOrdersButton selected' : 'notImplementedOrdersButton'
       }
-      onClick={handleClickTypeOrdersButton}
+      onClick={() => handleClickTypeOrdersButton(false)}
     >
       <p>Niezrealizowane</p>
     </div>
