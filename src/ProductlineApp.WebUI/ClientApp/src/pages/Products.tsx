@@ -48,7 +48,7 @@ export default function Products(this: any) {
       }));
       setProducts(productsRecords);
     });
-  }, [searchValue, searchProducts]);
+  }, []);
 
   useLayoutEffect(() => {
     if (ref.current != null) {
