@@ -9,6 +9,7 @@ import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuctio
 import { CreateListingTemplateRequest } from '../interfaces/auctions/createListingTemplateRequest';
 import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
@@ -23,6 +24,22 @@ export default function AddAuction() {
   const [ebayListingForm, setEbayListingForm] = useState<CreateEbayAuctionRequest | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
+
+  const { showConfirmation } = useConfirmationPopup();
+
+  const handleConfirmAction = () => {
+    handleAuctionsAdd();
+  };
+
+  const handleShowConfirmation = () => {
+    const confirmationText =
+      allegroListingForm || ebayListingForm
+        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm && 'Allegro'} ${
+            ebayListingForm && 'oraz Ebay?'
+          }`
+        : 'Brak zadeklarowanych ofert na platformy - utworzony zostanie jedynie szablon. Czy chcesz kontynuować?';
+    showConfirmation(confirmationText, handleConfirmAction);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -95,10 +112,14 @@ export default function AddAuction() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    let listingId: string;
-
     const isValid = await validateForm();
-    if (!isValid) return;
+    if (isValid) {
+      handleShowConfirmation();
+    }
+  };
+
+  const handleAuctionsAdd = async () => {
+    let listingId: string;
 
     const listingTemplateBody: CreateListingTemplateRequest = {
       title: selectedProduct.name,

@@ -5,13 +5,16 @@ import RoutingWrapper from './components/common/routingWrapper';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { PlatformsProvider } from './providers/platformsProvider';
+import { PopupProvider } from './providers/popupProvider';
 
 function App() {
   return (
     <AuthProvider>
       <PlatformsProvider>
-        <RoutingWrapper />
-        <ToastContainer></ToastContainer>
+        <PopupProvider>
+          <RoutingWrapper />
+          <ToastContainer></ToastContainer>
+        </PopupProvider>
       </PlatformsProvider>
     </AuthProvider>
   );

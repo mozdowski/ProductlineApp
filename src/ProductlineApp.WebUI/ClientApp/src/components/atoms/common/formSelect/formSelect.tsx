@@ -26,7 +26,6 @@ const SelectStyle = {
   border: '1px solid #d8d8d8',
   borderRadius: '8px',
   padding: 'inherit',
-  margin: 'auto',
   '& fieldset': {
     border: 'none',
   },

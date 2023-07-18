@@ -15,4 +15,6 @@ public interface IProductRepository : IRepository<Product, ProductId>
     public Task<IEnumerable<string>> GetSkusByIds(IEnumerable<ProductId> productIds, UserId userId);
 
     public Task<IEnumerable<Product?>> GetUserProductsByIds(IEnumerable<ProductId> productIds, UserId userId);
+
+    Task<Product?> GetProductsBySkuOrId(string id);
 }

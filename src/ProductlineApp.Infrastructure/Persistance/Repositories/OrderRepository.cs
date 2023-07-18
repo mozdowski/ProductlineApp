@@ -93,4 +93,13 @@ public class OrderRepository : IOrderRepository
             .Select(x => x.Id)
             .FirstOrDefaultAsync();
     }
+
+    public async Task<Dictionary<string, int>> GetProductsIdsWithCountByUserIdAsync(UserId userId)
+    {
+        return await this._context.Orders
+            .AsNoTracking()
+            .Where(x => x.OwnerId == userId)
+            .SelectMany(x => x.OrderLines)
+            .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
+    }
 }

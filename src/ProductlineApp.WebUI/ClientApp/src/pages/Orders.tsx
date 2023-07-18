@@ -10,9 +10,11 @@ export default function Orders() {
   const [searchValue, setSearchValue] = useState('');
   const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);
   const { ordersService } = useOrdersService();
+  const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
 
   const handleClickTypeOrdersButton = (showCompleted: boolean) => {
     setShowCompletedOrders(showCompleted);
+    setRefreshRecords(!refreshRecords);
   };
 
   const searchTableOrders = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -44,6 +46,7 @@ export default function Orders() {
     : undefined;
 
   useEffect(() => {
+    setOrders(undefined);
     ordersService.getOrdersList().then((res) => {
       const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
         orderID: order.orderId,
@@ -59,7 +62,7 @@ export default function Orders() {
       }));
       setOrders(orderRecords);
     });
-  }, [searchValue]);
+  }, [refreshRecords]);
 
   return (
     <OrdersTemplate

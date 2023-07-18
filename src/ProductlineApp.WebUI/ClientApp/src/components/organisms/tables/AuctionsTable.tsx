@@ -14,6 +14,7 @@ export default function AuctionsTable({
   onWithdrawAuction,
   searchValue,
   onChange,
+  isDataLoaded,
 }: {
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
@@ -26,6 +27,7 @@ export default function AuctionsTable({
   ) => Promise<boolean>;
   searchValue: string;
   onChange: (e: any) => void;
+  isDataLoaded: boolean;
 }) {
   return (
     <>
@@ -37,7 +39,7 @@ export default function AuctionsTable({
       />
       <table className="auctions">
         <AuctionsTableHeader />
-        {auctionRecords && auctionRecords.length > 0 && (
+        {auctionRecords && isDataLoaded && auctionRecords.length > 0 && (
           <AuctionsTableBody
             showActiveAuctions={showActiveAuctions}
             auctionRecords={auctionRecords}
@@ -46,7 +48,7 @@ export default function AuctionsTable({
           />
         )}
       </table>
-      {!auctionRecords && <CircularProgress sx={{ alignSelf: 'center' }} />}
+      {(!auctionRecords || !isDataLoaded) && <CircularProgress sx={{ alignSelf: 'center' }} />}
       <TableFooter />
     </>
   );
