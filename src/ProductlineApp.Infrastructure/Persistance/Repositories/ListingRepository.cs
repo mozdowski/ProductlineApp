@@ -83,6 +83,16 @@ public class ListingRepository : IListingRepository
             .ToListAsync();
     }
 
+    public async Task<IEnumerable<ListingInstance>> GetAllListingInstancesByUserIdAsync(UserId userId)
+    {
+        return await this._dbContext.Listings
+            .AsNoTracking()
+            .Include(x => x.Instances)
+            .Where(x => x.OwnerId == userId)
+            .SelectMany(x => x.Instances)
+            .ToListAsync();
+    }
+
     public async Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId)
     {
         return await this._dbContext.Listings

@@ -22,9 +22,16 @@ export default function Auctions() {
   const { auctionsService } = useAuctionsService();
   const [auctions, setAuctions] = useState<AuctionsRecord[]>();
   const [searchValue, setSearchValue] = useState('');
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
 
-  const handleClickTypeAuctionPortalButton = (platformName: PlatformEnum) => {
-    setSelectedAuctionPortal(getPlatformByName(platformName));
+  const handleClickTypeAuctionPortalButton = async (platformName: PlatformEnum) => {
+    if (!isDataLoaded) return;
+
+    const selectedPlatform = getPlatformByName(platformName);
+    setSelectedAuctionPortal(selectedPlatform);
+
+    setAuctions(undefined);
+    setIsDataLoaded(false);
   };
 
   const [showActiveAuctions, setShowActiveAuctions] = useState<boolean>(true);
@@ -50,16 +57,23 @@ export default function Auctions() {
   });
 
   useEffect(() => {
+    if (selectedAuctionPortal) return;
     if (platforms) {
       setSelectedAuctionPortal(getPlatformByName(PlatformEnum.EBAY));
     }
   }, [platforms]);
 
   useEffect(() => {
+    if (!selectedAuctionPortal || isDataLoaded) return;
+
+    fetchAuctionRecords();
+  }, [refreshRecords, selectedAuctionPortal]);
+
+  const fetchAuctionRecords = async () => {
     if (!selectedAuctionPortal) return;
-    setAuctions(undefined);
-    auctionsService.getPlatformAuctionsList(selectedAuctionPortal.platformId).then((res) => {
-      const auctionsRecords: AuctionsRecord[] = res.listings.map((auction) => ({
+    try {
+      const res = await auctionsService.getPlatformAuctionsList(selectedAuctionPortal?.platformId);
+      const auctionRecords: AuctionsRecord[] = res.listings.map((auction) => ({
         auctionID: auction.platformListingId,
         sku: auction.sku,
         brand: auction.brand,
@@ -73,9 +87,13 @@ export default function Auctions() {
         listingId: auction.listingId,
         listingInstanceId: auction.listingInstanceId,
       }));
-      setAuctions(auctionsRecords);
-    });
-  }, [selectedAuctionPortal, refreshRecords, searchValue]);
+      setAuctions(auctionRecords);
+    } catch {
+      toast.error('Blad podczas pobierania listy aukcji...');
+    }
+
+    setIsDataLoaded(true);
+  };
 
   const handleEditAuction = async (auctionId: string): Promise<boolean> => {
     setSelectedAuctionId(auctionId);
@@ -182,6 +200,7 @@ export default function Auctions() {
         onWithdrawAuction={handleWithdrawAuction}
         onChange={searchTableAuctions}
         searchValue={searchValue}
+        isDataLoaded={isDataLoaded}
       />
       {editAuctionValues && (
         <>

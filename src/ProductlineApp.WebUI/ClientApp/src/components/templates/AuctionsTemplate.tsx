@@ -19,6 +19,7 @@ export default function AuctionsTemplate({
   showActiveAuctions,
   searchValue,
   onChange,
+  isDataLoaded,
 }: {
   auctionRecords?: AuctionsRecord[];
   selectedAuctionPortal?: PlatformEnum;
@@ -33,6 +34,7 @@ export default function AuctionsTemplate({
   showActiveAuctions: boolean;
   searchValue: string;
   onChange: (e: any) => void;
+  isDataLoaded: boolean;
 }) {
   return (
     <>
@@ -59,6 +61,7 @@ export default function AuctionsTemplate({
             showActiveAuctions={showActiveAuctions}
             searchValue={searchValue}
             onChange={onChange}
+            isDataLoaded={isDataLoaded}
           />
         </div>
       </div>

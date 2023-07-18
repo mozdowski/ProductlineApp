@@ -1,16 +1,25 @@
-import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import './css/MostPopularProductsChart.css';
+import { ProductStatistics } from '../../../interfaces/dashboard/mostPopularProductsChartData';
 
-function MostPopularProductsChart() {
+function MostPopularProductsChart({
+  popularProductsChartData,
+}: {
+  popularProductsChartData: ProductStatistics[];
+}) {
+  const data = popularProductsChartData.map((x) => ({
+    name: x.name,
+    value: x.soldCount,
+  }));
+
   const option = {
     tooltip: {
       trigger: 'item',
     },
     visualMap: {
       show: false,
-      min: 80,
-      max: 600,
+      min: 1,
+      max: 1000,
       inRange: {
         colorLightness: [0, 1],
       },
@@ -20,13 +29,7 @@ function MostPopularProductsChart() {
         type: 'pie',
         radius: '70%',
         center: ['50%', '50%'],
-        data: [
-          { value: 335, name: 'Direct' },
-          { value: 310, name: 'Email' },
-          { value: 274, name: 'Union Ads' },
-          { value: 235, name: 'Video Ads' },
-          { value: 400, name: 'Search Engine' },
-        ].sort(function (a, b) {
+        data: data.sort(function (a, b) {
           return a.value - b.value;
         }),
         roseType: 'radius',

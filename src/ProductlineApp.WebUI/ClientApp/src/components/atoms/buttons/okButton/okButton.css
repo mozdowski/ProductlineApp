@@ -1,0 +1,20 @@
+.okButton {
+  border-radius: 8px;
+  height: 35px;
+  width: 125px;
+  background-color: var(--first-color);
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  color: var(--white-color);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
+  border: 0px;
+  cursor: pointer;
+}
+
+.okButton:hover {
+  background-color: var(--purple-button-hover);
+}

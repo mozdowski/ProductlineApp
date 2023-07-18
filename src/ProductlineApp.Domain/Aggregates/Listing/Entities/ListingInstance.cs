@@ -99,6 +99,11 @@ namespace ProductlineApp.Domain.Aggregates.Listing.Entities
                 null);
         }
 
+        public bool IsActive()
+        {
+            return this.Status == ListingStatus.ACTIVE;
+        }
+
         public void MarkAsInactive()
         {
             if (this.Status != ListingStatus.ACTIVE)

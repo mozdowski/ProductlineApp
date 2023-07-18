@@ -90,4 +90,12 @@ public class ProductRepository : IProductRepository
         return await this._dbContext.Products.Where(x => x.OwnerId == userId).Where(x => productIds.Contains(x.Id))
             .ToListAsync();
     }
+
+    public async Task<Product?> GetProductsBySkuOrId(string id)
+    {
+        var isProductId = Guid.TryParse(id, out var productId);
+
+        return await this._dbContext.Products
+            .FirstOrDefaultAsync(x => x.Sku == id || (isProductId && productId == x.Id.Value));
+    }
 }
