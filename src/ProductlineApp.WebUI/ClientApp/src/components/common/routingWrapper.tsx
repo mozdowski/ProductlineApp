@@ -19,6 +19,7 @@ import AddAuction from '../../pages/AddAuction';
 import { UserProvider } from '../../providers/userProvider';
 import PLatformRedirect from './platformRedirect';
 import { AddAuctionProvider } from '../../providers/addAuctionProvider';
+import EditProduct from '../../pages/EditProduct';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -67,7 +68,7 @@ const RoutingWrapper = () => {
         >
           <Route path="" element={<Products />}></Route>
           <Route path="add" element={<AddProduct />}></Route>
-          <Route path="edit" element={''}></Route>
+          <Route path="edit/:id" element={<EditProduct />}></Route>
         </Route>
 
         <Route

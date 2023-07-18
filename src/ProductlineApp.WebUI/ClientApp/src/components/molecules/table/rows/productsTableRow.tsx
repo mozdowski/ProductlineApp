@@ -5,6 +5,7 @@ import React from 'react';
 import { CollapseProductDetails } from '../bodys/CollapseProductDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import DeleteProductIcon from '../../../../assets/icons/delete_icon.svg';
+import { Link } from 'react-router-dom';
 
 
 export const ProductsTableRow = ({
@@ -64,7 +65,9 @@ export const ProductsTableRow = ({
               </>
             ) : (
               <>
-                <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
+                <Link to={`/products/edit/${product.sku}`} className="editProductLink" id="link">
+                  <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
+                </Link>
                 <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
               </>
             )}
