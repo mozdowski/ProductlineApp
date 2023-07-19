@@ -9,7 +9,7 @@ export default function EditProductTemplate({
   onSubmit,
   productForm,
   onChange,
-  errors
+  errors,
 }: {
   uploadProductPhotos: any;
   photos: string[];
@@ -29,7 +29,8 @@ export default function EditProductTemplate({
             onSubmit={onSubmit}
             productForm={productForm}
             onChange={onChange}
-            errors={errors} />
+            errors={errors}
+          />
         </div>
       </div>
     </>

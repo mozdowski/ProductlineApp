@@ -6,6 +6,7 @@ import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),

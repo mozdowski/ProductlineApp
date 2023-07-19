@@ -1,6 +1,7 @@
 .allegroParameterField {
   margin-right: 40px;
   width: 78%;
+  height: 90px;
 }
 
 .allegroParameterLabel,
@@ -34,5 +35,5 @@
 
 .allegroProductParameter {
   width: auto;
-  margin-top: 25px;
+  margin-top: 18px;
 }

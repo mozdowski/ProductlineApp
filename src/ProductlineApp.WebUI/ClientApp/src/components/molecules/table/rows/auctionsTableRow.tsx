@@ -7,16 +7,14 @@ import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInte
 import { CollapseAuctionDetails } from '../bodys/CollapseAuctionDetails';
 import DeleteAuctionIcon from '../../../../assets/icons/delete_icon.svg';
 import { CircularProgress } from '@mui/material';
-
+import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
 
 export const AuctionsTableRow = ({
-  key,
   auction,
   onEditAuction,
   onWithdrawAuction,
 }: {
   auction: AuctionsRecord;
-  key: string | number;
   onEditAuction: (auctionId: string) => Promise<boolean>;
   onWithdrawAuction: (
     listingId: string,
@@ -61,7 +59,7 @@ export const AuctionsTableRow = ({
   };
 
   return (
-    <React.Fragment key={key}>
+    <React.Fragment>
       <tr className="AuctionsTableRow">
         <td>{auction.isActive ? <CollapseTableButton isOpen={isOpen} toggle={toggle} /> : ''}</td>
         <td>{auction?.auctionID}</td>
@@ -80,35 +78,55 @@ export const AuctionsTableRow = ({
           <div className="auctionsButtonsAction">
             {!allowBackAuction ? (
               <>
-                <div className='cancelBackAuctionButton'>
-                  <span className="cancelBackAuctionIcon cancelTableIcon" onClick={handleClickAuctionButtonsActions} />
+                <div className="cancelBackAuctionButton">
+                  <span
+                    className="cancelBackAuctionIcon cancelTableIcon"
+                    onClick={handleClickAuctionButtonsActions}
+                  />
                 </div>
-                <div className='acceptBackAuctionButton'>
-                  <span className="acceptBackAuctionIcon assignTableIcon" onClick={() =>
-                    handleOnWithdrawClick(
-                      auction.listingId,
-                      auction.listingInstanceId,
-                      auction.auctionID,
-                    )} />
+                <div className="acceptBackAuctionButton">
+                  <span
+                    className="acceptBackAuctionIcon assignTableIcon"
+                    onClick={() =>
+                      handleOnWithdrawClick(
+                        auction.listingId,
+                        auction.listingInstanceId,
+                        auction.auctionID,
+                      )
+                    }
+                  />
                 </div>
               </>
             ) : (
               <>
                 {!isEditLoading && (
-                  <img className="editAuctionIcon" src={EditIcon} onClick={handleOnEditClick} />
+                  <BasicTooltip title="Edytuj aukcję">
+                    <img className="editAuctionIcon" src={EditIcon} onClick={handleOnEditClick} />
+                  </BasicTooltip>
                 )}
                 {isEditLoading && <CircularProgress size={22} sx={{ marginRight: '8px' }} />}
 
-                {auction.isActive ?
-                  <img className="backAuctionIcon" src={BackAuctionIcon} onClick={handleClickAuctionButtonsActions} />
-                  :
+                {auction.isActive ? (
+                  <BasicTooltip title="Wycofaj aukcję">
+                    <img
+                      className="backAuctionIcon"
+                      src={BackAuctionIcon}
+                      onClick={handleClickAuctionButtonsActions}
+                    />
+                  </BasicTooltip>
+                ) : (
                   <>
-                    <div className='refreshAuctionButton'>
-                      <span className="refreshAuctionIcon refreshAuctionIcon" onClick={handleClickAuctionButtonsActions} />
-                    </div>
+                    <BasicTooltip title="Wznów aukcję">
+                      <div className="refreshAuctionButton">
+                        <span
+                          className="refreshAuctionIcon refreshAuctionIcon"
+                          onClick={handleClickAuctionButtonsActions}
+                        />
+                      </div>
+                    </BasicTooltip>
                     {/* <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} /> */}
                   </>
-                }
+                )}
               </>
             )}
           </div>

@@ -7,15 +7,19 @@ import { CreateAllegroAuction } from '../../../../../interfaces/auctions/createA
 import { usePlatforms } from '../../../../../hooks/platforms/usePlatforms';
 import EbayFormPopup from '../popups/ebay/ebayFormPopup';
 import { CreateEbayAuctionRequest } from '../../../../../interfaces/auctions/createEbayAuctionRequest';
+import BasicTooltip from '../../../../atoms/common/tooltip/basicTooltip';
+import { PlatformEnum } from '../../../../../enums/platform.enum';
 
 function AuctionPortals({
   onAllegroFormSubmit,
   onEbayFormSubmit,
   platformConnections,
+  assignedPortals,
 }: {
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
   onEbayFormSubmit: (form: CreateEbayAuctionRequest) => void;
   platformConnections: string[];
+  assignedPortals: PlatformEnum[];
 }) {
   const [openAllegroPopup, setOpenAllegroFormPopup] = useState(false);
   const [openEbayPopup, setOpenEbayFormPopup] = useState(false);
@@ -32,26 +36,36 @@ function AuctionPortals({
         </div>
         <div className="addAuctionPortalsInputs">
           {allegroPlatform && platformConnections.includes(allegroPlatform.platformId) && (
-            <>
-              <AllegroFormButton setOpenAllegroFormPopup={setOpenAllegroFormPopup} />
-              {openAllegroPopup && (
-                <AllegroFormPopup
-                  closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
-                  onSubmit={onAllegroFormSubmit}
+            <BasicTooltip title="Stwórz formularz wystawiania na oferty Allegro">
+              <>
+                <AllegroFormButton
+                  setOpenAllegroFormPopup={setOpenAllegroFormPopup}
+                  isAssigned={assignedPortals.includes(allegroPlatform.platformName)}
                 />
-              )}
-            </>
+                {openAllegroPopup && (
+                  <AllegroFormPopup
+                    closeAllegroPopup={() => setOpenAllegroFormPopup(false)}
+                    onSubmit={onAllegroFormSubmit}
+                  />
+                )}
+              </>
+            </BasicTooltip>
           )}
           {ebayPlatform && platformConnections.includes(ebayPlatform.platformId) && (
-            <>
-              <EbayFormButton setOpenEbayFormPopup={setOpenEbayFormPopup} />
-              {openEbayPopup && (
-                <EbayFormPopup
-                  closePopup={() => setOpenEbayFormPopup(false)}
-                  onSubmit={onEbayFormSubmit}
+            <BasicTooltip title="Stwórz formularz wystawiania oferty na Ebay">
+              <>
+                <EbayFormButton
+                  setOpenEbayFormPopup={setOpenEbayFormPopup}
+                  isAssigned={assignedPortals.includes(ebayPlatform.platformName)}
                 />
-              )}
-            </>
+                {openEbayPopup && (
+                  <EbayFormPopup
+                    closePopup={() => setOpenEbayFormPopup(false)}
+                    onSubmit={onEbayFormSubmit}
+                  />
+                )}
+              </>
+            </BasicTooltip>
           )}
         </div>
       </div>

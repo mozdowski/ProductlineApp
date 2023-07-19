@@ -1,5 +1,5 @@
-import { ProductForm } from "./productForm";
+import { ProductForm } from './productForm';
 
 export interface ProductEditForm extends ProductForm {
-    gallery: string[];
+  gallery: string[];
 }

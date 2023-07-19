@@ -8,6 +8,7 @@ import './css/addAuctionForm.css';
 import { ProductAuctionData } from '../../../../interfaces/products/getProductsSKU';
 import { CreateAllegroAuction } from '../../../../interfaces/auctions/createAllegroAuction';
 import { CreateEbayAuctionRequest } from '../../../../interfaces/auctions/createEbayAuctionRequest';
+import { PlatformEnum } from '../../../../enums/platform.enum';
 
 export default function AddAuctionForm({
   products,
@@ -18,6 +19,7 @@ export default function AddAuctionForm({
   onEbayFormSubmit,
   errors,
   platformConnections,
+  assignedPortals,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -27,6 +29,7 @@ export default function AddAuctionForm({
   onEbayFormSubmit: (form: CreateEbayAuctionRequest) => void;
   errors: any;
   platformConnections: string[];
+  assignedPortals: PlatformEnum[];
 }) {
   const [showFormSteps, setSelectedOption] = useState('');
 
@@ -58,6 +61,7 @@ export default function AddAuctionForm({
               onAllegroFormSubmit={onAllegroFormSubmit}
               platformConnections={platformConnections}
               onEbayFormSubmit={onEbayFormSubmit}
+              assignedPortals={assignedPortals}
             />
           </div>
         )}

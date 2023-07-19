@@ -10,6 +10,7 @@ import { CreateListingTemplateRequest } from '../interfaces/auctions/createListi
 import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
+import { PlatformEnum } from '../enums/platform.enum';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
@@ -24,6 +25,7 @@ export default function AddAuction() {
   const [ebayListingForm, setEbayListingForm] = useState<CreateEbayAuctionRequest | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
+  const [assignedPortals, setAssignedPortals] = useState<PlatformEnum[]>([]);
 
   const { showConfirmation } = useConfirmationPopup();
 
@@ -34,9 +36,9 @@ export default function AddAuction() {
   const handleShowConfirmation = () => {
     const confirmationText =
       allegroListingForm || ebayListingForm
-        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm && 'Allegro'} ${
-            ebayListingForm && 'oraz Ebay?'
-          }`
+        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm ? 'Allegro' : ''} ${
+            ebayListingForm ? 'oraz Ebay' : ''
+          }?`
         : 'Brak zadeklarowanych ofert na platformy - utworzony zostanie jedynie szablon. Czy chcesz kontynuować?';
     showConfirmation(confirmationText, handleConfirmAction);
   };
@@ -144,44 +146,55 @@ export default function AddAuction() {
       return;
     }
 
+    const promises = [];
+
     if (allegroListingForm) {
       const allegroListingBody: CreateAllegroAuction = allegroListingForm;
       allegroListingBody.listingId = listingId;
-
-      try {
-        await toast.promise(auctionsService.createAllegroListing(allegroListingBody), {
+      const allegroPromise = toast.promise(
+        auctionsService.createAllegroListing(allegroListingBody),
+        {
           pending: 'Dodawanie aukcji na Allegro...',
           success: 'Dodano aukcję na Allegro',
           error: 'Błąd podczas dodawania aukcji na Allegro',
-        });
-      } catch {
-        toast.error('Błąd podczas dodawania aukcji na Allegro');
-      }
+        },
+      );
+      promises.push(allegroPromise);
     }
 
     if (ebayListingForm) {
       const ebayListingBody: CreateEbayAuctionRequest = ebayListingForm;
       ebayListingBody.listingId = listingId;
+      const ebayPromise = toast.promise(auctionsService.createEbayListing(ebayListingBody), {
+        pending: 'Dodawanie aukcji na Ebay...',
+        success: 'Dodano aukcję na Ebay',
+        error: 'Błąd podczas dodawania aukcji na Ebay',
+      });
+      promises.push(ebayPromise);
+    }
 
-      try {
-        await toast.promise(auctionsService.createEbayListing(ebayListingBody), {
-          pending: 'Dodawanie aukcji na Ebay...',
-          success: 'Dodano aukcję na Ebay',
-          error: 'Błąd podczas dodawania aukcji na Ebay',
-        });
-      } catch {
-        toast.error('Błąd podczas dodawania aukcji na Ebay');
-      }
+    try {
+      await Promise.all(promises);
+    } catch {
+      toast.error('Wystąpił błąd podczas dodawania aukcji');
     }
 
     navigate('/auctions');
   };
 
   const handleAllegroForm = (form: CreateAllegroAuction) => {
+    toast.info('Dodano formularz Allegro');
+    setAssignedPortals((prev) =>
+      prev.includes(PlatformEnum.ALLEGRO) ? prev : [...prev, PlatformEnum.ALLEGRO],
+    );
     setAllegroListingForm(form);
   };
 
   const handleEbayForm = (form: CreateEbayAuctionRequest) => {
+    toast.info('Dodano formularz Ebay');
+    setAssignedPortals((prev) =>
+      prev.includes(PlatformEnum.EBAY) ? prev : [...prev, PlatformEnum.EBAY],
+    );
     setEbayListingForm(form);
   };
 
@@ -197,6 +210,7 @@ export default function AddAuction() {
           products={products as ProductAuctionData[]}
           platformConnections={platformConnections}
           onEbayFormSubmit={handleEbayForm}
+          assignedPortals={assignedPortals}
         />
       )}
     </>

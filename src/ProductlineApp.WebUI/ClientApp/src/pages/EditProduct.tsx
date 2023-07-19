@@ -40,7 +40,7 @@ export default function EditProduct() {
     condition: 0,
     description: '',
     photos: null,
-    gallery: []
+    gallery: [],
   });
   const [errors, setErrors] = useState<Partial<ProductForm>>({});
 
@@ -152,7 +152,7 @@ export default function EditProduct() {
         description: product.description,
         condition: product.condition,
         photos: null,
-        gallery: [product.imageUrl, ...product.gallery]
+        gallery: [product.imageUrl, ...product.gallery],
       };
       setProductForm(productEditForm);
     });
@@ -165,6 +165,7 @@ export default function EditProduct() {
       onSubmit={handleSubmit}
       productForm={productForm}
       onChange={handleChange}
-      errors={errors} />
+      errors={errors}
+    />
   );
 }

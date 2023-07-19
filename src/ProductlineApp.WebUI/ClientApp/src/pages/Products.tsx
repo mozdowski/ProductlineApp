@@ -4,6 +4,7 @@ import { useProductsService } from '../hooks/products/useProductsService';
 import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
 import { mapProductConditionToString } from '../helpers/mappers';
 import { Outlet } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 export default function Products(this: any) {
   const ref = useRef<HTMLInputElement>(null);
@@ -11,6 +12,7 @@ export default function Products(this: any) {
   const [height, setHeight] = useState(0);
   const [products, setProducts] = useState<ProductsRecord[] | undefined>(undefined);
   const [searchValue, setSearchValue] = useState('');
+  const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
 
   const searchTableProducts = (e: { target: { value: React.SetStateAction<string> } }) => {
     setSearchValue(e.target.value);
@@ -49,13 +51,25 @@ export default function Products(this: any) {
       }));
       setProducts(productsRecords);
     });
-  }, []);
+  }, [refreshRecords]);
 
   useLayoutEffect(() => {
     if (ref.current != null) {
       setHeight(ref.current.clientHeight);
     }
   }, []);
+
+  const handleProductDelete = async (productId: string) => {
+    if (!productId) return;
+    try {
+      const res = await productsService.deleteProduct(productId);
+      toast.success('Pomyślnie usunięto produkt');
+      setRefreshRecords((prev) => !prev);
+      setProducts(undefined);
+    } catch {
+      toast.error('Błąd podczas usuwania produktu');
+    }
+  };
 
   return (
     <>
@@ -64,6 +78,7 @@ export default function Products(this: any) {
         productRecords={searchProducts}
         searchValue={searchValue}
         onChange={searchTableProducts}
+        onProductDelete={handleProductDelete}
       />
     </>
   );

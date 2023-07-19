@@ -6,14 +6,14 @@ import { CollapseProductDetails } from '../bodys/CollapseProductDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import DeleteProductIcon from '../../../../assets/icons/delete_icon.svg';
 import { Link } from 'react-router-dom';
-
+import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
 
 export const ProductsTableRow = ({
-  key,
   product,
+  onProductDelete,
 }: {
   product: ProductsRecord;
-  key: string | number;
+  onProductDelete: (productId: string) => void;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
 
@@ -28,7 +28,7 @@ export const ProductsTableRow = ({
   }, [setOpenState]);
 
   return (
-    <React.Fragment key={key}>
+    <React.Fragment>
       <tr className="ProductsTableRow">
         <td>
           <CollapseTableButton isOpen={isOpen} toggle={toggle} />
@@ -45,8 +45,9 @@ export const ProductsTableRow = ({
         <td>{product.price} zł</td>
         <td>{product.quantity}</td>
         <td
-          className={`productStatus ${product.isListed && 'productExposed'} ${!product.isListed && 'productNotExposed'
-            }`}
+          className={`productStatus ${product.isListed && 'productExposed'} ${
+            !product.isListed && 'productNotExposed'
+          }`}
         >
           {product.listingStatus}
         </td>
@@ -63,16 +64,25 @@ export const ProductsTableRow = ({
                 <div className="acceptDeleteProductButton">
                   <span
                     className="acceptDeleteProductIcon assignTableIcon"
-                    onClick={handleClickAllowDelete}
+                    onClick={() => onProductDelete(product.id)}
                   />
                 </div>
               </>
             ) : (
               <>
                 <Link to={`/products/edit/${product.id}`} className="editProductLink" id="link">
-                  <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
+                  <BasicTooltip title="Edutuj produkt">
+                    <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
+                  </BasicTooltip>
                 </Link>
-                <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
+                <BasicTooltip title="Usuń produkt">
+                  <img
+                    className="deleteProductIcon"
+                    src={DeleteProductIcon}
+                    alt="Delete Icon"
+                    onClick={handleClickAllowDelete}
+                  />
+                </BasicTooltip>
               </>
             )}
           </div>

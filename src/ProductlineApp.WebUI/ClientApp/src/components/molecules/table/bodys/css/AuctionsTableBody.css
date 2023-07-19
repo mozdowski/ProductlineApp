@@ -110,8 +110,6 @@ tbody tr:nth-child(odd) {
   background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
 }
 
-
-
 .acceptBackAuctionButton .acceptBackAuctionIcon {
   cursor: pointer;
   width: 21px;
@@ -132,8 +130,6 @@ tbody tr:nth-child(odd) {
 .acceptBackAuctionButton:hover .assignTableIcon {
   background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }
-
-
 
 .refreshAuctionButton .refreshAuctionIcon {
   cursor: pointer;

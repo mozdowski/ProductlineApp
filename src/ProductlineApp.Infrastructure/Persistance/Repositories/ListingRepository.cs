@@ -93,6 +93,20 @@ public class ListingRepository : IListingRepository
             .ToListAsync();
     }
 
+    public async Task<bool> IsListingTemplateAlreadyExistingForProduct(ProductId productId)
+    {
+        return await this._dbContext.Listings
+            .AnyAsync(x => x.ProductId == productId);
+    }
+
+    public async Task<ListingId?> GetListingIdByProductId(ProductId productId)
+    {
+        return await this._dbContext.Listings
+            .Where(x => x.ProductId == productId)
+            .Select(x => x.Id)
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<IEnumerable<PlatformId>> GetPlatformsProductIsListedOn(ProductId productId)
     {
         return await this._dbContext.Listings

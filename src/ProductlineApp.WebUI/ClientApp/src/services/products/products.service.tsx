@@ -1,6 +1,9 @@
 import { AddedProductResponse } from '../../interfaces/platforms/addedProductResponse';
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
-import { GetProductResponse, GetProductsResponse } from '../../interfaces/products/getProductsResponse';
+import {
+  GetProductResponse,
+  GetProductsResponse,
+} from '../../interfaces/products/getProductsResponse';
 import HttpService from '../common/http.service';
 
 export class ProductsService {
@@ -31,6 +34,10 @@ export class ProductsService {
   public async addImageToGallery(productId: string, data: FormData): Promise<void> {
     return this.httpService.post<void>('/products/' + productId + '/addImageToGallery', data);
   }
+
+  public async deleteProduct(productId: string): Promise<void> {
+    return this.httpService.delete<void>('/products/' + productId);
+  }
 }
 
-export { };
+export {};

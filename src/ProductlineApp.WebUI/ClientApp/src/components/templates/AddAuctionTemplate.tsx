@@ -1,3 +1,4 @@
+import { PlatformEnum } from '../../enums/platform.enum';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
 import { CreateEbayAuctionRequest } from '../../interfaces/auctions/createEbayAuctionRequest';
 import { ProductAuctionData } from '../../interfaces/products/getProductsSKU';
@@ -14,6 +15,7 @@ export default function AddAuctionTemplate({
   onEbayFormSubmit,
   errors,
   platformConnections,
+  assignedPortals,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -23,6 +25,7 @@ export default function AddAuctionTemplate({
   onEbayFormSubmit: (form: CreateEbayAuctionRequest) => void;
   errors: any;
   platformConnections: string[];
+  assignedPortals: PlatformEnum[];
 }) {
   return (
     <>
@@ -38,6 +41,7 @@ export default function AddAuctionTemplate({
             onEbayFormSubmit={onEbayFormSubmit}
             errors={errors}
             platformConnections={platformConnections}
+            assignedPortals={assignedPortals}
           />
         </div>
       </div>
