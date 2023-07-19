@@ -360,7 +360,7 @@ public class AllegroMapper : Profile
             .ForMember(dest => dest.Republish, opt => opt.MapFrom(src => src.Publication.Republish))
             .ForMember(dest => dest.ImagesUrls, opt => opt.MapFrom(src => src.Images))
             .ForMember(dest => dest.ShippingRateId, opt => opt.MapFrom(src => src.Delivery.ShippingRates.Id))
-            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.ProductSet.FirstOrDefault().Quantity.Value))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Stock.Available))
             .ForMember(dest => dest.StartingAt, opt => opt.MapFrom(src => src.Publication.StartingAt))
             .ReverseMap();
     }

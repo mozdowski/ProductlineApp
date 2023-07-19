@@ -3,8 +3,7 @@ import Photos from '../../../molecules/formSections/editProductFormSections/Phot
 import ProductInfo from '../../../molecules/formSections/editProductFormSections/ProductInfo/ProductInfo';
 import ButtonsSection from '../../../molecules/formSections/addProductFormSections/buttonsSection/ButtonsSection';
 import './css/editProductForm.css';
-import { ProductData } from '../../../../interfaces/products/getProductsSKU';
-import { ProductDtoResponse } from '../../../../interfaces/products/getProductsResponse';
+import { ProductEditForm } from '../../../../interfaces/products/productEditForm';
 
 export default function EditProductForm({
   uploadProductPhotos,
@@ -17,7 +16,7 @@ export default function EditProductForm({
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  productForm: ProductForm;
+  productForm: ProductEditForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
 }) {
@@ -31,7 +30,7 @@ export default function EditProductForm({
           <div className="editedProductPhotosForm">
             <Photos
               uploadProductPhotos={uploadProductPhotos}
-              photos={productForm.photos}
+              photos={productForm.gallery}
               error={errors.photos}
             />
           </div>

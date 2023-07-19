@@ -1,11 +1,5 @@
-import { AddProductRequest } from '../../interfaces/products/addProductRequest';
-import { ProductDtoResponse } from '../../interfaces/products/getProductsResponse';
-import { ProductData } from '../../interfaces/products/getProductsSKU';
-import { ProductForm } from '../../interfaces/products/productForm';
-import Photos from '../molecules/formSections/addProductFormSections/Photos/Photos';
-import AddProductForm from '../organisms/forms/addProductForm/AddProductForm';
+import { ProductEditForm } from '../../interfaces/products/productEditForm';
 import EditProductForm from '../organisms/forms/editProductForm/EditProductForm';
-import AddProductPageHeader from '../organisms/pageHeaders/AddProductPageHeader';
 import EditProductPageHeader from '../organisms/pageHeaders/EditProductPageHeader';
 import './css/editProductTemplate.css';
 
@@ -20,7 +14,7 @@ export default function EditProductTemplate({
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  productForm: ProductForm;
+  productForm: ProductEditForm;
   onChange: (name: string, value: string | number) => void;
   errors: any;
 }) {
