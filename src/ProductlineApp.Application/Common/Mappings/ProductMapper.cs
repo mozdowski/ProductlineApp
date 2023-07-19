@@ -11,7 +11,7 @@ public class ProductMapper : Profile
     {
         // this.CreateMap<ProductResponseMapperInput, ProductDtoResponse>();
 
-        this.CreateMap<ProductResponseMapperInput, ProductDtoResponse>()
+        this.CreateMap<ProductResponseMapperInput, ProductWithPlatformsDtoResponse>()
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Product.Id.Value))
             .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Product.Image.Url))
             .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Product.Brand.Name))
@@ -28,10 +28,18 @@ public class ProductMapper : Profile
         this.CreateMap<string, PlatformNames>()
             .ConvertUsing(src => Enum.Parse<PlatformNames>(src.ToUpper()));
 
-        // this.CreateMap<Product, ProductDtoResponse>()
-        //     .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Image.Url.ToString()))
-        //     .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category != null ? src.Category.Name : string.Empty))
-        //     .ForMember(dest => dest.Gallery, opt => opt.MapFrom(src => GetGalleryUrls(src)));
+        this.CreateMap<Product, ProductDtoResponse>()
+            .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id.Value))
+            .ForMember(dest => dest.ImageUrl, opt => opt.MapFrom(src => src.Image.Url))
+            .ForMember(dest => dest.Brand, opt => opt.MapFrom(src => src.Brand.Name))
+            .ForMember(dest => dest.Condition, opt => opt.MapFrom(src => src.Condition))
+            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name))
+            .ForMember(dest => dest.Description, opt => opt.MapFrom(src => src.Description))
+            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name))
+            .ForMember(dest => dest.Sku, opt => opt.MapFrom(src => src.Sku))
+            .ForMember(dest => dest.Price, opt => opt.MapFrom(src => src.Price))
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.Quantity))
+            .ForMember(dest => dest.Gallery, opt => opt.MapFrom(src => GetGalleryUrls(src)));
 
         this.CreateMap<Product, EditProductInfoResponse>();
         this.CreateMap<Product, EditProductImageResponse>()

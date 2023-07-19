@@ -68,7 +68,7 @@ public class GetAllUserProductsQuery
 
             var productResponseMapperInputs = (from product in products let platforms = productPlatformsDictionary[product.Id].Select(x => platformNames[x]).ToList() select new ProductResponseMapperInput(product, platforms)).ToList();
 
-            var mappedProducts = this._mapper.Map<List<ProductDtoResponse>>(productResponseMapperInputs);
+            var mappedProducts = this._mapper.Map<List<ProductWithPlatformsDtoResponse>>(productResponseMapperInputs);
 
             return new GetProductsResponse(mappedProducts.ToList());
         }

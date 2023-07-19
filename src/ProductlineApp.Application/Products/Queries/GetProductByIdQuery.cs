@@ -2,6 +2,7 @@ using AutoMapper;
 using FluentValidation;
 using MediatR;
 using ProductlineApp.Application.Common.Interfaces;
+using ProductlineApp.Application.Common.Mappings;
 using ProductlineApp.Application.Products.DTO;
 
 namespace ProductlineApp.Application.Products.Queries;
