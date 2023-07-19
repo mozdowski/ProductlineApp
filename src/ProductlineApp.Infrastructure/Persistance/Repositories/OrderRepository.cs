@@ -102,4 +102,46 @@ public class OrderRepository : IOrderRepository
             .SelectMany(x => x.OrderLines)
             .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
     }
+
+    public async Task<Dictionary<string, int>> GetTodayProductsIdsWithCountByUserIdAsync(UserId userId)
+    {
+        DateTime yesterday = DateTime.UtcNow.Date.AddDays(-1);
+
+        return await this._context.Orders
+            .AsNoTracking()
+            .Where(x => x.OwnerId == userId)
+            .Where(x => x.CreatedAt >= yesterday)
+            .SelectMany(x => x.OrderLines)
+            .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
+    }
+
+    public async Task<List<int>> GetWeeklySellsCount(UserId userId)
+    {
+        DateTime sevenDaysAgo = DateTime.UtcNow.Date.AddDays(-7);
+
+        var orderCounts = await this._context.Orders
+            .AsNoTracking()
+            .Where(x => x.OwnerId == userId && x.PlacedAt >= sevenDaysAgo)
+            .GroupBy(x => x.PlacedAt.Date)
+            .Select(group => new
+            {
+                Day = group.Key,
+                Count = group.Sum(x => x.OrderLines.Sum(y => y.Quantity)),
+            })
+            .OrderBy(entry => entry.Day)
+            .ToListAsync();
+
+        List<int> result = Enumerable.Repeat(0, 7).ToList();
+
+        foreach (var entry in orderCounts)
+        {
+            int daysAgo = (DateTime.Now.Date - entry.Day).Days;
+            if (daysAgo < 7)
+            {
+                result[daysAgo] = entry.Count;
+            }
+        }
+
+        return result;
+    }
 }

@@ -1,5 +1,7 @@
 import { AuctionsChartData } from '../../interfaces/dashboard/auctionsChartData';
 import { MostPopularProductsChartData } from '../../interfaces/dashboard/mostPopularProductsChartData';
+import { SoldTodayChartData } from '../../interfaces/dashboard/soldTodayChartData';
+import { WeeklySellsChartData } from '../../interfaces/dashboard/weeklySellsChartData';
 import HttpService from '../common/http.service';
 
 export class StatisticsService {
@@ -15,6 +17,14 @@ export class StatisticsService {
 
   public async getMostPopularProductsChartData(): Promise<MostPopularProductsChartData> {
     return this.httpService.get<MostPopularProductsChartData>('/statistics/mostPopularProducts');
+  }
+
+  public async getSoldTodayProductsChartData(): Promise<SoldTodayChartData> {
+    return this.httpService.get<SoldTodayChartData>('/statistics/soldToday');
+  }
+
+  public async getWeeklySellingStatsChartData(): Promise<WeeklySellsChartData> {
+    return this.httpService.get<WeeklySellsChartData>('/statistics/weeklySelling');
   }
 }
 

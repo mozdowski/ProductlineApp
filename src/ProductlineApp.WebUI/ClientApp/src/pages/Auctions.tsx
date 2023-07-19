@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 import { WithdrawAuctionRequest } from '../interfaces/auctions/withdrawAuctionRequest';
 import EbayFormPopup from '../components/molecules/formSections/addAuctionFormSections/popups/ebay/ebayFormPopup';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 export default function Auctions() {
   const { platforms, getPlatformByName } = usePlatforms();
@@ -64,7 +65,7 @@ export default function Auctions() {
   }, [platforms]);
 
   useEffect(() => {
-    if (!selectedAuctionPortal || isDataLoaded) return;
+    if (isDataLoaded) return;
 
     fetchAuctionRecords();
   }, [refreshRecords, selectedAuctionPortal]);
@@ -112,11 +113,25 @@ export default function Auctions() {
     return true;
   };
 
-  const handleWithdrawAuction = async (
+  const { showConfirmation } = useConfirmationPopup();
+
+  const handleShowWithdrawConfirmation = async (
     listingId: string,
     listingInstanceId: string,
     auctionId: string,
-  ): Promise<boolean> => {
+  ) => {
+    const confirmationText = 'Czy na pewno chcesz wycofać ofertę?';
+    showConfirmation(
+      confirmationText,
+      async () => await withdrawAuction(listingId, listingInstanceId, auctionId),
+    );
+  };
+
+  const withdrawAuction = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => {
     setSelectedAuctionId(auctionId);
 
     const data: WithdrawAuctionRequest = {
@@ -126,18 +141,28 @@ export default function Auctions() {
 
     try {
       await toast.promise(
-        auctionsService.withdrawAuction(selectedAuctionPortal?.platformId as string, data),
+        Promise.all([
+          auctionsService.withdrawAuction(selectedAuctionPortal?.platformId as string, data),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]),
         {
           pending: 'Trwa wycofywanie oferty...',
           success: `Pomyślnie wycofano ofertę ${auctionId}`,
           error: 'Błąd podczas wycofywania oferty',
         },
       );
-      setRefreshRecords(!refreshRecords);
+      refreshRecordsState();
     } catch (error) {
       console.error('Błąd podczas wycofywania oferty:', error);
     }
+  };
 
+  const handleWithdrawAuction = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ): Promise<boolean> => {
+    await handleShowWithdrawConfirmation(listingId, listingInstanceId, auctionId);
     return true;
   };
 
@@ -182,9 +207,11 @@ export default function Auctions() {
   };
 
   const refreshRecordsState = () => {
+    setAuctions(undefined);
     setEditAuctionValues(undefined);
     setSelectedAuctionId('');
     setRefreshRecords((prev) => !prev);
+    setIsDataLoaded(false);
   };
 
   return (

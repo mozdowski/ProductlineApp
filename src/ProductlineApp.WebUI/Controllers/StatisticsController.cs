@@ -39,4 +39,22 @@ public class StatisticsController : ControllerBase
 
         return this.Ok(result);
     }
+
+    [HttpGet("soldToday")]
+    public async Task<IActionResult> GetSoldTodayProducts()
+    {
+        var command = new GetSoldTodayQuery.Query(this._currentUser.UserId.GetValueOrDefault());
+        var result = await this._mediator.Send(command);
+
+        return this.Ok(result);
+    }
+
+    [HttpGet("weeklySelling")]
+    public async Task<IActionResult> GetWeeklySellingStats()
+    {
+        var command = new GetWeeklySellingStatsQuery.Query(this._currentUser.UserId.GetValueOrDefault());
+        var result = await this._mediator.Send(command);
+
+        return this.Ok(result);
+    }
 }

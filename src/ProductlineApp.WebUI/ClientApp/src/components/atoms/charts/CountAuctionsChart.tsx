@@ -81,7 +81,7 @@ function CountAuctionsChart({ auctionsChartData }: { auctionsChartData: Auctions
 
   return (
     <div className="chart3">
-      <h1>Wystawione Aukje</h1>
+      <h1>Wystawione Aukcje</h1>
       <ReactEcharts option={option} style={{ height: '340px' }} />
     </div>
   );

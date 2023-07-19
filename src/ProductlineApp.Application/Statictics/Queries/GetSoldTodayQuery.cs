@@ -7,9 +7,9 @@ using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 
 namespace ProductlineApp.Application.Statictics.Queries;
 
-public class GetMostPopularProductsQuery
+public class GetSoldTodayQuery
 {
-    public record Query(Guid UserId) : IQuery<MostPopularProductsDto>;
+    public record Query(Guid UserId) : IQuery<SoldTodayDto>;
 
     public class Validator : AbstractValidator<Query>
     {
@@ -19,9 +19,9 @@ public class GetMostPopularProductsQuery
         }
     }
 
-    public class Handler : IQueryHandler<Query, MostPopularProductsDto>
+    public class Handler : IQueryHandler<Query, SoldTodayDto>
     {
-        const int MostPopularProductsCount = 5;
+        const int SoldTodayProductsCount = 5;
         private readonly IOrderRepository _orderRepository;
         private readonly IProductRepository _productRepository;
 
@@ -33,13 +33,13 @@ public class GetMostPopularProductsQuery
             this._productRepository = productRepository;
         }
 
-        public async Task<MostPopularProductsDto> Handle(Query query, CancellationToken cancellationToken)
+        public async Task<SoldTodayDto> Handle(Query query, CancellationToken cancellationToken)
         {
-            var productsIdsWithCount = await this._orderRepository.GetProductsIdsWithCountByUserIdAsync(UserId.Create(query.UserId));
+            var productsIdsWithCount = await this._orderRepository.GetTodayProductsIdsWithCountByUserIdAsync(UserId.Create(query.UserId));
 
             if (!productsIdsWithCount.Any())
             {
-                return new MostPopularProductsDto()
+                return new SoldTodayDto()
                 {
                     ProductsStatistics = new List<ProductStatistics>(),
                 };
@@ -59,11 +59,11 @@ public class GetMostPopularProductsQuery
                 });
             }
 
-            return new MostPopularProductsDto()
+            return new SoldTodayDto()
             {
                 ProductsStatistics = productStatisticsList
                     .OrderByDescending(x => x.SoldCount)
-                    .Take(MostPopularProductsCount)
+                    .Take(SoldTodayProductsCount)
                     .ToList(),
             };
         }
