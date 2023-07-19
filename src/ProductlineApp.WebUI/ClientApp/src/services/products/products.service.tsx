@@ -1,6 +1,6 @@
 import { AddedProductResponse } from '../../interfaces/platforms/addedProductResponse';
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
-import { GetProductsResponse } from '../../interfaces/products/getProductsResponse';
+import { GetProductResponse, GetProductsResponse } from '../../interfaces/products/getProductsResponse';
 import HttpService from '../common/http.service';
 
 export class ProductsService {
@@ -12,6 +12,10 @@ export class ProductsService {
 
   public async getProductList(): Promise<GetProductsResponse> {
     return this.httpService.get<GetProductsResponse>('/products');
+  }
+
+  public async getProduct(productId: string): Promise<GetProductResponse> {
+    return this.httpService.get<GetProductResponse>('/products/' + productId);
   }
 
   public async addProduct(data: AddProductRequest): Promise<AddedProductResponse> {
@@ -29,4 +33,4 @@ export class ProductsService {
   }
 }
 
-export {};
+export { };

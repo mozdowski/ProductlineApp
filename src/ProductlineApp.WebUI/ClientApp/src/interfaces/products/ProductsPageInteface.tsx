@@ -5,6 +5,7 @@ export interface ProductsPage {
 }
 
 export interface ProductsRecord {
+  id: string;
   sku: string;
   brand: string;
   productName: string;

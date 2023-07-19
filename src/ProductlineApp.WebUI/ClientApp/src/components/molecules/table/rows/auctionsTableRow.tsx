@@ -5,7 +5,9 @@ import BackAuctionIcon from '../../../../assets/icons/backAuction_icon.png';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInteface';
 import { CollapseAuctionDetails } from '../bodys/CollapseAuctionDetails';
+import DeleteAuctionIcon from '../../../../assets/icons/delete_icon.svg';
 import { CircularProgress } from '@mui/material';
+
 
 export const AuctionsTableRow = ({
   key,
@@ -25,6 +27,18 @@ export const AuctionsTableRow = ({
   const [isOpen, setOpenState] = useState<boolean>(false);
   const [isEditLoading, setIsEditLoading] = useState<boolean>(false);
   const [isWithdrawLoading, setIsWithdrawLoading] = useState<boolean>(false);
+
+  const [allowBackAuction, setAllowBackAuction] = useState(true);
+
+  const handleClickAuctionButtonsActions = () => {
+    setAllowBackAuction(!allowBackAuction);
+  };
+
+  const [allowDelete, setAllowDelete] = useState(true);
+
+  const handleClickAllowDelete = () => {
+    setAllowDelete(!allowDelete);
+  };
 
   const toggle = useCallback(() => {
     setOpenState((state: boolean) => !state);
@@ -64,24 +78,37 @@ export const AuctionsTableRow = ({
         <td>{auction?.quantity}</td>
         <td>
           <div className="auctionsButtonsAction">
-            {auction.isActive && (
+            {!allowBackAuction ? (
+              <>
+                <div className='cancelBackAuctionButton'>
+                  <span className="cancelBackAuctionIcon cancelTableIcon" onClick={handleClickAuctionButtonsActions} />
+                </div>
+                <div className='acceptBackAuctionButton'>
+                  <span className="acceptBackAuctionIcon assignTableIcon" onClick={() =>
+                    handleOnWithdrawClick(
+                      auction.listingId,
+                      auction.listingInstanceId,
+                      auction.auctionID,
+                    )} />
+                </div>
+              </>
+            ) : (
               <>
                 {!isEditLoading && (
                   <img className="editAuctionIcon" src={EditIcon} onClick={handleOnEditClick} />
                 )}
                 {isEditLoading && <CircularProgress size={22} sx={{ marginRight: '8px' }} />}
-                <img
-                  className="backAuctionIcon"
-                  src={BackAuctionIcon}
-                  onClick={() =>
-                    handleOnWithdrawClick(
-                      auction.listingId,
-                      auction.listingInstanceId,
-                      auction.auctionID,
-                    )
-                  }
-                />
-                {isWithdrawLoading && <CircularProgress size={22} />}
+
+                {auction.isActive ?
+                  <img className="backAuctionIcon" src={BackAuctionIcon} onClick={handleClickAuctionButtonsActions} />
+                  :
+                  <>
+                    <div className='refreshAuctionButton'>
+                      <span className="refreshAuctionIcon refreshAuctionIcon" onClick={handleClickAuctionButtonsActions} />
+                    </div>
+                    <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
+                  </>
+                }
               </>
             )}
           </div>

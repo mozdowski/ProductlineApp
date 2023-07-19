@@ -5,6 +5,8 @@ import React from 'react';
 import { CollapseProductDetails } from '../bodys/CollapseProductDetails';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import DeleteProductIcon from '../../../../assets/icons/delete_icon.svg';
+import { Link } from 'react-router-dom';
+
 
 export const ProductsTableRow = ({
   key,
@@ -43,9 +45,8 @@ export const ProductsTableRow = ({
         <td>{product.price} zł</td>
         <td>{product.quantity}</td>
         <td
-          className={`productStatus ${product.isListed && 'productExposed'} ${
-            !product.isListed && 'productNotExposed'
-          }`}
+          className={`productStatus ${product.isListed && 'productExposed'} ${!product.isListed && 'productNotExposed'
+            }`}
         >
           {product.listingStatus}
         </td>
@@ -68,13 +69,10 @@ export const ProductsTableRow = ({
               </>
             ) : (
               <>
-                <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
-                <img
-                  className="deleteProductIcon"
-                  src={DeleteProductIcon}
-                  alt="Delete Icon"
-                  onClick={handleClickAllowDelete}
-                />
+                <Link to={`/products/edit/${product.id}`} className="editProductLink" id="link">
+                  <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
+                </Link>
+                <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
               </>
             )}
           </div>

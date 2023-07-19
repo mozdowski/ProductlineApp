@@ -65,6 +65,10 @@ tbody tr:nth-child(odd) {
   color: var(--productNotExposedColor);
 }
 
+.auctionsButtonsAction {
+  display: inline-flex;
+}
+
 /* buttons Action */
 .auctionsButtonsAction .editAuctionIcon {
   margin-right: 8px;
@@ -77,4 +81,73 @@ tbody tr:nth-child(odd) {
   cursor: pointer;
   width: 22px;
   height: 22px;
+}
+
+.auctionsButtonsAction .deleteAuctionIcon {
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  margin-left: 14px;
+}
+
+.cancelBackAuctionButton .cancelBackAuctionIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  background-size: cover;
+}
+
+.cancelBackAuctionButton {
+  align-items: center;
+  display: flex;
+}
+
+.cancelBackAuctionButton .cancelTableIcon {
+  background-image: url('../../../../../assets/icons/cancelTable_icon.svg');
+}
+
+.cancelBackAuctionButton:hover .cancelTableIcon {
+  background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
+}
+
+
+
+.acceptBackAuctionButton .acceptBackAuctionIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  margin-left: 8px;
+  background-size: cover;
+}
+
+.acceptBackAuctionButton {
+  align-items: center;
+  display: flex;
+}
+
+.acceptBackAuctionButton .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon.svg');
+}
+
+.acceptBackAuctionButton:hover .assignTableIcon {
+  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
+}
+
+
+
+.refreshAuctionButton .refreshAuctionIcon {
+  cursor: pointer;
+  width: 16.89px;
+  height: 20px;
+  margin-left: 8px;
+  background-size: cover;
+}
+
+.refreshAuctionButton {
+  align-items: center;
+  display: flex;
+}
+
+.refreshAuctionButton .refreshAuctionIcon {
+  background-image: url('../../../../../assets/icons/refreshAuction_icon.svg');
 }

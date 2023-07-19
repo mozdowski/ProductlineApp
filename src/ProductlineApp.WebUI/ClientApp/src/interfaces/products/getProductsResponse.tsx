@@ -5,6 +5,10 @@ export interface GetProductsResponse {
   products: ProductWithPlatformsDtoResponse[];
 }
 
+export interface GetProductResponse {
+  product: ProductDtoResponse
+}
+
 export interface ProductDtoResponse {
   id: string;
   sku: string;

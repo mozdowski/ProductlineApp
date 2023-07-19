@@ -33,6 +33,7 @@ export default function Products(this: any) {
   useEffect(() => {
     productsService.getProductList().then((res) => {
       const productsRecords = res.products.map((product) => ({
+        id: product.id,
         sku: product.sku,
         brand: product.brand,
         productName: product.name,
