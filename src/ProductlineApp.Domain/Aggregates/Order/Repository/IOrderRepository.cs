@@ -19,4 +19,8 @@ public interface IOrderRepository : IRepository<Order, OrderId>
     Task<OrderId?> GetOrderIdByPlatformOrder(UserId userId, PlatformId platformId, string orderId);
 
     Task<Dictionary<string, int>> GetProductsIdsWithCountByUserIdAsync(UserId userId);
+
+    Task<Dictionary<string, int>> GetTodayProductsIdsWithCountByUserIdAsync(UserId userId);
+
+    Task<List<int>> GetWeeklySellsCount(UserId userId);
 }

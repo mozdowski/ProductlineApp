@@ -25,16 +25,25 @@ export default function Dashboard() {
     allAuctionsCount: 60,
   });
   const [popularProductsChartData, setPopularProductsChartData] = useState<ProductStatistics[]>([]);
+  const [soldTodayProductsChartData, setSoldTodayProductsChartData] = useState<ProductStatistics[]>(
+    [],
+  );
+  const [weeklySellsChartData, setWeeklySellsChartData] = useState<number[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
-      const [auctionsCountData, mostPopularProductsData] = await Promise.all([
-        statisticsService.getAuctionsChartData(),
-        statisticsService.getMostPopularProductsChartData(),
-      ]);
+      const [auctionsCountData, mostPopularProductsData, soldTodayProductsData, weeklySellsData] =
+        await Promise.all([
+          statisticsService.getAuctionsChartData(),
+          statisticsService.getMostPopularProductsChartData(),
+          statisticsService.getSoldTodayProductsChartData(),
+          statisticsService.getWeeklySellingStatsChartData(),
+        ]);
 
       setAuctionsChartData(auctionsCountData);
       setPopularProductsChartData(mostPopularProductsData.productsStatistics);
+      setSoldTodayProductsChartData(soldTodayProductsData.productsStatistics);
+      setWeeklySellsChartData(weeklySellsData.weeklySellingCount);
     };
 
     fetchData();
@@ -55,12 +64,14 @@ export default function Dashboard() {
       </div>
       <div className="content">
         <div className="charts">
-          <SoldTodayChart />
+          {soldTodayProductsChartData.length > 0 && (
+            <SoldTodayChart soldTodayProductsChartData={soldTodayProductsChartData} />
+          )}
           {popularProductsChartData.length > 0 && (
             <MostPopularProductsChart popularProductsChartData={popularProductsChartData} />
           )}
           <CountAuctionsChart auctionsChartData={auctionsChartData} />
-          <WeekSoldChart />
+          <WeekSoldChart weeklySellsChartData={weeklySellsChartData} />
         </div>
       </div>
     </>

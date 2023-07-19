@@ -4,6 +4,7 @@ import { OrdersRecord } from '../interfaces/orders/OrdersPageInteface';
 import { useOrdersService } from '../hooks/orders/useOrdersService';
 import { mapOrderStatusToString } from '../helpers/mappers';
 import { toast } from 'react-toastify';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 export default function Orders() {
   const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
@@ -11,6 +12,7 @@ export default function Orders() {
   const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);
   const { ordersService } = useOrdersService();
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
+  const { showConfirmation } = useConfirmationPopup();
 
   const handleClickTypeOrdersButton = (showCompleted: boolean) => {
     setShowCompletedOrders(showCompleted);
@@ -22,6 +24,15 @@ export default function Orders() {
   };
 
   const handleMarkOrderAsCompleted = async (orderId: string) => {
+    await handleMarkOrderAsCompletedConfirmationPopup(orderId);
+  };
+
+  const handleMarkOrderAsCompletedConfirmationPopup = async (orderId: string) => {
+    const confirmationText = 'Czy na pewno chcesz oznaczyć zamówienie jako zrealizowane?';
+    showConfirmation(confirmationText, async () => await markOrderAsCompleted(orderId));
+  };
+
+  const markOrderAsCompleted = async (orderId: string) => {
     try {
       const res = await ordersService.markOrderAsCompleted(orderId);
       toast.success('Zamówienie zrealizowane');
