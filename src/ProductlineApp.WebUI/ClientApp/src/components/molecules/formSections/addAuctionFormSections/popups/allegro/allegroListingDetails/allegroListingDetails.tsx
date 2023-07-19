@@ -91,7 +91,6 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
     product.description = selectedProduct.description;
   }
 
-  //   const { selectedProduct } = useSelectedProduct();
   const parser = new DOMParser();
 
   const [formData, setFormData] = useState<AllegroListingDetailsFormData>({
@@ -100,9 +99,9 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
     returnPolicyId: initValues ? initValues.returnPolicyId : '',
     price: initValues ? initValues.price : product.price,
     locationCity: initValues ? initValues.location.city : '',
-    locationCountryCode: initValues ? initValues.location.countryCode : '',
+    locationCountryCode: initValues ? initValues.location.countryCode : 'PL',
     locationPostCode: initValues ? initValues.location.postCode : '',
-    locationProvince: initValues ? initValues.location.province : '',
+    locationProvince: initValues ? initValues.location.province : 'MAZOWIECKIE',
     duration: initValues ? initValues.duration : AllegroDurationPeriods.P10D,
     republish: initValues ? initValues.republish : true,
     shippingRateId: initValues ? initValues.shippingRateId : '',

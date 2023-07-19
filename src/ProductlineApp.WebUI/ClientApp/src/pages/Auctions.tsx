@@ -182,11 +182,13 @@ export default function Auctions() {
         Promise.all([
           auctionsService.updateAllegroAuction(selectedAuctionId, data),
           new Promise((resolve) => setTimeout(resolve, 3000)),
-        ]), {
-        pending: 'Trwa aktualizowanie aukcji Allegro...',
-        success: 'Zaktualizowano aukcję Allegro',
-        error: 'Błąd podczas aktualizowania aukcji Allegro',
-      });
+        ]),
+        {
+          pending: 'Trwa aktualizowanie aukcji Allegro...',
+          success: 'Zaktualizowano aukcję Allegro',
+          error: 'Błąd podczas aktualizowania aukcji Allegro',
+        },
+      );
     } catch (error) {
       console.error('Błąd podczas aktualizowania aukcji Allegro:', error);
     }
@@ -202,11 +204,13 @@ export default function Auctions() {
         Promise.all([
           auctionsService.updateEbayAuction(selectedAuctionId, ebayForm),
           new Promise((resolve) => setTimeout(resolve, 3000)),
-        ]), {
-        pending: 'Trwa aktualizowanie aukcji Ebay...',
-        success: 'Zaktualizowano aukcję Ebay',
-        error: 'Błąd podczas aktualizowania aukcji Ebay',
-      });
+        ]),
+        {
+          pending: 'Trwa aktualizowanie aukcji Ebay...',
+          success: 'Zaktualizowano aukcję Ebay',
+          error: 'Błąd podczas aktualizowania aukcji Ebay',
+        },
+      );
     } catch (error) {
       console.error('Błąd podczas aktualizowania aukcji Ebay:', error);
     }

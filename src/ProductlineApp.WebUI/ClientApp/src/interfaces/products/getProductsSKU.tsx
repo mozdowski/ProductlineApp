@@ -1,5 +1,5 @@
-import { PlatformEnum } from "../../enums/platform.enum";
-import { ProductCondition } from "../../enums/productCondition";
+import { PlatformEnum } from '../../enums/platform.enum';
+import { ProductCondition } from '../../enums/productCondition';
 
 export interface ProductAuctionData {
   id: string;

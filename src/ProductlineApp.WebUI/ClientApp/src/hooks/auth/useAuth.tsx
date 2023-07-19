@@ -44,7 +44,7 @@ export const useAuth = () => {
       }
 
       if (expirationDate && expirationDate < new Date()) {
-        toast.error('Token wygasl');
+        toast.info('Sesja wygasła. Zaloguj się ponownie');
         return false;
       }
 

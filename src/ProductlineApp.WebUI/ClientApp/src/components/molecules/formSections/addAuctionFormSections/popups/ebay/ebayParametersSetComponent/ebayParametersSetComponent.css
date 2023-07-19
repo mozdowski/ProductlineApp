@@ -1,6 +1,7 @@
 .ebayParameterField {
   margin-right: 40px;
   width: 78%;
+  height: 90px;
 }
 
 .ebayParameterLabel,
@@ -34,5 +35,5 @@
 
 .ebayProductParameter {
   width: auto;
-  margin-top: 25px;
+  margin-top: 18px;
 }

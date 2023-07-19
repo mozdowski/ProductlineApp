@@ -345,9 +345,9 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
       )}
 
       <div className="addAuctionAllAllegroButtons">
-          <div className="addAuctionAllegroBackButton">
-            {!initValues && (<BackButton onClick={onPrevPage} />)}
-          </div>
+        <div className="addAuctionAllegroBackButton">
+          {!initValues && <BackButton onClick={onPrevPage} />}
+        </div>
         <div className="addauctionAllegroButtons">
           <CancelButton pathTo={''} onClick={onCancel} />
           <NextButton onClick={handleNextPage} />

@@ -7,10 +7,12 @@ export default function ProductsTemplate({
   productRecords,
   searchValue,
   onChange,
+  onProductDelete,
 }: {
   productRecords?: ProductsRecord[];
   searchValue: string;
   onChange: (e: any) => void;
+  onProductDelete: (productId: string) => void;
 }) {
   return (
     <>
@@ -21,6 +23,7 @@ export default function ProductsTemplate({
             productRecords={productRecords}
             searchValue={searchValue}
             onChange={onChange}
+            onProductDelete={onProductDelete}
           />
         </div>
       </div>

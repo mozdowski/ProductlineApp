@@ -6,7 +6,7 @@ export interface GetProductsResponse {
 }
 
 export interface GetProductResponse {
-  product: ProductDtoResponse
+  product: ProductDtoResponse;
 }
 
 export interface ProductDtoResponse {

@@ -5,14 +5,13 @@ import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import { OrdersRecord } from '../../../../interfaces/orders/OrdersPageInteface';
 import { CollapseOrderDetails } from '../bodys/CollapseOrderDetails';
 import { OrderStatus } from '../../../../enums/orderStatus.enum';
+import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
 
 export const OrdersTableRow = ({
-  key,
   order,
   markOrderAsCompleted,
 }: {
   order: OrdersRecord;
-  key: string | number;
   markOrderAsCompleted: (orderId: string) => void;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
@@ -22,7 +21,7 @@ export const OrdersTableRow = ({
   }, [setOpenState]);
 
   return (
-    <React.Fragment key={key}>
+    <React.Fragment>
       <tr className="OrdersTableRow">
         <td>
           <CollapseTableButton isOpen={isOpen} toggle={toggle} />
@@ -50,12 +49,14 @@ export const OrdersTableRow = ({
           <div className="ordersButtonsAction">
             <img className="editOrderIcon" src={EditIcon} />
             {order.status !== OrderStatus.COMPLETED && (
-              <div
-                className="assignedOrderButton"
-                onClick={() => markOrderAsCompleted(order.orderID)}
-              >
-                <span className="assignOrderIcon assignTableIcon" />
-              </div>
+              <BasicTooltip title="Oznacz jako zrealizowany">
+                <div
+                  className="assignedOrderButton"
+                  onClick={() => markOrderAsCompleted(order.orderID)}
+                >
+                  <span className="assignOrderIcon assignTableIcon" />
+                </div>
+              </BasicTooltip>
             )}
           </div>
         </td>

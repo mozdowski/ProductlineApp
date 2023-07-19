@@ -2,7 +2,6 @@ using FluentValidation;
 using ProductlineApp.Application.Common.Interfaces;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Domain.Aggregates.Listing.Repository;
-using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 using ProductlineApp.Domain.Aggregates.User.ValueObjects;
 
@@ -43,20 +42,15 @@ public class CreateListingTemplateCommand
 
         public async Task<CreateListingResponse> Handle(Command request, CancellationToken cancellationToken)
         {
-            // Domain.Aggregates.Listing.Listing listing;
+            var existingListingId = await this._listingRepository.GetListingIdByProductId(ProductId.Create(request.ProductId));
 
-            // if (request.TakeProductDetails && request.ProductId.HasValue)
-            // {
-            //     var product = await this._productRepository.GetByIdAsync(ProductId.Create(request.ProductId.Value));
-            //     if (product is null) throw new Exception($"Product with ID: {request.ProductId.Value} not found");
-            //
-            //     listing = Domain.Aggregates.Listing.Listing.CreateFromProduct(product, UserId.Create(request.UserId));
-            //     await this._listingRepository.AddAsync(listing);
-            //     return new CreateListingResponse()
-            //     {
-            //         ListingId = listing.Id.Value,
-            //     };
-            // }
+            if (existingListingId is not null)
+            {
+                return new CreateListingResponse()
+                {
+                    ListingId = existingListingId.Value,
+                };
+            }
 
             var listing = Domain.Aggregates.Listing.Listing.Create(
                     request.Title,

@@ -26,4 +26,8 @@ public interface IListingRepository : IRepository<Listing, ListingId>
     Task<IEnumerable<ListingInstance>> GetByPlatformId(UserId userId, PlatformId platformId);
 
     Task<IEnumerable<ListingInstance>> GetAllListingInstancesByUserIdAsync(UserId userId);
+
+    Task<bool> IsListingTemplateAlreadyExistingForProduct(ProductId productId);
+
+    Task<ListingId?> GetListingIdByProductId(ProductId productId);
 }

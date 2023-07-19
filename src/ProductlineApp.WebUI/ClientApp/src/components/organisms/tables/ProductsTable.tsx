@@ -10,17 +10,19 @@ export default function ProductsTable({
   productRecords,
   searchValue,
   onChange,
+  onProductDelete,
 }: {
   productRecords?: ProductsRecord[];
   searchValue: string;
   onChange: (e: any) => void;
+  onProductDelete: (productId: string) => void;
 }) {
   return (
     <>
       <ProductsHederActions searchValue={searchValue} onChange={onChange} />
       <table className="products">
         <ProductsTableHeader />
-        <ProductsTableBody productRecords={productRecords} />
+        <ProductsTableBody productRecords={productRecords} onProductDelete={onProductDelete} />
       </table>
       {!productRecords && <CircularProgress />}
       <TableFooter />
