@@ -2,7 +2,7 @@ import { PlatformEnum } from '../../enums/platform.enum';
 import { ProductCondition } from '../../enums/productCondition';
 
 export interface GetProductsResponse {
-  products: ProductDtoResponse[];
+  products: ProductWithPlatformsDtoResponse[];
 }
 
 export interface ProductDtoResponse {
@@ -17,5 +17,8 @@ export interface ProductDtoResponse {
   condition: ProductCondition;
   description: string;
   gallery: string[];
+}
+
+export interface ProductWithPlatformsDtoResponse extends ProductDtoResponse {
   platforms: PlatformEnum[];
 }

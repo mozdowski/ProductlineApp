@@ -24,7 +24,5 @@ public class ProductDtoResponse
 
     public ProductCondition Condition { get; set; }
 
-    public IEnumerable<PlatformNames> Platforms { get; set; }
-
     public List<string> Gallery { get; set; }
 }
