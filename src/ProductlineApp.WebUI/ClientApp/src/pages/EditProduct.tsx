@@ -6,9 +6,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import EditProductTemplate from '../components/templates/EditProductTemplate';
-import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
-import { ProductData } from '../interfaces/products/getProductsSKU';
-import { ProductDtoResponse } from '../interfaces/products/getProductsResponse';
+import { ProductEditForm } from '../interfaces/products/productEditForm';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -32,7 +30,7 @@ export default function EditProduct() {
   const { productId } = useParams<string>();
   // const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
   const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
-  const [productForm, setProductForm] = useState<ProductForm>({
+  const [productForm, setProductForm] = useState<ProductEditForm>({
     sku: '',
     name: '',
     brand: '',
@@ -42,6 +40,7 @@ export default function EditProduct() {
     condition: 0,
     description: '',
     photos: null,
+    gallery: []
   });
   const [errors, setErrors] = useState<Partial<ProductForm>>({});
 
@@ -139,21 +138,23 @@ export default function EditProduct() {
     }));
   };
 
-
   useEffect(() => {
     if (!productId) return;
     productsService.getProduct(productId).then((res) => {
-      const productData: ProductDtoResponse = {
-        sku: productForm.sku,
-        name: productForm.name,
-        category: productForm.category,
-        price: productForm.price,
-        quantity: productForm.quantity,
-        brand: productForm.brand,
-        description: productForm.description,
-        condition: productForm.condition,
-        gallery: productForm.photos
-      }
+      const product = res.product;
+      const productEditForm: ProductEditForm = {
+        sku: product.sku,
+        name: product.name,
+        category: product.category,
+        price: product.price,
+        quantity: product.quantity,
+        brand: product.brand,
+        description: product.description,
+        condition: product.condition,
+        photos: null,
+        gallery: [product.imageUrl, ...product.gallery]
+      };
+      setProductForm(productEditForm);
     });
   }, []);
 

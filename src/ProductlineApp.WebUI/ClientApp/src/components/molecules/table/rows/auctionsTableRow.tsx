@@ -106,7 +106,7 @@ export const AuctionsTableRow = ({
                     <div className='refreshAuctionButton'>
                       <span className="refreshAuctionIcon refreshAuctionIcon" onClick={handleClickAuctionButtonsActions} />
                     </div>
-                    <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
+                    {/* <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} /> */}
                   </>
                 }
               </>

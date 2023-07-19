@@ -178,7 +178,11 @@ export default function Auctions() {
     if (!selectedAuctionId) return;
 
     try {
-      await toast.promise(auctionsService.updateAllegroAuction(selectedAuctionId, data), {
+      await toast.promise(
+        Promise.all([
+          auctionsService.updateAllegroAuction(selectedAuctionId, data),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]), {
         pending: 'Trwa aktualizowanie aukcji Allegro...',
         success: 'Zaktualizowano aukcję Allegro',
         error: 'Błąd podczas aktualizowania aukcji Allegro',
@@ -194,7 +198,11 @@ export default function Auctions() {
     if (!selectedAuctionId) return;
 
     try {
-      await toast.promise(auctionsService.updateEbayAuction(selectedAuctionId, ebayForm), {
+      await toast.promise(
+        Promise.all([
+          auctionsService.updateEbayAuction(selectedAuctionId, ebayForm),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]), {
         pending: 'Trwa aktualizowanie aukcji Ebay...',
         success: 'Zaktualizowano aukcję Ebay',
         error: 'Błąd podczas aktualizowania aukcji Ebay',
