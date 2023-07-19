@@ -8,6 +8,8 @@ import { ProductAuctionData } from '../interfaces/products/getProductsSKU';
 import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuction';
 import { CreateListingTemplateRequest } from '../interfaces/auctions/createListingTemplateRequest';
 import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
+import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
@@ -19,8 +21,25 @@ export default function AddAuction() {
   const { auctionsService } = useAuctionsService();
   const [products, setProducts] = useState<ProductAuctionData[]>();
   const [allegroListingForm, setAllegroListingForm] = useState<CreateAllegroAuction | null>(null);
+  const [ebayListingForm, setEbayListingForm] = useState<CreateEbayAuctionRequest | null>(null);
   const [errors, setErrors] = useState<any>({});
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
+
+  const { showConfirmation } = useConfirmationPopup();
+
+  const handleConfirmAction = () => {
+    handleAuctionsAdd();
+  };
+
+  const handleShowConfirmation = () => {
+    const confirmationText =
+      allegroListingForm || ebayListingForm
+        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm && 'Allegro'} ${
+            ebayListingForm && 'oraz Ebay?'
+          }`
+        : 'Brak zadeklarowanych ofert na platformy - utworzony zostanie jedynie szablon. Czy chcesz kontynuować?';
+    showConfirmation(confirmationText, handleConfirmAction);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,10 +112,14 @@ export default function AddAuction() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    let listingId: string;
-
     const isValid = await validateForm();
-    if (!isValid) return;
+    if (isValid) {
+      handleShowConfirmation();
+    }
+  };
+
+  const handleAuctionsAdd = async () => {
+    let listingId: string;
 
     const listingTemplateBody: CreateListingTemplateRequest = {
       title: selectedProduct.name,
@@ -107,11 +130,15 @@ export default function AddAuction() {
     };
 
     try {
-      const createListingTemplateResponse = await auctionsService.createListingTemplate(
-        listingTemplateBody,
+      const createListingTemplateResponse = await toast.promise(
+        auctionsService.createListingTemplate(listingTemplateBody),
+        {
+          pending: 'Tworzenie szablonu aukcji...',
+          success: 'Stworzono szablon aukcji',
+          error: 'Błąd podczas dodawania szablonu aukcji',
+        },
       );
       listingId = createListingTemplateResponse.listingId;
-      toast.success('Stworzono szablon aukcji');
     } catch {
       toast.error('Błąd podczas dodawania szablonu aukcji');
       return;
@@ -122,10 +149,28 @@ export default function AddAuction() {
       allegroListingBody.listingId = listingId;
 
       try {
-        const allegroResponse = await auctionsService.createAllegroListing(allegroListingBody);
-        toast.success('Dodano aukcję na Allegro');
+        await toast.promise(auctionsService.createAllegroListing(allegroListingBody), {
+          pending: 'Dodawanie aukcji na Allegro...',
+          success: 'Dodano aukcję na Allegro',
+          error: 'Błąd podczas dodawania aukcji na Allegro',
+        });
       } catch {
         toast.error('Błąd podczas dodawania aukcji na Allegro');
+      }
+    }
+
+    if (ebayListingForm) {
+      const ebayListingBody: CreateEbayAuctionRequest = ebayListingForm;
+      ebayListingBody.listingId = listingId;
+
+      try {
+        await toast.promise(auctionsService.createEbayListing(ebayListingBody), {
+          pending: 'Dodawanie aukcji na Ebay...',
+          success: 'Dodano aukcję na Ebay',
+          error: 'Błąd podczas dodawania aukcji na Ebay',
+        });
+      } catch {
+        toast.error('Błąd podczas dodawania aukcji na Ebay');
       }
     }
 
@@ -134,6 +179,10 @@ export default function AddAuction() {
 
   const handleAllegroForm = (form: CreateAllegroAuction) => {
     setAllegroListingForm(form);
+  };
+
+  const handleEbayForm = (form: CreateEbayAuctionRequest) => {
+    setEbayListingForm(form);
   };
 
   return (
@@ -147,6 +196,7 @@ export default function AddAuction() {
           onAllegroFormSubmit={handleAllegroForm}
           products={products as ProductAuctionData[]}
           platformConnections={platformConnections}
+          onEbayFormSubmit={handleEbayForm}
         />
       )}
     </>

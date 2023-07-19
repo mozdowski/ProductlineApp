@@ -99,18 +99,23 @@ namespace ProductlineApp.Domain.Aggregates.Listing.Entities
                 null);
         }
 
+        public bool IsActive()
+        {
+            return this.Status == ListingStatus.ACTIVE;
+        }
+
         public void MarkAsInactive()
         {
-            if (this.Status != ListingStatus.ACTIVE)
-                throw new InvalidOperationException("Listing is not active.");
+            // if (this.Status != ListingStatus.ACTIVE)
+            //     throw new InvalidOperationException("Listing is not active.");
 
             this.Status = ListingStatus.INACTIVE;
         }
 
         public void MarkAsSold()
         {
-            if (this.Status != ListingStatus.ACTIVE)
-                throw new InvalidOperationException("Listing is not active.");
+            // if (this.Status != ListingStatus.ACTIVE)
+            //     throw new InvalidOperationException("Listing is not active.");
 
             this.Status = ListingStatus.SOLD;
         }

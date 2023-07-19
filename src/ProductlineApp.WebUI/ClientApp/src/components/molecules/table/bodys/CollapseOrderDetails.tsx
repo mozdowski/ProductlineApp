@@ -6,11 +6,11 @@ import { OrderItem } from '../../../../interfaces/orders/orderItem';
 export const CollapseOrderDetails = ({
   shippingAddress,
   address,
-  items
+  items,
 }: {
-  shippingAddress: ShippingAddress,
-  address: Address,
-  items: OrderItem[]
+  shippingAddress: ShippingAddress;
+  address: Address;
+  items: OrderItem[];
 }) => {
   return (
     <tr className="orderDetailsWrapper">
@@ -35,8 +35,7 @@ export const CollapseOrderDetails = ({
           </ul>
         </div>
       </td>
-      <td>
-      </td>
+      <td></td>
       <td></td>
       <td></td>
       <td colSpan={3}>
@@ -45,7 +44,7 @@ export const CollapseOrderDetails = ({
           <ul className="orderShipingAddressData">
             <li>
               <h1>Imię i Nazwisko:</h1>
-              <h2>{shippingAddress.firstName + " " + shippingAddress.lastName}</h2>
+              <h2>{shippingAddress.firstName + ' ' + shippingAddress.lastName}</h2>
             </li>
             <li>
               {shippingAddress.phoneNumber !== null ? (
@@ -53,51 +52,63 @@ export const CollapseOrderDetails = ({
                   <h1>Numer telefonu:</h1>
                   <h2>{shippingAddress.phoneNumber}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
             <li>
-              {address.city !== "" ? (
+              {address.city !== '' ? (
                 <>
                   <h1>Miasto:</h1>
                   <h2>{address.city}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
             <li>
-              {address.streetName !== "" ? (
+              {address.streetName !== '' ? (
                 <>
                   <h1>Ulica:</h1>
                   <h2>{address.streetName}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
             <li>
-              {address.streetNumber !== "" ? (
+              {address.streetNumber !== '' ? (
                 <>
                   <h1>Numer domu:</h1>
                   <h2>{address.streetNumber}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
             <li>
-              {address.zip !== "" ? (
+              {address.zip !== '' ? (
                 <>
                   <h1>Kod pocztowy:</h1>
                   <h2>{address.zip}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
             <li>
-              {address.country !== "" ? (
+              {address.country !== '' ? (
                 <>
                   <h1>Kraj:</h1>
                   <h2>{address.country}</h2>
                 </>
-              ) : ""}
+              ) : (
+                ''
+              )}
             </li>
           </ul>
         </div>
       </td>
-    </tr >
+    </tr>
   );
 };

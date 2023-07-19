@@ -1,8 +1,8 @@
-import React from 'react';
 import ReactEcharts from 'echarts-for-react';
 import './css/CountAuctionsChart.css';
+import { AuctionsChartData } from '../../../interfaces/dashboard/auctionsChartData';
 
-function CountAuctionsChart() {
+function CountAuctionsChart({ auctionsChartData }: { auctionsChartData: AuctionsChartData }) {
   const option = {
     series: [
       {
@@ -11,7 +11,7 @@ function CountAuctionsChart() {
         startAngle: 210,
         endAngle: -30,
         min: 0,
-        max: 60,
+        max: auctionsChartData.allAuctionsCount,
         splitNumber: 12,
         itemStyle: {
           color: '#5F47F1',
@@ -72,46 +72,7 @@ function CountAuctionsChart() {
         },
         data: [
           {
-            value: 20,
-          },
-        ],
-      },
-      {
-        type: 'gauge',
-        center: ['50%', '60%'],
-        startAngle: 200,
-        endAngle: -20,
-        min: 0,
-        max: 60,
-        itemStyle: {
-          color: '',
-          borderRadius: 8,
-        },
-        progress: {
-          show: false,
-          width: 8,
-        },
-        pointer: {
-          show: false,
-        },
-        axisLine: {
-          show: false,
-        },
-        axisTick: {
-          show: false,
-        },
-        splitLine: {
-          show: false,
-        },
-        axisLabel: {
-          show: false,
-        },
-        detail: {
-          show: false,
-        },
-        data: [
-          {
-            value: 20,
+            value: auctionsChartData.activeAuctionsCount,
           },
         ],
       },
@@ -120,7 +81,7 @@ function CountAuctionsChart() {
 
   return (
     <div className="chart3">
-      <h1>Wystawione Aukje</h1>
+      <h1>Wystawione Aukcje</h1>
       <ReactEcharts option={option} style={{ height: '340px' }} />
     </div>
   );

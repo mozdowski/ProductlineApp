@@ -12,4 +12,5 @@
   height: calc(100vh - 212px);
   border-radius: 8px;
   position: relative;
+  text-align: center;
 }

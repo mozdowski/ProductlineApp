@@ -1,3 +1,4 @@
+using System.Globalization;
 using AutoMapper;
 using MediatR;
 using ProductlineApp.Application.Common.Contexts;
@@ -122,20 +123,12 @@ public class EbayService : IEbayService
         return this._mapper.Map<IEnumerable<OrderDtoResponse>>(orders);
     }
 
-    // pierwsza wersja zaklada pobieranie ofert stworzonych tylko na naszym portalu
     public async Task<IEnumerable<ListingDtoResponse>> GetListingsAsync()
     {
-        // nowy wersja pobierania listy ofert:
-        // 1. pobieramy z ebay api liste produktow dla danego uzytkownika
-        // 2. dla kazdego produktu pobieramy jego oferty z ebay api na podstawie SKU
-        // 3. jezeli produkt istnieje w naszej bazie, to zwracamy wartosci z bazy
-        // 4. jesli produkt nie istnieje w bazie, to zwracane sa informacje z produktu pobranego z ebay api
-        // var userListings = await this._listingRepository.GetAllByUserIdAsync(UserId.Create(this._currentUser.UserId.Value));
-        var ebayOfferIds = await this._listingRepository.GetUsersPlatformListingsIds(UserId.Create(this._currentUser.UserId.Value), this.PlatformId);
-        // var ebayProducts =
-        //     await this._productRepository.GetUserProductsByIds(ebayProductIds, UserId.Create(this._currentUser.UserId.Value));
+        var listingInstances = await this._listingRepository.GetByPlatformId(UserId.Create(this._currentUser.UserId.Value), this.PlatformId);
 
-        if (!ebayOfferIds.Any()) return new List<ListingDtoResponse>();
+        var ebayOfferIds = listingInstances.Select(x => x.PlatformListingId);
+        if (!listingInstances.Any() || !ebayOfferIds.Any()) return new List<ListingDtoResponse>();
 
         var offers = await this._ebayApiClient.GetOffers(this._accessToken, ebayOfferIds);
 
@@ -146,6 +139,7 @@ public class EbayService : IEbayService
         {
             var mappedOffer = this._mapper.Map<ListingDtoResponse>(offer);
             var product = await this._productRepository.GetProductBySku(offer.Sku);
+            var listingInstance = listingInstances.First(x => x.PlatformListingId == mappedOffer.PlatformListingId);
 
             if (product is null) continue;
 
@@ -153,6 +147,8 @@ public class EbayService : IEbayService
             mappedOffer.ProductName = product.Name;
             mappedOffer.ProductImageUrl = product.Image.Url.ToString();
             mappedOffer.Brand = product.Brand.Name;
+            mappedOffer.ListingId = listingInstance.ListingId.Value;
+            mappedOffer.ListingInstanceId = listingInstance.Id.Value;
 
             result.Add(mappedOffer);
         }
@@ -181,7 +177,7 @@ public class EbayService : IEbayService
             this._currentUser.UserId.Value,
             request.ListingId,
             this.PlatformId.Value,
-            listingId,
+            ebayOfferId,
             null,
             null);
         await this._mediator.Send(command);
@@ -242,6 +238,89 @@ public class EbayService : IEbayService
         return new EbayLocationsDtoResponse()
         {
             Locations = mappedLocations,
+        };
+    }
+
+    public async Task<EbayUserPolicies> GetUserPolicies()
+    {
+        var marketplaceId = "EBAY_PL";
+
+        var fulfillmentPoliciesTask = this._ebayApiClient.GetFulfillmentPolicies(this._accessToken, marketplaceId);
+        var returnPoliciesTask = this._ebayApiClient.GetReturnPolicies(this._accessToken, marketplaceId);
+        var paymentPoliciesTask = this._ebayApiClient.GetPaymentPolicies(this._accessToken, marketplaceId);
+        var locationKeysTask = this._ebayApiClient.GetMerchantLocationKeys(this._accessToken);
+
+        await Task.WhenAll(fulfillmentPoliciesTask, returnPoliciesTask, paymentPoliciesTask, locationKeysTask);
+
+        return new EbayUserPolicies()
+        {
+            FulfillmentPolicies = fulfillmentPoliciesTask.Result.FulfillmentPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+                {
+                    Id = x.FulfillmentPolicyId,
+                    Name = x.Name,
+                }),
+            ReturnPolicies = returnPoliciesTask.Result.ReturnPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+            {
+                Id = x.ReturnPolicyId,
+                Name = x.Name,
+            }),
+            PaymentPolicies = paymentPoliciesTask.Result.PaymentPolicies.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+                {
+                    Id = x.PaymentPolicyId,
+                    Name = x.Name,
+                }),
+            LocationKeys = locationKeysTask.Result.Select(x =>
+                new EbayUserPolicies.EbayUserPolicy()
+            {
+                Id = x.MerchantLocationKey,
+                Name = x.Name,
+            }),
+        };
+    }
+
+    public async Task UpdateListingAsync(string offerId, EbayListingDtoRequest request)
+    {
+        var listing = await this._listingRepository.GetByIdAsync(ListingId.Create(request.ListingId));
+        if (listing is null) throw new Exception($"Listing with ID: {request.ListingId} not found");
+
+        var inventoryItemSku = await this.CreateOrReplaceInventoryItem(listing.ProductId, request.Aspects);
+
+        var requestBody = this._mapper.Map<EbayUpdateOfferRequest>(request.OfferDetails);
+
+        await this._ebayApiClient.UpdateOffer(this._accessToken, offerId, requestBody);
+    }
+
+    public async Task<EbayOfferDetailsResponse> GetOfferDetails(string offerId)
+    {
+        var offer = (await this._ebayApiClient.GetOffers(this._accessToken, new[] { offerId })).ToArray()[0];
+        var product = await this._ebayApiClient.GetProductDetails(this._accessToken, offer.Sku);
+
+        var offerProductDetails = new EbayOfferDtoResponse()
+        {
+            ListingDescription = offer.ListingDescription,
+            Quantity = offer.AvailableQuantity,
+            QuantityLimitPerBuyer = offer.QuantityLimitPerBuyer,
+            CategoryId = offer.CategoryId,
+            Price = decimal.Parse(
+                offer.PricingSummary.Price.Value,
+                NumberStyles.AllowDecimalPoint,
+                CultureInfo.InvariantCulture),
+            FulfillmentPolicyId = offer.ListingPolicies.FulfillmentPolicyId,
+            PaymentPolicyId = offer.ListingPolicies.PaymentPolicyId,
+            ReturnPolicyId = offer.ListingPolicies.ReturnPolicyId,
+            LocationKey = offer.MerchantLocationKey,
+        };
+
+        var listingInstance = await this._listingRepository.GetByPlatformListingId(offerId);
+
+        return new EbayOfferDetailsResponse()
+        {
+            Aspects = product.Product.Aspects,
+            OfferDetails = offerProductDetails,
+            ListingId = listingInstance.ListingId.Value,
         };
     }
 

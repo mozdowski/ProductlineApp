@@ -19,6 +19,7 @@ import AddAuction from '../../pages/AddAuction';
 import { UserProvider } from '../../providers/userProvider';
 import PLatformRedirect from './platformRedirect';
 import { AddAuctionProvider } from '../../providers/addAuctionProvider';
+import { StatisticsProvider } from '../../providers/statisticsProvider';
 import EditProduct from '../../pages/EditProduct';
 
 const RoutingWrapper = () => {
@@ -51,7 +52,9 @@ const RoutingWrapper = () => {
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <StatisticsProvider>
+                <Dashboard />
+              </StatisticsProvider>
             </ProtectedRoute>
           }
         ></Route>

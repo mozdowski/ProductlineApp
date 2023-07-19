@@ -55,5 +55,13 @@ namespace ProductlineApp.Domain.ValueObjects
         {
             return this.Name.GetHashCode();
         }
+
+        public string GetUrlStringWithoutQueryParams()
+        {
+            string baseUri = this.Url.GetLeftPart(UriPartial.Authority);
+            string pathWithoutQuery = this.Url.AbsolutePath;
+
+            return baseUri + pathWithoutQuery;
+        }
     }
 }

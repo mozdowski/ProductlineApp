@@ -20,4 +20,10 @@ public interface IListingRepository : IRepository<Listing, ListingId>
     Task<IDictionary<ProductId, List<PlatformId>>> GetPlatformsProductsAreListedOn(IEnumerable<ProductId> productIds);
 
     Task<IEnumerable<PlatformId>> GetPlatformsUserHasListingsOn(UserId userId);
+
+    Task<ListingInstance> GetByPlatformListingId(string platformListingId);
+
+    Task<IEnumerable<ListingInstance>> GetByPlatformId(UserId userId, PlatformId platformId);
+
+    Task<IEnumerable<ListingInstance>> GetAllListingInstancesByUserIdAsync(UserId userId);
 }

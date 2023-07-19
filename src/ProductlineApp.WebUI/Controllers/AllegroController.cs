@@ -77,13 +77,13 @@ public class AllegroController : ControllerBase
         await this._allegroService.UpdateListing(offerId, request);
         return this.Ok();
     }
-
-    [HttpPost("withdrawListing")]
-    public async Task<IActionResult> WithdrawListing([FromBody] WithdrawAllegroListingDtoRequest request)
-    {
-        await this._allegroService.WithdrawListing(request.OfferId);
-        return this.Ok();
-    }
+    //
+    // [HttpPost("withdrawListing")]
+    // public async Task<IActionResult> WithdrawListing([FromBody] WithdrawListingDtoRequest request)
+    // {
+    //     await this._allegroService.WithdrawListing(request.OfferId);
+    //     return this.Ok();
+    // }
 
     [HttpPost("listingRenewal")]
     public async Task<IActionResult> ListingRenewal([FromBody] AllegroListingRenewalDtoRequest request)

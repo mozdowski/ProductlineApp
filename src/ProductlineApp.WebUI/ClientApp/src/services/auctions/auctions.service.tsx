@@ -2,10 +2,13 @@ import { AllegroAuctionRenewalRequest } from '../../interfaces/auctions/allegroA
 import { AllegroOfferProductDetailsResponse } from '../../interfaces/auctions/allegroOfferProductDetailsResponse';
 import { AllegroUserPoliciesResponse } from '../../interfaces/auctions/allegroUserPoliciesResponse';
 import { CreateAllegroAuction } from '../../interfaces/auctions/createAllegroAuction';
+import { CreateEbayAuctionRequest } from '../../interfaces/auctions/createEbayAuctionRequest';
 import { CreateListingTemplateRequest } from '../../interfaces/auctions/createListingTemplateRequest';
 import { CreateListingTemplateResponse } from '../../interfaces/auctions/createListingTemplateResponse';
+import { EbayAuctionDetailsResponse } from '../../interfaces/auctions/ebayAuctionDetailsResponse';
 import { EbayCategoryAspectsResponse } from '../../interfaces/auctions/ebayCategoryAspectsResponse';
 import { EbayCategoryTreeResponse } from '../../interfaces/auctions/ebayCategoryTreeResponse';
+import { EbayUserPoliciesResponse } from '../../interfaces/auctions/ebayUserPoliciesResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
 import { WithdrawAuctionRequest } from '../../interfaces/auctions/withdrawAuctionRequest';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
@@ -90,8 +93,8 @@ export class AuctionsService {
     return this.httpService.post<void>('/allegro/updateListing/' + offerId, data);
   }
 
-  public async withdrawAllegroAuction(data: WithdrawAuctionRequest): Promise<void> {
-    return this.httpService.post<void>('/allegro/withdrawListing', data);
+  public async withdrawAuction(platformId: string, data: WithdrawAuctionRequest): Promise<void> {
+    return this.httpService.post<void>(`/platforms/withdrawListing/${platformId}`, data);
   }
 
   public async allegroAuctionRenewal(data: AllegroAuctionRenewalRequest): Promise<void> {
@@ -106,6 +109,26 @@ export class AuctionsService {
     return this.httpService.get<EbayCategoryAspectsResponse>(
       `/ebay/aspectsForCategory/${categoryId}`,
     );
+  }
+
+  public async getEbayUserPolicies(): Promise<EbayUserPoliciesResponse> {
+    return this.httpService.get<EbayUserPoliciesResponse>('/ebay/userPolicies');
+  }
+
+  public async createEbayListing(data: CreateEbayAuctionRequest): Promise<void> {
+    return this.httpService.post<void>('/ebay/createListing', data);
+  }
+
+  public async withdrawEbayAuction(data: WithdrawAuctionRequest): Promise<void> {
+    return this.httpService.post<void>('/ebay/withdrawListing', data);
+  }
+
+  public async getEbayAuctionDetails(auctionId: string): Promise<EbayAuctionDetailsResponse> {
+    return this.httpService.get<EbayAuctionDetailsResponse>(`/ebay/offerDetails/${auctionId}`);
+  }
+
+  public async updateEbayAuction(auctionId: string, data: CreateEbayAuctionRequest): Promise<void> {
+    return this.httpService.post<void>(`/ebay/updateOffer/${auctionId}`, data);
   }
 }
 

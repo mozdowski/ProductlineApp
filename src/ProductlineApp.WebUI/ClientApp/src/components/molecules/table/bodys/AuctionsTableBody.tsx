@@ -19,17 +19,30 @@ export const AuctionsTableBody = ({
   onWithdrawAuction,
   showActiveAuctions,
 }: {
-  auctionRecords: AuctionsRecord[],
-  onEditAuction: (auctionId: string) => void;
-  onWithdrawAuction: (auctionId: string) => void;
+  auctionRecords: AuctionsRecord[];
+  onEditAuction: (auctionId: string) => Promise<boolean>;
+  onWithdrawAuction: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
   showActiveAuctions: boolean;
 }) => {
   return (
     <>
       <tbody>
-        {auctionRecords.map((auction, key) => auction && auction.isActive == showActiveAuctions && (
-          <AuctionsTableRow key={key} auction={auction} onEditAuction={onEditAuction} onWithdrawAuction={onWithdrawAuction} />
-        ))}
+        {auctionRecords.map(
+          (auction, key) =>
+            auction &&
+            auction.isActive == showActiveAuctions && (
+              <AuctionsTableRow
+                key={key}
+                auction={auction}
+                onEditAuction={onEditAuction}
+                onWithdrawAuction={onWithdrawAuction}
+              />
+            ),
+        )}
       </tbody>
     </>
   );

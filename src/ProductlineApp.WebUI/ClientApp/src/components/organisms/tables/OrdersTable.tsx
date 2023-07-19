@@ -4,33 +4,41 @@ import { OrdersRecord } from '../../../interfaces/orders/OrdersPageInteface';
 import { OrdersHederActions } from '../../molecules/table/headersActions/OrdersHederActions';
 import { OrdersTableHeader } from '../../molecules/table/headers/OrdersTableHeader';
 import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
+import { CircularProgress } from '@mui/material';
 import { OrderStatus } from '../../../enums/orderStatus.enum';
 
 export default function OrdersTable({
   orderRecords,
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
+  markOrderAsCompleted,
 }: {
-  orderRecords: OrdersRecord[];
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
-  searchValue: string,
-  onChange: (e: any) => void
+  orderRecords?: OrdersRecord[];
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
+  searchValue: string;
+  onChange: (e: any) => void;
+  markOrderAsCompleted: (orderId: string) => void;
 }) {
   return (
     <>
       <OrdersHederActions
-        showNoImplementedOrders={showNoImplementedOrders}
+        showCompletedOrders={showCompletedOrders}
         handleClickTypeOrdersButton={handleClickTypeOrdersButton}
         searchValue={searchValue}
         onChange={onChange}
       />
       <table className="orders">
         <OrdersTableHeader />
-        <OrdersTableBody orderRecords={orderRecords} showNoImplementedOrders={showNoImplementedOrders} />
+        <OrdersTableBody
+          orderRecords={orderRecords}
+          showCompletedOrders={showCompletedOrders}
+          markOrderAsCompleted={markOrderAsCompleted}
+        />
       </table>
+      {!orderRecords && <CircularProgress />}
       <TableFooter />
     </>
   );

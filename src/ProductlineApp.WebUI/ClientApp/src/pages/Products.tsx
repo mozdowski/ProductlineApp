@@ -9,24 +9,26 @@ export default function Products(this: any) {
   const ref = useRef<HTMLInputElement>(null);
   const { productsService } = useProductsService();
   const [height, setHeight] = useState(0);
-  const [products, setProducts] = useState<ProductsRecord[]>([]);
-  const [searchValue, setSearchValue] = useState("");
+  const [products, setProducts] = useState<ProductsRecord[] | undefined>(undefined);
+  const [searchValue, setSearchValue] = useState('');
 
-  const searchTableProducts = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchValue(e.target.value)
-  }
+  const searchTableProducts = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchValue(e.target.value);
+  };
 
-  const searchProducts = products.filter(product => {
-    return (
-      product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
-      product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
-      product.productName.toLowerCase().indexOf(searchValue) >= 0 ||
-      product.category.toLowerCase().indexOf(searchValue) >= 0 ||
-      product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      product.listingStatus.toString().indexOf(searchValue) >= 0
-    )
-  });
+  const searchProducts = products
+    ? products.filter((product) => {
+        return (
+          product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+          product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
+          product.productName.toLowerCase().indexOf(searchValue) >= 0 ||
+          product.category.toLowerCase().indexOf(searchValue) >= 0 ||
+          product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          product.listingStatus.toString().indexOf(searchValue) >= 0
+        );
+      })
+    : undefined;
 
   useEffect(() => {
     productsService.getProductList().then((res) => {
@@ -47,7 +49,7 @@ export default function Products(this: any) {
       }));
       setProducts(productsRecords);
     });
-  }, [searchValue, searchProducts]);
+  }, []);
 
   useLayoutEffect(() => {
     if (ref.current != null) {
@@ -58,7 +60,11 @@ export default function Products(this: any) {
   return (
     <>
       <Outlet />
-      <ProductsTemplate productRecords={searchProducts} searchValue={searchValue} onChange={searchTableProducts} />
+      <ProductsTemplate
+        productRecords={searchProducts}
+        searchValue={searchValue}
+        onChange={searchTableProducts}
+      />
     </>
   );
 }

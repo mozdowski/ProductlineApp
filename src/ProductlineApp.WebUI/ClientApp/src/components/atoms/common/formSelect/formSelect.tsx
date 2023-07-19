@@ -3,6 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import ListItemText from '@mui/material/ListItemText';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import './formSelect.css';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -25,7 +26,6 @@ const SelectStyle = {
   border: '1px solid #d8d8d8',
   borderRadius: '8px',
   padding: 'inherit',
-  margin: 'auto',
   '& fieldset': {
     border: 'none',
   },
@@ -54,7 +54,7 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
   };
 
   return (
-    <div>
+    <div className="formSelect">
       <FormControl>
         <Select
           labelId="demo-multiple-checkbox-label"
@@ -71,22 +71,9 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
           ))}
         </Select>
       </FormControl>
-      {error && <span className="error">{error}</span>}
+      {error && <span className="formSelectError">{error}</span>}
     </div>
   );
-
-  // return (
-  //   <div className="selectDiv">
-  //     <select value={value} onChange={handleChange} {...props}>
-  //       {options.map((option) => (
-  //         <option key={option.value} value={option.value}>
-  //           {option.label}
-  //         </option>
-  //       ))}
-  //     </select>
-  //     {error && <span className="error">{error}</span>}
-  //   </div>
-  // );
 };
 
 export { FormSelect };

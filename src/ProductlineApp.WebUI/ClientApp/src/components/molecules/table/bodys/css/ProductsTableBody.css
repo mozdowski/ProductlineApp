@@ -104,8 +104,6 @@ tbody tr:nth-child(odd) {
   background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
 }
 
-
-
 .acceptDeleteProductButton .acceptDeleteProductIcon {
   cursor: pointer;
   width: 21px;

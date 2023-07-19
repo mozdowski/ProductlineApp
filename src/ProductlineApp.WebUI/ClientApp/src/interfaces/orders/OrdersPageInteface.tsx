@@ -1,3 +1,4 @@
+import { OrderStatus } from '../../enums/orderStatus.enum';
 import { OrderItem } from './orderItem';
 import { ShippingAddress } from './shippingAddress';
 
@@ -12,7 +13,8 @@ export interface OrdersRecord {
   client: string;
   price: number;
   quantity: number;
-  status: string;
+  status: OrderStatus;
+  statusText: string;
   shippingAddress: ShippingAddress;
   items: OrderItem[];
 }

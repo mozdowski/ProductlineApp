@@ -18,17 +18,23 @@ export default function AuctionsTemplate({
   onWithdrawAuction,
   showActiveAuctions,
   searchValue,
-  onChange
+  onChange,
+  isDataLoaded,
 }: {
-  auctionRecords: AuctionsRecord[];
-  selectedAuctionPortal: PlatformEnum;
+  auctionRecords?: AuctionsRecord[];
+  selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
   handleClickTypeAuctionsButton: any;
-  onEditAuction: (auctionId: string) => void;
-  onWithdrawAuction: (auctionId: string) => void;
+  onEditAuction: (auctionId: string) => Promise<boolean>;
+  onWithdrawAuction: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
   showActiveAuctions: boolean;
   searchValue: string;
-  onChange: (e: any) => void
+  onChange: (e: any) => void;
+  isDataLoaded: boolean;
 }) {
   return (
     <>
@@ -42,7 +48,8 @@ export default function AuctionsTemplate({
         <AllegroAuctionsButton
           id={PlatformEnum.ALLEGRO}
           selectedAuctionPortal={selectedAuctionPortal}
-          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton} />
+          handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
+        />
       </div>
       <div className="content">
         <div className="tableAuctions">
@@ -53,7 +60,9 @@ export default function AuctionsTemplate({
             onWithdrawAuction={onWithdrawAuction}
             showActiveAuctions={showActiveAuctions}
             searchValue={searchValue}
-            onChange={onChange} />
+            onChange={onChange}
+            isDataLoaded={isDataLoaded}
+          />
         </div>
       </div>
     </>

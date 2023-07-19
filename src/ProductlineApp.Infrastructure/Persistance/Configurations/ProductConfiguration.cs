@@ -35,7 +35,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                     v => v.ToString(),
                     v => new Uri(v))
                 .HasColumnName("ImageUrl")
-                .HasColumnType("varchar(500)")
+                .HasColumnType("varchar(800)")
                 .IsRequired();
         });
 
@@ -54,7 +54,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 .HasConversion(
                     v => v.ToString(),
                     v => new Uri(v))
-                .HasColumnType("varchar(500)")
+                .HasColumnType("varchar(800)")
                 .IsRequired();
         });
 

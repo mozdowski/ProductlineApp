@@ -15,7 +15,6 @@ export const ProductsTableRow = ({
   product: ProductsRecord;
   key: string | number;
 }) => {
-
   const [isOpen, setOpenState] = useState<boolean>(false);
 
   const [allowDelete, setAllowDelete] = useState(true);
@@ -27,7 +26,6 @@ export const ProductsTableRow = ({
   const toggle = useCallback(() => {
     setOpenState((state: boolean) => !state);
   }, [setOpenState]);
-
 
   return (
     <React.Fragment key={key}>
@@ -56,11 +54,17 @@ export const ProductsTableRow = ({
           <div className="productsButtonsAction">
             {!allowDelete ? (
               <>
-                <div className='canceleDeleteProductButton'>
-                  <span className="canceleDeleteProductIcon cancelTableIcon" onClick={handleClickAllowDelete} />
+                <div className="canceleDeleteProductButton">
+                  <span
+                    className="canceleDeleteProductIcon cancelTableIcon"
+                    onClick={handleClickAllowDelete}
+                  />
                 </div>
-                <div className='acceptDeleteProductButton'>
-                  <span className="acceptDeleteProductIcon assignTableIcon" onClick={handleClickAllowDelete} />
+                <div className="acceptDeleteProductButton">
+                  <span
+                    className="acceptDeleteProductIcon assignTableIcon"
+                    onClick={handleClickAllowDelete}
+                  />
                 </div>
               </>
             ) : (

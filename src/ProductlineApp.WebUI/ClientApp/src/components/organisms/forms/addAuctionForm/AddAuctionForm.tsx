@@ -7,6 +7,7 @@ import SelectProduct from '../../../molecules/formSections/addAuctionFormSection
 import './css/addAuctionForm.css';
 import { ProductAuctionData } from '../../../../interfaces/products/getProductsSKU';
 import { CreateAllegroAuction } from '../../../../interfaces/auctions/createAllegroAuction';
+import { CreateEbayAuctionRequest } from '../../../../interfaces/auctions/createEbayAuctionRequest';
 
 export default function AddAuctionForm({
   products,
@@ -14,6 +15,7 @@ export default function AddAuctionForm({
   onSubmit,
   onProductChange,
   onAllegroFormSubmit,
+  onEbayFormSubmit,
   errors,
   platformConnections,
 }: {
@@ -22,6 +24,7 @@ export default function AddAuctionForm({
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   onProductChange: (id: string) => void;
   onAllegroFormSubmit: (form: CreateAllegroAuction) => void;
+  onEbayFormSubmit: (form: CreateEbayAuctionRequest) => void;
   errors: any;
   platformConnections: string[];
 }) {
@@ -44,7 +47,7 @@ export default function AddAuctionForm({
             errors={errors}
           />
           {showFormSteps != ' ' && (
-            <ProductInfo selectedProduct={selectedProduct} onChange={() => { }} />
+            <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
           )}
           <ButtonsSection />
         </form>
@@ -54,6 +57,7 @@ export default function AddAuctionForm({
             <AuctionPortals
               onAllegroFormSubmit={onAllegroFormSubmit}
               platformConnections={platformConnections}
+              onEbayFormSubmit={onEbayFormSubmit}
             />
           </div>
         )}

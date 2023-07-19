@@ -6,16 +6,18 @@ import { OrderStatus } from '../../enums/orderStatus.enum';
 
 export default function OrdersTemplate({
   orderRecords,
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
+  markOrderAsCompleted,
 }: {
-  orderRecords: OrdersRecord[];
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
-  searchValue: string,
-  onChange: (e: any) => void
+  orderRecords?: OrdersRecord[];
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
+  searchValue: string;
+  onChange: (e: any) => void;
+  markOrderAsCompleted: (orderId: string) => void;
 }) {
   return (
     <>
@@ -24,10 +26,11 @@ export default function OrdersTemplate({
         <div className="tableOrders">
           <OrdersTable
             orderRecords={orderRecords}
-            showNoImplementedOrders={showNoImplementedOrders}
+            showCompletedOrders={showCompletedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             searchValue={searchValue}
             onChange={onChange}
+            markOrderAsCompleted={markOrderAsCompleted}
           />
         </div>
       </div>

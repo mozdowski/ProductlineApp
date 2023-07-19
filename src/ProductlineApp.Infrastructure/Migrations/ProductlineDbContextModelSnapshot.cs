@@ -80,7 +80,7 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.Property<decimal>("DeliveryCost")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime>("DeliveryDate")
+                    b.Property<DateTime?>("DeliveryDate")
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<bool>("IsPaid")
@@ -201,19 +201,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("242bae2b-9c50-4ac7-883a-90ed9606667e"),
-                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5140),
+                            Id = new Guid("816066a8-0840-4a81-92ff-7dc91b7ccb09"),
+                            CreatedAt = new DateTime(2023, 7, 17, 10, 45, 6, 172, DateTimeKind.Utc).AddTicks(2210),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7620),
+                            LastModified = new DateTime(2023, 7, 17, 10, 45, 6, 312, DateTimeKind.Utc).AddTicks(7550),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("0847775c-ba55-4318-8065-042546b9ca43"),
-                            CreatedAt = new DateTime(2023, 6, 20, 8, 13, 0, 707, DateTimeKind.Utc).AddTicks(5170),
+                            Id = new Guid("2c036535-b02b-4652-9004-bd325f516f06"),
+                            CreatedAt = new DateTime(2023, 7, 17, 10, 45, 6, 172, DateTimeKind.Utc).AddTicks(2230),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 6, 20, 8, 13, 0, 839, DateTimeKind.Utc).AddTicks(7690),
+                            LastModified = new DateTime(2023, 7, 17, 10, 45, 6, 312, DateTimeKind.Utc).AddTicks(7610),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -521,7 +521,7 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                             b1.Property<string>("Url")
                                 .IsRequired()
-                                .HasColumnType("varchar(500)")
+                                .HasColumnType("varchar(800)")
                                 .HasColumnName("ImageUrl");
 
                             b1.HasKey("ProductId", "Id");
@@ -544,7 +544,7 @@ namespace ProductlineApp.Infrastructure.Migrations
 
                             b1.Property<string>("Url")
                                 .IsRequired()
-                                .HasColumnType("varchar(500)");
+                                .HasColumnType("varchar(800)");
 
                             b1.HasKey("ProductId");
 

@@ -7,6 +7,7 @@ using ProductlineApp.Application.Listing.Commands;
 using ProductlineApp.Application.Listing.DTO;
 using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Application.User.Commands;
+using ProductlineApp.Domain.Aggregates.Listing.Repository;
 using ProductlineApp.Domain.Aggregates.Listing.ValueObjects;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
@@ -25,6 +26,7 @@ public class AllegroService : IAllegroService
     private readonly ICurrentUserContext _currentUser;
     private readonly string? _accessToken;
     private readonly IProductRepository _productRepository;
+    private readonly IListingRepository _listingRepository;
 
     public AllegroService(
         IAllegroApiClient allegroApiClient,
@@ -32,13 +34,15 @@ public class AllegroService : IAllegroService
         IMediator mediator,
         ICurrentUserContext currentUser,
         IPlatformRepository platformRepository,
-        IProductRepository productRepository)
+        IProductRepository productRepository,
+        IListingRepository listingRepository)
     {
         this._allegroApiClient = allegroApiClient;
         this._mapper = mapper;
         this._mediator = mediator;
         this._currentUser = currentUser;
         this._productRepository = productRepository;
+        this._listingRepository = listingRepository;
 
         var platformId = platformRepository.GetIdByNameAsync(PlatformNames.ALLEGRO.ToString().ToLower()).GetAwaiter().GetResult();
         this.PlatformId = platformId;
@@ -123,6 +127,7 @@ public class AllegroService : IAllegroService
             }
 
             var product = await this._productRepository.GetByIdAsync(ProductId.Create(mappedOffer.ProductId));
+            var listing = await this._listingRepository.GetByPlatformListingId(mappedOffer.PlatformListingId);
 
             if (product is null)
             {
@@ -134,6 +139,8 @@ public class AllegroService : IAllegroService
             mappedOffer.ProductImageUrl = product.Image.Url.ToString();
             mappedOffer.Sku = product.Sku;
             mappedOffer.Brand = product.Brand.Name;
+            mappedOffer.ListingId = listing.ListingId.Value;
+            mappedOffer.ListingInstanceId = listing.Id.Value;
 
             result.Add(mappedOffer);
         }
@@ -153,22 +160,65 @@ public class AllegroService : IAllegroService
 
     public async Task WithdrawListingAsync(ListingId listingId, ListingInstanceId listingInstanceId)
     {
-        throw new NotImplementedException();
+        var listing = await this._listingRepository.GetByIdAsync(listingId);
+        var listingInstance = listing.GetListingInstance(listingInstanceId);
+
+        var requestBody = new AllegroWithdrawOfferRequest
+        {
+            OfferCriteria = new List<AllegroWithdrawOfferRequest.WithdrawOfferCriteria>
+            {
+                new AllegroWithdrawOfferRequest.WithdrawOfferCriteria
+                {
+                    Offers = new List<AllegroWithdrawOfferRequest.Offer>
+                    {
+                        new AllegroWithdrawOfferRequest.Offer
+                        {
+                            Id = listingInstance.PlatformListingId,
+                        },
+                    },
+                },
+            },
+            Publication = new AllegroWithdrawOfferRequest.WithdrawPublication(),
+        };
+
+        var commandId = Guid.NewGuid();
+        await this._allegroApiClient.WithdrawOffer(this._accessToken, commandId.ToString(), requestBody);
+
+        listing.MarkListingInstanceAsInactive(listingInstanceId);
+
+        await this._listingRepository.UpdateAsync(listing);
     }
 
     public async Task PublishListingAsync(ListingId listingId, ListingInstanceId listingInstanceId)
     {
-        throw new NotImplementedException();
-    }
+        var listing = await this._listingRepository.GetByIdAsync(listingId);
+        var listingInstance = listing.GetListingInstance(listingInstanceId);
 
-    public Task WithdrawListingAsync(string listingId)
-    {
-        throw new NotImplementedException();
-    }
+        var requestBody = new AllegroOfferRenewalRequest()
+        {
+            OfferCriteria = new List<AllegroOfferRenewalRequest.RenewalOfferCriteria>
+            {
+                new AllegroOfferRenewalRequest.RenewalOfferCriteria()
+                {
+                    Offers = new List<AllegroOfferRenewalRequest.Offer>
+                    {
+                        new AllegroOfferRenewalRequest.Offer
+                        {
+                            Id = listingInstance.PlatformListingId,
+                        },
+                    },
+                },
+            },
+            Publication = new AllegroOfferRenewalRequest.RenewalPublication(),
+        };
 
-    public Task PublishListingAsync(string listingId)
-    {
-        throw new NotImplementedException();
+        var commandId = Guid.NewGuid();
+
+        await this._allegroApiClient.OfferRenewal(this._accessToken, commandId.ToString(), requestBody);
+
+        listing.MarkListingInstanceAsActive(listingInstanceId);
+
+        await this._listingRepository.UpdateAsync(listing);
     }
 
     public async Task<AllegroProductListDto> GetProductList(string phrase)

@@ -4,14 +4,30 @@ import { OrdersTableRow } from '../rows/ordersTableRow';
 import { OrderStatus } from '../../../../enums/orderStatus.enum';
 import { mapOrderStatusToString } from '../../../../helpers/mappers';
 
-export const OrdersTableBody = ({ orderRecords, showNoImplementedOrders }: { orderRecords: OrdersRecord[], showNoImplementedOrders: any }) => {
-
+export const OrdersTableBody = ({
+  orderRecords,
+  showCompletedOrders,
+  markOrderAsCompleted,
+}: {
+  orderRecords?: OrdersRecord[];
+  showCompletedOrders: boolean;
+  markOrderAsCompleted: (orderId: string) => void;
+}) => {
   return (
     <>
       <tbody>
-        {orderRecords.map((order, key) => (
-          <OrdersTableRow key={key} order={order} />
-        ))}
+        {orderRecords &&
+          orderRecords.map(
+            (order, key) =>
+              order &&
+              showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
+                <OrdersTableRow
+                  key={key}
+                  order={order}
+                  markOrderAsCompleted={markOrderAsCompleted}
+                />
+              ),
+          )}
       </tbody>
     </>
   );

@@ -83,6 +83,11 @@ public class Order : AggregateRoot<OrderId>
         this._orderLines.Add(orderLine);
     }
 
+    public void MarkAsCompleted()
+    {
+        this.Status = OrderStatus.COMPLETED;
+    }
+
     public void AddOrderLines(IEnumerable<OrderLine> orderLines)
     {
         this._orderLines.AddRange(orderLines);

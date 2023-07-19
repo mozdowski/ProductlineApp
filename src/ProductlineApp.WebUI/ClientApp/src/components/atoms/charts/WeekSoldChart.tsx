@@ -1,10 +1,33 @@
-import React, { PureComponent } from 'react';
-import ReactEcharts, { EChartsReactProps } from 'echarts-for-react';
+import ReactEcharts from 'echarts-for-react';
 import './css/WeekSoldChart.css';
-import echarts from 'echarts/types/dist/echarts';
-import EChartsReactCore from 'echarts-for-react/lib/core';
 
-function WeekSoldChart() {
+interface DayOfWeek {
+  id: number;
+  name: string;
+}
+
+const getDaysOfWeek = (): string[] => {
+  const daysOfWeek: DayOfWeek[] = [];
+  const days = ['Niedziela', 'Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota'];
+
+  const today = new Date();
+  const currentDayOfWeek = today.getDay();
+
+  for (let i = currentDayOfWeek; i >= 0; i--) {
+    const dayName = i === currentDayOfWeek ? 'Dzisiaj' : days[i];
+    daysOfWeek.push({ id: i, name: dayName });
+  }
+
+  if (currentDayOfWeek > 0) {
+    for (let i = days.length - 1; i >= currentDayOfWeek + 1; i--) {
+      daysOfWeek.push({ id: i, name: days[i] });
+    }
+  }
+
+  return daysOfWeek.map((x) => x.name).reverse();
+};
+
+function WeekSoldChart({ weeklySellsChartData }: { weeklySellsChartData: number[] }) {
   const option = {
     tooltip: {
       trigger: 'axis',
@@ -21,7 +44,7 @@ function WeekSoldChart() {
     xAxis: [
       {
         type: 'category',
-        data: ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'],
+        data: getDaysOfWeek(),
         axisTick: {
           alignWithLabel: true,
         },
@@ -41,7 +64,7 @@ function WeekSoldChart() {
         type: 'bar',
         barWidth: '40%',
         color: '#5F47F1',
-        data: [555, 52, 200, 334, 390, 330, 220],
+        data: weeklySellsChartData,
       },
     ],
   };

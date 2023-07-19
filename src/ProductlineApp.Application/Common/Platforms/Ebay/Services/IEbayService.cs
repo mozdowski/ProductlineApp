@@ -18,4 +18,10 @@ public interface IEbayService : IPlatformService
     Task<EbayCategoryTreeDto> GetCategories();
 
     Task<EbayLocationsDtoResponse> GetLocations();
+
+    Task<EbayUserPolicies> GetUserPolicies();
+
+    Task UpdateListingAsync(string offerId, EbayListingDtoRequest request);
+
+    Task<EbayOfferDetailsResponse> GetOfferDetails(string offerId);
 }

@@ -11,6 +11,10 @@ export class OrdersService {
   public async getOrdersList(): Promise<GetAllOrdersResponse> {
     return this.httpService.get<GetAllOrdersResponse>('/orders');
   }
+
+  public async markOrderAsCompleted(orderId: string): Promise<void> {
+    return this.httpService.post<void>(`/orders/markCompleted/${orderId}`);
+  }
 }
 
 export {};

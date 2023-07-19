@@ -3,35 +3,61 @@ import OrdersTemplate from '../components/templates/OrdersTemplate';
 import { OrdersRecord } from '../interfaces/orders/OrdersPageInteface';
 import { useOrdersService } from '../hooks/orders/useOrdersService';
 import { mapOrderStatusToString } from '../helpers/mappers';
+import { toast } from 'react-toastify';
+import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 export default function Orders() {
-  const [showNoImplementedOrders, setShowNoImplementedOrders] = useState<boolean>();
-  const [searchValue, setSearchValue] = useState("");
-  const [orders, setOrders] = useState<OrdersRecord[]>([]);
+  const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
+  const [searchValue, setSearchValue] = useState('');
+  const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);
   const { ordersService } = useOrdersService();
+  const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
+  const { showConfirmation } = useConfirmationPopup();
 
-  const handleClickTypeOrdersButton = (e: any) => {
-    const setNoImplemented = e.target.value == 'notImplemented';
-    setShowNoImplementedOrders(setNoImplemented);
+  const handleClickTypeOrdersButton = (showCompleted: boolean) => {
+    setShowCompletedOrders(showCompleted);
+    setRefreshRecords(!refreshRecords);
   };
 
-  const searchTableOrders = (e: { target: { value: React.SetStateAction<string>; }; }) => {
-    setSearchValue(e.target.value)
-  }
+  const searchTableOrders = (e: { target: { value: React.SetStateAction<string> } }) => {
+    setSearchValue(e.target.value);
+  };
 
-  const searchOrders = orders.filter(order => {
-    return (
-      order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
-      order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
-      order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
-      order.client.toLowerCase().indexOf(searchValue) >= 0 ||
-      order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
-      order.status.indexOf(searchValue) >= 0
-    )
-  });
+  const handleMarkOrderAsCompleted = async (orderId: string) => {
+    await handleMarkOrderAsCompletedConfirmationPopup(orderId);
+  };
+
+  const handleMarkOrderAsCompletedConfirmationPopup = async (orderId: string) => {
+    const confirmationText = 'Czy na pewno chcesz oznaczyć zamówienie jako zrealizowane?';
+    showConfirmation(confirmationText, async () => await markOrderAsCompleted(orderId));
+  };
+
+  const markOrderAsCompleted = async (orderId: string) => {
+    try {
+      const res = await ordersService.markOrderAsCompleted(orderId);
+      toast.success('Zamówienie zrealizowane');
+    } catch {
+      toast.error('Błąd podczas zamykania zamówiena');
+    }
+    setShowCompletedOrders(false);
+  };
+
+  const searchOrders = orders
+    ? orders.filter((order) => {
+        return (
+          order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
+          order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
+          order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
+          order.client.toLowerCase().indexOf(searchValue) >= 0 ||
+          order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
+          order.statusText.indexOf(searchValue) >= 0
+        );
+      })
+    : undefined;
 
   useEffect(() => {
+    setOrders(undefined);
     ordersService.getOrdersList().then((res) => {
       const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
         orderID: order.orderId,
@@ -40,13 +66,14 @@ export default function Orders() {
         client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
         price: order.totalPrice,
         quantity: order.quantity,
-        status: mapOrderStatusToString(order.status),
+        statusText: mapOrderStatusToString(order.status),
+        status: order.status,
         shippingAddress: order.shippingAddress,
-        items: order.items
+        items: order.items,
       }));
       setOrders(orderRecords);
     });
-  }, [searchValue]);
+  }, [refreshRecords]);
 
   return (
     <OrdersTemplate
@@ -54,6 +81,8 @@ export default function Orders() {
       handleClickTypeOrdersButton={handleClickTypeOrdersButton}
       searchValue={searchValue}
       onChange={searchTableOrders}
-      showNoImplementedOrders={showNoImplementedOrders} />
+      showCompletedOrders={showCompletedOrders}
+      markOrderAsCompleted={handleMarkOrderAsCompleted}
+    />
   );
 }

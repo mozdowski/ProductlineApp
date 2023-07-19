@@ -7,4 +7,6 @@ export interface EbayCategoryAspect {
   dataType: string;
   isRequired: boolean;
   values: string[];
+  mode: string;
+  isSingleValue: boolean;
 }

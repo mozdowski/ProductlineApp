@@ -1,32 +1,30 @@
-import React from 'react';
 import './css/OrdersHederActions.css';
 import Searchbar from '../../../atoms/inputs/searchbarInput/Searchbar';
 import ImplementedOrdersButton from '../../../atoms/buttons/implementedOrdersButton/ImplementedOrdersButton';
 import NotImpementedOrdersButton from '../../../atoms/buttons/notImplementedOrdersButton/NotImplementedOrdersButton';
-import { OrderStatus } from '../../../../enums/orderStatus.enum';
 
 export const OrdersHederActions = ({
-  showNoImplementedOrders,
+  showCompletedOrders,
   handleClickTypeOrdersButton,
   searchValue,
-  onChange
+  onChange,
 }: {
-  showNoImplementedOrders: any;
-  handleClickTypeOrdersButton: any;
+  showCompletedOrders: boolean;
+  handleClickTypeOrdersButton: (showCompleted: boolean) => void;
   searchValue: string;
-  onChange: (e: any) => void
+  onChange: (e: any) => void;
 }) => {
   return (
     <>
       <div className="OrdersTableButtons">
         <div className="changeTypeOrdersButtons">
           <NotImpementedOrdersButton
-            showNoImplementedOrders={showNoImplementedOrders}
+            showCompletedOrders={showCompletedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             id={'notImplemented'}
           />
           <ImplementedOrdersButton
-            showNoImplementedOrders={showNoImplementedOrders}
+            showCompletedOrders={showCompletedOrders}
             handleClickTypeOrdersButton={handleClickTypeOrdersButton}
             id={'implemented'}
           />
