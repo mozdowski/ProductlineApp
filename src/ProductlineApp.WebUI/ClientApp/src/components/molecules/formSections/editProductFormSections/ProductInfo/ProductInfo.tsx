@@ -9,13 +9,14 @@ import QuantityInput from '../../../../atoms/inputs/quantityInput/QuantityInput'
 import SKUInput from '../../../../atoms/inputs/skuInptu/SKUInput';
 import './css/addProduct_ProductInfo.css';
 import { ProductData } from '../../../../../interfaces/products/getProductsSKU';
+import { ProductDtoResponse } from '../../../../../interfaces/products/getProductsResponse';
 
 function ProductInfo({
-  selectedProductData,
+  productForm,
   onChange,
   errors,
 }: {
-  selectedProductData: ProductData;
+  productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
 }) {
@@ -30,9 +31,9 @@ function ProductInfo({
         </div>
         <div className="addProductInputs">
           <div className="firsLineInputs">
-            <SKUInput value={selectedProductData.sku} onChange={onChange} error={errors.sku} />
+            <SKUInput value={productForm.sku} onChange={onChange} error={errors.sku} />
             <ProductNameInput
-              value={selectedProductData?.name}
+              value={productForm.name}
               onChange={onChange}
               error={errors.name}
               disabled={false}
@@ -40,19 +41,19 @@ function ProductInfo({
           </div>
           <div className="secondLineInputs">
             <BrandInput
-              value={selectedProductData?.brand}
+              value={productForm.brand}
               onChange={onChange}
               error={errors.brand}
               disabled={false}
             />
             <QuantityInput
-              value={selectedProductData.quantity}
+              value={productForm.quantity}
               onChange={onChange}
               error={errors.quantity}
               disabled={false}
             />
             <PriceInput
-              value={selectedProductData.price}
+              value={productForm.price}
               onChange={onChange}
               error={errors.price}
               disabled={false}
@@ -60,19 +61,19 @@ function ProductInfo({
           </div>
           <div className="thirdLineInputs">
             <CategoryInput
-              value={selectedProductData.category}
+              value={productForm.category}
               onChange={onChange}
               error={errors.category}
             />
             <ConditionInput
-              value={selectedProductData.condition}
+              value={productForm.condition}
               onChange={onChange}
               error={errors.condition}
             />
           </div>
           <div className="textAreaProductDescription">
             <ProductDescritionInput
-              value={selectedProductData.description}
+              value={productForm.description}
               onChange={onChange}
               error={errors.description}
               disabled={false}

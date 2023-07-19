@@ -65,7 +65,7 @@ export const ProductsTableRow = ({
               </>
             ) : (
               <>
-                <Link to={`/products/edit/${product.sku}`} className="editProductLink" id="link">
+                <Link to={`/products/edit/${product.id}`} className="editProductLink" id="link">
                   <img className="editProductIcon" src={EditIcon} alt="Edit Icon" />
                 </Link>
                 <img className="deleteProductIcon" src={DeleteProductIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />

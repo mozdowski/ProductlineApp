@@ -4,19 +4,19 @@ import ProductInfo from '../../../molecules/formSections/editProductFormSections
 import ButtonsSection from '../../../molecules/formSections/addProductFormSections/buttonsSection/ButtonsSection';
 import './css/editProductForm.css';
 import { ProductData } from '../../../../interfaces/products/getProductsSKU';
+import { ProductDtoResponse } from '../../../../interfaces/products/getProductsResponse';
 
 export default function EditProductForm({
   uploadProductPhotos,
   photos,
   onSubmit,
-  selectedProductData,
+  productForm,
   onChange,
   errors,
 }: {
   uploadProductPhotos: any;
   photos: string[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
-  selectedProductData: ProductData;
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
@@ -26,12 +26,12 @@ export default function EditProductForm({
       <form onSubmit={onSubmit}>
         <div className="editProduct">
           <div className="detailsAboutEditedProductForm">
-            <ProductInfo selectedProductData={selectedProductData} onChange={onChange} errors={errors} />
+            <ProductInfo productForm={productForm} onChange={onChange} errors={errors} />
           </div>
           <div className="editedProductPhotosForm">
             <Photos
               uploadProductPhotos={uploadProductPhotos}
-              photos={selectedProductData ? selectedProductData.imageUrls : []}
+              photos={productForm.photos}
               error={errors.photos}
             />
           </div>

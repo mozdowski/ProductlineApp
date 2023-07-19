@@ -1,7 +1,6 @@
 import { AddedProductResponse } from '../../interfaces/platforms/addedProductResponse';
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
-import { ProductDtoResponse } from '../../interfaces/products/getProductResponse';
-import { GetProductsResponse } from '../../interfaces/products/getProductsResponse';
+import { GetProductResponse, GetProductsResponse } from '../../interfaces/products/getProductsResponse';
 import HttpService from '../common/http.service';
 
 export class ProductsService {
@@ -15,8 +14,8 @@ export class ProductsService {
     return this.httpService.get<GetProductsResponse>('/products');
   }
 
-  public async getProduct(productId: string): Promise<GetProductsResponse> {
-    return this.httpService.get<GetProductsResponse>('/product/' + { productId });
+  public async getProduct(productId: string): Promise<GetProductResponse> {
+    return this.httpService.get<GetProductResponse>('/products/' + productId);
   }
 
   public async addProduct(data: AddProductRequest): Promise<AddedProductResponse> {

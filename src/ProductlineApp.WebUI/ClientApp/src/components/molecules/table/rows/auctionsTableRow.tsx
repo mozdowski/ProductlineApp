@@ -5,6 +5,7 @@ import BackAuctionIcon from '../../../../assets/icons/backAuction_icon.png';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInteface';
 import { CollapseAuctionDetails } from '../bodys/CollapseAuctionDetails';
+import DeleteAuctionIcon from '../../../../assets/icons/delete_icon.svg';
 
 export const AuctionsTableRow = ({
   key,
@@ -18,6 +19,18 @@ export const AuctionsTableRow = ({
   onWithdrawAuction: (auctionId: string) => void;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
+
+  const [allowBackAuction, setAllowBackAuction] = useState(true);
+
+  const handleClickAuctionButtonsActions = () => {
+    setAllowBackAuction(!allowBackAuction);
+  };
+
+  const [allowDelete, setAllowDelete] = useState(true);
+
+  const handleClickAllowDelete = () => {
+    setAllowDelete(!allowDelete);
+  };
 
   const toggle = useCallback(() => {
     setOpenState((state: boolean) => !state);
@@ -47,8 +60,30 @@ export const AuctionsTableRow = ({
         <td>{auction?.quantity}</td>
         <td>
           <div className="auctionsButtonsAction">
-            <img className="editAuctionIcon" src={EditIcon} onClick={() => onEditAuction(auction.auctionID)} />
-            <img className="backAuctionIcon" src={BackAuctionIcon} onClick={() => onWithdrawAuction(auction.auctionID)} />
+            {!allowBackAuction ? (
+              <>
+                <div className='cancelBackAuctionButton'>
+                  <span className="cancelBackAuctionIcon cancelTableIcon" onClick={handleClickAuctionButtonsActions} />
+                </div>
+                <div className='acceptBackAuctionButton'>
+                  <span className="acceptBackAuctionIcon assignTableIcon" onClick={() => onWithdrawAuction(auction.auctionID)} />
+                </div>
+              </>
+            ) : (
+              <>
+                <img className="editAuctionIcon" src={EditIcon} onClick={() => onEditAuction(auction.auctionID)} />
+                {auction.isActive ?
+                  <img className="backAuctionIcon" src={BackAuctionIcon} onClick={handleClickAuctionButtonsActions} />
+                  :
+                  <>
+                    <div className='refreshAuctionButton'>
+                      <span className="refreshAuctionIcon refreshAuctionIcon" onClick={handleClickAuctionButtonsActions} />
+                    </div>
+                    <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} />
+                  </>
+                }
+              </>
+            )}
           </div>
         </td>
       </tr>

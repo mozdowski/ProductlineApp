@@ -1,4 +1,5 @@
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
+import { ProductDtoResponse } from '../../interfaces/products/getProductsResponse';
 import { ProductData } from '../../interfaces/products/getProductsSKU';
 import { ProductForm } from '../../interfaces/products/productForm';
 import Photos from '../molecules/formSections/addProductFormSections/Photos/Photos';
@@ -14,8 +15,7 @@ export default function EditProductTemplate({
   onSubmit,
   productForm,
   onChange,
-  errors,
-  selectedProductData
+  errors
 }: {
   uploadProductPhotos: any;
   photos: string[];
@@ -23,7 +23,6 @@ export default function EditProductTemplate({
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
   errors: any;
-  selectedProductData: ProductData;
 }) {
   return (
     <>
@@ -36,8 +35,7 @@ export default function EditProductTemplate({
             onSubmit={onSubmit}
             productForm={productForm}
             onChange={onChange}
-            errors={errors}
-            selectedProductData={selectedProductData} />
+            errors={errors} />
         </div>
       </div>
     </>

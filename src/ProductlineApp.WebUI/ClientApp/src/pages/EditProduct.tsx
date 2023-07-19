@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 import { AddProductRequest } from '../interfaces/products/addProductRequest';
 import { ProductForm } from '../interfaces/products/productForm';
 import { useProductsService } from '../hooks/products/useProductsService';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import EditProductTemplate from '../components/templates/EditProductTemplate';
 import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
 import { ProductData } from '../interfaces/products/getProductsSKU';
+import { ProductDtoResponse } from '../interfaces/products/getProductsResponse';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -28,7 +29,7 @@ const productSchema = Yup.object().shape({
 export default function EditProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
-  const [selectedProductData, setSelectedProductData] = useState<ProductData>();
+  const { productId } = useParams<string>();
   // const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
   const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
   const [productForm, setProductForm] = useState<ProductForm>({
@@ -120,12 +121,12 @@ export default function EditProduct() {
 
       await Promise.all(addImageRequestPool);
 
-      toast.success('Pomyślnie dodano produkt', {
+      toast.success('Pomyślnie edytowano produkt', {
         position: toast.POSITION.TOP_RIGHT,
       });
       navigate('/products');
     } catch (err: any) {
-      toast.error('Wystąpił błąd przy dodawaniu produktu', {
+      toast.error('Wystąpił błąd przy edycji produktu', {
         position: toast.POSITION.TOP_RIGHT,
       });
     }
@@ -138,24 +139,22 @@ export default function EditProduct() {
     }));
   };
 
+
   useEffect(() => {
-    productsService.getProduct(selectedProductData.id).then((res) => {
-      const productData: ProductData = res.products.map((product) => ({
-        id: product.id,
-        sku: product.sku,
-        name: product.name,
-        imageUrls: product.gallery,
-        brand: product.brand,
-        condition: product.condition,
-        quantity: product.quantity,
-        price: product.price,
-        description: product.description,
-        category: product.category,
-        platforms: product.platforms,
-        imageUrl: product.imageUrl
-      }))
-      setSelectedProductData[productData]
-    })
+    if (!productId) return;
+    productsService.getProduct(productId).then((res) => {
+      const productData: ProductDtoResponse = {
+        sku: productForm.sku,
+        name: productForm.name,
+        category: productForm.category,
+        price: productForm.price,
+        quantity: productForm.quantity,
+        brand: productForm.brand,
+        description: productForm.description,
+        condition: productForm.condition,
+        gallery: productForm.photos
+      }
+    });
   }, []);
 
   return (
@@ -165,7 +164,6 @@ export default function EditProduct() {
       onSubmit={handleSubmit}
       productForm={productForm}
       onChange={handleChange}
-      errors={errors}
-      selectedProductData={selectedProductData} />
+      errors={errors} />
   );
 }

@@ -68,7 +68,7 @@ const RoutingWrapper = () => {
         >
           <Route path="" element={<Products />}></Route>
           <Route path="add" element={<AddProduct />}></Route>
-          <Route path="edit/:id" element={<EditProduct />}></Route>
+          <Route path="edit/:productId" element={<EditProduct />}></Route>
         </Route>
 
         <Route
