@@ -23,7 +23,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.OwnsOne(p => p.Category, category =>
         {
             category.Property(c => c.Name)
-                .HasMaxLength(50)
+                .HasMaxLength(255)
                 .IsRequired();
         });
 
@@ -58,16 +58,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
                 .IsRequired();
         });
 
-        // builder.Property(p => p.Image)
-        //     .HasConversion(
-        //         v => v.Url.ToString(),
-        //         v => Image.Create(v))
-        //     .HasColumnName("ImageUrl")
-        //     .HasColumnType("varchar(500)")
-        //     .IsRequired();
-
         builder.Property(p => p.Name)
-            .HasMaxLength(100)
+            .HasMaxLength(255)
             .IsRequired();
 
         builder.Property(p => p.Price)
@@ -76,11 +68,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
         builder.Property(p => p.Quantity)
             .IsRequired();
 
-        // builder.Property(p => p.Brand)
-        //     .IsRequired();
-
         builder.Property(p => p.Description)
-            .HasMaxLength(500)
+            .HasMaxLength(800)
             .IsRequired();
 
         builder.Property(p => p.OwnerId)
@@ -90,7 +79,7 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .IsRequired();
 
         builder.Property(p => p.Sku)
-            .HasMaxLength(50).IsRequired();
+            .HasMaxLength(255).IsRequired();
 
         builder.Property(p => p.IsListed)
             .HasDefaultValue(0)

@@ -29,7 +29,9 @@ using ProductlineApp.Infrastructure.Persistance.Repositories;
 using ProductlineApp.Infrastructure.Security;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using ProductlineApp.Application.Common.Contexts;
 using ProductlineApp.Infrastructure.ExternalServices.Common;
+using ProductlineApp.Infrastructure.Logging;
 
 namespace ProductlineApp.Infrastructure
 {
@@ -70,8 +72,6 @@ namespace ProductlineApp.Infrastructure
                 return new PlatformServiceDispatcher(platformServices, provider);
             });
 
-            // services.AddScoped<IHostedService, TokenRefreshService>();
-            // services.AddSingleton<IUserRepositoryFactory, UserRepositoryFactory>();
             services.AddHostedService<TokenRefreshService>();
 
             return services;
@@ -86,20 +86,6 @@ namespace ProductlineApp.Infrastructure
 
             services.AddSingleton(Options.Create(jwtSettings));
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
-
-            // services.AddAuthorization(options =>
-            // {
-            //     options.DefaultPolicy = new AuthorizationPolicyBuilder()
-            //         .AddRequirements(new DenyAnonymousAuthorizationRequirement())
-            //         .Build();
-            //
-            //     options.AddPolicy("MyPolicy", policy =>
-            //     {
-            //         policy.AuthenticationSchemes.Add(JwtBearerDefaults.AuthenticationScheme);
-            //         policy.RequireAuthenticatedUser();
-            //         policy.Requirements.Add(new MyRequirement());
-            //     });
-            // });
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters
@@ -129,6 +115,7 @@ namespace ProductlineApp.Infrastructure
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IListingRepository, ListingRepository>();
+            services.AddScoped<ILoggingRepository, LoggingRepository>();
 
             return services;
         }

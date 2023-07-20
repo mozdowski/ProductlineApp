@@ -16,8 +16,6 @@ const MenuProps = {
   },
 };
 const SelectStyle = {
-  width: '316px',
-  height: '44px',
   color: '#757575',
   fontFamily: 'Poppins, sans-serif',
   fontSize: '12px',
@@ -40,9 +38,21 @@ interface FormSelectProps {
   onChange: (name: string, value: string) => void;
   options: { label: string; value: string | number }[];
   error?: string;
+  inputHeight?: number;
+  inputWidth?: number;
+  optionsWidth?: number;
 }
 
-const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) => {
+const FormSelect = ({
+  name,
+  value,
+  onChange,
+  options,
+  error,
+  inputHeight,
+  inputWidth,
+  optionsWidth,
+}: FormSelectProps) => {
   const [selectedValue, setSelectedValue] = React.useState<string>(value);
 
   const handleChange = (event: SelectChangeEvent<typeof selectedValue>) => {
@@ -61,8 +71,20 @@ const FormSelect = ({ name, value, onChange, options, error }: FormSelectProps) 
           id="demo-multiple-checkbox"
           value={selectedValue}
           onChange={handleChange}
-          MenuProps={MenuProps}
-          sx={{ ...SelectStyle, font: '12px Poppins, sans-serif' }}
+          MenuProps={{
+            PaperProps: {
+              style: {
+                maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                width: optionsWidth ? optionsWidth : inputWidth ? inputWidth : 250,
+              },
+            },
+          }}
+          sx={{
+            ...SelectStyle,
+            font: '12px Poppins, sans-serif',
+            width: inputWidth ? inputWidth : '316px',
+            height: inputHeight ? inputHeight : '44px',
+          }}
         >
           {options.map((option) => (
             <MenuItem key={option.value} value={option.value}>

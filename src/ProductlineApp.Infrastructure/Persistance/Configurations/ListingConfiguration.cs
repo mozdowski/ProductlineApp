@@ -29,7 +29,7 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 
             builder.Property(e => e.Title)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             builder.Property(e => e.Description)
                 .IsRequired()
@@ -88,7 +88,7 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
 
             ba.Property(li => li.PlatformListingId)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             ba.Property(li => li.ExpiresIn);
 

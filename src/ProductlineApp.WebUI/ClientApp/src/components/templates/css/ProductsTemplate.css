@@ -9,7 +9,7 @@
   margin-top: 30px;
   margin-right: 60px;
   background-color: var(--white-color);
-  height: calc(100vh - 212px);
+  /* height: calc(100vh - 212px); */
   border-radius: 8px;
   position: relative;
   text-align: center;

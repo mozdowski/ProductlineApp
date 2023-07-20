@@ -95,7 +95,15 @@ public class ProductRepository : IProductRepository
     {
         var isProductId = Guid.TryParse(id, out var productId);
 
-        return await this._dbContext.Products
-            .FirstOrDefaultAsync(x => x.Sku == id || (isProductId && productId == x.Id.Value));
+        var product = await this._dbContext.Products
+            .FirstOrDefaultAsync(x => x.Sku == id);
+
+        if (product is null && isProductId)
+        {
+            product = await this._dbContext.Products
+                .FirstOrDefaultAsync(x => x.Id == ProductId.Create(productId));
+        }
+
+        return product;
     }
 }

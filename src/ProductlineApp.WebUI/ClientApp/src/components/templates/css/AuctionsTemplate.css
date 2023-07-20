@@ -15,7 +15,7 @@
   margin-top: 20px;
   margin-right: 60px;
   background-color: var(--white-color);
-  height: calc(100vh - 271px);
+  /* height: calc(100vh - 271px); */
   border-radius: 8px;
   position: relative;
   text-align: center;
