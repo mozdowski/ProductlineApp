@@ -6,6 +6,7 @@ import { OrdersTableHeader } from '../../molecules/table/headers/OrdersTableHead
 import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
 import { CircularProgress } from '@mui/material';
 import { OrderStatus } from '../../../enums/orderStatus.enum';
+import { useEffect, useState } from 'react';
 
 export default function OrdersTable({
   orderRecords,
@@ -22,6 +23,26 @@ export default function OrdersTable({
   onChange: (e: any) => void;
   markOrderAsCompleted: (orderId: string) => void;
 }) {
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    if (orderRecords) {
+      const totalPages = Math.ceil(orderRecords.length / rowsPerPage);
+      setTotalPages(totalPages);
+    }
+  }, [orderRecords, rowsPerPage]);
+
+  const handleChangeRowsPerPage = (rowsCount: number) => {
+    setRowsPerPage(rowsCount);
+    setPage(0);
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber - 1);
+  };
+
   return (
     <>
       <OrdersHederActions
@@ -39,7 +60,13 @@ export default function OrdersTable({
         />
       </table>
       {!orderRecords && <CircularProgress />}
-      <TableFooter />
+      <TableFooter
+        totalPages={totalPages}
+        currentPage={page + 1}
+        currentRowsCount={rowsPerPage}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }

@@ -22,7 +22,7 @@ public class LoggingConfiguration : IEntityTypeConfiguration<LogEntity>
 
             builder.Property(e => e.Message)
                 .IsRequired()
-                .HasMaxLength(1000);
+                .HasColumnType("json");
 
             builder.Property(e => e.UserId)
                 .IsRequired();

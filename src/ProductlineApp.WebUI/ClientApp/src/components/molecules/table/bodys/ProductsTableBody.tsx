@@ -5,16 +5,22 @@ import { ProductsTableRow } from '../rows/productsTableRow';
 export const ProductsTableBody = ({
   productRecords,
   onProductDelete,
+  page,
+  rowsPerPage,
 }: {
   productRecords?: ProductsRecord[];
   onProductDelete: (productId: string) => void;
+  page: number;
+  rowsPerPage: number;
 }) => {
   return (
     <tbody>
       {productRecords &&
-        productRecords.map((product, key) => (
-          <ProductsTableRow key={key} product={product} onProductDelete={onProductDelete} />
-        ))}
+        productRecords
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map((product, key) => (
+            <ProductsTableRow key={key} product={product} onProductDelete={onProductDelete} />
+          ))}
     </tbody>
   );
 };

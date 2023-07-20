@@ -5,6 +5,7 @@ import { AuctionsHederActions } from '../../molecules/table/headersActions/Aucti
 import { AuctionsTableHeader } from '../../molecules/table/headers/AuctionsTableHeader';
 import { AuctionsTableBody } from '../../molecules/table/bodys/AuctionsTableBody';
 import { CircularProgress } from '@mui/material';
+import { useEffect, useState } from 'react';
 
 export default function AuctionsTable({
   auctionRecords,
@@ -29,6 +30,26 @@ export default function AuctionsTable({
   onChange: (e: any) => void;
   isDataLoaded: boolean;
 }) {
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+  const [totalPages, setTotalPages] = useState<number>(0);
+
+  useEffect(() => {
+    if (auctionRecords) {
+      const totalPages = Math.ceil(auctionRecords.length / rowsPerPage);
+      setTotalPages(totalPages);
+    }
+  }, [auctionRecords, rowsPerPage]);
+
+  const handleChangeRowsPerPage = (rowsCount: number) => {
+    setRowsPerPage(rowsCount);
+    setPage(0);
+  };
+
+  const handlePageChange = (pageNumber: number) => {
+    setPage(pageNumber - 1);
+  };
+
   return (
     <>
       <AuctionsHederActions
@@ -49,7 +70,13 @@ export default function AuctionsTable({
         )}
       </table>
       {(!auctionRecords || !isDataLoaded) && <CircularProgress sx={{ alignSelf: 'center' }} />}
-      <TableFooter />
+      <TableFooter
+        totalPages={totalPages}
+        currentPage={page + 1}
+        currentRowsCount={rowsPerPage}
+        onPageChange={handlePageChange}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
     </>
   );
 }

@@ -138,7 +138,7 @@ public class OrderRepository : IOrderRepository
             int daysAgo = (DateTime.Now.Date - entry.Day).Days;
             if (daysAgo < 7)
             {
-                result[daysAgo] = entry.Count;
+                result[6 - daysAgo] = entry.Count;
             }
         }
 
