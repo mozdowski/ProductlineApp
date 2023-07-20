@@ -1,4 +1,5 @@
 using System.Net;
+using ProductlineApp.Application.Common.Contexts;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ProductlineApp.WebUI.Middlewares;
@@ -25,6 +26,9 @@ public class ErrorHandlingMiddleware
         catch (Exception ex)
         {
             this._logger.LogError(ex, "An error occured");
+
+            var loggingRepository = context.RequestServices.GetService<ILoggingRepository>();
+            await loggingRepository.LogError(ex);
             await HandleExceptionAsync(context);
         }
     }

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductlineApp.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using ProductlineApp.Infrastructure.Persistance;
 namespace ProductlineApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductlineDbContext))]
-    partial class ProductlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230720101246_VarLenChangesAndLogTableAdded2")]
+    partial class VarLenChangesAndLogTableAdded2
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,7 +207,7 @@ namespace ProductlineApp.Infrastructure.Migrations
                             Id = new Guid("245115f9-02c1-446d-a265-b27faec8fe7f"),
                             CreatedAt = new DateTime(2023, 7, 20, 10, 12, 46, 564, DateTimeKind.Utc).AddTicks(6150),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 706, DateTimeKind.Utc).AddTicks(950),
+                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 702, DateTimeKind.Utc).AddTicks(830),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
@@ -213,7 +216,7 @@ namespace ProductlineApp.Infrastructure.Migrations
                             Id = new Guid("6caa1f53-524e-4f55-93a5-aa8bf04eb386"),
                             CreatedAt = new DateTime(2023, 7, 20, 10, 12, 46, 564, DateTimeKind.Utc).AddTicks(6170),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 706, DateTimeKind.Utc).AddTicks(1020),
+                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 702, DateTimeKind.Utc).AddTicks(930),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });

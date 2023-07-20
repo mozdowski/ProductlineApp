@@ -6,6 +6,7 @@ using ProductlineApp.Domain.Aggregates.Products;
 using ProductlineApp.Domain.Aggregates.User;
 using ProductlineApp.Domain.Aggregates.User.Entities;
 using ProductlineApp.Domain.Common.Abstractions;
+using ProductlineApp.Infrastructure.Logging;
 
 namespace ProductlineApp.Infrastructure.Persistance;
 
@@ -25,6 +26,8 @@ public class ProductlineDbContext : DbContext
     public DbSet<Listing> Listings { get; set; }
 
     public DbSet<Order> Orders { get; set; }
+
+    public DbSet<LogEntity> Logs { get; set; }
 
     public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default(CancellationToken))
     {
@@ -56,7 +59,7 @@ public class ProductlineDbContextFactory : IDesignTimeDbContextFactory<Productli
     {
         var optionsBuilder = new DbContextOptionsBuilder<ProductlineDbContext>();
 
-        optionsBuilder.UseNpgsql("string-connection-here");
+        optionsBuilder.UseNpgsql("connection-string-here");
 
         return new ProductlineDbContext(optionsBuilder.Options);
     }

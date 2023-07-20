@@ -19,7 +19,7 @@ public class TokenRefreshService : IHostedService
     {
         this._serviceProvider = serviceProvider;
         this._logger = logger;
-        this._timer = new Timer(this.RefreshToken, null, TimeSpan.Zero, TimeSpan.FromHours(1)); // assume token expires in 1 hour
+        this._timer = new Timer(this.RefreshToken, null, TimeSpan.Zero, TimeSpan.FromMinutes(20));
     }
 
     public Task StartAsync(CancellationToken cancellationToken)

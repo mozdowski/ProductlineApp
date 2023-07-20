@@ -22,7 +22,7 @@ public class PlatformConfiguration : IEntityTypeConfiguration<Platform>
 
         builder.Property(e => e.Name)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(255);
 
         builder.Property(e => e.LastModified)
             .HasConversion(

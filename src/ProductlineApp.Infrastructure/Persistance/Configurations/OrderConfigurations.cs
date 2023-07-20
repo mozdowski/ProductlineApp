@@ -27,7 +27,7 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
                     v => v.Value,
                     v => DocumentId.Create(v))
                 .IsRequired();
-            doc.Property(p => p.Name).IsRequired().HasMaxLength(100);
+            doc.Property(p => p.Name).IsRequired().HasMaxLength(255);
             doc.Property(p => p.Url)
                 .HasConversion(
                     v => v.ToString(),
@@ -55,9 +55,9 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
                 sa.Property(a => a.Address).HasConversion(
                     v => v.ToString(),
                     v => new Address(v)).HasColumnName("ShippingAddress_Address").HasMaxLength(500);
-                sa.Property(a => a.FirstName).HasColumnName("ShippingAddress_Firstname").HasMaxLength(100).IsRequired(false);
-                sa.Property(a => a.LastName).HasColumnName("ShippingAddress_Lastname").HasMaxLength(100).IsRequired(false);
-                sa.Property(a => a.PhoneNumber).HasColumnName("ShippingAddress_Phone").HasMaxLength(100).IsRequired(false);
+                sa.Property(a => a.FirstName).HasColumnName("ShippingAddress_Firstname").HasMaxLength(255).IsRequired(false);
+                sa.Property(a => a.LastName).HasColumnName("ShippingAddress_Lastname").HasMaxLength(255).IsRequired(false);
+                sa.Property(a => a.PhoneNumber).HasColumnName("ShippingAddress_Phone").HasMaxLength(255).IsRequired(false);
             });
 
             builder.OwnsOne(o => o.BillingAddress, ba =>
@@ -65,11 +65,11 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
                     ba.Property(a => a.Address).HasConversion(
                         v => v.ToString(),
                         v => new Address(v)).HasColumnName("BillingAddress_Address").HasMaxLength(500);
-                    ba.Property(a => a.FirstName).HasColumnName("BillingAddress_Firstname").HasMaxLength(100).IsRequired(false);
-                    ba.Property(a => a.LastName).HasColumnName("BillingAddress_Lastname").HasMaxLength(100).IsRequired(false);
-                    ba.Property(a => a.Email).HasColumnName("BillingAddress_Email").HasMaxLength(100).IsRequired(false);
-                    ba.Property(a => a.Username).HasColumnName("BillingAddress_Username").HasMaxLength(100).IsRequired(false);
-                    ba.Property(a => a.PhoneNumber).HasColumnName("BillingAddress_Phone").HasMaxLength(100).IsRequired(false);
+                    ba.Property(a => a.FirstName).HasColumnName("BillingAddress_Firstname").HasMaxLength(255).IsRequired(false);
+                    ba.Property(a => a.LastName).HasColumnName("BillingAddress_Lastname").HasMaxLength(255).IsRequired(false);
+                    ba.Property(a => a.Email).HasColumnName("BillingAddress_Email").HasMaxLength(255).IsRequired(false);
+                    ba.Property(a => a.Username).HasColumnName("BillingAddress_Username").HasMaxLength(255).IsRequired(false);
+                    ba.Property(a => a.PhoneNumber).HasColumnName("BillingAddress_Phone").HasMaxLength(255).IsRequired(false);
                 });
 
             builder.Property(pc => pc.OwnerId)
@@ -138,11 +138,11 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
 
             ol.Property(li => li.Sku)
                 .IsRequired()
-                .HasMaxLength(20);
+                .HasMaxLength(255);
 
             ol.Property(li => li.Name)
                 .IsRequired()
-                .HasMaxLength(100);
+                .HasMaxLength(255);
 
             ol.Property(li => li.Quantity)
                 .IsRequired();

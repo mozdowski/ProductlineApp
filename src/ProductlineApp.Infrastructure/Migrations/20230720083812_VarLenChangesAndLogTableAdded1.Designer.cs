@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using ProductlineApp.Infrastructure.Persistance;
@@ -11,9 +12,11 @@ using ProductlineApp.Infrastructure.Persistance;
 namespace ProductlineApp.Infrastructure.Migrations
 {
     [DbContext(typeof(ProductlineDbContext))]
-    partial class ProductlineDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230720083812_VarLenChangesAndLogTableAdded1")]
+    partial class VarLenChangesAndLogTableAdded1
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -201,19 +204,19 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("245115f9-02c1-446d-a265-b27faec8fe7f"),
-                            CreatedAt = new DateTime(2023, 7, 20, 10, 12, 46, 564, DateTimeKind.Utc).AddTicks(6150),
+                            Id = new Guid("8dd2c1ee-6748-4e51-b494-4888b149e448"),
+                            CreatedAt = new DateTime(2023, 7, 20, 8, 38, 12, 414, DateTimeKind.Utc).AddTicks(7320),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 706, DateTimeKind.Utc).AddTicks(950),
+                            LastModified = new DateTime(2023, 7, 20, 8, 38, 12, 538, DateTimeKind.Utc).AddTicks(5490),
                             LastModifiedBy = "system",
                             Name = "ebay"
                         },
                         new
                         {
-                            Id = new Guid("6caa1f53-524e-4f55-93a5-aa8bf04eb386"),
-                            CreatedAt = new DateTime(2023, 7, 20, 10, 12, 46, 564, DateTimeKind.Utc).AddTicks(6170),
+                            Id = new Guid("4323cf89-a174-4cf7-9cbc-49db142d846d"),
+                            CreatedAt = new DateTime(2023, 7, 20, 8, 38, 12, 414, DateTimeKind.Utc).AddTicks(7340),
                             CreatedBy = "system",
-                            LastModified = new DateTime(2023, 7, 20, 10, 12, 46, 706, DateTimeKind.Utc).AddTicks(1020),
+                            LastModified = new DateTime(2023, 7, 20, 8, 38, 12, 538, DateTimeKind.Utc).AddTicks(5560),
                             LastModifiedBy = "system",
                             Name = "allegro"
                         });
@@ -264,16 +267,20 @@ namespace ProductlineApp.Infrastructure.Migrations
                     b.ToTable("Users", (string)null);
                 });
 
-            modelBuilder.Entity("ProductlineApp.Infrastructure.Logging.LogEntity", b =>
+            modelBuilder.Entity("ProductlineApp.Shared.Logging.LogEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("LogLevel")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("Message")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasMaxLength(1500)
+                        .HasColumnType("character varying(1500)");
 
                     b.Property<string>("Severity")
                         .IsRequired()
