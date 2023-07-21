@@ -66,6 +66,8 @@ export default function AuctionsTable({
             auctionRecords={auctionRecords}
             onEditAuction={onEditAuction}
             onWithdrawAuction={onWithdrawAuction}
+            page={page}
+            rowsPerPage={rowsPerPage}
           />
         )}
       </table>
