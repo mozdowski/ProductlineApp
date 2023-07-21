@@ -20,6 +20,7 @@ export default function AuctionsTemplate({
   searchValue,
   onChange,
   isDataLoaded,
+  onAuctionReactivate,
 }: {
   auctionRecords?: AuctionsRecord[];
   selectedAuctionPortal?: PlatformEnum;
@@ -35,6 +36,11 @@ export default function AuctionsTemplate({
   searchValue: string;
   onChange: (e: any) => void;
   isDataLoaded: boolean;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) {
   return (
     <>
@@ -62,6 +68,7 @@ export default function AuctionsTemplate({
             searchValue={searchValue}
             onChange={onChange}
             isDataLoaded={isDataLoaded}
+            onAuctionReactivate={onAuctionReactivate}
           />
         </div>
       </div>

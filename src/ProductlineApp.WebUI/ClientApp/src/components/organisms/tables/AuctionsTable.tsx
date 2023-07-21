@@ -16,6 +16,7 @@ export default function AuctionsTable({
   searchValue,
   onChange,
   isDataLoaded,
+  onAuctionReactivate,
 }: {
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
@@ -29,6 +30,11 @@ export default function AuctionsTable({
   searchValue: string;
   onChange: (e: any) => void;
   isDataLoaded: boolean;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
@@ -68,6 +74,7 @@ export default function AuctionsTable({
             onWithdrawAuction={onWithdrawAuction}
             page={page}
             rowsPerPage={rowsPerPage}
+            onAuctionReactivate={onAuctionReactivate}
           />
         )}
       </table>

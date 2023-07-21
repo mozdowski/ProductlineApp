@@ -20,6 +20,7 @@ export const AuctionsTableBody = ({
   showActiveAuctions,
   page,
   rowsPerPage,
+  onAuctionReactivate,
 }: {
   auctionRecords: AuctionsRecord[];
   onEditAuction: (auctionId: string) => Promise<boolean>;
@@ -31,6 +32,11 @@ export const AuctionsTableBody = ({
   showActiveAuctions: boolean;
   page: number;
   rowsPerPage: number;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) => {
   return (
     <>
@@ -46,6 +52,7 @@ export const AuctionsTableBody = ({
                   auction={auction}
                   onEditAuction={onEditAuction}
                   onWithdrawAuction={onWithdrawAuction}
+                  onAuctionReactivate={onAuctionReactivate}
                 />
               ),
           )}

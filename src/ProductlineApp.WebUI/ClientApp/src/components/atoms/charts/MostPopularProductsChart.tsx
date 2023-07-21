@@ -7,9 +7,14 @@ function MostPopularProductsChart({
 }: {
   popularProductsChartData: ProductStatistics[];
 }) {
+  const colors = ['#F14668', '#52CA76', '#FFA726', '#3D5AFE', '#FF4081', '#00C853', '#5F47F1'];
+
   const data = popularProductsChartData.map((x) => ({
     name: x.name,
     value: x.soldCount,
+    itemStyle: {
+      color: colors[Math.floor(Math.random() * colors.length - 1)],
+    },
   }));
 
   const option = {
