@@ -40,9 +40,9 @@ export default function Auctions() {
   };
 
   const [showActiveAuctions, setShowActiveAuctions] = useState<boolean>(true);
-  const handleClickTypeAuctionsButton = (e: any) => {
-    const setActive = e.target.id == 'active';
-    setShowActiveAuctions(setActive);
+
+  const handleAuctionStateClick = (showActive: boolean) => {
+    setShowActiveAuctions(showActive);
   };
 
   const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -270,7 +270,7 @@ export default function Auctions() {
         selectedAuctionPortal={selectedAuctionPortal?.platformName}
         handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         showActiveAuctions={showActiveAuctions}
-        handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+        onAuctionStateClick={handleAuctionStateClick}
         onEditAuction={handleEditAuction}
         onWithdrawAuction={handleWithdrawAuction}
         onChange={searchTableAuctions}

@@ -1,3 +1,4 @@
+import { Photo } from '../../../../../pages/EditProduct';
 import EditProductPhotosInput from '../../../../atoms/inputs/productPhotosInput/EditProductPhotosInput';
 import './css/editProduct_Photos.css';
 
@@ -5,10 +6,14 @@ function Photos({
   uploadProductPhotos,
   photos,
   error,
+  onPhotoDelete,
+  onPhotoMove,
 }: {
   uploadProductPhotos: any;
-  photos: string[];
+  photos: Photo[];
   error: any;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -24,6 +29,8 @@ function Photos({
             uploadProductPhotos={uploadProductPhotos}
             photos={photos}
             error={error}
+            onPhotoDelete={onPhotoDelete}
+            onPhotoMove={onPhotoMove}
           />
         </div>
       </div>

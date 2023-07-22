@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react';
 export default function AuctionsTable({
   auctionRecords,
   showActiveAuctions,
-  handleClickTypeAuctionsButton,
+  onAuctionStateClick,
   onEditAuction,
   onWithdrawAuction,
   searchValue,
@@ -20,7 +20,7 @@ export default function AuctionsTable({
 }: {
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
-  handleClickTypeAuctionsButton: any;
+  onAuctionStateClick: (showActive: boolean) => void;
   onEditAuction: (auctionId: string) => Promise<boolean>;
   onWithdrawAuction: (
     listingId: string,
@@ -60,7 +60,7 @@ export default function AuctionsTable({
     <>
       <AuctionsHederActions
         showActiveAuctions={showActiveAuctions}
-        handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+        onAuctionStateClick={onAuctionStateClick}
         searchValue={searchValue}
         onChange={onChange}
       />

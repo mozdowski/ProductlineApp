@@ -7,6 +7,8 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 import EditProductTemplate from '../components/templates/EditProductTemplate';
 import { ProductEditForm } from '../interfaces/products/productEditForm';
+import { Photo } from '@mui/icons-material';
+import { EditProductRequest } from '../interfaces/products/editProductRequest';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -20,16 +22,32 @@ const productSchema = Yup.object().shape({
   photos: Yup.mixed()
     .nullable()
     .test('file', 'Wymagane co najmniej jedno zdjęcie', (value) => {
-      return value instanceof FileList && value.length > 0;
+      return (value as Array<Photo>).length > 0;
     }),
 });
+
+export interface Photo {
+  id: number;
+  url: string;
+  source: PhotoSource;
+}
+
+export enum PhotoSource {
+  SERVER,
+  UPLOADED,
+}
 
 export default function EditProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const { productId } = useParams<string>();
-  // const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
-  const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
+
+  // const [photos, setPhotos] = useState<Photo[]>([])
+
+  // const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
+
+  const [uploadedPhotos, setUploadedPhotos] = useState<Record<number, File>>({});
+
   const [productForm, setProductForm] = useState<ProductEditForm>({
     sku: '',
     name: '',
@@ -39,9 +57,9 @@ export default function EditProduct() {
     category: '',
     condition: 0,
     description: '',
-    photos: null,
-    gallery: [],
+    photos: [],
   });
+
   const [errors, setErrors] = useState<Partial<ProductForm>>({});
 
   const validateForm = async () => {
@@ -60,24 +78,38 @@ export default function EditProduct() {
   };
 
   const selectImages = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const photos: Array<string> = [];
+    const photos: Photo[] = [];
     const files = event.target.files;
+    const maxId = Math.max(...productForm.photos.map((o) => o.id)) + 1;
 
     if (files) {
       for (let i = 0; i < files.length; i++) {
-        photos.push(URL.createObjectURL(files[i]));
+        const uploadedUrl = URL.createObjectURL(files[i]);
+        const id = maxId + i;
+        photos.push({
+          id: id,
+          url: uploadedUrl,
+          source: PhotoSource.UPLOADED,
+        });
+
+        setUploadedPhotos((prevData) => ({
+          ...prevData,
+          [id]: files[i],
+        }));
       }
 
       setProductForm((prevData) => ({
         ...prevData,
-        ['photos']: files,
+        photos: [...prevData.photos, ...photos],
       }));
-      setPhotosPreviews(photos);
     }
   };
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
+
+    console.log(productForm);
+    console.log(uploadedPhotos);
 
     const isValid: boolean = await validateForm();
 
@@ -88,9 +120,9 @@ export default function EditProduct() {
       return;
     }
 
-    const photos: FileList = productForm.photos as FileList;
+    //   const photos: FileList = productForm.photos as FileList;
 
-    const newProductRequestData: AddProductRequest = {
+    const editProductRequestData: EditProductRequest = {
       sku: productForm.sku,
       name: productForm.name,
       categoryName: productForm.category,
@@ -99,20 +131,31 @@ export default function EditProduct() {
       brandName: productForm.brand,
       description: productForm.description,
       condition: productForm.condition,
-      image: photos.item(0) as File,
+      imageFile:
+        productForm.photos[0].source === PhotoSource.UPLOADED
+          ? (uploadedPhotos[productForm.photos[0].id] as File)
+          : undefined,
+      imageUrl:
+        productForm.photos[0].source === PhotoSource.SERVER ? productForm.photos[0].url : undefined,
+      gallery: productForm.photos.filter((x) => x.source === PhotoSource.SERVER).map((x) => x.url),
     };
 
+    const uploadedFiles = Object.values(uploadedPhotos);
+
     try {
-      const productResponse = await productsService.addProduct(newProductRequestData);
+      const productResponse = await productsService.updateProduct(
+        productId as string,
+        editProductRequestData,
+      );
 
       const addImageRequestPool: Promise<void>[] = [];
 
-      for (let i = 0; i < photos.length; i++) {
-        const photo = photos[i];
+      for (let i = 0; i < uploadedFiles.length; i++) {
+        const photo = uploadedFiles[i];
         const addImageToGalleryFormData: FormData = new FormData();
         addImageToGalleryFormData.append('image', photo);
         const request = productsService.addImageToGallery(
-          productResponse.productId,
+          productId as string,
           addImageToGalleryFormData,
         );
         addImageRequestPool.push(request);
@@ -138,6 +181,26 @@ export default function EditProduct() {
     }));
   };
 
+  const handleMovePhoto = (dragIndex: number, hoverIndex: number) => {
+    const newOrder = [...productForm.photos];
+    const draggedPhoto = newOrder[dragIndex];
+    newOrder.splice(dragIndex, 1);
+    newOrder.splice(hoverIndex, 0, draggedPhoto);
+    setProductForm((prevData) => ({
+      ...prevData,
+      photos: newOrder,
+    }));
+  };
+
+  const handleDeletePhoto = (index: number) => {
+    const updatedPhotos = [...productForm.photos];
+    updatedPhotos.splice(index, 1);
+    setProductForm((prevData) => ({
+      ...prevData,
+      photos: updatedPhotos,
+    }));
+  };
+
   useEffect(() => {
     if (!productId) return;
     productsService.getProduct(productId).then((res) => {
@@ -151,8 +214,12 @@ export default function EditProduct() {
         brand: product.brand,
         description: product.description,
         condition: product.condition,
-        photos: null,
-        gallery: [product.imageUrl, ...product.gallery],
+        photos: [product.imageUrl, ...product.gallery].map((x, index) => ({
+          id: index,
+          url: x,
+          source: PhotoSource.SERVER,
+        })),
+        // gallery: [product.imageUrl, ...product.gallery],
       };
       setProductForm(productEditForm);
     });
@@ -161,11 +228,13 @@ export default function EditProduct() {
   return (
     <EditProductTemplate
       uploadProductPhotos={selectImages}
-      photos={photoPreviews}
+      photos={productForm.photos}
       onSubmit={handleSubmit}
       productForm={productForm}
       onChange={handleChange}
       errors={errors}
+      onPhotoMove={handleMovePhoto}
+      onPhotoDelete={handleDeletePhoto}
     />
   );
 }

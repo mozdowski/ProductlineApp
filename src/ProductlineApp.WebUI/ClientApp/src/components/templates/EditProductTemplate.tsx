@@ -1,4 +1,5 @@
 import { ProductEditForm } from '../../interfaces/products/productEditForm';
+import { Photo } from '../../pages/EditProduct';
 import EditProductForm from '../organisms/forms/editProductForm/EditProductForm';
 import EditProductPageHeader from '../organisms/pageHeaders/EditProductPageHeader';
 import './css/editProductTemplate.css';
@@ -10,13 +11,17 @@ export default function EditProductTemplate({
   productForm,
   onChange,
   errors,
+  onPhotoDelete,
+  onPhotoMove,
 }: {
   uploadProductPhotos: any;
-  photos: string[];
+  photos: Photo[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   productForm: ProductEditForm;
   onChange: (name: string, value: string | number) => void;
   errors: any;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -30,6 +35,8 @@ export default function EditProductTemplate({
             productForm={productForm}
             onChange={onChange}
             errors={errors}
+            onPhotoDelete={onPhotoDelete}
+            onPhotoMove={onPhotoMove}
           />
         </div>
       </div>

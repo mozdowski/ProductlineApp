@@ -7,12 +7,12 @@ import AddAuctionButton from '../../../atoms/buttons/addAuctionButton/AddAuction
 
 export const AuctionsHederActions = ({
   showActiveAuctions,
-  handleClickTypeAuctionsButton,
+  onAuctionStateClick,
   searchValue,
   onChange,
 }: {
   showActiveAuctions: boolean;
-  handleClickTypeAuctionsButton: any;
+  onAuctionStateClick: (showActive: boolean) => void;
   searchValue: any;
   onChange: (e: any) => void;
 }) => {
@@ -23,12 +23,12 @@ export const AuctionsHederActions = ({
           <ActiveAuctionButton
             id={'active'}
             showActiveAuctions={showActiveAuctions}
-            handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+            onAuctionStateClick={onAuctionStateClick}
           />
           <EndAuctionButton
             id={'ended'}
             showActiveAuctions={showActiveAuctions}
-            handleClickTypeAuctionButton={handleClickTypeAuctionsButton}
+            onAuctionStateClick={onAuctionStateClick}
           />
         </div>
         <div className="AuctionsTableActionButtons">

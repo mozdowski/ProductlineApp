@@ -110,7 +110,7 @@ public class OrderRepository : IOrderRepository
         return await this._context.Orders
             .AsNoTracking()
             .Where(x => x.OwnerId == userId)
-            .Where(x => x.CreatedAt >= yesterday)
+            .Where(x => x.PlacedAt >= yesterday)
             .SelectMany(x => x.OrderLines)
             .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
     }

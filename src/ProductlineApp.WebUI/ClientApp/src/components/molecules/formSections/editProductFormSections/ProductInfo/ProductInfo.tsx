@@ -10,13 +10,14 @@ import SKUInput from '../../../../atoms/inputs/skuInptu/SKUInput';
 import './css/addProduct_ProductInfo.css';
 import { ProductData } from '../../../../../interfaces/products/getProductsSKU';
 import { ProductDtoResponse } from '../../../../../interfaces/products/getProductsResponse';
+import { ProductEditForm } from '../../../../../interfaces/products/productEditForm';
 
 function ProductInfo({
   productForm,
   onChange,
   errors,
 }: {
-  productForm: ProductForm;
+  productForm: ProductEditForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
 }) {
