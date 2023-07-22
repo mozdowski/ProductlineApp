@@ -1,5 +1,6 @@
 import { AddedProductResponse } from '../../interfaces/platforms/addedProductResponse';
 import { AddProductRequest } from '../../interfaces/products/addProductRequest';
+import { EditProductRequest } from '../../interfaces/products/editProductRequest';
 import {
   GetProductResponse,
   GetProductsResponse,
@@ -37,6 +38,25 @@ export class ProductsService {
 
   public async deleteProduct(productId: string): Promise<void> {
     return this.httpService.delete<void>('/products/' + productId);
+  }
+
+  public async updateProduct(productId: string, data: EditProductRequest): Promise<void> {
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      if (key === 'gallery') {
+        return;
+      }
+      formData.append(key, value);
+    });
+
+    console.log(data.gallery);
+
+    for (let i = 0; i < data.gallery.length; i++) {
+      formData.append(`gallery[${i}]`, data.gallery[i]);
+    }
+
+    return this.httpService.post<void>(`/products/${productId}/updateInfo`, formData);
   }
 }
 

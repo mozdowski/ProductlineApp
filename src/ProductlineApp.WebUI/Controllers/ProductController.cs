@@ -80,10 +80,11 @@ public class ProductController : ControllerBase
         return this.Ok();
     }
 
-    [HttpPut("{productId:guid}/updateInfo")]
-    public async Task<IActionResult> UpdateProductInfo(Guid productId, [FromBody] EditProductDtoRequest request)
+    [HttpPost("{productId:guid}/updateInfo")]
+    public async Task<IActionResult> UpdateProductInfo(Guid productId, [FromForm] EditProductDtoRequest request)
     {
         var command = new EditProductInfoCommand.Command(
+            this._currentUser.UserId.GetValueOrDefault(),
             productId,
             request.Name,
             request.CategoryName,
@@ -91,22 +92,12 @@ public class ProductController : ControllerBase
             request.Quantity,
             request.BrandName,
             request.Description,
-            this._currentUser.UserId.GetValueOrDefault());
+            request.Gallery,
+            request.ImageFile,
+            request.ImageUrl);
         var response = await this._mediator.Send(command);
 
         return this.Ok(response);
-    }
-
-    [HttpPost("{productId:guid}/updateImage")]
-    public async Task<IActionResult> UpdateProductImage(Guid productId, [FromForm] IFormFile image)
-    {
-        var command = new EditProductImageCommand.Command(
-            this._currentUser.UserId.GetValueOrDefault(),
-            productId,
-            image);
-        var result = await this._mediator.Send(command);
-
-        return this.Ok(result);
     }
 
     [HttpDelete("{productId:guid}")]
@@ -119,11 +110,4 @@ public class ProductController : ControllerBase
 
         return this.Ok();
     }
-
-    // [HttpGet("categories/{platformId:guid}")]
-    // public async Task<IActionResult> GetCategoriesForPlatform(Guid platformId)
-    // {
-    //     var platformService = this._platformServiceDispatcher.Dispatch(platformId);
-    //
-    // }
 }

@@ -4,6 +4,7 @@ import ProductInfo from '../../../molecules/formSections/editProductFormSections
 import ButtonsSection from '../../../molecules/formSections/addProductFormSections/buttonsSection/ButtonsSection';
 import './css/editProductForm.css';
 import { ProductEditForm } from '../../../../interfaces/products/productEditForm';
+import { Photo } from '../../../../pages/EditProduct';
 
 export default function EditProductForm({
   uploadProductPhotos,
@@ -12,13 +13,17 @@ export default function EditProductForm({
   productForm,
   onChange,
   errors,
+  onPhotoDelete,
+  onPhotoMove,
 }: {
   uploadProductPhotos: any;
-  photos: string[];
+  photos: Photo[];
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
   productForm: ProductEditForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -30,8 +35,10 @@ export default function EditProductForm({
           <div className="editedProductPhotosForm">
             <Photos
               uploadProductPhotos={uploadProductPhotos}
-              photos={productForm.gallery}
+              photos={photos}
               error={errors.photos}
+              onPhotoDelete={onPhotoDelete}
+              onPhotoMove={onPhotoMove}
             />
           </div>
         </div>

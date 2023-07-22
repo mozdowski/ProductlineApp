@@ -9,17 +9,23 @@ export const OrdersTableBody = ({
   showCompletedOrders,
   markOrderAsCompleted,
   onOpenOrderFilesPopup,
+  page,
+  rowsPerPage,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
   markOrderAsCompleted: (orderId: string) => void;
   onOpenOrderFilesPopup: (orderId: string) => void;
+  page: number;
+  rowsPerPage: number;
 }) => {
   return (
     <>
       <tbody>
         {orderRecords &&
-          orderRecords.map(
+          orderRecords
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .map(
             (order, key) =>
               order &&
               showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (

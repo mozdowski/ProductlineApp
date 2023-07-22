@@ -10,7 +10,10 @@ import { EbayCategoryAspectsResponse } from '../../interfaces/auctions/ebayCateg
 import { EbayCategoryTreeResponse } from '../../interfaces/auctions/ebayCategoryTreeResponse';
 import { EbayUserPoliciesResponse } from '../../interfaces/auctions/ebayUserPoliciesResponse';
 import { GetAuctionsResponse } from '../../interfaces/auctions/getAuctionsResponse';
-import { WithdrawAuctionRequest } from '../../interfaces/auctions/withdrawAuctionRequest';
+import {
+  ReactivateAuctionRequest,
+  WithdrawAuctionRequest,
+} from '../../interfaces/auctions/withdrawAuctionRequest';
 import { AllegroProductParametersResponse } from '../../interfaces/platforms/allegroProductParametersResponse';
 import { GetAllegroCatalogueProductDetailsResponse } from '../../interfaces/platforms/getAllegroCatalogueProductDetailsResponse';
 import { GetAllegroCalalogueResponse } from '../../interfaces/platforms/getAllegroCatalogueResponse';
@@ -129,6 +132,13 @@ export class AuctionsService {
 
   public async updateEbayAuction(auctionId: string, data: CreateEbayAuctionRequest): Promise<void> {
     return this.httpService.post<void>(`/ebay/updateOffer/${auctionId}`, data);
+  }
+
+  public async reactivateAuction(
+    platformId: string,
+    data: ReactivateAuctionRequest,
+  ): Promise<void> {
+    return this.httpService.post<void>(`/platforms/publishListing/${platformId}`, data);
   }
 }
 

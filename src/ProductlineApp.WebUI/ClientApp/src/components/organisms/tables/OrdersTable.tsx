@@ -59,6 +59,8 @@ export default function OrdersTable({
           orderRecords={orderRecords}
           showCompletedOrders={showCompletedOrders}
           markOrderAsCompleted={markOrderAsCompleted}
+          page={page}
+          rowsPerPage={rowsPerPage}
           onOpenOrderFilesPopup={onOpenOrderFilesPopup}
         />
       </table>

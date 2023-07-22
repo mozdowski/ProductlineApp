@@ -97,13 +97,25 @@ public class OrdersController : ControllerBase
         return this.Ok(orders);
     }
 
-    [HttpPost("{orderId:guid}")]
+    [HttpPost("{orderId:guid}/attachDocument")]
     public async Task<IActionResult> AttachDocumentToOrder(Guid orderId, [FromForm] IFormFile document)
     {
         var command = new AttachDocumentCommand.Command(
             this._currentUser.UserId.GetValueOrDefault(),
             orderId,
             document);
+        await this._mediator.Send(command);
+
+        return this.Ok();
+    }
+
+    [HttpDelete("{orderId:guid}/deleteDocument/{documentId:guid}")]
+    public async Task<IActionResult> DeleteDocument(Guid orderId, Guid documentId)
+    {
+        var command = new DeleteDocumentCommand.Command(
+            this._currentUser.UserId.GetValueOrDefault(),
+            orderId,
+            documentId);
         await this._mediator.Send(command);
 
         return this.Ok();
@@ -116,5 +128,16 @@ public class OrdersController : ControllerBase
         await this._mediator.Send(command);
 
         return this.Ok();
+    }
+
+    [HttpGet("{orderId:guid}/documents")]
+    public async Task<IActionResult> GetOrderDocuments(Guid orderId)
+    {
+        var command = new GetOrderDocumentsQuery.Query(
+            this._currentUser.UserId.GetValueOrDefault(),
+            orderId);
+        var response = await this._mediator.Send(command);
+
+        return this.Ok(response);
     }
 }

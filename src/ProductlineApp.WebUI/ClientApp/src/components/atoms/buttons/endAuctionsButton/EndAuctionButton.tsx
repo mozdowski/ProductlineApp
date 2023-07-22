@@ -2,18 +2,18 @@ import './css/EndAuctionButton.css';
 
 function EndAuctionButton({
   showActiveAuctions,
-  handleClickTypeAuctionButton,
+  onAuctionStateClick,
   id,
 }: {
   showActiveAuctions: boolean;
-  handleClickTypeAuctionButton: any;
+  onAuctionStateClick: (showActive: boolean) => void;
   id: string;
 }) {
   return (
     <div
       id={id}
       className={!showActiveAuctions ? 'endAuctionButton selected' : 'endAuctionButton'}
-      onClick={handleClickTypeAuctionButton}
+      onClick={() => onAuctionStateClick(false)}
     >
       <p>Zakończone</p>
     </div>

@@ -76,9 +76,7 @@
   gap: 20px;
 }
 
-.uploadPhotosField .productPhotos .productImage {
-  width: 120px;
-  height: 120px;
-  border-radius: 8px;
-  object-fit: cover;
+.productPhotos .photoArray {
+  display: flex;
+  gap: 10px;
 }

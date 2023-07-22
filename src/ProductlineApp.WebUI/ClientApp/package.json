@@ -26,6 +26,8 @@
     "node-modules": "^0.0.1",
     "react": "^18.2.0",
     "react-apexcharts": "^1.4.0",
+    "react-dnd": "^16.0.1",
+    "react-dnd-html5-backend": "^16.0.1",
     "react-dom": "^18.2.0",
     "react-echarts-resizable": "^1.0.0",
     "react-router-dom": "^6.4.3",
