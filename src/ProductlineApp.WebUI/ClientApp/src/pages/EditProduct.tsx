@@ -120,8 +120,6 @@ export default function EditProduct() {
       return;
     }
 
-    //   const photos: FileList = productForm.photos as FileList;
-
     const editProductRequestData: EditProductRequest = {
       sku: productForm.sku,
       name: productForm.name,
@@ -143,34 +141,28 @@ export default function EditProduct() {
     const uploadedFiles = Object.values(uploadedPhotos);
 
     try {
-      const productResponse = await productsService.updateProduct(
-        productId as string,
-        editProductRequestData,
+      const productResponse = await toast.promise(
+        Promise.all([
+          productsService.updateProduct(productId as string, editProductRequestData),
+          ...uploadedFiles.map((photo) => {
+            const addImageToGalleryFormData: FormData = new FormData();
+            addImageToGalleryFormData.append('image', photo);
+            return productsService.addImageToGallery(
+              productId as string,
+              addImageToGalleryFormData,
+            );
+          }),
+        ]),
+        {
+          pending: 'Edytowanie produktu...',
+          success: 'Pomyślnie edytowano produkt',
+          error: 'Wystąpił błąd przy edycji produktu',
+        },
       );
 
-      const addImageRequestPool: Promise<void>[] = [];
-
-      for (let i = 0; i < uploadedFiles.length; i++) {
-        const photo = uploadedFiles[i];
-        const addImageToGalleryFormData: FormData = new FormData();
-        addImageToGalleryFormData.append('image', photo);
-        const request = productsService.addImageToGallery(
-          productId as string,
-          addImageToGalleryFormData,
-        );
-        addImageRequestPool.push(request);
-      }
-
-      await Promise.all(addImageRequestPool);
-
-      toast.success('Pomyślnie edytowano produkt', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
       navigate('/products');
     } catch (err: any) {
-      toast.error('Wystąpił błąd przy edycji produktu', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      toast.error('Wystąpił błąd przy edycji produktu');
     }
   };
 
