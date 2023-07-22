@@ -32,6 +32,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const fetchData = async () => {
+      const orders = await statisticsService.refreshOrders();
       const [auctionsCountData, mostPopularProductsData, soldTodayProductsData, weeklySellsData] =
         await Promise.all([
           statisticsService.getAuctionsChartData(),
