@@ -31,11 +31,12 @@ export const TableFooter = ({
 
   return (
     <div className="paginationTable">
-      <div></div>
+      <div className="emptyObject"></div>
       <div className="paginationButtons">
         <ul className="pagination">{pages}</ul>
       </div>
       <div className="rowsPerPage">
+        <p>Ilość rekordów na stronie:</p>
         <FormSelect
           value={currentRowsCount}
           onChange={(name: string, value: string) => onRowsPerPageChange(parseInt(value))}

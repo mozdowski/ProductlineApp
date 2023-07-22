@@ -84,6 +84,10 @@
   height: 100vh;
 }
 
+.content {
+  height: 100%;
+}
+
 .content .charts {
   margin-left: 60px;
   margin-right: 60px;
@@ -92,7 +96,7 @@
   grid-template-columns: 1.5fr 1.5fr 1.5fr;
   grid-template-rows: 1fr 1fr;
   gap: 60px;
-  height: calc(100vh - 210px);
+  /* height: calc(100vh - 210px); */
 }
 
 .error {

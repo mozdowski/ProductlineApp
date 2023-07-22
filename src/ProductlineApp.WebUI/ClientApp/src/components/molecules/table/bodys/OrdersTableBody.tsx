@@ -8,26 +8,32 @@ export const OrdersTableBody = ({
   orderRecords,
   showCompletedOrders,
   markOrderAsCompleted,
+  page,
+  rowsPerPage,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
   markOrderAsCompleted: (orderId: string) => void;
+  page: number;
+  rowsPerPage: number;
 }) => {
   return (
     <>
       <tbody>
         {orderRecords &&
-          orderRecords.map(
-            (order, key) =>
-              order &&
-              showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
-                <OrdersTableRow
-                  key={key}
-                  order={order}
-                  markOrderAsCompleted={markOrderAsCompleted}
-                />
-              ),
-          )}
+          orderRecords
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(
+              (order, key) =>
+                order &&
+                showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
+                  <OrdersTableRow
+                    key={key}
+                    order={order}
+                    markOrderAsCompleted={markOrderAsCompleted}
+                  />
+                ),
+            )}
       </tbody>
     </>
   );

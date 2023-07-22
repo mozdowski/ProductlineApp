@@ -27,8 +27,16 @@ public class ErrorHandlingMiddleware
         {
             this._logger.LogError(ex, "An error occured");
 
-            var loggingRepository = context.RequestServices.GetService<ILoggingRepository>();
-            await loggingRepository.LogError(ex);
+            try
+            {
+                var loggingRepository = context.RequestServices.GetService<ILoggingRepository>();
+                await loggingRepository.LogError(ex);
+            }
+            catch (Exception exe2)
+            {
+                this._logger.LogError(ex, "Logging exception occured");
+            }
+
             await HandleExceptionAsync(context);
         }
     }

@@ -8,6 +8,7 @@ using ProductlineApp.Application.Products.DTO;
 using ProductlineApp.Application.Products.Queries;
 using ProductlineApp.Domain.Aggregates.Products.Repository;
 using ProductlineApp.Domain.ValueObjects;
+using ProductlineApp.Shared.Models.Allegro;
 using ProductlineApp.Shared.Models.Files;
 
 namespace ProductlineApp.Application.Products.Commands;
@@ -17,15 +18,19 @@ public class EditProductImageCommand
     public record Command(
         Guid UserId,
         Guid ProductId,
-        IFormFile ImageFile) : IResultCommand<EditProductImageResponse>;
+        IFormFile? ImageFile,
+        string? ImageUrl) : IResultCommand<EditProductImageResponse>;
 
     public class Validator : AbstractValidator<Command>
     {
         public Validator()
         {
-            this.RuleFor(x => x.ImageFile).NotNull();
             this.RuleFor(x => x.ProductId).NotEmpty().NotEqual(Guid.Empty);
             this.RuleFor(x => x.UserId).NotEmpty().NotEqual(Guid.Empty);
+            this.RuleFor(x => x.ImageFile)
+                .NotNull().When(x => string.IsNullOrWhiteSpace(x.ImageUrl));
+            this.RuleFor(x => x.ImageUrl)
+                .NotEmpty().When(x => x.ImageFile == null);
         }
     }
 
@@ -55,6 +60,18 @@ public class EditProductImageCommand
                 request.UserId);
 
             var product = await this._mediator.Send(query, cancellationToken);
+
+            if (request.ImageFile is null && !string.IsNullOrEmpty(request.ImageUrl))
+            {
+                var existingImage = Image.Create(request.ImageUrl);
+                product.UpdateImage(existingImage);
+
+                await this._productRepository.UpdateAsync(product);
+                return new EditProductImageResponse()
+                {
+                    Url = request.ImageUrl,
+                };
+            }
 
             await this._uploadFileService.DeleteFileAsync(product.Image.Name);
 

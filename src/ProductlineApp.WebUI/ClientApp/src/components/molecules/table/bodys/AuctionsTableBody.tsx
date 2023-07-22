@@ -18,6 +18,9 @@ export const AuctionsTableBody = ({
   onEditAuction,
   onWithdrawAuction,
   showActiveAuctions,
+  page,
+  rowsPerPage,
+  onAuctionReactivate,
 }: {
   auctionRecords: AuctionsRecord[];
   onEditAuction: (auctionId: string) => Promise<boolean>;
@@ -27,22 +30,32 @@ export const AuctionsTableBody = ({
     auctionId: string,
   ) => Promise<boolean>;
   showActiveAuctions: boolean;
+  page: number;
+  rowsPerPage: number;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) => {
   return (
     <>
       <tbody>
-        {auctionRecords.map(
-          (auction, key) =>
-            auction &&
-            auction.isActive == showActiveAuctions && (
-              <AuctionsTableRow
-                key={key}
-                auction={auction}
-                onEditAuction={onEditAuction}
-                onWithdrawAuction={onWithdrawAuction}
-              />
-            ),
-        )}
+        {auctionRecords
+          .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+          .map(
+            (auction, key) =>
+              auction &&
+              auction.isActive == showActiveAuctions && (
+                <AuctionsTableRow
+                  key={key}
+                  auction={auction}
+                  onEditAuction={onEditAuction}
+                  onWithdrawAuction={onWithdrawAuction}
+                  onAuctionReactivate={onAuctionReactivate}
+                />
+              ),
+          )}
       </tbody>
     </>
   );

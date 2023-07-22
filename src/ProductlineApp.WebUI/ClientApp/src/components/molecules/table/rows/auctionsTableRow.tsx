@@ -5,14 +5,20 @@ import BackAuctionIcon from '../../../../assets/icons/backAuction_icon.png';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
 import { AuctionsRecord } from '../../../../interfaces/auctions/AuctionsPageInteface';
 import { CollapseAuctionDetails } from '../bodys/CollapseAuctionDetails';
-import DeleteAuctionIcon from '../../../../assets/icons/delete_icon.svg';
 import { CircularProgress } from '@mui/material';
 import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
+
+enum AuctionActionType {
+  WITHDRAW,
+  REACTIVATE,
+  DELETE,
+}
 
 export const AuctionsTableRow = ({
   auction,
   onEditAuction,
   onWithdrawAuction,
+  onAuctionReactivate,
 }: {
   auction: AuctionsRecord;
   onEditAuction: (auctionId: string) => Promise<boolean>;
@@ -21,14 +27,24 @@ export const AuctionsTableRow = ({
     listingInstanceId: string,
     auctionId: string,
   ) => Promise<boolean>;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
   const [isEditLoading, setIsEditLoading] = useState<boolean>(false);
   const [isWithdrawLoading, setIsWithdrawLoading] = useState<boolean>(false);
+  const [isReactivateLoading, setIsReactivateLoading] = useState<boolean>(false);
 
-  const [allowBackAuction, setAllowBackAuction] = useState(true);
+  const [allowBackAuction, setAllowBackAuction] = useState<boolean>(true);
+  const [selectedActionType, setSelectedActionType] = useState<AuctionActionType | undefined>(
+    undefined,
+  );
 
-  const handleClickAuctionButtonsActions = () => {
+  const handleClickAuctionButtonsActions = (actionType?: AuctionActionType) => {
+    setSelectedActionType(actionType);
     setAllowBackAuction(!allowBackAuction);
   };
 
@@ -58,6 +74,33 @@ export const AuctionsTableRow = ({
     setIsWithdrawLoading(!isLoaded);
   };
 
+  const handleOnReactivateClick = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => {
+    setIsReactivateLoading(true);
+    const isLoaded = await onAuctionReactivate(listingId, listingInstanceId, auctionId);
+    setIsReactivateLoading(!isLoaded);
+  };
+
+  const handleAcceptActionClick = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => {
+    switch (selectedActionType) {
+      case AuctionActionType.WITHDRAW: {
+        const res = await handleOnWithdrawClick(listingId, listingInstanceId, auctionId);
+        break;
+      }
+      case AuctionActionType.REACTIVATE: {
+        const res = await handleOnReactivateClick(listingId, listingInstanceId, auctionId);
+        break;
+      }
+    }
+  };
+
   return (
     <React.Fragment>
       <tr className="AuctionsTableRow">
@@ -81,14 +124,14 @@ export const AuctionsTableRow = ({
                 <div className="cancelBackAuctionButton">
                   <span
                     className="cancelBackAuctionIcon cancelTableIcon"
-                    onClick={handleClickAuctionButtonsActions}
+                    onClick={() => handleClickAuctionButtonsActions()}
                   />
                 </div>
                 <div className="acceptBackAuctionButton">
                   <span
                     className="acceptBackAuctionIcon assignTableIcon"
                     onClick={() =>
-                      handleOnWithdrawClick(
+                      handleAcceptActionClick(
                         auction.listingId,
                         auction.listingInstanceId,
                         auction.auctionID,
@@ -107,23 +150,39 @@ export const AuctionsTableRow = ({
                 {isEditLoading && <CircularProgress size={22} sx={{ marginRight: '8px' }} />}
 
                 {auction.isActive ? (
-                  <BasicTooltip title="Wycofaj aukcję">
-                    <img
-                      className="backAuctionIcon"
-                      src={BackAuctionIcon}
-                      onClick={handleClickAuctionButtonsActions}
-                    />
-                  </BasicTooltip>
+                  <>
+                    {!isWithdrawLoading && (
+                      <BasicTooltip title="Wycofaj aukcję">
+                        <img
+                          className="backAuctionIcon"
+                          src={BackAuctionIcon}
+                          onClick={() =>
+                            handleClickAuctionButtonsActions(AuctionActionType.WITHDRAW)
+                          }
+                        />
+                      </BasicTooltip>
+                    )}
+                    {isWithdrawLoading && (
+                      <CircularProgress size={22} sx={{ marginRight: '8px' }} />
+                    )}
+                  </>
                 ) : (
                   <>
-                    <BasicTooltip title="Wznów aukcję">
-                      <div className="refreshAuctionButton">
-                        <span
-                          className="refreshAuctionIcon refreshAuctionIcon"
-                          onClick={handleClickAuctionButtonsActions}
-                        />
-                      </div>
-                    </BasicTooltip>
+                    {!isReactivateLoading && (
+                      <BasicTooltip title="Wznów aukcję">
+                        <div className="refreshAuctionButton">
+                          <span
+                            className="refreshAuctionIcon refreshAuctionIcon"
+                            onClick={() =>
+                              handleClickAuctionButtonsActions(AuctionActionType.REACTIVATE)
+                            }
+                          />
+                        </div>
+                      </BasicTooltip>
+                    )}
+                    {isReactivateLoading && (
+                      <CircularProgress size={22} sx={{ marginRight: '8px' }} />
+                    )}
                     {/* <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} /> */}
                   </>
                 )}

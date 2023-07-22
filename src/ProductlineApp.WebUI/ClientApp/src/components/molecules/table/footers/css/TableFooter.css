@@ -43,4 +43,17 @@
 
 .rowsPerPage {
   margin-right: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.rowsPerPage p {
+  margin-right: 10px;
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.paginationTable .emptyObject {
+  width: 220px;
 }

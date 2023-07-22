@@ -9,10 +9,14 @@ import { PlatformAuthUrl } from '../interfaces/platforms/platformsAuthUrlRespons
 import AllegroFormPopup from '../components/molecules/formSections/addAuctionFormSections/popups/allegro/AllegroFormPopup';
 import { CreateAllegroAuction } from '../interfaces/auctions/createAllegroAuction';
 import { toast } from 'react-toastify';
-import { WithdrawAuctionRequest } from '../interfaces/auctions/withdrawAuctionRequest';
+import {
+  ReactivateAuctionRequest,
+  WithdrawAuctionRequest,
+} from '../interfaces/auctions/withdrawAuctionRequest';
 import EbayFormPopup from '../components/molecules/formSections/addAuctionFormSections/popups/ebay/ebayFormPopup';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
+import { bool } from 'prop-types';
 
 export default function Auctions() {
   const { platforms, getPlatformByName } = usePlatforms();
@@ -36,9 +40,9 @@ export default function Auctions() {
   };
 
   const [showActiveAuctions, setShowActiveAuctions] = useState<boolean>(true);
-  const handleClickTypeAuctionsButton = (e: any) => {
-    const setActive = e.target.id == 'active';
-    setShowActiveAuctions(setActive);
+
+  const handleAuctionStateClick = (showActive: boolean) => {
+    setShowActiveAuctions(showActive);
   };
 
   const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -226,6 +230,38 @@ export default function Auctions() {
     setIsDataLoaded(false);
   };
 
+  const handleAuctionReactivate = async (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ): Promise<boolean> => {
+    setSelectedAuctionId(auctionId);
+
+    const data: ReactivateAuctionRequest = {
+      listingId: listingId,
+      listingInstanceiD: listingInstanceId,
+    };
+
+    try {
+      await toast.promise(
+        Promise.all([
+          auctionsService.reactivateAuction(selectedAuctionPortal?.platformId as string, data),
+          new Promise((resolve) => setTimeout(resolve, 3000)),
+        ]),
+        {
+          pending: 'Trwa aktywacja oferty...',
+          success: `Pomyślnie aktywowano ofertę ${auctionId}`,
+          error: 'Błąd podczas aktywowania oferty',
+        },
+      );
+      refreshRecordsState();
+    } catch (error) {
+      console.error('Błąd podczas aktywowania oferty:', error);
+    }
+
+    return true;
+  };
+
   return (
     <>
       <Outlet />
@@ -234,12 +270,13 @@ export default function Auctions() {
         selectedAuctionPortal={selectedAuctionPortal?.platformName}
         handleClickTypeAuctionPortalButton={handleClickTypeAuctionPortalButton}
         showActiveAuctions={showActiveAuctions}
-        handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+        onAuctionStateClick={handleAuctionStateClick}
         onEditAuction={handleEditAuction}
         onWithdrawAuction={handleWithdrawAuction}
         onChange={searchTableAuctions}
         searchValue={searchValue}
         isDataLoaded={isDataLoaded}
+        onAuctionReactivate={handleAuctionReactivate}
       />
       {editAuctionValues && (
         <>

@@ -21,6 +21,7 @@ import PLatformRedirect from './platformRedirect';
 import { AddAuctionProvider } from '../../providers/addAuctionProvider';
 import { StatisticsProvider } from '../../providers/statisticsProvider';
 import EditProduct from '../../pages/EditProduct';
+import DndProviderWrapper from '../../providers/dndProviderWrapper';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
@@ -64,7 +65,9 @@ const RoutingWrapper = () => {
           element={
             <ProtectedRoute>
               <ProductsProvider>
-                <Outlet />
+                <DndProviderWrapper>
+                  <Outlet />
+                </DndProviderWrapper>
               </ProductsProvider>
             </ProtectedRoute>
           }

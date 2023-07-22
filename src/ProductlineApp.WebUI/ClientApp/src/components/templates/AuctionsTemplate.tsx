@@ -13,18 +13,19 @@ export default function AuctionsTemplate({
   auctionRecords,
   selectedAuctionPortal,
   handleClickTypeAuctionPortalButton,
-  handleClickTypeAuctionsButton,
+  onAuctionStateClick,
   onEditAuction,
   onWithdrawAuction,
   showActiveAuctions,
   searchValue,
   onChange,
   isDataLoaded,
+  onAuctionReactivate,
 }: {
   auctionRecords?: AuctionsRecord[];
   selectedAuctionPortal?: PlatformEnum;
   handleClickTypeAuctionPortalButton: any;
-  handleClickTypeAuctionsButton: any;
+  onAuctionStateClick: (showActive: boolean) => void;
   onEditAuction: (auctionId: string) => Promise<boolean>;
   onWithdrawAuction: (
     listingId: string,
@@ -35,6 +36,11 @@ export default function AuctionsTemplate({
   searchValue: string;
   onChange: (e: any) => void;
   isDataLoaded: boolean;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) {
   return (
     <>
@@ -55,13 +61,14 @@ export default function AuctionsTemplate({
         <div className="tableAuctions">
           <AuctionsTable
             auctionRecords={auctionRecords}
-            handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+            onAuctionStateClick={onAuctionStateClick}
             onEditAuction={onEditAuction}
             onWithdrawAuction={onWithdrawAuction}
             showActiveAuctions={showActiveAuctions}
             searchValue={searchValue}
             onChange={onChange}
             isDataLoaded={isDataLoaded}
+            onAuctionReactivate={onAuctionReactivate}
           />
         </div>
       </div>

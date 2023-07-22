@@ -10,16 +10,17 @@ import { useEffect, useState } from 'react';
 export default function AuctionsTable({
   auctionRecords,
   showActiveAuctions,
-  handleClickTypeAuctionsButton,
+  onAuctionStateClick,
   onEditAuction,
   onWithdrawAuction,
   searchValue,
   onChange,
   isDataLoaded,
+  onAuctionReactivate,
 }: {
   auctionRecords?: AuctionsRecord[];
   showActiveAuctions: boolean;
-  handleClickTypeAuctionsButton: any;
+  onAuctionStateClick: (showActive: boolean) => void;
   onEditAuction: (auctionId: string) => Promise<boolean>;
   onWithdrawAuction: (
     listingId: string,
@@ -29,6 +30,11 @@ export default function AuctionsTable({
   searchValue: string;
   onChange: (e: any) => void;
   isDataLoaded: boolean;
+  onAuctionReactivate: (
+    listingId: string,
+    listingInstanceId: string,
+    auctionId: string,
+  ) => Promise<boolean>;
 }) {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
@@ -54,7 +60,7 @@ export default function AuctionsTable({
     <>
       <AuctionsHederActions
         showActiveAuctions={showActiveAuctions}
-        handleClickTypeAuctionsButton={handleClickTypeAuctionsButton}
+        onAuctionStateClick={onAuctionStateClick}
         searchValue={searchValue}
         onChange={onChange}
       />
@@ -66,6 +72,9 @@ export default function AuctionsTable({
             auctionRecords={auctionRecords}
             onEditAuction={onEditAuction}
             onWithdrawAuction={onWithdrawAuction}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onAuctionReactivate={onAuctionReactivate}
           />
         )}
       </table>
