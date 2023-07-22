@@ -1,0 +1,23 @@
+.confirmUploadedFilesButton {
+  border-radius: 8px;
+  height: 35px;
+  width: 125px;
+  background-color: var(--white-color);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  justify-content: center;
+  box-sizing: border-box;
+  border: 0px;
+  float: right;
+  color: var(--apply-change-data);
+  font-family: var(--body-font);
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-right: 112.5px;
+}
+
+.confirmUploadedFilesButton:hover {
+  border: 1px solid var(--apply-change-data);
+}

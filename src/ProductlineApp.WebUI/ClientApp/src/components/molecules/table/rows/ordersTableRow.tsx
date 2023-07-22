@@ -6,6 +6,7 @@ import { OrdersRecord } from '../../../../interfaces/orders/OrdersPageInteface';
 import { CollapseOrderDetails } from '../bodys/CollapseOrderDetails';
 import { OrderStatus } from '../../../../enums/orderStatus.enum';
 import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
+import AddOrderFilesPopup from '../../addOrderFilesPopup/AddOrderFilesPopup';
 
 export const OrdersTableRow = ({
   order,
@@ -19,6 +20,8 @@ export const OrdersTableRow = ({
   const toggle = useCallback(() => {
     setOpenState((state: boolean) => !state);
   }, [setOpenState]);
+
+  const [openAddOrderFilesPopup, setOpenAddOrderFilesPopup] = useState(false);
 
   return (
     <React.Fragment>
@@ -47,9 +50,22 @@ export const OrdersTableRow = ({
         <td className="orderStatus complete">{order.statusText}</td>
         <td>
           <div className="ordersButtonsAction">
+            <BasicTooltip title="Dodaj lub edytuj dokumenty zamówienia">
+              <>
+                <div className="attachOrderFilesButton" onClick={() => setOpenAddOrderFilesPopup(true)}>
+                  <span className="attachOrderFilesIcon attachFilesIcon" />
+                </div>
+              </>
+            </BasicTooltip>
+
+            <BasicTooltip title="Pobierz dokumenty">
+              <div className="downloadOrderFilesButton">
+                <span className="downloadOrderFilesIcon downloadFilesIcon" />
+              </div>
+            </BasicTooltip>
             <img className="editOrderIcon" src={EditIcon} />
             {order.status !== OrderStatus.COMPLETED && (
-              <BasicTooltip title="Oznacz jako zrealizowany">
+              <BasicTooltip title="Oznacz jako zrealizowane">
                 <div
                   className="assignedOrderButton"
                   onClick={() => markOrderAsCompleted(order.orderID)}
@@ -70,6 +86,10 @@ export const OrdersTableRow = ({
           />
         </React.Fragment>
       )}
+      {openAddOrderFilesPopup && (
+        <AddOrderFilesPopup />
+      )}
     </React.Fragment>
+
   );
 };
