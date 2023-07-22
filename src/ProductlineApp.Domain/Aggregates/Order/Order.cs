@@ -103,6 +103,35 @@ public class Order : AggregateRoot<OrderId>
         this._documents.Add(document);
     }
 
+    public void RemoveDocument(Document document)
+    {
+        if (document is null)
+        {
+            throw new ArgumentNullException(nameof(document));
+        }
+
+        if (this._documents.Contains(document))
+        {
+            this._documents.Remove(document);
+        }
+    }
+
+    public Document GetDocumentById(DocumentId documentId)
+    {
+        if (documentId is null)
+        {
+            throw new ArgumentNullException(nameof(documentId));
+        }
+
+        var document = this._documents.FirstOrDefault(x => x.Id == documentId);
+        if (document is null)
+        {
+            throw new ArgumentException($"Document with id {documentId} not found");
+        }
+
+        return document;
+    }
+
     public static Order Create(
         UserId ownerId,
         IEnumerable<OrderLine> orderLines,
