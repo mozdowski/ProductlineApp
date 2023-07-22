@@ -8,10 +8,12 @@ export const OrdersTableBody = ({
   orderRecords,
   showCompletedOrders,
   markOrderAsCompleted,
+  onOpenOrderFilesPopup,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
   markOrderAsCompleted: (orderId: string) => void;
+  onOpenOrderFilesPopup: (orderId: string) => void;
 }) => {
   return (
     <>
@@ -25,6 +27,7 @@ export const OrdersTableBody = ({
                   key={key}
                   order={order}
                   markOrderAsCompleted={markOrderAsCompleted}
+                  onOpenOrderFilesPopup={onOpenOrderFilesPopup}
                 />
               ),
           )}

@@ -1,13 +1,14 @@
 import './css/confirmUploadedFilesButton.css';
 
-function ConfirmUploadedFilesButton({ onClick }: { onClick?: () => void }) {
+function ConfirmUploadedFilesButton({ onClick }: { onClick: () => void }) {
   return (
-    <input
-      type="submit"
-      className="confirmUploadedFilesButton"
-      value="Przeslij"
-      onClick={onClick}
-    ></input>
+    <div className="confirmUploadedFilesButtonWrapper">
+      <input
+        type="submit"
+        className="confirmUploadedFilesButton"
+        value="Przeslij"
+      ></input>
+    </div>
   );
 }
 

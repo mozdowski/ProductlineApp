@@ -5,6 +5,9 @@ import { useOrdersService } from '../hooks/orders/useOrdersService';
 import { mapOrderStatusToString } from '../helpers/mappers';
 import { toast } from 'react-toastify';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
+import { usePopup } from '../hooks/popups/usePopup';
+import DropFileInput from '../components/atoms/inputs/dropFileInput/DropFileInput';
+import { OrderDocument } from '../interfaces/orders/orderDocumentsResponse';
 
 export default function Orders() {
   const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
@@ -13,6 +16,26 @@ export default function Orders() {
   const { ordersService } = useOrdersService();
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
   const { showConfirmation } = useConfirmationPopup();
+  const { openPopup } = usePopup();
+
+  useEffect(() => {
+    setOrders(undefined);
+    ordersService.getOrdersList().then((res) => {
+      const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
+        orderID: order.orderId,
+        orderDate: new Date(order.creationDate),
+        shipToDate: new Date(order.maxDeliveryDate as Date),
+        client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
+        price: order.totalPrice,
+        quantity: order.quantity,
+        statusText: mapOrderStatusToString(order.status),
+        status: order.status,
+        shippingAddress: order.shippingAddress,
+        items: order.items,
+      }));
+      setOrders(orderRecords);
+    });
+  }, [refreshRecords]);
 
   const handleClickTypeOrdersButton = (showCompleted: boolean) => {
     setShowCompletedOrders(showCompleted);
@@ -56,24 +79,24 @@ export default function Orders() {
       })
     : undefined;
 
-  useEffect(() => {
-    setOrders(undefined);
-    ordersService.getOrdersList().then((res) => {
-      const orderRecords: OrdersRecord[] = res.orders.map((order) => ({
-        orderID: order.orderId,
-        orderDate: new Date(order.creationDate),
-        shipToDate: new Date(order.maxDeliveryDate as Date),
-        client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
-        price: order.totalPrice,
-        quantity: order.quantity,
-        statusText: mapOrderStatusToString(order.status),
-        status: order.status,
-        shippingAddress: order.shippingAddress,
-        items: order.items,
-      }));
-      setOrders(orderRecords);
-    });
-  }, [refreshRecords]);
+  const handleOpenOrderFilesPopup = async (orderId: string) => {
+    const documents = await getOrderDocuments(orderId);
+    if (!documents) return;
+
+    openPopup(<DropFileInput onFilesSubmit={handleSubmitOrderFiles} orderDocuments={documents} />);
+  };
+
+  const getOrderDocuments = async (orderId: string) : Promise<OrderDocument[] | undefined> => {
+    try {
+      const documentsResponse = await ordersService.getOrderDocuments(orderId);
+      return documentsResponse.orderDocuments;
+    } catch {
+      toast.error('Błąd przy pobieraniu dokumentów');
+    }
+  }
+
+  const handleSubmitOrderFiles = (serverFiles: string[], uploadedFileList: File[]) => {
+  }
 
   return (
     <OrdersTemplate
@@ -83,6 +106,7 @@ export default function Orders() {
       onChange={searchTableOrders}
       showCompletedOrders={showCompletedOrders}
       markOrderAsCompleted={handleMarkOrderAsCompleted}
+      onOpenOrderFilesPopup={handleOpenOrderFilesPopup}
     />
   );
 }

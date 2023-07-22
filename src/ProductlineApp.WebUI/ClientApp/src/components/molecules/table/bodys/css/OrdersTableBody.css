@@ -101,14 +101,6 @@ tbody tr:nth-child(odd) {
   background-image: url('../../../../../assets/icons/download_icon.svg');
 }
 
-
-
-
-
-
-
-
-
 .assignedOrderButton .assignOrderIcon {
   cursor: pointer;
   width: 21px;

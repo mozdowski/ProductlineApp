@@ -1,95 +1,129 @@
-import React, { useEffect, useRef, useState } from "react";
-import "./css/dropFileInput.css";
+import React, { useEffect, useRef, useState } from 'react';
+import './css/dropFileInput.css';
 import PropTypes from 'prop-types';
-import { Props } from "react-apexcharts";
 import fileDefaultIcon from '../../../../assets/icons/defaultFile_icon.png';
 import filePdfIcon from '../../../../assets/icons/pdfFile_icon.png';
 import fileImageIcon from '../../../../assets/icons/imageFile_icon.png';
 import uploadIcon from '../../../../assets/icons/uplaodFiles_icon.svg';
-import ConfirmUploadedFilesButton from "../../buttons/confirmUploadedFilesButton/ConfirmUploadedFilesButton";
-import CancelButton from "../../buttons/cancelButton/CancelButton";
+import ConfirmUploadedFilesButton from '../../buttons/confirmUploadedFilesButton/ConfirmUploadedFilesButton';
+import { OrderDocument } from '../../../../interfaces/orders/orderDocumentsResponse';
 
-const DropFileInput = (props: Props) => {
-
-    interface imageFilesTypes {
-        [key: string]: string;
-    }
-
-    const ImageFiles: imageFilesTypes = {
-        default: fileDefaultIcon,
-        pdf: filePdfIcon,
-        png: fileImageIcon,
-    }
-
-    const wrapperRef = useRef<HTMLDivElement>(null);
-
-    const [fileList, setFileList] = useState<any[]>([]);
-
-    const onDragEnter = () => wrapperRef.current?.classList.add('dragover');
-
-    const onDragLeave = () => wrapperRef.current?.classList.remove('dragover');
-
-    const onDrop = () => wrapperRef.current?.classList.remove('dragover');
-
-    const onFileDrop = (e: any) => {
-        const newFile = e.target.files[0];
-        if (newFile) {
-            const updatedList = [...fileList, newFile];
-            setFileList(updatedList);
-            props.onFileChange(updatedList);
-        }
-    }
-
-    const fileRemove = (file: any) => {
-        const updatedList = [...fileList];
-        updatedList.splice(fileList.indexOf(file), 1);
-        setFileList(updatedList);
-        props.onFileChange(updatedList);
-    }
-
-    return (
-        <>
-            <div
-                ref={wrapperRef}
-                className="dropFileInput"
-                onDragEnter={onDragEnter}
-                onDragLeave={onDragLeave}
-                onDrop={onDrop}
-            >
-                <div className="dropFileInputLabel">
-                    <img src={uploadIcon} alt="" />
-                    <p>Przeciągnij i upuść pliki</p>
-                </div>
-                <input type="file" value="" onChange={onFileDrop} />
-            </div>
-            {
-                fileList.length > 0 ? (
-                    <div className="ordersFilesPreviev">
-                        {
-                            fileList.map((item, index) => (
-                                <>
-                                    <div key={index} className="orderFilePreviev">
-                                        <img src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']} alt="" />
-                                        <div className="orderFilePrevievInfo">
-                                            <p>{item.name}</p>
-                                        </div>
-                                        <div className="deleteOrderFileButton" onClick={() => fileRemove(item)}>
-                                            <span className="deleteOrderFileIcon deleteFileOrderIcon" />
-                                        </div>
-                                    </div>
-                                    <ConfirmUploadedFilesButton />
-                                </>
-                            ))
-                        }
-                    </div>
-                ) : null
-            }
-        </>
-    );
+interface DropFileInputProps {
+  orderDocuments: OrderDocument[];
+  onFilesSubmit: (serverFiles: string[], uploadedFileList: File[]) => void;
 }
+
+interface imageFilesTypes {
+  [key: string]: string;
+}
+
+const ImageFiles: imageFilesTypes = {
+  default: fileDefaultIcon,
+  pdf: filePdfIcon,
+  png: fileImageIcon,
+};
+
+const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSubmit }) => {
+
+  const wrapperRef = useRef<HTMLDivElement>(null);
+  const [uploadedFileList, setUploadedFileList] = useState<File[]>([]);
+  const [serverFileList, setServerFileList] = useState<OrderDocument[]>([]);
+
+  useEffect(() => {
+    if (orderDocuments) {
+        setServerFileList(orderDocuments);
+    }
+  }, [orderDocuments]);
+
+  const onDragEnter = () => wrapperRef.current?.classList.add('dragover');
+  const onDragLeave = () => wrapperRef.current?.classList.remove('dragover');
+  const onDrop = () => wrapperRef.current?.classList.remove('dragover');
+
+  const onFileDrop = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const newFile = files[0];
+    if (newFile) {
+      const updatedList = [...uploadedFileList, newFile];
+      setUploadedFileList(updatedList);
+    }
+  };
+
+  const uploadedFileRemove = (file: File) => {
+    const updatedList = [...uploadedFileList];
+    updatedList.splice(uploadedFileList.indexOf(file), 1);
+    setUploadedFileList(updatedList);
+  };
+
+  const serverFileRemove = (fileId: string) => {
+    const updatedList = serverFileList.filter((order) => order.id !== fileId);
+    setServerFileList(updatedList);
+  };
+
+  const handleConfirmClick = () => {
+    onFilesSubmit(
+        serverFileList.map(x => x.id),
+        uploadedFileList
+    );
+  };
+
+  return (
+    <>
+      <div
+        ref={wrapperRef}
+        className="dropFileInput"
+        onDragEnter={onDragEnter}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        <div className="dropFileInputLabel">
+          <img src={uploadIcon} alt="" />
+          <p>Przeciągnij i upuść pliki</p>
+        </div>
+        <input type="file" value="" onChange={onFileDrop} />
+      </div>
+      
+      {(uploadedFileList.length > 0 || serverFileList.length > 0) && (
+        <div className="ordersFilesPreviev">
+
+          {serverFileList.length > 0 && serverFileList.map((item, index) => (
+            <>
+              <div key={index} className="orderFilePreviev">
+                <img src={ImageFiles[item.name.split('.')[1]] || ImageFiles['default']} alt="" />
+                <div className="orderFilePrevievInfo">
+                  <p>{item.name}</p>
+                </div>
+                <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
+                  <span className="deleteOrderFileIcon deleteFileOrderIcon" />
+                </div>
+              </div>
+            </>
+          ))}
+
+          {uploadedFileList.length > 0 && uploadedFileList.map((item, index) => (
+            <>
+              <div key={index+serverFileList.length} className="orderFilePreviev">
+                <img src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']} alt="" />
+                <div className="orderFilePrevievInfo">
+                  <p>{item.name}</p>
+                </div>
+                <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
+                  <span className="deleteOrderFileIcon deleteFileOrderIcon" />
+                </div>
+              </div>
+            </>
+          ))}
+
+          <ConfirmUploadedFilesButton onClick={handleConfirmClick}/>
+        </div>
+      )}
+    </>
+  );
+};
 
 DropFileInput.prototype = {
-    onFileChange: PropTypes.func
-}
+  onFileChange: PropTypes.func,
+};
 
-export default DropFileInput
+export default DropFileInput;

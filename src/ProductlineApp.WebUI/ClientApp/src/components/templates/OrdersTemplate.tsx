@@ -11,6 +11,7 @@ export default function OrdersTemplate({
   searchValue,
   onChange,
   markOrderAsCompleted,
+  onOpenOrderFilesPopup,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
@@ -18,6 +19,7 @@ export default function OrdersTemplate({
   searchValue: string;
   onChange: (e: any) => void;
   markOrderAsCompleted: (orderId: string) => void;
+  onOpenOrderFilesPopup: (orderId: string) => void;
 }) {
   return (
     <>
@@ -31,6 +33,7 @@ export default function OrdersTemplate({
             searchValue={searchValue}
             onChange={onChange}
             markOrderAsCompleted={markOrderAsCompleted}
+            onOpenOrderFilesPopup={onOpenOrderFilesPopup}
           />
         </div>
       </div>

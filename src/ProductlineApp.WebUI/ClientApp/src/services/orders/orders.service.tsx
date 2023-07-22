@@ -1,4 +1,5 @@
 import { GetAllOrdersResponse } from '../../interfaces/orders/getAllOrdersResponse';
+import { OrderDocumentsResponse } from '../../interfaces/orders/orderDocumentsResponse';
 import HttpService from '../common/http.service';
 
 export class OrdersService {
@@ -14,6 +15,14 @@ export class OrdersService {
 
   public async markOrderAsCompleted(orderId: string): Promise<void> {
     return this.httpService.post<void>(`/orders/markCompleted/${orderId}`);
+  }
+
+  public async getOrderDocuments(orderId: string): Promise<OrderDocumentsResponse> {
+    return this.httpService.get<OrderDocumentsResponse>(`/orders/${orderId}/documents`);
+  }
+
+  public async attachDocumentToOrder(orderId: string, data: FormData): Promise<OrderDocumentsResponse> {
+    return this.httpService.post<OrderDocumentsResponse>(`/orders/${orderId}/attachDocument`, data);
   }
 }
 
