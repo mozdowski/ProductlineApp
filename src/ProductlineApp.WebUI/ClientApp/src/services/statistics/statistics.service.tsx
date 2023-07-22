@@ -26,6 +26,10 @@ export class StatisticsService {
   public async getWeeklySellingStatsChartData(): Promise<WeeklySellsChartData> {
     return this.httpService.get<WeeklySellsChartData>('/statistics/weeklySelling');
   }
+
+  public async refreshOrders(): Promise<void> {
+    return this.httpService.get<void>('/orders');
+  }
 }
 
 export {};

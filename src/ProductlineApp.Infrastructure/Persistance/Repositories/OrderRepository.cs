@@ -96,23 +96,29 @@ public class OrderRepository : IOrderRepository
 
     public async Task<Dictionary<string, int>> GetProductsIdsWithCountByUserIdAsync(UserId userId)
     {
-        return await this._context.Orders
+        var result = await this._context.Orders
             .AsNoTracking()
             .Where(x => x.OwnerId == userId)
             .SelectMany(x => x.OrderLines)
-            .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
+            .GroupBy(x => x.Sku)
+            .ToDictionaryAsync(g => g.Key, g => g.Sum(x => x.Quantity));
+
+        return result;
     }
 
     public async Task<Dictionary<string, int>> GetTodayProductsIdsWithCountByUserIdAsync(UserId userId)
     {
         DateTime yesterday = DateTime.UtcNow.Date.AddDays(-1);
 
-        return await this._context.Orders
+        var result = await this._context.Orders
             .AsNoTracking()
             .Where(x => x.OwnerId == userId)
             .Where(x => x.PlacedAt >= yesterday)
             .SelectMany(x => x.OrderLines)
-            .ToDictionaryAsync(x => x.Sku, x => x.Quantity);
+            .GroupBy(x => x.Sku)
+            .ToDictionaryAsync(g => g.Key, g => g.Sum(x => x.Quantity));
+
+        return result;
     }
 
     public async Task<List<int>> GetWeeklySellsCount(UserId userId)
