@@ -67,6 +67,40 @@ tbody tr:nth-child(odd) {
   height: 22px;
 }
 
+.attachOrderFilesButton .attachOrderFilesIcon {
+  cursor: pointer;
+  width: 21px;
+  height: 21px;
+  margin-right: 8px;
+  background-size: cover;
+}
+
+.attachOrderFilesButton {
+  align-items: center;
+  display: flex;
+}
+
+.attachOrderFilesButton .attachFilesIcon {
+  background-image: url('../../../../../assets/icons/attachFiles_icon.svg');
+}
+
+.downloadOrderFilesButton .downloadOrderFilesIcon {
+  cursor: pointer;
+  width: 27px;
+  height: 25px;
+  margin-right: 8px;
+  background-size: cover;
+}
+
+.downloadOrderFilesButton {
+  align-items: center;
+  display: flex;
+}
+
+.downloadOrderFilesButton .downloadFilesIcon {
+  background-image: url('../../../../../assets/icons/download_icon.svg');
+}
+
 .assignedOrderButton .assignOrderIcon {
   cursor: pointer;
   width: 21px;

@@ -15,6 +15,7 @@ export default function OrdersTable({
   searchValue,
   onChange,
   markOrderAsCompleted,
+  onOpenOrderFilesPopup,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
@@ -22,6 +23,7 @@ export default function OrdersTable({
   searchValue: string;
   onChange: (e: any) => void;
   markOrderAsCompleted: (orderId: string) => void;
+  onOpenOrderFilesPopup: (orderId: string) => void;
 }) {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
@@ -59,6 +61,7 @@ export default function OrdersTable({
           markOrderAsCompleted={markOrderAsCompleted}
           page={page}
           rowsPerPage={rowsPerPage}
+          onOpenOrderFilesPopup={onOpenOrderFilesPopup}
         />
       </table>
       {!orderRecords && <CircularProgress />}

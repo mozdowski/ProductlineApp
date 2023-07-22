@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import { CollapseTableButton } from '../../../atoms/buttons/collapseTableButton/CollapseTableButton';
 import React from 'react';
 import EditIcon from '../../../../assets/icons/edit_icon.svg';
@@ -6,13 +6,17 @@ import { OrdersRecord } from '../../../../interfaces/orders/OrdersPageInteface';
 import { CollapseOrderDetails } from '../bodys/CollapseOrderDetails';
 import { OrderStatus } from '../../../../enums/orderStatus.enum';
 import BasicTooltip from '../../../atoms/common/tooltip/basicTooltip';
+import { PopupContext } from '../../../../context/popupContext';
+import DropFileInput from '../../../atoms/inputs/dropFileInput/DropFileInput';
 
 export const OrdersTableRow = ({
   order,
   markOrderAsCompleted,
+  onOpenOrderFilesPopup,
 }: {
   order: OrdersRecord;
   markOrderAsCompleted: (orderId: string) => void;
+  onOpenOrderFilesPopup: (orderId: string) => void;
 }) => {
   const [isOpen, setOpenState] = useState<boolean>(false);
 
@@ -47,9 +51,25 @@ export const OrdersTableRow = ({
         <td className="orderStatus complete">{order.statusText}</td>
         <td>
           <div className="ordersButtonsAction">
+            <BasicTooltip title="Dodaj lub edytuj dokumenty zamówienia">
+              <>
+                <div
+                  className="attachOrderFilesButton"
+                  onClick={() => onOpenOrderFilesPopup(order.orderID)}
+                >
+                  <span className="attachOrderFilesIcon attachFilesIcon" />
+                </div>
+              </>
+            </BasicTooltip>
+
+            <BasicTooltip title="Pobierz dokumenty">
+              <div className="downloadOrderFilesButton">
+                <span className="downloadOrderFilesIcon downloadFilesIcon" />
+              </div>
+            </BasicTooltip>
             <img className="editOrderIcon" src={EditIcon} />
             {order.status !== OrderStatus.COMPLETED && (
-              <BasicTooltip title="Oznacz jako zrealizowany">
+              <BasicTooltip title="Oznacz jako zrealizowane">
                 <div
                   className="assignedOrderButton"
                   onClick={() => markOrderAsCompleted(order.orderID)}
