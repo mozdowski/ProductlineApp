@@ -57,6 +57,7 @@ public class OrderRepository : IOrderRepository
     public async Task<IEnumerable<Document>> GetDocumentsByOrderIdAsync(OrderId orderId)
     {
         return await this._context.Orders
+            .AsNoTracking()
             .Where(x => x.Id == orderId)
             .Include(x => x.Documents)
             .SelectMany(x => x.Documents)

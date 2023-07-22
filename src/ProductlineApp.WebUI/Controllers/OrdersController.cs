@@ -129,4 +129,15 @@ public class OrdersController : ControllerBase
 
         return this.Ok();
     }
+
+    [HttpGet("{orderId:guid}/documents")]
+    public async Task<IActionResult> GetOrderDocuments(Guid orderId)
+    {
+        var command = new GetOrderDocumentsQuery.Query(
+            this._currentUser.UserId.GetValueOrDefault(),
+            orderId);
+        var response = await this._mediator.Send(command);
+
+        return this.Ok(response);
+    }
 }
