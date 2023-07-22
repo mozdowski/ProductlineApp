@@ -53,7 +53,10 @@ export const OrdersTableRow = ({
           <div className="ordersButtonsAction">
             <BasicTooltip title="Dodaj lub edytuj dokumenty zamówienia">
               <>
-                <div className="attachOrderFilesButton" onClick={() => onOpenOrderFilesPopup(order.orderID)}>
+                <div
+                  className="attachOrderFilesButton"
+                  onClick={() => onOpenOrderFilesPopup(order.orderID)}
+                >
                   <span className="attachOrderFilesIcon attachFilesIcon" />
                 </div>
               </>

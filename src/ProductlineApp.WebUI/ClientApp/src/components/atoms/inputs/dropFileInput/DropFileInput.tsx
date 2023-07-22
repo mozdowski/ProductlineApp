@@ -24,14 +24,13 @@ const ImageFiles: imageFilesTypes = {
 };
 
 const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSubmit }) => {
-
   const wrapperRef = useRef<HTMLDivElement>(null);
   const [uploadedFileList, setUploadedFileList] = useState<File[]>([]);
   const [serverFileList, setServerFileList] = useState<OrderDocument[]>([]);
 
   useEffect(() => {
     if (orderDocuments) {
-        setServerFileList(orderDocuments);
+      setServerFileList(orderDocuments);
     }
   }, [orderDocuments]);
 
@@ -63,8 +62,8 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
 
   const handleConfirmClick = () => {
     onFilesSubmit(
-        serverFileList.map(x => x.id),
-        uploadedFileList
+      serverFileList.map((x) => x.id),
+      uploadedFileList,
     );
   };
 
@@ -83,39 +82,40 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
         </div>
         <input type="file" value="" onChange={onFileDrop} />
       </div>
-      
+
       {(uploadedFileList.length > 0 || serverFileList.length > 0) && (
         <div className="ordersFilesPreviev">
+          {serverFileList.length > 0 &&
+            serverFileList.map((item, index) => (
+              <React.Fragment key={index}>
+                <div className="orderFilePreviev">
+                  <img src={ImageFiles[item.name.split('.')[1]] || ImageFiles['default']} alt="" />
+                  <div className="orderFilePrevievInfo">
+                    <p>{item.name}</p>
+                  </div>
+                  <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
+                    <span className="deleteOrderFileIcon deleteFileOrderIcon" />
+                  </div>
+                </div>
+              </React.Fragment>
+            ))}
 
-          {serverFileList.length > 0 && serverFileList.map((item, index) => (
-            <>
-              <div key={index} className="orderFilePreviev">
-                <img src={ImageFiles[item.name.split('.')[1]] || ImageFiles['default']} alt="" />
-                <div className="orderFilePrevievInfo">
-                  <p>{item.name}</p>
+          {uploadedFileList.length > 0 &&
+            uploadedFileList.map((item, index) => (
+              <React.Fragment key={index + serverFileList.length}>
+                <div className="orderFilePreviev">
+                  <img src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']} alt="" />
+                  <div className="orderFilePrevievInfo">
+                    <p>{item.name}</p>
+                  </div>
+                  <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
+                    <span className="deleteOrderFileIcon deleteFileOrderIcon" />
+                  </div>
                 </div>
-                <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
-                  <span className="deleteOrderFileIcon deleteFileOrderIcon" />
-                </div>
-              </div>
-            </>
-          ))}
+              </React.Fragment>
+            ))}
 
-          {uploadedFileList.length > 0 && uploadedFileList.map((item, index) => (
-            <>
-              <div key={index+serverFileList.length} className="orderFilePreviev">
-                <img src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']} alt="" />
-                <div className="orderFilePrevievInfo">
-                  <p>{item.name}</p>
-                </div>
-                <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
-                  <span className="deleteOrderFileIcon deleteFileOrderIcon" />
-                </div>
-              </div>
-            </>
-          ))}
-
-          <ConfirmUploadedFilesButton onClick={handleConfirmClick}/>
+          <ConfirmUploadedFilesButton onClick={handleConfirmClick} />
         </div>
       )}
     </>

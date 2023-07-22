@@ -24,19 +24,19 @@ export const OrdersTableBody = ({
       <tbody>
         {orderRecords &&
           orderRecords
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map(
-            (order, key) =>
-              order &&
-              showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
-                <OrdersTableRow
-                  key={key}
-                  order={order}
-                  markOrderAsCompleted={markOrderAsCompleted}
-                  onOpenOrderFilesPopup={onOpenOrderFilesPopup}
-                />
-              ),
-          )}
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map(
+              (order, key) =>
+                order &&
+                showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
+                  <OrdersTableRow
+                    key={key}
+                    order={order}
+                    markOrderAsCompleted={markOrderAsCompleted}
+                    onOpenOrderFilesPopup={onOpenOrderFilesPopup}
+                  />
+                ),
+            )}
       </tbody>
     </>
   );

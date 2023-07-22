@@ -8,6 +8,7 @@ import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 import { usePopup } from '../hooks/popups/usePopup';
 import DropFileInput from '../components/atoms/inputs/dropFileInput/DropFileInput';
 import { OrderDocument } from '../interfaces/orders/orderDocumentsResponse';
+import { UpdateOrderDocumentsRequest } from '../interfaces/orders/updateOrderDocumentsRequest';
 
 export default function Orders() {
   const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
@@ -16,7 +17,7 @@ export default function Orders() {
   const { ordersService } = useOrdersService();
   const [refreshRecords, setRefreshRecords] = useState<boolean>(false);
   const { showConfirmation } = useConfirmationPopup();
-  const { openPopup } = usePopup();
+  const { openPopup, hidePopup } = usePopup();
 
   useEffect(() => {
     setOrders(undefined);
@@ -83,20 +84,54 @@ export default function Orders() {
     const documents = await getOrderDocuments(orderId);
     if (!documents) return;
 
-    openPopup(<DropFileInput onFilesSubmit={handleSubmitOrderFiles} orderDocuments={documents} />);
+    openPopup(
+      <DropFileInput
+        onFilesSubmit={(serverFiles: string[], uploadedFileList: File[]) =>
+          handleSubmitOrderFiles(orderId, serverFiles, uploadedFileList)
+        }
+        orderDocuments={documents}
+      />,
+    );
   };
 
-  const getOrderDocuments = async (orderId: string) : Promise<OrderDocument[] | undefined> => {
+  const getOrderDocuments = async (orderId: string): Promise<OrderDocument[] | undefined> => {
     try {
       const documentsResponse = await ordersService.getOrderDocuments(orderId);
       return documentsResponse.orderDocuments;
     } catch {
       toast.error('Błąd przy pobieraniu dokumentów');
     }
-  }
+  };
 
-  const handleSubmitOrderFiles = (serverFiles: string[], uploadedFileList: File[]) => {
-  }
+  const handleSubmitOrderFiles = async (
+    orderId: string,
+    serverFiles: string[],
+    uploadedFileList: File[],
+  ) => {
+    console.log(serverFiles);
+    console.log(uploadedFileList.map((x) => x.name));
+    try {
+      const updateDocumentsPromisesPool = Promise.all([
+        ...uploadedFileList.map((x) => {
+          const data: FormData = new FormData();
+          data.append('document', x);
+
+          return ordersService.attachDocumentToOrder(orderId, data);
+        }),
+        ordersService.updateOrderDocuments(orderId, { documentIds: serverFiles }),
+      ]);
+
+      await toast.promise(updateDocumentsPromisesPool, {
+        pending: 'Trwa aktualizowanie dokumentów...',
+        success: `Pomyślnie zaktualizowano dokumenty dla zamówienia ${orderId}`,
+        error: 'Błąd podczas aktualizowania dokumentów',
+      });
+    } catch {
+      toast.error('Błąd podczas aktualizowania dokumentów');
+    }
+
+    hidePopup();
+  };
 
   return (
     <OrdersTemplate

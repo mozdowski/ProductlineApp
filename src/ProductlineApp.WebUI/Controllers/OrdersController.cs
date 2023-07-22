@@ -1,4 +1,3 @@
-using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,7 +6,6 @@ using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Order.Commands;
 using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Application.Order.Queries;
-using ProductlineApp.Domain.Aggregates.Order.Entities;
 
 namespace ProductlineApp.WebUI.Controllers;
 
@@ -116,6 +114,18 @@ public class OrdersController : ControllerBase
             this._currentUser.UserId.GetValueOrDefault(),
             orderId,
             documentId);
+        await this._mediator.Send(command);
+
+        return this.Ok();
+    }
+
+    [HttpPost("{orderId:guid}/updateExistingDocuments")]
+    public async Task<IActionResult> UpdateExistingDocuments(Guid orderId, [FromBody] UpdateExistingDocumentsRequest request)
+    {
+        var command = new UpdateExistingDocumentsCommand.Command(
+            this._currentUser.UserId.GetValueOrDefault(),
+            orderId,
+            request.DocumentIds);
         await this._mediator.Send(command);
 
         return this.Ok();
