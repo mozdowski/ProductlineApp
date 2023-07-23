@@ -1,4 +1,3 @@
-import React from 'react';
 import './css/ProductsTableHeader.css';
 
 export const ProductsTableHeader = () => {

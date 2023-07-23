@@ -18,7 +18,7 @@ const getDaysOfWeek = (): string[] => {
     daysOfWeek.push({ id: i, name: dayName });
   }
 
-  if (currentDayOfWeek > 0) {
+  if (currentDayOfWeek >= 0) {
     for (let i = days.length - 1; i >= currentDayOfWeek + 1; i--) {
       daysOfWeek.push({ id: i, name: days[i] });
     }

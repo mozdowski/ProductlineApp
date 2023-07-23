@@ -1,4 +1,3 @@
-import { Platform } from '../../../../interfaces/platforms/platform';
 import { PlatformAuthUrl } from '../../../../interfaces/platforms/platformsAuthUrlResponse';
 import AuctionPortalsToConnectList from '../../../molecules/settingsSections/auctionPortalsToConnectList/AuctionPortalsToConnectList';
 import './css/connectAccountToPortals.css';

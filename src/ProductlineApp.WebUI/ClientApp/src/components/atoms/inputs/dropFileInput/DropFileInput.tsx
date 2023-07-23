@@ -89,10 +89,15 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
             serverFileList.map((item, index) => (
               <React.Fragment key={index}>
                 <div className="orderFilePreviev">
-                  <img src={ImageFiles[item.name.split('.')[1]] || ImageFiles['default']} alt="" />
-                  <div className="orderFilePrevievInfo">
-                    <p>{item.name}</p>
-                  </div>
+                  <a href={item.url} className="fileDownloadAnchor" download>
+                    <img
+                      src={ImageFiles[item.name.split('.')[1]] || ImageFiles['default']}
+                      alt=""
+                    />
+                    <div className="orderFilePrevievInfo">
+                      <p>{item.name}</p>
+                    </div>
+                  </a>
                   <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
                     <span className="deleteOrderFileIcon deleteFileOrderIcon" />
                   </div>
@@ -104,10 +109,15 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
             uploadedFileList.map((item, index) => (
               <React.Fragment key={index + serverFileList.length}>
                 <div className="orderFilePreviev">
-                  <img src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']} alt="" />
-                  <div className="orderFilePrevievInfo">
-                    <p>{item.name}</p>
-                  </div>
+                  <a href={URL.createObjectURL(item)} className="fileDownloadAnchor" download>
+                    <img
+                      src={ImageFiles[item.type.split('/')[1]] || ImageFiles['default']}
+                      alt=""
+                    />
+                    <div className="orderFilePrevievInfo">
+                      <p>{item.name}</p>
+                    </div>
+                  </a>
                   <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
                     <span className="deleteOrderFileIcon deleteFileOrderIcon" />
                   </div>

@@ -1,6 +1,4 @@
-import { AddProductRequest } from '../../interfaces/products/addProductRequest';
 import { ProductForm } from '../../interfaces/products/productForm';
-import Photos from '../molecules/formSections/addProductFormSections/Photos/Photos';
 import AddProductForm from '../organisms/forms/addProductForm/AddProductForm';
 import AddProductPageHeader from '../organisms/pageHeaders/AddProductPageHeader';
 import './css/AddProductTemplate.css';

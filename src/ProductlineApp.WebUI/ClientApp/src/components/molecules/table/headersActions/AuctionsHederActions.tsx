@@ -1,4 +1,3 @@
-import React from 'react';
 import './css/AuctionsHederActions.css';
 import Searchbar from '../../../atoms/inputs/searchbarInput/Searchbar';
 import ActiveAuctionButton from '../../../atoms/buttons/activeAuctionsButton/ActiveAuctionsButton';

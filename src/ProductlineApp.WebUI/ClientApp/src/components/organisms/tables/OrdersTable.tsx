@@ -5,7 +5,6 @@ import { OrdersHederActions } from '../../molecules/table/headersActions/OrdersH
 import { OrdersTableHeader } from '../../molecules/table/headers/OrdersTableHeader';
 import { OrdersTableBody } from '../../molecules/table/bodys/OrdersTableBody';
 import { CircularProgress } from '@mui/material';
-import { OrderStatus } from '../../../enums/orderStatus.enum';
 import { useEffect, useState } from 'react';
 
 export default function OrdersTable({
@@ -16,6 +15,7 @@ export default function OrdersTable({
   onChange,
   markOrderAsCompleted,
   onOpenOrderFilesPopup,
+  onFilesDownload,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
@@ -24,6 +24,7 @@ export default function OrdersTable({
   onChange: (e: any) => void;
   markOrderAsCompleted: (orderId: string) => void;
   onOpenOrderFilesPopup: (orderId: string) => void;
+  onFilesDownload: (orderId: string) => void;
 }) {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(5);
@@ -62,6 +63,7 @@ export default function OrdersTable({
           page={page}
           rowsPerPage={rowsPerPage}
           onOpenOrderFilesPopup={onOpenOrderFilesPopup}
+          onFilesDownload={onFilesDownload}
         />
       </table>
       {!orderRecords && <CircularProgress />}

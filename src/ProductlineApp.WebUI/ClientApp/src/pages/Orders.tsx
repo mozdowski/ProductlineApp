@@ -8,7 +8,8 @@ import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 import { usePopup } from '../hooks/popups/usePopup';
 import DropFileInput from '../components/atoms/inputs/dropFileInput/DropFileInput';
 import { OrderDocument } from '../interfaces/orders/orderDocumentsResponse';
-import { UpdateOrderDocumentsRequest } from '../interfaces/orders/updateOrderDocumentsRequest';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
 
 export default function Orders() {
   const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
@@ -133,6 +134,22 @@ export default function Orders() {
     hidePopup();
   };
 
+  const handleFilesDownload = async (orderId: string) => {
+    const documents = await getOrderDocuments(orderId);
+    if (!documents) return;
+
+    const zip = new JSZip();
+
+    for (const doc of documents) {
+      const response = await fetch(doc.url);
+      const blob = await response.blob();
+      zip.file(doc.name, blob);
+    }
+
+    const content = await zip.generateAsync({ type: 'blob' });
+    saveAs(content, `order-${orderId}-documents.zip`);
+  };
+
   return (
     <OrdersTemplate
       orderRecords={searchOrders}
@@ -142,6 +159,7 @@ export default function Orders() {
       showCompletedOrders={showCompletedOrders}
       markOrderAsCompleted={handleMarkOrderAsCompleted}
       onOpenOrderFilesPopup={handleOpenOrderFilesPopup}
+      onFilesDownload={handleFilesDownload}
     />
   );
 }

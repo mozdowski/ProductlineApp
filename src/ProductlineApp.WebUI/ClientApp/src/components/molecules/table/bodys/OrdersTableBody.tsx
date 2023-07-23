@@ -7,17 +7,19 @@ import { mapOrderStatusToString } from '../../../../helpers/mappers';
 export const OrdersTableBody = ({
   orderRecords,
   showCompletedOrders,
-  markOrderAsCompleted,
-  onOpenOrderFilesPopup,
   page,
   rowsPerPage,
+  markOrderAsCompleted,
+  onOpenOrderFilesPopup,
+  onFilesDownload,
 }: {
   orderRecords?: OrdersRecord[];
   showCompletedOrders: boolean;
-  markOrderAsCompleted: (orderId: string) => void;
-  onOpenOrderFilesPopup: (orderId: string) => void;
   page: number;
   rowsPerPage: number;
+  markOrderAsCompleted: (orderId: string) => void;
+  onOpenOrderFilesPopup: (orderId: string) => void;
+  onFilesDownload: (orderId: string) => void;
 }) => {
   return (
     <>
@@ -34,6 +36,7 @@ export const OrdersTableBody = ({
                     order={order}
                     markOrderAsCompleted={markOrderAsCompleted}
                     onOpenOrderFilesPopup={onOpenOrderFilesPopup}
+                    onFilesDownload={onFilesDownload}
                   />
                 ),
             )}
