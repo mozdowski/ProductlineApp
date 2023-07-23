@@ -10,6 +10,8 @@ export default function AddProductTemplate({
   productForm,
   onChange,
   errors,
+  onPhotoMove,
+  onPhotoDelete,
 }: {
   uploadProductPhotos: any;
   photos: string[];
@@ -17,6 +19,8 @@ export default function AddProductTemplate({
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
   errors: any;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -30,6 +34,8 @@ export default function AddProductTemplate({
             productForm={productForm}
             onChange={onChange}
             errors={errors}
+            onPhotoMove={onPhotoMove}
+            onPhotoDelete={onPhotoDelete}
           />
         </div>
       </div>

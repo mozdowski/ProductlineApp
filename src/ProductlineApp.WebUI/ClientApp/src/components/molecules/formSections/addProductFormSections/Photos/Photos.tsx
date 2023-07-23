@@ -5,10 +5,14 @@ function Photos({
   uploadProductPhotos,
   photos,
   error,
+  onPhotoMove,
+  onPhotoDelete,
 }: {
   uploadProductPhotos: any;
   photos: string[];
   error: any;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -24,6 +28,8 @@ function Photos({
             uploadProductPhotos={uploadProductPhotos}
             photos={photos}
             error={error}
+            onPhotoMove={onPhotoMove}
+            onPhotoDelete={onPhotoDelete}
           />
         </div>
       </div>

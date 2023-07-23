@@ -7,5 +7,11 @@ export interface ProductForm {
   category: string;
   condition: number;
   description: string;
-  photos: FileList | null;
+  photos: PhotoFile[];
+}
+
+export interface PhotoFile {
+  id: number;
+  url: string;
+  file: File;
 }
