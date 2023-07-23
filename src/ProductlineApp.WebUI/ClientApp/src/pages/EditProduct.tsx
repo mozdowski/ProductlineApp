@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import { AddProductRequest } from '../interfaces/products/addProductRequest';
 import { ProductForm } from '../interfaces/products/productForm';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -41,10 +40,6 @@ export default function EditProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const { productId } = useParams<string>();
-
-  // const [photos, setPhotos] = useState<Photo[]>([])
-
-  // const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
 
   const [uploadedPhotos, setUploadedPhotos] = useState<Record<number, File>>({});
 
@@ -108,9 +103,6 @@ export default function EditProduct() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
-    console.log(productForm);
-    console.log(uploadedPhotos);
-
     const isValid: boolean = await validateForm();
 
     if (!isValid) {
@@ -135,10 +127,15 @@ export default function EditProduct() {
           : undefined,
       imageUrl:
         productForm.photos[0].source === PhotoSource.SERVER ? productForm.photos[0].url : undefined,
-      gallery: productForm.photos.filter((x) => x.source === PhotoSource.SERVER).map((x) => x.url),
+      gallery: productForm.photos
+        .slice(1)
+        .filter((x) => x.source === PhotoSource.SERVER)
+        .map((x) => x.url),
     };
 
     const uploadedFiles = Object.values(uploadedPhotos);
+
+    console.log(editProductRequestData);
 
     try {
       const productResponse = await toast.promise(
@@ -211,9 +208,9 @@ export default function EditProduct() {
           url: x,
           source: PhotoSource.SERVER,
         })),
-        // gallery: [product.imageUrl, ...product.gallery],
       };
       setProductForm(productEditForm);
+      console.log(res);
     });
   }, []);
 
