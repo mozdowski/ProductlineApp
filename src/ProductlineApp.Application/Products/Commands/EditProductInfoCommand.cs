@@ -77,23 +77,23 @@ public class EditProductInfoCommand
                 request.BrandName,
                 request.Description);
 
-            if (request.Gallery is not null && request.Gallery.Any())
-            {
-                if (product.Gallery.Any())
-                {
-                    foreach (var image in product.Gallery)
-                    {
-                        await this._uploadFileService.DeleteFileAsync(image.Name);
-                    }
-
-                    product.ClearGallery();
-                }
-
-                request.Gallery.ForEach(x => product.AddImageToGallery(Image.Create(x)));
-            }
-
             var updateImageCommand = new EditProductImageCommand.Command(request.UserId, request.ProductId, request.ImageFile, request.ImageUrl);
             await this._mediator.Send(updateImageCommand, cancellationToken);
+
+            if (product.Gallery.Any())
+            {
+                foreach (var image in product.Gallery)
+                {
+                    await this._uploadFileService.DeleteFileAsync(image.Name);
+                }
+
+                product.ClearGallery();
+            }
+
+            if (request.Gallery is not null && request.Gallery.Any())
+            {
+                request.Gallery.ForEach(x => product.AddImageToGallery(Image.Create(x)));
+            }
 
             await this._productRepository.UpdateAsync(product);
 
