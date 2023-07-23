@@ -176,7 +176,7 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
     <div className="ebayPopupBody">
       {isLoading && (
         <div className="loadingCircle">
-          <CircularProgress />
+          <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />
         </div>
       )}
       {categoryAspects && categoryAspects.length > 0 && !isLoading && (

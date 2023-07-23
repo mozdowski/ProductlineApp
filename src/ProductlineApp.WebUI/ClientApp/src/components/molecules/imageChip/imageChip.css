@@ -1,4 +1,7 @@
 .productImage {
   max-height: 100%;
   max-width: 100%;
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
 }

@@ -67,6 +67,8 @@ export default function Settings() {
       onDisconnect={handleDisconnect}
       userConnections={platformConnections}
       onPasswordChange={handlePasswordChange}
+      UserName={user?.name}
+      UserEmail={user?.email}
     />
   );
 }

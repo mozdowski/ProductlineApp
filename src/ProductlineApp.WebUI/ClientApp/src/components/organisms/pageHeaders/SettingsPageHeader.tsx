@@ -12,7 +12,7 @@ export default function SettingsPageHeader() {
           <p>Ustawienia konta oraz aplikacji</p>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton />*/}
           <AddProductButton />
           <UserAccountButton />
         </div>

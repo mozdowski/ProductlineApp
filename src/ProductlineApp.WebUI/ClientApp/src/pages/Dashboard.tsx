@@ -58,7 +58,7 @@ export default function Dashboard() {
           <p>{date}</p>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton />*/}
           <AddProductButton />
           <UserAccountButton />
         </div>

@@ -10,7 +10,7 @@ export default function Forgotpassword() {
         <div className="forgotPassword">
           <div className="forgotPasswordSection">
             <Link to="/login" className="backToLoginPageLink" id="link">
-              <img className="backButton" src={BackButtonImage} />
+              <img className="backToLoginButton" src={BackButtonImage} />
             </Link>
 
             <h1>Reset hasła</h1>
@@ -25,7 +25,6 @@ export default function Forgotpassword() {
                 placeholder="Podaj email"
                 className="emailInput"
               ></input>
-
               <ResetPasswordButton />
             </form>
           </div>

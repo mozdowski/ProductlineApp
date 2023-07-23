@@ -12,6 +12,8 @@ export default function SettingsTemplate({
   image,
   showImage,
   UserImage,
+  UserName,
+  UserEmail,
   platformsAuthUrl,
   onDisconnect,
   userConnections,
@@ -20,6 +22,8 @@ export default function SettingsTemplate({
   image: any;
   showImage: any;
   UserImage: any;
+  UserName: any,
+  UserEmail: any,
   platformsAuthUrl: PlatformAuthUrl[];
   onDisconnect: (platformId: string) => void;
   userConnections: string[];
@@ -30,7 +34,7 @@ export default function SettingsTemplate({
       <SettingsPageHeader />
       <div className="content">
         <div className="settings">
-          <ProfileDetails image={image} showImage={showImage} UserImage={UserImage} />
+          <ProfileDetails image={image} showImage={showImage} UserImage={UserImage} UserName={UserName} UserEmail={UserEmail} />
           {platformsAuthUrl.length > 0 && (
             <ConnectAccountToPortals
               platformsAuthUrl={platformsAuthUrl}

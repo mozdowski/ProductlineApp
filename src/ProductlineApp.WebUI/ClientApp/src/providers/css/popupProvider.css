@@ -1,0 +1,38 @@
+.overlayPopup {
+    background-color: rgba(0, 0, 0, 0.5);
+    left: 0px;
+    top: 0px;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.popup {
+    width: 350px;
+    background-color: var(--white-color);
+    border-radius: 8px;
+    padding: 35px 35px 35px 35px;
+    display: flex;
+    flex-direction: column;
+}
+
+.closePopupButton .closePopupIcon {
+    cursor: pointer;
+    width: 12px;
+    height: 12px;
+    margin-left: 8px;
+    background-size: cover;
+}
+
+.closePopupButton {
+    align-items: center;
+    display: flex;
+    float: right;
+}
+
+.closePopupButton .closeIcon {
+    background-image: url('../../assets/icons/deleteFile_icon.svg');
+}

@@ -12,7 +12,7 @@ export default function OrdersPageHeader() {
           <p>Lista zamówień</p>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton />*/}
           <AddProductButton />
           <UserAccountButton />
         </div>

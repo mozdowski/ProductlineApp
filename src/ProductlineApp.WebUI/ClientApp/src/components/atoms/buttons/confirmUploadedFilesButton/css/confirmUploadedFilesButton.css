@@ -6,7 +6,7 @@
   cursor: pointer;
   box-sizing: border-box;
   border: 0px;
-  color: var(--apply-change-data);
+  color: var(--first-color);
   font-family: var(--body-font);
   font-size: 12px;
   font-weight: 600;
@@ -14,7 +14,7 @@
 }
 
 .confirmUploadedFilesButton:hover {
-  border: 1px solid var(--apply-change-data);
+  border: 1px solid var(--first-color);
 }
 
 .confirmUploadedFilesButtonWrapper {

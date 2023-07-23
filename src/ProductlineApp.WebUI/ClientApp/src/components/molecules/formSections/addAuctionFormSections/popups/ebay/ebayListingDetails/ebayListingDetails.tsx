@@ -183,7 +183,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
       <form onSubmit={handleSubmit}>
         {isLoading && (
           <div className="loadingCircle">
-            <CircularProgress />
+            <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />
           </div>
         )}
         {!isLoading && (

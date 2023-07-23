@@ -36,7 +36,7 @@ export const TableFooter = ({
         <ul className="pagination">{pages}</ul>
       </div>
       <div className="rowsPerPage">
-        <p>Ilość rekordów na stronie:</p>
+        <p>Pokaż:</p>
         <FormSelect
           value={currentRowsCount}
           onChange={(name: string, value: string) => onRowsPerPageChange(parseInt(value))}

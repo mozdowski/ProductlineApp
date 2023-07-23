@@ -114,7 +114,7 @@ export default function Signin() {
         <div className="signin">
           <div className="signinSection">
             <Link to="/login" className="backToLoginPageLink" id="link">
-              <img className="backButton" src={BackButtonImage} />
+              <img className="backToLoginButton" src={BackButtonImage} />
             </Link>
 
             <h1>Zarejestruj się</h1>

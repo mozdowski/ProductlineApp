@@ -1,4 +1,4 @@
-tr > td.details.open {
+tr>td.details.open {
   background-color: #fff;
   width: 100%;
   max-height: 100px;
@@ -99,6 +99,7 @@ ul.orderItemsList {
   margin-top: 20px;
   float: right;
   margin-right: 50px;
+  margin-bottom: 30px;
 }
 
 .orderItems .orderItemsList li {

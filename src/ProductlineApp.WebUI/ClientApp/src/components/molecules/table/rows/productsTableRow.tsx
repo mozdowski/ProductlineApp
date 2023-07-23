@@ -34,7 +34,9 @@ export const ProductsTableRow = ({
           <CollapseTableButton isOpen={isOpen} toggle={toggle} />
         </td>
         <td>{product.sku}</td>
-        <td>{product.brand}</td>
+        <td>
+          {product.brand}
+        </td>
         <td>
           <div className="productName">
             <img className="productImage" src={product?.imageUrl} alt="product img" />
@@ -45,9 +47,8 @@ export const ProductsTableRow = ({
         <td>{product.price} zł</td>
         <td>{product.quantity}</td>
         <td
-          className={`productStatus ${product.isListed && 'productExposed'} ${
-            !product.isListed && 'productNotExposed'
-          }`}
+          className={`productStatus ${product.isListed && 'productExposed'} ${!product.isListed && 'productNotExposed'
+            }`}
         >
           {product.listingStatus}
         </td>

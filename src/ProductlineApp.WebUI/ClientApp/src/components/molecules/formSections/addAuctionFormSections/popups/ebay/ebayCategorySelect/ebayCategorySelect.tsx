@@ -85,7 +85,7 @@ const EbayCategorySelect: React.FC<EbayCategorySelectProps> = ({ onCancel, onNex
     <div className="ebayPopupBody">
       {isLoading && (
         <div className="loadingCircle">
-          <CircularProgress />
+          <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />
         </div>
       )}
       {!isLoading && (

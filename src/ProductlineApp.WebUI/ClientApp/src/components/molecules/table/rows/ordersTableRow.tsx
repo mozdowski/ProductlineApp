@@ -68,7 +68,8 @@ export const OrdersTableRow = ({
               </div>
             </BasicTooltip>
 
-            {order.status !== OrderStatus.COMPLETED && (
+
+            {order.status === OrderStatus.COMPLETED && (
               <BasicTooltip title="Oznacz jako zrealizowane">
                 <div
                   className="assignedOrderButton"

@@ -15,7 +15,7 @@ export const CollapseOrderDetails = ({
   return (
     <tr className="orderDetailsWrapper">
       <td></td>
-      <td colSpan={2}>
+      <td colSpan={3}>
         <div className="orderItems">
           <h1 className="orderItemsSectionLabel">Zamówione Produkty:</h1>
           <ul className="orderItemsList">

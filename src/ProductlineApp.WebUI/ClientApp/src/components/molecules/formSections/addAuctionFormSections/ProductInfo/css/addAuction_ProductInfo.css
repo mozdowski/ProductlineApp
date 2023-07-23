@@ -50,3 +50,9 @@
   margin-top: 40px;
   margin-left: 54px;
 }
+
+@media only screen and (max-height: 1192px) {
+  .productInfo .addAuctionInputs .textAreaProductDescription .productDescriptionTextarea {
+    height: 200px;
+  }
+}

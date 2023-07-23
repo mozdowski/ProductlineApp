@@ -66,7 +66,7 @@ export default function OrdersTable({
           onFilesDownload={onFilesDownload}
         />
       </table>
-      {!orderRecords && <CircularProgress />}
+      {!orderRecords && <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />}
       <TableFooter
         totalPages={totalPages}
         currentPage={page + 1}

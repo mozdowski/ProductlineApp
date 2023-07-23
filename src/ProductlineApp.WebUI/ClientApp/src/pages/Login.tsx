@@ -113,6 +113,7 @@ export default function Login() {
                   className="passwordInput"
                   value={loginForm.password}
                   onChange={handleChange}
+                  passwordImage={true}
                   error={errors.password}
                 />
                 <img

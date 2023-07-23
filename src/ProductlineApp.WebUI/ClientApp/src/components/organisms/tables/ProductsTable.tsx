@@ -50,7 +50,7 @@ export default function ProductsTable({
           rowsPerPage={rowsPerPage}
         />
       </table>
-      {!productRecords && <CircularProgress />}
+      {!productRecords && <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />}
       <TableFooter
         totalPages={totalPages}
         currentPage={page + 1}

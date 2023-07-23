@@ -9,7 +9,6 @@
 .signinBackground .signin {
   background-color: #ffffff;
   width: 680px;
-  height: 818px;
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
@@ -24,6 +23,10 @@
   margin-bottom: 84px;
   margin-right: 161.5px;
   position: relative;
+}
+
+.signinBackground .signin .signinSection .backToLoginPageLink {
+  text-decoration: none;
 }
 
 .signinBackground .signin h1 {
@@ -53,25 +56,29 @@
 }
 
 .signinBackground .signin .signinSection .repeatPasswordField {
-  margin-bottom: 25px;
+  margin-bottom: 54.5px;
 }
 
 .signinBackground .signin .signinSection .passwordField .imageEye {
   position: relative;
-  left: 325px;
+  /* left: 370px; */
   bottom: 30px;
-  height: 16px;
+  margin-right: 14px;
+  /* height: 16px; */
   width: 16px;
   cursor: pointer;
+  float: right;
 }
 
 .signinBackground .signin .signinSection .repeatPasswordField .repeatImageEye {
   position: relative;
-  left: 325px;
+  /* left: 370px; */
   bottom: 30px;
-  height: 16px;
+  margin-right: 14px;
+  /* height: 16px; */
   width: 16px;
   cursor: pointer;
+  float: right;
 }
 
 .unameLabel,
@@ -83,6 +90,7 @@
 
 .repeatPasswordLabel {
   margin-bottom: 19.5px;
+  margin-top: 19.5px;
 }
 
 .unameLabel,
@@ -153,11 +161,14 @@ input[type='file']::-webkit-file-upload-button {
   margin-bottom: 4px;
 }
 
-.signinBackground .signin .signinSection .backToLoginPageLink .backButton {
-  position: absolute;
+.signinBackground .signin .signinSection .backToLoginPageLink .backToLoginButton {
+  position: relative;
   cursor: pointer;
-  right: 460px;
-  bottom: 680px;
+  float: left;
+  right: 120px;
+  bottom: 45px;
+  /* right: 460px; */
+  /* bottom: 680px; */
   width: 25px;
   height: 25px;
 }
