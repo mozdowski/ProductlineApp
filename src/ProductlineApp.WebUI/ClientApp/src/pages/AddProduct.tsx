@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import AddProductTemplate from '../components/templates/AddProductTemplate';
 import { AddProductRequest } from '../interfaces/products/addProductRequest';
-import { ProductForm } from '../interfaces/products/productForm';
+import { PhotoFile, ProductForm } from '../interfaces/products/productForm';
 import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
-import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -20,15 +19,13 @@ const productSchema = Yup.object().shape({
   photos: Yup.mixed()
     .nullable()
     .test('file', 'Wymagane co najmniej jedno zdjęcie', (value) => {
-      return value instanceof FileList && value.length > 0;
+      return (value as Array<PhotoFile>).length > 0;
     }),
 });
 
 export default function AddProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
-  // const [selectedPhotos, setSelectedPhotos] = useState<FileList | null>(null);
-  const [photoPreviews, setPhotosPreviews] = useState<Array<string>>([]);
   const [productForm, setProductForm] = useState<ProductForm>({
     sku: '',
     name: '',
@@ -38,7 +35,7 @@ export default function AddProduct() {
     category: '',
     condition: 0,
     description: '',
-    photos: null,
+    photos: [],
   });
   const [errors, setErrors] = useState<Partial<ProductForm>>({});
 
@@ -58,19 +55,22 @@ export default function AddProduct() {
   };
 
   const selectImages = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const photos: Array<string> = [];
+    const photos: PhotoFile[] = [];
     const files = event.target.files;
 
     if (files) {
       for (let i = 0; i < files.length; i++) {
-        photos.push(URL.createObjectURL(files[i]));
+        photos.push({
+          id: i,
+          url: URL.createObjectURL(files[i]),
+          file: files[i],
+        });
       }
 
       setProductForm((prevData) => ({
         ...prevData,
-        ['photos']: files,
+        photos: [...prevData.photos, ...photos],
       }));
-      setPhotosPreviews(photos);
     }
   };
 
@@ -86,7 +86,7 @@ export default function AddProduct() {
       return;
     }
 
-    const photos: FileList = productForm.photos as FileList;
+    const photos = productForm.photos;
 
     const newProductRequestData: AddProductRequest = {
       sku: productForm.sku,
@@ -97,7 +97,7 @@ export default function AddProduct() {
       brandName: productForm.brand,
       description: productForm.description,
       condition: productForm.condition,
-      image: photos.item(0) as File,
+      image: photos[0].file,
     };
 
     try {
@@ -108,7 +108,7 @@ export default function AddProduct() {
       for (let i = 0; i < photos.length; i++) {
         const photo = photos[i];
         const addImageToGalleryFormData: FormData = new FormData();
-        addImageToGalleryFormData.append('image', photo);
+        addImageToGalleryFormData.append('image', photo.file);
         const request = productsService.addImageToGallery(
           productResponse.productId,
           addImageToGalleryFormData,
@@ -136,14 +136,36 @@ export default function AddProduct() {
     }));
   };
 
+  const handleMovePhoto = (dragIndex: number, hoverIndex: number) => {
+    const newOrder = [...productForm.photos];
+    const draggedPhoto = newOrder[dragIndex];
+    newOrder.splice(dragIndex, 1);
+    newOrder.splice(hoverIndex, 0, draggedPhoto);
+    setProductForm((prevData) => ({
+      ...prevData,
+      photos: newOrder,
+    }));
+  };
+
+  const handleDeletePhoto = (index: number) => {
+    const updatedPhotos = [...productForm.photos];
+    updatedPhotos.splice(index, 1);
+    setProductForm((prevData) => ({
+      ...prevData,
+      photos: updatedPhotos,
+    }));
+  };
+
   return (
     <AddProductTemplate
       uploadProductPhotos={selectImages}
-      photos={photoPreviews}
+      photos={productForm.photos.map((x) => x.url)}
       onSubmit={handleSubmit}
       productForm={productForm}
       onChange={handleChange}
       errors={errors}
+      onPhotoMove={handleMovePhoto}
+      onPhotoDelete={handleDeletePhoto}
     />
   );
 }

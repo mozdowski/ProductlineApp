@@ -11,6 +11,8 @@ export default function AddProductForm({
   productForm,
   onChange,
   errors,
+  onPhotoMove,
+  onPhotoDelete,
 }: {
   uploadProductPhotos: any;
   photos: string[];
@@ -18,6 +20,8 @@ export default function AddProductForm({
   productForm: ProductForm;
   onChange: (name: string, value: string | number) => void;
   errors: Partial<ProductForm>;
+  onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
+  onPhotoDelete: (index: number) => void;
 }) {
   return (
     <>
@@ -31,6 +35,8 @@ export default function AddProductForm({
               uploadProductPhotos={uploadProductPhotos}
               photos={photos}
               error={errors.photos}
+              onPhotoMove={onPhotoMove}
+              onPhotoDelete={onPhotoDelete}
             />
           </div>
         </div>
