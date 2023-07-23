@@ -1,5 +1,4 @@
 import { Photo } from '../../pages/EditProduct';
-import { ProductForm } from './productForm';
 
 export interface ProductEditForm {
   sku: string;

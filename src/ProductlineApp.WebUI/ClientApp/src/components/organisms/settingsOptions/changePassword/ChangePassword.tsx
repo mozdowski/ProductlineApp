@@ -25,7 +25,6 @@ export const ChangePassword = ({
     setPasswordVisible(!isPasswordVisible);
   };
   const [showFields, setShowFields] = useState(true);
-  const [showPasswordFields, setShowPasswordFields] = useState(false);
   const [errors, setErrors] = useState<Partial<ChangePasswordForm>>({});
   const [changePasswordForm, setPasswordForm] = useState<ChangePasswordForm>({
     newPassword: '',

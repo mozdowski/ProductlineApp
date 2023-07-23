@@ -22,7 +22,7 @@ function SoldTodayChart({
     },
     series: [
       {
-        color: ['pink', 'purple', 'ff0000', 'red', 'blue'],
+        color: ['pink', 'purple', 'magenta', 'red', 'blue'],
         type: 'pie',
         radius: ['35%', '65%'],
         avoidLabelOverlap: false,

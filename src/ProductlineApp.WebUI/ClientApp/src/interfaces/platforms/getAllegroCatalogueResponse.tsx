@@ -58,31 +58,10 @@ export interface AllegroCatalogueProduct {
   isDraft: boolean;
 }
 
-interface Subcategory {
-  id: string;
-  name: string;
-  count: number;
-}
-
-interface Path {
-  id: string;
-  name: string;
-}
-
 interface FilterValue {
   name: string;
   value: string;
   idSuffix: string;
   count: number;
   selected: boolean;
-}
-
-interface Filter {
-  id: string;
-  type: string;
-  name: string;
-  values: FilterValue[];
-  minValue: number;
-  maxValue: number;
-  unit: string;
 }

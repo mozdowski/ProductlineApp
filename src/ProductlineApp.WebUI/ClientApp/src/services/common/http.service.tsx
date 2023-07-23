@@ -1,4 +1,5 @@
 import axios, {
+  AxiosError,
   AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse,
@@ -38,7 +39,6 @@ class HttpService {
   }
 
   private handleError(error: any) {
-    // logika obsługi błędów
     throw new Error(error.response?.data?.message || error.message);
   }
 

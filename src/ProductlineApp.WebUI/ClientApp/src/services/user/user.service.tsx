@@ -1,5 +1,4 @@
 import { GainAccessTokenRequest } from '../../interfaces/platforms/gainAccessTokenRequest';
-import { PlatformAuthUrl } from '../../interfaces/platforms/platformsAuthUrlResponse';
 import { ChangePasswordRequest } from '../../interfaces/user/changePasswordRequest';
 import { DisconnectPlatformRequest } from '../../interfaces/user/disconnectPlatformRequest';
 import HttpService from '../common/http.service';

@@ -1,4 +1,3 @@
-import { GetPlatformsResponse } from '../../interfaces/platforms/getPlatformsResponse';
 import { PlatformAuthUrl } from '../../interfaces/platforms/platformsAuthUrlResponse';
 import HttpService from '../common/http.service';
 

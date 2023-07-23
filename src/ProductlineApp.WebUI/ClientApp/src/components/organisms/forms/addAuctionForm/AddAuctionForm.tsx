@@ -1,4 +1,4 @@
-import { ChangeEvent, HtmlHTMLAttributes, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Photos from '../../../molecules/formSections/addAuctionFormSections/Photos/Photos';
 import ProductInfo from '../../../molecules/formSections/addAuctionFormSections/ProductInfo/ProductInfo';
 import AuctionPortals from '../../../molecules/formSections/addAuctionFormSections/auctionPortals/AuctionPortals';

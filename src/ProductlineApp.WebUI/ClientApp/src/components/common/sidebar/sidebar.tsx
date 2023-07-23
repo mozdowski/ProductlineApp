@@ -18,7 +18,7 @@ const SidebarOverHandler = (event: React.MouseEvent<HTMLDivElement>) => {
   if (!logo || !separator || !container) {
     return;
   } else {
-    logo.innerHTML = `<Link to="/dashboard">productline<span id="dot">.</span></Link>`;
+    logo.innerHTML = '<Link to="/dashboard">productline<span id="dot">.</span></Link>';
     separator.style.width = '162px';
     container.style.width = 'calc(100% - 248px)';
     container.style.transition = '0.25s';
@@ -34,7 +34,7 @@ const SidebarOutHandler = (event: React.MouseEvent<HTMLDivElement>) => {
   if (!logo || !separator || !container) {
     return;
   } else {
-    logo.innerHTML = `<Link to="/dashboard">pl<span id="dot">.</span></Link>`;
+    logo.innerHTML = '<Link to="/dashboard">pl<span id="dot">.</span></Link>';
     separator.style.width = '22px';
     separator.style.transition = '0.25s';
     container.style.width = 'calc(100% - 104px)';

@@ -72,7 +72,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
   onCancel,
   initValues,
 }) => {
-  let product = {
+  const product = {
     name: '',
     price: 0,
     quantity: 0,

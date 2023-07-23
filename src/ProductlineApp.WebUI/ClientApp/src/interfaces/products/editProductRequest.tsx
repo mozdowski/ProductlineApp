@@ -1,5 +1,4 @@
 import { ProductCondition } from '../../enums/productCondition';
-import { AddProductRequest } from './addProductRequest';
 
 export interface EditProductRequest {
   sku: string;

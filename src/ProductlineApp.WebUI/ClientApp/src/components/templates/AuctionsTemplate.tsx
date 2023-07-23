@@ -2,10 +2,7 @@ import './css/AuctionsTemplate.css';
 import { AuctionsRecord } from '../../interfaces/auctions/AuctionsPageInteface';
 import AuctionsPageHeader from '../organisms/pageHeaders/AuctionsPageHeader';
 import AuctionsTable from '../organisms/tables/AuctionsTable';
-import AmazonAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AmazonAuctionsButton';
 import EbayAuctionsButton from '../atoms/buttons/auctionPortalsButtons/EbayAuctionsButton';
-import OlxAuctionsButton from '../atoms/buttons/auctionPortalsButtons/OlxAuctionsButton';
-import { Platform } from '../../interfaces/platforms/platform';
 import { PlatformEnum } from '../../enums/platform.enum';
 import AllegroAuctionsButton from '../atoms/buttons/auctionPortalsButtons/AllegroAuctionsButton';
 

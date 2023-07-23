@@ -19,8 +19,10 @@
     "axios": "^1.4.0",
     "echarts": "^5.4.2",
     "echarts-for-react": "^3.0.2",
+    "file-saver": "^2.0.5",
     "jsrsasign": "^10.8.6",
     "jsrsasign-util": "^1.0.5",
+    "jszip": "^3.10.1",
     "jwt-decode": "^3.1.2",
     "node-libs-browser": "^2.2.1",
     "node-modules": "^0.0.1",
@@ -42,7 +44,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src --ext .ts,.tsx",
     "lint:fix": "npm run lint -- --fix",
     "prettier": "npx prettier src test --check",
     "prettier:fix": "npm run prettier -- --write"
@@ -90,6 +92,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@types/file-saver": "^2.0.5",
     "@types/jsonwebtoken": "^9.0.2",
     "@types/jsrsasign": "^10.5.8",
     "@types/react": "^18.0.38",
