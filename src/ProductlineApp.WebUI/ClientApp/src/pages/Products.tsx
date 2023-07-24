@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 export default function Products(this: any) {
   const ref = useRef<HTMLInputElement>(null);
   const { productsService } = useProductsService();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [height, setHeight] = useState(0);
   const [products, setProducts] = useState<ProductsRecord[] | undefined>(undefined);
   const [searchValue, setSearchValue] = useState('');
@@ -20,16 +21,16 @@ export default function Products(this: any) {
 
   const searchProducts = products
     ? products.filter((product) => {
-        return (
-          product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+      return (
+        product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
           product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
           product.productName.toLowerCase().indexOf(searchValue) >= 0 ||
           product.category.toLowerCase().indexOf(searchValue) >= 0 ||
           product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           product.listingStatus.toString().indexOf(searchValue) >= 0
-        );
-      })
+      );
+    })
     : undefined;
 
   useEffect(() => {
@@ -62,6 +63,7 @@ export default function Products(this: any) {
   const handleProductDelete = async (productId: string) => {
     if (!productId) return;
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const res = await productsService.deleteProduct(productId);
       toast.success('Pomyślnie usunięto produkt');
       setRefreshRecords((prev) => !prev);

@@ -1,5 +1,5 @@
-import React, { Component, ReactElement, ReactNode } from 'react';
-import { Navigate, Route, RouteProps } from 'react-router-dom';
+import { ReactElement } from 'react';
+import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../hooks/auth/useAuth';
 
 const ProtectedRoute = ({ children }: { children: ReactElement }) => {

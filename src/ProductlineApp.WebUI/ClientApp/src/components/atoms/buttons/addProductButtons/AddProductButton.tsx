@@ -1,6 +1,5 @@
-import React from 'react';
 import AddIcon from '../../../../assets/icons/add_icon.png';
-import { Link, useMatch, useResolvedPath } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './css/AddProductButton.css';
 import BasicTooltip from '../../common/tooltip/basicTooltip';
 

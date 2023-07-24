@@ -79,7 +79,9 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
   const validateForm = async () => {
     if (!validationSchema) return true;
     try {
-      await validationSchema.validate(parametersForm, { abortEarly: false });
+      await validationSchema.validate(parametersForm, {
+        abortEarly: false,
+      });
       setErrors({});
       return true;
     } catch (validationErrors: any) {

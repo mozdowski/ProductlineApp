@@ -162,24 +162,24 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
           {currentPage === PopupPages.ParametersSet &&
             selelectedCategoryId &&
             selectedAllegroProductId && (
-              <ParametersSetComponent
-                categoryId={initialFormValues ? initialFormValues.categoryId : selelectedCategoryId}
-                productId={
-                  initialFormValues ? initialFormValues.allegroProductId : selectedAllegroProductId
-                }
-                onPrevPage={handlePrevPage}
-                onNextPage={handleNextPage}
-                onCancel={handleCancel}
-                initValues={
-                  initialFormValues
-                    ? [
-                        ...initialFormValues.productParameters,
-                        ...initialFormValues.listingParameters,
-                      ]
-                    : undefined
-                }
-              />
-            )}
+            <ParametersSetComponent
+              categoryId={initialFormValues ? initialFormValues.categoryId : selelectedCategoryId}
+              productId={
+                initialFormValues ? initialFormValues.allegroProductId : selectedAllegroProductId
+              }
+              onPrevPage={handlePrevPage}
+              onNextPage={handleNextPage}
+              onCancel={handleCancel}
+              initValues={
+                initialFormValues
+                  ? [
+                    ...initialFormValues.productParameters,
+                    ...initialFormValues.listingParameters,
+                  ]
+                  : undefined
+              }
+            />
+          )}
           {currentPage === PopupPages.ListingDetails && (
             <AllegroListingDetails
               onConfirm={handleConfirm}
