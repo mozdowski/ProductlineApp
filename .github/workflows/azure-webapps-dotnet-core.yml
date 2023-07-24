@@ -2,7 +2,7 @@ name: Build and deploy ASP.Net Core app with React frontend to Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: productline-app    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: ./src/ProductlineApp.WebUI   # set this to the path of your web app project, including the frontend React app
+  AZURE_WEBAPP_PACKAGE_PATH: ./src   # set this to the path of your web app project, including the frontend React app
   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 on:
