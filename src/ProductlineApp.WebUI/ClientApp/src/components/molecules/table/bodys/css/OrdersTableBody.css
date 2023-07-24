@@ -119,5 +119,5 @@ tbody tr:nth-child(odd) {
 }
 
 .assignedOrderButton:hover .assignTableIcon {
-  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/assignTable_icon_hover.svg');
 }

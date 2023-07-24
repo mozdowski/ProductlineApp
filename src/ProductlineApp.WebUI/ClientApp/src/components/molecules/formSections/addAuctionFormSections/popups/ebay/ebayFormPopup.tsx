@@ -1,5 +1,5 @@
 import './ebayFormPopup.css';
-import EbayLogo from '../../../../../../assets/icons/ebayLink_icon:hover.svg';
+import EbayLogo from '../../../../../../assets/icons/ebayLink_icon_hover.svg';
 import EbayCategorySelect from './ebayCategorySelect/ebayCategorySelect';
 import { useState } from 'react';
 import EbayParametersSetComponent from './ebayParametersSetComponent/ebayParametersSetComponent';

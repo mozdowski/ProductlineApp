@@ -28,7 +28,7 @@
 }
 
 .ebayButton:hover .ebayAuctionsIcon {
-  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/ebay_icon_hover.svg');
 }
 
 .ebayButton.selected {
@@ -37,5 +37,5 @@
 }
 
 .ebayButton.selected .ebayAuctionsIcon {
-  background-image: url('../../../../../assets/icons/ebay_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/ebay_icon_hover.svg');
 }
