@@ -41,7 +41,7 @@
 }
 
 .allegroPortalButton:hover .allegroIcon {
-  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/allegro_icon_hover.svg');
 }
 
 .allegroPortalButton.assigned {
@@ -49,7 +49,7 @@
 }
 
 .allegroPortalButton.assigned .allegroIcon {
-  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/allegro_icon_hover.svg');
 }
 
 .allegroPortalButton.assigned p {
