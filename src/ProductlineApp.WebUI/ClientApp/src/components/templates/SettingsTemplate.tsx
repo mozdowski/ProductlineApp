@@ -18,25 +18,32 @@ export default function SettingsTemplate({
   onDisconnect,
   userConnections,
   onPasswordChange,
-  changeAatar
+  changeAatar,
 }: {
   image: any;
   showImage: any;
   UserImage: any;
-  UserName: string,
-  UserEmail: string,
+  UserName: string;
+  UserEmail: string;
   platformsAuthUrl: PlatformAuthUrl[];
   onDisconnect: (platformId: string) => void;
   userConnections: string[];
   onPasswordChange: (data: ChangePasswordForm) => void;
-  changeAatar: () => void
+  changeAatar: () => void;
 }) {
   return (
     <>
       <SettingsPageHeader />
       <div className="content">
         <div className="settings">
-          <ProfileDetails image={image} showImage={showImage} UserImage={UserImage} UserName={UserName} UserEmail={UserEmail} changeAatar={changeAatar} />
+          <ProfileDetails
+            image={image}
+            showImage={showImage}
+            UserImage={UserImage}
+            UserName={UserName}
+            UserEmail={UserEmail}
+            changeAatar={changeAatar}
+          />
           {platformsAuthUrl.length > 0 && (
             <ConnectAccountToPortals
               platformsAuthUrl={platformsAuthUrl}

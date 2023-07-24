@@ -221,7 +221,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       <form onSubmit={handleSubmit}>
         {isLoading && (
           <div className="loadingCircle">
-            <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />
+            <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)' }} />
           </div>
         )}
         {!isLoading && (

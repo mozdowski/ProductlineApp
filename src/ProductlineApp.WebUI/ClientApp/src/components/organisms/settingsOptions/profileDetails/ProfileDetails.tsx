@@ -8,19 +8,24 @@ export const ProfileDetails = ({
   UserImage,
   UserName,
   UserEmail,
-  changeAatar
+  changeAatar,
 }: {
   image: any;
   showImage: any;
   UserImage: any;
   UserName: string;
   UserEmail: string;
-  changeAatar: () => any
+  changeAatar: () => any;
 }) => {
   return (
     <div className="profileDetails grid-col-span-2">
       <h1>Szczegóły Profilu</h1>
-      <ChangeProfilePhotoSection image={image} showImage={showImage} UserImage={UserImage} changeAatar={changeAatar} />
+      <ChangeProfilePhotoSection
+        image={image}
+        showImage={showImage}
+        UserImage={UserImage}
+        changeAatar={changeAatar}
+      />
       <ChangePersonalDataSection UserName={UserName} UserEmail={UserEmail} />
     </div>
   );

@@ -228,8 +228,8 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         const value = param.valuesIds
           ? param.valuesIds
           : param.values && param.values.length > 0
-            ? param.values[0]
-            : '';
+          ? param.values[0]
+          : '';
         setFormFields((prevData) => ({
           ...prevData,
           [name]: value,
@@ -273,8 +273,8 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
           formFields[name] !== undefined
             ? formFields[name]
             : isMultiselect
-              ? parameter?.valuesLabels
-              : parameter?.valuesIds[0];
+            ? parameter?.valuesLabels
+            : parameter?.valuesIds[0];
         return value;
       }
       default: {
@@ -318,7 +318,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     <div className="allegroPopupBody">
       {isLoading && (
         <div className="loadingCircle">
-          <CircularProgress sx={{ alignSelf: 'center', color: "var(--first-color)" }} />
+          <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)' }} />
         </div>
       )}
       {commonParameters && commonParameters.length > 0 && !isLoading && (

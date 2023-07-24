@@ -12,7 +12,13 @@ const changePersonalDetailsSchema = Yup.object().shape({
   email: Yup.string().email('Nieprawidłowy adres email').required('Email jest wymagany'),
 });
 
-function ChangePersonalDataSection({ UserName, UserEmail }: { UserName: string, UserEmail: string }) {
+function ChangePersonalDataSection({
+  UserName,
+  UserEmail,
+}: {
+  UserName: string;
+  UserEmail: string;
+}) {
   const [disableEdit, setDisableEdit] = useState(true);
   const [errors, setErrors] = useState<Partial<ChangePersonalDetailsForm>>({});
 
@@ -20,7 +26,7 @@ function ChangePersonalDataSection({ UserName, UserEmail }: { UserName: string, 
     setDisableEdit(!disableEdit);
   };
 
-  const handleConfirm = () => { };
+  const handleConfirm = () => {};
 
   const { user } = useAuth();
 
@@ -40,7 +46,7 @@ function ChangePersonalDataSection({ UserName, UserEmail }: { UserName: string, 
               className="changeUsernameInput"
               disabled={disableEdit}
               value={UserName}
-              onChange={() => { }}
+              onChange={() => {}}
               error={errors.username}
             />
           </div>
@@ -56,7 +62,7 @@ function ChangePersonalDataSection({ UserName, UserEmail }: { UserName: string, 
               className="changeEmailInput"
               disabled={disableEdit}
               value={UserEmail}
-              onChange={() => { }}
+              onChange={() => {}}
               error={errors.email}
             />
           </div>

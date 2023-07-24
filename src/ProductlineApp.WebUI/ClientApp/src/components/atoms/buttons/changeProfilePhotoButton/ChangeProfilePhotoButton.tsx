@@ -1,6 +1,12 @@
 import './css/changeProfilePhotoButton.css';
 
-function ChangeProfilePhotoButton({ showImage, changeAatar }: { showImage: any, changeAatar: () => void }) {
+function ChangeProfilePhotoButton({
+  showImage,
+  changeAatar,
+}: {
+  showImage: any;
+  changeAatar: () => void;
+}) {
   return (
     <div className="changeProfilePhotoButton">
       <input

@@ -8,8 +8,7 @@ import {
 import ConfirmationPopup from '../components/common/confirmationPopup/confirmationPopup';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
-import "./css/popupProvider.css"
-
+import './css/popupProvider.css';
 
 interface PopupProviderProps {
   children: ReactNode;
@@ -78,4 +77,4 @@ export const PopupProvider: React.FC<PopupProviderProps> = ({ children }) => {
   );
 };
 
-export { };
+export {};

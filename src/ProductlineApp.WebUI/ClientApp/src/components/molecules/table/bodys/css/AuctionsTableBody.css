@@ -171,7 +171,6 @@ tbody tr:nth-child(odd) {
   background-image: url('../../../../../assets/icons/refreshAuction_icon.svg');
 }
 
-
 @media only screen and (max-width: 1715px) {
   .AuctionsTableRow .productName p {
     max-width: 200px;

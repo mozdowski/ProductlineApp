@@ -5,12 +5,12 @@ function ChangeProfilePhotoSection({
   image,
   showImage,
   UserImage,
-  changeAatar
+  changeAatar,
 }: {
   image: any;
   showImage: any;
   UserImage: any;
-  changeAatar: () => void
+  changeAatar: () => void;
 }) {
   return (
     <>

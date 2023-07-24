@@ -24,9 +24,7 @@ const FormInput: React.FC<FormInputProps> = ({
   return (
     <>
       <input value={value} onChange={handleChange} disabled={disabled} {...props} />
-      {error &&
-        <span className="error">{error}</span>
-      }
+      {error && <span className="error">{error}</span>}
     </>
   );
 };

@@ -62,7 +62,10 @@
   cursor: pointer;
 }
 
-.uploadPhotosField .productPhotos .uploadPhotosInput input[type='file']::-webkit-file-upload-button {
+.uploadPhotosField
+  .productPhotos
+  .uploadPhotosInput
+  input[type='file']::-webkit-file-upload-button {
   cursor: pointer;
 }
 

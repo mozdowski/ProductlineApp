@@ -1,7 +1,7 @@
 import { Chip, Avatar } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 import './imageChip.css';
-import { ReactComponent as DeleteIcon } from "../../../assets/icons/deleteFile_icon.svg"
+import { ReactComponent as DeleteIcon } from '../../../assets/icons/deleteFile_icon.svg';
 
 const ImageChipStyle = {
   width: '120px',
@@ -22,7 +22,7 @@ const ImageChipStyle = {
     position: 'absolute',
     backgroundColor: '#FFFFFF',
   },
-}
+};
 
 interface ImageChipProps {
   onDelete: () => void;

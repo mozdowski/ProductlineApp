@@ -135,7 +135,6 @@ tbody tr:nth-child(odd) {
   background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }
 
-
 @media only screen and (max-width: 1715px) {
   .ProductsTableRow .productName p {
     max-width: 200px;

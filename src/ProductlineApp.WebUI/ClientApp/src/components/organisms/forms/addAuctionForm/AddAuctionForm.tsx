@@ -50,7 +50,7 @@ export default function AddAuctionForm({
             errors={errors}
           />
           {showFormSteps != ' ' && selectedProduct && selectedProduct?.id !== '' && (
-            <ProductInfo selectedProduct={selectedProduct} onChange={() => { }} />
+            <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
           )}
           <ButtonsSection />
         </form>
