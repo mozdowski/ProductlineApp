@@ -36,6 +36,7 @@
   --logo-font: 'Sen', sans-serif;
 }
 
+
 .App {
   text-align: center;
 }
@@ -102,9 +103,11 @@
 .error {
   color: red;
   font-size: 12px;
-  margin-top: 4px;
-  margin-left: 8px;
-  margin-top: -20px;
+  font-family: var(--body-font);
+  font-weight: 400;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: inline-block;
 }
 
 .error-spacer {

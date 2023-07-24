@@ -93,7 +93,7 @@ const FormSelect = ({
           ))}
         </Select>
       </FormControl>
-      {error && <span className="formSelectError">{error}</span>}
+      {error && <span className="error">{error}</span>}
     </div>
   );
 };

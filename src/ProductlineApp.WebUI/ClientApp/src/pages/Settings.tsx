@@ -63,7 +63,6 @@ export default function Settings() {
   };
 
   const handleAvatarChange = async () => {
-
     try {
       const requestData = {
         url: "",
@@ -88,8 +87,8 @@ export default function Settings() {
       onDisconnect={handleDisconnect}
       userConnections={platformConnections}
       onPasswordChange={handlePasswordChange}
-      UserName={user?.name}
-      UserEmail={user?.email}
+      UserName={user?.name as string}
+      UserEmail={user?.email as string}
       changeAatar={handleAvatarChange} />
   );
 }

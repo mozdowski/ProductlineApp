@@ -65,10 +65,10 @@ export default function Dashboard() {
       </div>
       <div className="content">
         <div className="charts">
-          {soldTodayProductsChartData.length > 0 && (
+          {soldTodayProductsChartData.length >= 0 && (
             <SoldTodayChart soldTodayProductsChartData={soldTodayProductsChartData} />
           )}
-          {popularProductsChartData.length > 0 && (
+          {popularProductsChartData.length >= 0 && (
             <MostPopularProductsChart popularProductsChartData={popularProductsChartData} />
           )}
           <CountAuctionsChart auctionsChartData={auctionsChartData} />

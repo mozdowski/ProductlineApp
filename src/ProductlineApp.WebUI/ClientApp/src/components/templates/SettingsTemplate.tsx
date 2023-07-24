@@ -23,8 +23,8 @@ export default function SettingsTemplate({
   image: any;
   showImage: any;
   UserImage: any;
-  UserName: any,
-  UserEmail: any,
+  UserName: string,
+  UserEmail: string,
   platformsAuthUrl: PlatformAuthUrl[];
   onDisconnect: (platformId: string) => void;
   userConnections: string[];

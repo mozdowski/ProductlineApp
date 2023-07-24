@@ -1,14 +1,17 @@
 import { Chip, Avatar } from '@mui/material';
 import { useDrag, useDrop } from 'react-dnd';
 import './imageChip.css';
+import { ReactComponent as DeleteIcon } from "../../../assets/icons/deleteFile_icon.svg"
 
 const ImageChipStyle = {
-  width: '122px',
-  height: '122px',
+  width: '120px',
+  height: '120px',
   border: 'none',
   position: 'relative',
   '& .MuiChip-deleteIcon': {
-    margin: '-12px -12px auto auto',
+    margin: '-4px -4px auto auto',
+    width: '10px',
+    height: '10px',
     zIndex: 1,
   },
   '& .MuiChip-avatar': {
@@ -17,14 +20,15 @@ const ImageChipStyle = {
     borderRadius: '8px',
     margin: 0,
     position: 'absolute',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFFFFF',
   },
-};
+}
 
 interface ImageChipProps {
   onDelete: () => void;
   imageUrl: string;
   id: string;
+
   moveChip: (dragIndex: number, hoverIndex: number) => void;
   index: number;
 }
@@ -51,7 +55,8 @@ const ImageChip: React.FC<ImageChipProps> = ({ imageUrl, id, onDelete, moveChip,
   return (
     <div ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0 : 1 }}>
       <Chip
-        variant="outlined"
+        deleteIcon={<DeleteIcon />}
+        variant="filled"
         onDelete={onDelete}
         avatar={
           <Avatar>

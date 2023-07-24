@@ -120,3 +120,15 @@ tbody tr:nth-child(odd) {
 .assignedOrderButton:hover .assignTableIcon {
   background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }
+
+@media only screen and (max-width: 1420px) {
+  .OrdersTableRow td {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .OrdersTableRow td {
+    font-size: 12px;
+  }
+}

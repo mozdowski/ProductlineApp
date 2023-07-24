@@ -13,8 +13,8 @@ export const ProfileDetails = ({
   image: any;
   showImage: any;
   UserImage: any;
-  UserName: any;
-  UserEmail: any;
+  UserName: string;
+  UserEmail: string;
   changeAatar: () => any
 }) => {
   return (

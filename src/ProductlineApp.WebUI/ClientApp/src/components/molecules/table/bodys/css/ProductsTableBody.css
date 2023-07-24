@@ -134,3 +134,27 @@ tbody tr:nth-child(odd) {
 .acceptDeleteProductButton:hover .assignTableIcon {
   background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
 }
+
+
+@media only screen and (max-width: 1715px) {
+  .ProductsTableRow .productName p {
+    max-width: 200px;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  .ProductsTableRow .productName p {
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .ProductsTableRow td {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .ProductsTableRow td {
+    font-size: 12px;
+  }
+}

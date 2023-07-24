@@ -170,3 +170,27 @@ tbody tr:nth-child(odd) {
 .refreshAuctionButton .refreshAuctionIcon {
   background-image: url('../../../../../assets/icons/refreshAuction_icon.svg');
 }
+
+
+@media only screen and (max-width: 1715px) {
+  .AuctionsTableRow .productName p {
+    max-width: 200px;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  .AuctionsTableRow .productName p {
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .AuctionsTableRow td {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .AuctionsTableRow td {
+    font-size: 12px;
+  }
+}
