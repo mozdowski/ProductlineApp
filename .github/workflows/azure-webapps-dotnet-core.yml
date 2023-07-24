@@ -2,7 +2,6 @@ name: Build and deploy ASP.Net Core app with React frontend to Azure Web App
 
 env:
   AZURE_WEBAPP_NAME: productline-app    # set this to the name of your Azure Web App
-  AZURE_WEBAPP_PACKAGE_PATH: ./src   # set this to the path of your web app project, including the frontend React app
   DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
 
 on:
@@ -37,7 +36,7 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-
+            
       - name: Build Backend with dotnet
         run: dotnet build --configuration Release
 
@@ -46,19 +45,16 @@ jobs:
         run: npm install && npm run build
 
       - name: Publish Backend
-        run: dotnet publish -c Release -o ${{env.DOTNET_ROOT}}/myapp
+        run: dotnet publish -c Release -o src/ProductlineApp.WebUI/myapp
 
-      - name: Upload Backend artifact for deployment job
+      - name: Copy Frontend artifacts to the correct directory
+        run: cp -R src/ProductlineApp.WebUI/ClientApp/build src/ProductlineApp.WebUI/myapp
+
+      - name: Upload Backend and Frontend artifacts for deployment job
         uses: actions/upload-artifact@v2
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/myapp
-
-      - name: Upload Frontend artifact for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: react-app
-          path: src/ProductlineApp.WebUI/ClientApp/build   # Change to the React app build folder path
+          name: app-artifacts
+          path: src/ProductlineApp.WebUI/myapp
 
   deploy:
     permissions:
@@ -70,15 +66,10 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      - name: Download Backend artifact from build job
+      - name: Download Backend and Frontend artifacts from build job
         uses: actions/download-artifact@v2
         with:
-          name: .net-app
-
-      - name: Download Frontend artifact from build job
-        uses: actions/download-artifact@v2
-        with:
-          name: react-app
+          name: app-artifacts
 
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
@@ -86,4 +77,4 @@ jobs:
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+          package: ./src/ProductlineApp.WebUI/myapp
