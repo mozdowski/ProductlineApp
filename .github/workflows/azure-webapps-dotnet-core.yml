@@ -1,13 +1,17 @@
-name: Build and deploy ASP.Net Core app with React frontend to Azure Web App
-
-env:
-  AZURE_WEBAPP_NAME: productline-app    # set this to the name of your Azure Web App
-  DOTNET_VERSION: '6.0'                 # set this to the .NET Core version to use
+name: Build and deploy .NET Core with React app to Azure Web App
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main  # Możesz zmienić na inną główną gałąź
   workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: productline-app  # Nazwa Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: 'src/ProductlineApp.WebUI'  # Ścieżka do projektu webowego, w tym przypadku projektu ASP.NET z Reactem
+  DOTNET_VERSION: '6.0'  # Wersja .NET Core do użycia
+  NODE_VERSION: '16'   # Wersja Node.js do użycia
+  YARN_VERSION: '1.22.17'   # Wersja Yarn do użycia
 
 permissions:
   contents: read
@@ -17,64 +21,50 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
 
-      - name: Set up .NET Core
-        uses: actions/setup-dotnet@v2
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
-      - name: Set up Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '14'   # Set the appropriate Node.js version for your React app
+          node-version: ${{ env.NODE_VERSION }}
 
-      - name: Set up dependency caching for faster builds
-        uses: actions/cache@v2
-        with:
-          path: ~/.nuget/packages
-          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-nuget-
-            
-      - name: Build Backend with dotnet
+      - name: Install Yarn
+        run: npm install -g yarn@${{ env.YARN_VERSION }}
+
+      - name: Build Backend
         run: dotnet build --configuration Release
 
-      - name: Build Frontend with npm
-        working-directory: src/ProductlineApp.WebUI/ClientApp   # Change to the frontend folder path
-        run: npm install && npm run build
-
-      - name: Publish Backend
-        run: dotnet publish -c Release -o src/ProductlineApp.WebUI/myapp
-
-      - name: Copy Frontend artifacts to the correct directory
-        run: cp -R src/ProductlineApp.WebUI/ClientApp/build src/ProductlineApp.WebUI/myapp
-
-      - name: Upload Backend and Frontend artifacts for deployment job
-        uses: actions/upload-artifact@v2
-        with:
-          name: app-artifacts
-          path: src/ProductlineApp.WebUI/myapp
+      - name: Build Frontend
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp  # Ścieżka do folderu z Reactem
+        run: |
+          yarn install
+          yarn build
 
   deploy:
-    permissions:
-      contents: none
-    runs-on: ubuntu-latest
     needs: build
-    environment:
-      name: 'Development'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    runs-on: ubuntu-latest
 
     steps:
-      - name: Download Backend and Frontend artifacts from build job
+      - name: Download Artifact from Build Job
         uses: actions/download-artifact@v2
         with:
-          name: app-artifacts
+          name: dotnet-app  # Nazwa artefaktu z backendem
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Download Frontend Artifact from Build Job
+        uses: actions/download-artifact@v2
+        with:
+          name: react-app  # Nazwa artefaktu z frontendem
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp/build
 
       - name: Deploy to Azure Web App
-        id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
         with:
           app-name: ${{ env.AZURE_WEBAPP_NAME }}
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-          package: ./src/ProductlineApp.WebUI/myapp
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
