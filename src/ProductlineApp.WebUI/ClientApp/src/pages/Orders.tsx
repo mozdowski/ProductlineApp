@@ -109,8 +109,6 @@ export default function Orders() {
     serverFiles: string[],
     uploadedFileList: File[],
   ) => {
-    console.log(serverFiles);
-    console.log(uploadedFileList.map((x) => x.name));
     try {
       const updateDocumentsPromisesPool = Promise.all([
         ...uploadedFileList.map((x) => {

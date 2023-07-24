@@ -5,10 +5,12 @@ function ChangeProfilePhotoSection({
   image,
   showImage,
   UserImage,
+  changeAatar
 }: {
   image: any;
   showImage: any;
   UserImage: any;
+  changeAatar: () => void
 }) {
   return (
     <>
@@ -17,7 +19,7 @@ function ChangeProfilePhotoSection({
           className="uploadedImage"
           src={image === null ? UserImage : URL.createObjectURL(image)}
         ></img>
-        <ChangeProfilePhotoButton showImage={showImage} />
+        <ChangeProfilePhotoButton showImage={showImage} changeAatar={changeAatar} />
       </div>
     </>
   );

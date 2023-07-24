@@ -1,6 +1,6 @@
 import './css/changeProfilePhotoButton.css';
 
-function ChangeProfilePhotoButton({ showImage }: { showImage: any }) {
+function ChangeProfilePhotoButton({ showImage, changeAatar }: { showImage: any, changeAatar: () => void }) {
   return (
     <div className="changeProfilePhotoButton">
       <input
@@ -10,6 +10,7 @@ function ChangeProfilePhotoButton({ showImage }: { showImage: any }) {
         name="profilePhoto"
         className="profilePhoto"
         onChange={showImage}
+        onClick={changeAatar}
       />
       <p>Zmień zdjęcie profilowe</p>
     </div>

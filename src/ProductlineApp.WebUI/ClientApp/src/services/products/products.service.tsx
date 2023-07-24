@@ -50,8 +50,6 @@ export class ProductsService {
       formData.append(key, value);
     });
 
-    console.log(data.gallery);
-
     for (let i = 0; i < data.gallery.length; i++) {
       formData.append(`gallery[${i}]`, data.gallery[i]);
     }

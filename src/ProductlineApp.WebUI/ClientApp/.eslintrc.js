@@ -28,7 +28,8 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': 'error'
+    'prettier/prettier': 'error',
+    '@typescript-eslint/no-explicit-any': 'off',
   },
   'settings': {
     'react': {

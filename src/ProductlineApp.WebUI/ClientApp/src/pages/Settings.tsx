@@ -7,6 +7,9 @@ import { DisconnectPlatformRequest } from '../interfaces/user/disconnectPlatform
 import { toast } from 'react-toastify';
 import { ChangePasswordForm } from '../interfaces/settings/changePasswordForm';
 import { ChangePasswordRequest } from '../interfaces/user/changePasswordRequest';
+import UpdateAvatarResponse from '../interfaces/user/updateAvatarResponse';
+import { log } from 'console';
+
 
 export default function Settings() {
   const [image, setImage] = useState<File | null>(null);
@@ -30,6 +33,7 @@ export default function Settings() {
 
     setImage(e.target.files[0]);
   };
+
 
   const handleDisconnect = async (platformId: string) => {
     try {
@@ -58,6 +62,23 @@ export default function Settings() {
     }
   };
 
+  const handleAvatarChange = async () => {
+
+    try {
+      const requestData = {
+        url: "",
+        name: showImage.name,
+      };
+
+      console.log("wybrane zdjecie" + showImage)
+
+      const response = await userService.updateAvatar(requestData);
+      toast.success('Zmieniono zdjecie profilowe');
+    } catch {
+      toast.error('Błąd przy zmianie zdjecia');
+    }
+  };
+
   return (
     <SettingsTemplate
       platformsAuthUrl={platforms}
@@ -69,6 +90,6 @@ export default function Settings() {
       onPasswordChange={handlePasswordChange}
       UserName={user?.name}
       UserEmail={user?.email}
-    />
+      changeAatar={handleAvatarChange} />
   );
 }
