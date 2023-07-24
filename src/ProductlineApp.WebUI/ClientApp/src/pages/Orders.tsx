@@ -117,7 +117,9 @@ export default function Orders() {
 
           return ordersService.attachDocumentToOrder(orderId, data);
         }),
-        ordersService.updateOrderDocuments(orderId, { documentIds: serverFiles }),
+        ordersService.updateOrderDocuments(orderId, {
+          documentIds: serverFiles,
+        }),
       ]);
 
       await toast.promise(updateDocumentsPromisesPool, {
