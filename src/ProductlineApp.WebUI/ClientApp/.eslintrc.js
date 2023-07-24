@@ -16,9 +16,7 @@ module.exports = {
   },
   'plugins': ['react', '@typescript-eslint', 'react-hooks', 'prettier'],
   'rules': {
-    'indent': ['warn', 2, {
-      SwitchCase: 1
-    }],
+    'indent': ['warn', 2, { SwitchCase: 1 }],
     'quotes': ['error', 'single', {
       avoidEscape: true
     }],
@@ -28,8 +26,8 @@ module.exports = {
     'react/display-name': 'off',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'prettier/prettier': 'error',
     '@typescript-eslint/no-explicit-any': 'off',
+    '@typescript-eslint/no-unused-vars': 'off'
   },
   'settings': {
     'react': {

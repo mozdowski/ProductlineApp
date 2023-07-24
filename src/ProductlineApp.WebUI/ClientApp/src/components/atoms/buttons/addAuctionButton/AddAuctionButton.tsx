@@ -1,4 +1,3 @@
-import React from 'react';
 import AddIcon from '../../../../assets/icons/add_icon.png';
 import { Link } from 'react-router-dom';
 import './css/AddAuctionButton.css';

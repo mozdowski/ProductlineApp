@@ -36,6 +36,7 @@ export default function Settings() {
       const data: DisconnectPlatformRequest = {
         platformId: platformId,
       };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await userService.disconnectPlatformConnection(data);
       toast.success('Usunięto połączenie z platformą');
       setReloadPage(!reloadPage);
@@ -51,6 +52,7 @@ export default function Settings() {
         newPassword: data.newPassword,
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await userService.changePassword(requestData);
       toast.success('Zmieniono hasło');
     } catch {
