@@ -65,7 +65,11 @@ export const PopupProvider: React.FC<PopupProviderProps> = ({ children }) => {
               <div className="closeButton">
                 <IconButton
                   onClick={hidePopup}
-                  sx={{ float: 'right', marginRight: '-20px', marginTop: '-20px' }}
+                  sx={{
+                    float: 'right',
+                    marginRight: '-20px',
+                    marginTop: '-20px',
+                  }}
                 >
                   <CloseIcon />
                 </IconButton>

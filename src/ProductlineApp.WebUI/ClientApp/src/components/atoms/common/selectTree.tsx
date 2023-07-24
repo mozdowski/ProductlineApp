@@ -67,7 +67,10 @@ const TreeSelect: React.FC<TreeSelectProps> = ({ options, value, onChange }) => 
               key={id}
               nodeId={id}
               label={label}
-              sx={{ cursor: 'pointer', '& .MuiTreeItem-content': { height: '40px' } }}
+              sx={{
+                cursor: 'pointer',
+                '& .MuiTreeItem-content': { height: '40px' },
+              }}
             >
               {renderTree(children)}
             </TreeItem>

@@ -53,7 +53,9 @@ export const ChangePassword = ({
 
   const validateForm = async (): Promise<boolean> => {
     try {
-      await changePasswordSchema.validate(changePasswordForm, { abortEarly: false });
+      await changePasswordSchema.validate(changePasswordForm, {
+        abortEarly: false,
+      });
       setErrors({});
       return true;
     } catch (validationErrors: any) {

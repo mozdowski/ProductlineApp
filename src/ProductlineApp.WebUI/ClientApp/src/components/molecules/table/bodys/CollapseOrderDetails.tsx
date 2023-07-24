@@ -19,8 +19,8 @@ export const CollapseOrderDetails = ({
         <div className="orderItems">
           <h1 className="orderItemsSectionLabel">Zamówione Produkty:</h1>
           <ul className="orderItemsList">
-            {items.map((item) => (
-              <li>
+            {items.map((item, index) => (
+              <li key={index}>
                 <div className="orderItemDetails">
                   <img className="orderItemImage" src={item?.imageUrl} />
                   <h1>SKU:</h1>
