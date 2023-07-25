@@ -7,13 +7,11 @@ import { DisconnectPlatformRequest } from '../interfaces/user/disconnectPlatform
 import { toast } from 'react-toastify';
 import { ChangePasswordForm } from '../interfaces/settings/changePasswordForm';
 import { ChangePasswordRequest } from '../interfaces/user/changePasswordRequest';
-import UpdateAvatarResponse from '../interfaces/user/updateAvatarResponse';
 import { log } from 'console';
 import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Settings() {
-
-  TabTitle("productline. Ustawienia")
+  TabTitle('productline. Ustawienia');
 
   const [image, setImage] = useState<File | undefined>();
   const { user } = useAuth();
@@ -43,6 +41,7 @@ export default function Settings() {
       const data: DisconnectPlatformRequest = {
         platformId: platformId,
       };
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await userService.disconnectPlatformConnection(data);
       toast.success('Usunięto połączenie z platformą');
       setReloadPage(!reloadPage);
@@ -58,6 +57,7 @@ export default function Settings() {
         newPassword: data.newPassword,
       };
 
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await userService.changePassword(requestData);
       toast.success('Zmieniono hasło');
     } catch {
@@ -71,8 +71,7 @@ export default function Settings() {
     if (!e.target.files) return;
 
     try {
-
-      formData.append('avatar', e.target.files[0])
+      formData.append('avatar', e.target.files[0]);
 
       //console.log("handleAvatarChange - zdjecie " + e.target.files[0]);
       //console.log("handleAvatarChange - " + e.target.files[0]);

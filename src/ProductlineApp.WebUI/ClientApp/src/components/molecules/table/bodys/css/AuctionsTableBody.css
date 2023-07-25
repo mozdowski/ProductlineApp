@@ -131,7 +131,7 @@ tbody tr:nth-child(odd) {
 }
 
 .cancelBackAuctionButton:hover .cancelTableIcon {
-  background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/cancelTable_icon_hover.svg');
 }
 
 .acceptBackAuctionButton .acceptBackAuctionIcon {
@@ -152,7 +152,7 @@ tbody tr:nth-child(odd) {
 }
 
 .acceptBackAuctionButton:hover .assignTableIcon {
-  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/assignTable_icon_hover.svg');
 }
 
 .refreshAuctionButton .refreshAuctionIcon {

@@ -101,8 +101,18 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
                     </div>
                   </a>
                   <BasicTooltip title="Usuń">
-                    <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
-                      <CancelIcon sx={{ color: '#aab1c6', height: '22px', width: '22px', "&:hover": { color: "#FF4A4A" } }} />
+                    <div
+                      className="deleteOrderFileButton"
+                      onClick={() => serverFileRemove(item.id)}
+                    >
+                      <CancelIcon
+                        sx={{
+                          color: '#aab1c6',
+                          height: '22px',
+                          width: '22px',
+                          '&:hover': { color: '#FF4A4A' },
+                        }}
+                      />
                     </div>
                   </BasicTooltip>
                 </div>
@@ -124,7 +134,14 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
                   </a>
                   <BasicTooltip title="Usuń">
                     <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
-                      <CancelIcon sx={{ color: '#aab1c6', height: '22px', width: '22px', "&:hover": { color: "#FF4A4A" } }} />
+                      <CancelIcon
+                        sx={{
+                          color: '#aab1c6',
+                          height: '22px',
+                          width: '22px',
+                          '&:hover': { color: '#FF4A4A' },
+                        }}
+                      />
                     </div>
                   </BasicTooltip>
                 </div>

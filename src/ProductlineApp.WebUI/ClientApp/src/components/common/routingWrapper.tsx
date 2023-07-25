@@ -26,7 +26,7 @@ import { TabTitle } from '../../helpers/changePageTitle';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
-  TabTitle("productline.")
+  TabTitle('productline.');
 
   return (
     <Routes>

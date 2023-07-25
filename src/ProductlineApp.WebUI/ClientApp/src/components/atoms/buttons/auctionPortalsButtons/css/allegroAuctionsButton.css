@@ -28,7 +28,7 @@
 }
 
 .allegroButton:hover .allegroAuctionsIcon {
-  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/allegro_icon_hover.svg');
 }
 
 .allegroButton.selected {
@@ -37,5 +37,5 @@
 }
 
 .allegroButton.selected .allegroAuctionsIcon {
-  background-image: url('../../../../../assets/icons/allegro_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/allegro_icon_hover.svg');
 }

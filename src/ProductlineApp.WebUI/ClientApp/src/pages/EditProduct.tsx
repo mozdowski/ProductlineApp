@@ -38,8 +38,7 @@ export enum PhotoSource {
 }
 
 export default function EditProduct() {
-
-  TabTitle("productline. Edytuj Produkt")
+  TabTitle('productline. Edytuj Produkt');
 
   const { productsService } = useProductsService();
   const navigate = useNavigate();

@@ -1,0 +1,83 @@
+name: Build and deploy .NET Core with React app to Azure Web App
+
+on:
+  push:
+    branches:
+      - main  # Możesz zmienić na inną główną gałąź
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: productline-app  # Nazwa Azure Web App
+  AZURE_WEBAPP_PACKAGE_PATH: 'src/ProductlineApp.WebUI'  # Ścieżka do projektu webowego, w tym przypadku projektu ASP.NET z Reactem
+  DOTNET_VERSION: '6.0'  # Wersja .NET Core do użycia
+  NODE_VERSION: '16'   # Wersja Node.js do użycia
+  YARN_VERSION: '1.22.17'   # Wersja Yarn do użycia
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn@${{ env.YARN_VERSION }}
+
+      - name: Build Backend
+        run: dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/backend
+
+      - name: Build Frontend
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp
+        run: |
+          yarn install
+          yarn build
+
+      - name: Upload Backend artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: dotnet-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Upload Frontend artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: react-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp/build
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download Backend Artifact from Build Job
+        uses: actions/download-artifact@v2
+        with:
+          name: dotnet-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+
+      - name: Download Frontend Artifact from Build Job
+        uses: actions/download-artifact@v2
+        with:
+          name: react-app
+          path: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp/build
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+

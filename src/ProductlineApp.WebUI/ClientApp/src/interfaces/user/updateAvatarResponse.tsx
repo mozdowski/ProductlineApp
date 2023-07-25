@@ -1,4 +1,4 @@
-export default interface UpdateAvatarResponse {
+export interface UpdateAvatarResponse {
   url: string;
   name: string;
 }

@@ -20,8 +20,7 @@ import { bool } from 'prop-types';
 import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Auctions() {
-
-  TabTitle("productline. Aukcje")
+  TabTitle('productline. Aukcje');
 
   const { platforms, getPlatformByName } = usePlatforms();
   const [selectedAuctionPortal, setSelectedAuctionPortal] = useState<PlatformAuthUrl | undefined>();

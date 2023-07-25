@@ -1,0 +1,71 @@
+name: BE and FE deployed on different services
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  BACKEND_APP_NAME: productline-backend  # Nazwa Azure App Service dla backendu
+  FRONTEND_APP_NAME: productline-app  # Nazwa Azure App Service dla frontendu
+  BACKEND_PACKAGE_PATH: 'src/ProductlineApp.WebUI'  # Ścieżka do projektu backendu
+  FRONTEND_PACKAGE_PATH: 'src/ProductlineApp.WebUI/ClientApp'  # Ścieżka do projektu frontendu
+  DOTNET_VERSION: '6.0'
+  NODE_VERSION: '16'
+  YARN_VERSION: '1.22.17'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy-backend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Build Backend
+        working-directory: ${{ env.BACKEND_PACKAGE_PATH }}
+        run: dotnet publish -c Release -o backend
+
+      - name: Deploy Backend to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.BACKEND_APP_NAME }}
+          publish-profile: ${{ secrets.BACKEND_APP_PUBLISH_PROFILE }}
+          package: ${{ env.BACKEND_PACKAGE_PATH }}/backend
+
+  build-and-deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn@${{ env.YARN_VERSION }}
+
+      - name: Build Frontend
+        working-directory: ${{ env.FRONTEND_PACKAGE_PATH }}
+        run: |
+          yarn install
+          yarn build
+
+      - name: Deploy Frontend to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.FRONTEND_APP_NAME }}
+          publish-profile: ${{ secrets.FRONTEND_APP_PUBLISH_PROFILE }}
+          package: ${{ env.FRONTEND_PACKAGE_PATH }}/build

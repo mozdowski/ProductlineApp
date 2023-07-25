@@ -40,7 +40,10 @@ export const TableFooter = ({
         <FormSelect
           value={currentRowsCount}
           onChange={(name: string, value: string) => onRowsPerPageChange(parseInt(value))}
-          options={[5, 10, 15].map((x) => ({ value: x, label: x.toString() }))}
+          options={[5, 10, 15].map((x) => ({
+            value: x,
+            label: x.toString(),
+          }))}
           name={'rowsPerPage'}
           error={undefined}
           inputHeight={31}

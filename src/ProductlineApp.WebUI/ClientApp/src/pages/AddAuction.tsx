@@ -18,8 +18,7 @@ const validationSchema = Yup.object().shape({
 });
 
 export default function AddAuction() {
-
-  TabTitle("productline. Dodaj Aukcje")
+  TabTitle('productline. Dodaj Aukcje');
 
   const navigate = useNavigate();
   const { selectedProduct, setSelectedProduct } = useSelectedProduct();
@@ -40,8 +39,9 @@ export default function AddAuction() {
   const handleShowConfirmation = () => {
     const confirmationText =
       allegroListingForm || ebayListingForm
-        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm ? 'Allegro' : ''} ${ebayListingForm ? 'oraz Ebay' : ''
-        }?`
+        ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm ? 'Allegro' : ''} ${
+            ebayListingForm ? 'oraz Ebay' : ''
+          }?`
         : 'Brak zadeklarowanych ofert na platformy - utworzony zostanie jedynie szablon. Czy chcesz kontynuować?';
     showConfirmation(confirmationText, handleConfirmAction);
   };

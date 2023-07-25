@@ -12,7 +12,7 @@ import { ProductStatistics } from '../interfaces/dashboard/mostPopularProductsCh
 import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Dashboard() {
-  TabTitle("productline. Dashboard")
+  TabTitle('productline. Dashboard');
 
   const actualDate = new Date();
   const date = actualDate.toLocaleString('default', {

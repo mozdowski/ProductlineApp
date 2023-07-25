@@ -33,7 +33,9 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
 }) => {
   const { auctionsService } = useAuctionsService();
   const [categoryAspects, setCategoryAspects] = useState<EbayCategoryAspect[]>([]);
-  const [parametersForm, setParametersForm] = useState<{ [index: string]: any }>({});
+  const [parametersForm, setParametersForm] = useState<{
+    [index: string]: any;
+  }>({});
   const [errors, setErrors] = useState<Partial<typeof parametersForm>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [validationSchema, setValidationSchema] = useState<Yup.ObjectSchema<any> | null>(null);
@@ -77,7 +79,9 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
   const validateForm = async () => {
     if (!validationSchema) return true;
     try {
-      await validationSchema.validate(parametersForm, { abortEarly: false });
+      await validationSchema.validate(parametersForm, {
+        abortEarly: false,
+      });
       setErrors({});
       return true;
     } catch (validationErrors: any) {

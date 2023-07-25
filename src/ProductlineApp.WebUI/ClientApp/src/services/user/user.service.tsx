@@ -1,7 +1,6 @@
 import { GainAccessTokenRequest } from '../../interfaces/platforms/gainAccessTokenRequest';
 import { ChangePasswordRequest } from '../../interfaces/user/changePasswordRequest';
 import { DisconnectPlatformRequest } from '../../interfaces/user/disconnectPlatformRequest';
-import UpdateAvatarResponse from '../../interfaces/user/updateAvatarResponse';
 import HttpService from '../common/http.service';
 
 export class UserService {

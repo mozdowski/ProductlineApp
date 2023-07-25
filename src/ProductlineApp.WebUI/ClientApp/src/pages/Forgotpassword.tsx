@@ -5,7 +5,7 @@ import ResetPasswordButton from '../components/atoms/buttons/resetPasswordButton
 import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Forgotpassword() {
-  TabTitle("productline. Zapomniałeś hasła")
+  TabTitle('productline. Zapomniałeś hasła');
 
   return (
     <>

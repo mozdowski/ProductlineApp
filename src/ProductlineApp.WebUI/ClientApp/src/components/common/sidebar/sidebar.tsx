@@ -44,13 +44,13 @@ const SidebarOutHandler = (event: React.MouseEvent<HTMLDivElement>) => {
 
 function CustomLink({
   to,
-  children,
+  title,
   image,
   onClick,
   ...props
 }: {
   to: string;
-  children: string;
+  title: string;
   image: string;
   onClick?: () => void;
 }) {
@@ -67,7 +67,7 @@ function CustomLink({
     <li className={isActive ? 'nav__link active' : 'nav__link'} id="nav__link">
       <Link to={to} className="link" id="link" onClick={handleClick} {...props}>
         <img id="image" src={image} className="sidebar-img" />
-        <span className="nav__name">{children}</span>
+        <span className="nav__name">{title}</span>
       </Link>
     </li>
   );
@@ -90,24 +90,19 @@ function Sidebar() {
       </div>
 
       <ul className="nav__list">
-        <CustomLink to="/dashboard" children="Dashboard" image={DashboardImage}></CustomLink>
+        <CustomLink to="/dashboard" title="Dashboard" image={DashboardImage}></CustomLink>
 
-        <CustomLink to="/products" children="Produkty" image={ProductsImage}></CustomLink>
+        <CustomLink to="/products" title="Produkty" image={ProductsImage}></CustomLink>
 
-        <CustomLink to="/auctions" children="Aukcje" image={AuctionsImage}></CustomLink>
+        <CustomLink to="/auctions" title="Aukcje" image={AuctionsImage}></CustomLink>
 
-        <CustomLink to="/orders" children="Zamówienia" image={OrdersImage}></CustomLink>
+        <CustomLink to="/orders" title="Zamówienia" image={OrdersImage}></CustomLink>
 
         <div className="separator" id="separator"></div>
 
-        <CustomLink to="/settings" children="Ustawienia" image={SettingsImage}></CustomLink>
+        <CustomLink to="/settings" title="Ustawienia" image={SettingsImage}></CustomLink>
 
-        <CustomLink
-          to="/logout"
-          children="Wyloguj"
-          image={LogoutImage}
-          onClick={logout}
-        ></CustomLink>
+        <CustomLink to="/logout" title="Wyloguj" image={LogoutImage} onClick={logout}></CustomLink>
       </ul>
     </div>
   );

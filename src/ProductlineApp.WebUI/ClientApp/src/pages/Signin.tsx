@@ -33,7 +33,7 @@ const signinSchema = Yup.object().shape({
 });
 
 export default function Signin() {
-  TabTitle("productline. Zarejestruj się")
+  TabTitle('productline. Zarejestruj się');
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [signinForm, setSigninForm] = useState<SigninForm>({

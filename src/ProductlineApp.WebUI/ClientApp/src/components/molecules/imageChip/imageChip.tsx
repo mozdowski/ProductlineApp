@@ -13,7 +13,7 @@ const ImageChipStyle = {
     height: '22px',
     zIndex: 1,
     color: '#aab1c6',
-    "&:hover": { color: "#FF4A4A" }
+    '&:hover': { color: '#FF4A4A' },
   },
   '& .MuiChip-avatar': {
     width: '100%',

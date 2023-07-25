@@ -100,7 +100,7 @@
 }
 
 .deleteOrderFileButton:hover .deleteFileOrderIcon {
-  background-image: url('../../../../../assets/icons/deleteFile_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/deleteFile_icon_hover.svg');
 }
 
 .orderFilePreviev:hover .deleteOrderFileButton {

@@ -18,11 +18,7 @@ export const ProfileDetails = ({
   return (
     <div className="profileDetails grid-col-span-2">
       <h1>Szczegóły Profilu</h1>
-      <ChangeProfilePhotoSection
-        image={image}
-        UserImage={UserImage}
-        changeAvatar={changeAvatar}
-      />
+      <ChangeProfilePhotoSection image={image} UserImage={UserImage} changeAvatar={changeAvatar} />
       <ChangePersonalDataSection UserName={UserName} UserEmail={UserEmail} />
     </div>
   );

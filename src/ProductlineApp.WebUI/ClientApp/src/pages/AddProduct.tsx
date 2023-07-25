@@ -25,8 +25,7 @@ const productSchema = Yup.object().shape({
 });
 
 export default function AddProduct() {
-
-  TabTitle("productline. Dodaj Produkt")
+  TabTitle('productline. Dodaj Produkt');
 
   const { productsService } = useProductsService();
   const navigate = useNavigate();
@@ -171,6 +170,8 @@ export default function AddProduct() {
         onChange={handleChange}
         errors={errors}
         onPhotoMove={handleMovePhoto}
-        onPhotoDelete={handleDeletePhoto} /></>
+        onPhotoDelete={handleDeletePhoto}
+      />
+    </>
   );
 }

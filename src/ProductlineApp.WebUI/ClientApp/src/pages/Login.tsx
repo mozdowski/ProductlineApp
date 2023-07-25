@@ -21,7 +21,7 @@ interface LoginForm {
 }
 
 export default function Login() {
-  TabTitle("productline. Zaloguj się")
+  TabTitle('productline. Zaloguj się');
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [loginForm, setLoginForm] = useState<LoginForm>({

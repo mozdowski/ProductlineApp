@@ -111,7 +111,7 @@ tbody tr:nth-child(odd) {
 }
 
 .canceleDeleteProductButton:hover .cancelTableIcon {
-  background-image: url('../../../../../assets/icons/cancelTable_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/cancelTable_icon_hover.svg');
 }
 
 .acceptDeleteProductButton .acceptDeleteProductIcon {
@@ -132,7 +132,7 @@ tbody tr:nth-child(odd) {
 }
 
 .acceptDeleteProductButton:hover .assignTableIcon {
-  background-image: url('../../../../../assets/icons/assignTable_icon:hover.svg');
+  background-image: url('../../../../../assets/icons/assignTable_icon_hover.svg');
 }
 
 @media only screen and (max-width: 1715px) {
