@@ -71,7 +71,7 @@ export default function Settings() {
     if (!e.target.files) return;
 
     try {
-      formData.append('avatar', e.target.files[0]);
+      formData.append('avatar', e.target.files[0] as File);
 
       //console.log("handleAvatarChange - zdjecie " + e.target.files[0]);
       //console.log("handleAvatarChange - " + e.target.files[0]);
