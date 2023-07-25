@@ -7,6 +7,8 @@ import fileImageIcon from '../../../../assets/icons/imageFile_icon.png';
 import uploadIcon from '../../../../assets/icons/uplaodFiles_icon.svg';
 import ConfirmUploadedFilesButton from '../../buttons/confirmUploadedFilesButton/ConfirmUploadedFilesButton';
 import { OrderDocument } from '../../../../interfaces/orders/orderDocumentsResponse';
+import CancelIcon from '@mui/icons-material/Cancel';
+import BasicTooltip from '../../common/tooltip/basicTooltip';
 
 interface DropFileInputProps {
   orderDocuments: OrderDocument[];
@@ -98,9 +100,11 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
                       <p>{item.name}</p>
                     </div>
                   </a>
-                  <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
-                    <span className="deleteOrderFileIcon deleteFileOrderIcon" />
-                  </div>
+                  <BasicTooltip title="Usuń">
+                    <div className="deleteOrderFileButton" onClick={() => serverFileRemove(item.id)}>
+                      <CancelIcon sx={{ color: '#aab1c6', height: '22px', width: '22px', "&:hover": { color: "#FF4A4A" } }} />
+                    </div>
+                  </BasicTooltip>
                 </div>
               </React.Fragment>
             ))}
@@ -118,9 +122,11 @@ const DropFileInput: React.FC<DropFileInputProps> = ({ orderDocuments, onFilesSu
                       <p>{item.name}</p>
                     </div>
                   </a>
-                  <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
-                    <span className="deleteOrderFileIcon deleteFileOrderIcon" />
-                  </div>
+                  <BasicTooltip title="Usuń">
+                    <div className="deleteOrderFileButton" onClick={() => uploadedFileRemove(item)}>
+                      <CancelIcon sx={{ color: '#aab1c6', height: '22px', width: '22px', "&:hover": { color: "#FF4A4A" } }} />
+                    </div>
+                  </BasicTooltip>
                 </div>
               </React.Fragment>
             ))}

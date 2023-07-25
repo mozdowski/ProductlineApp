@@ -27,9 +27,9 @@ export class UserService {
     return this.httpService.post<void>('/user/changePassword', data);
   }
 
-  public async updateAvatar(data: UpdateAvatarResponse): Promise<void> {
+  public async updateAvatar(data: FormData): Promise<void> {
     return this.httpService.put<void>('/user/updateAvatar', data);
   }
 }
 
-export {};
+export { };

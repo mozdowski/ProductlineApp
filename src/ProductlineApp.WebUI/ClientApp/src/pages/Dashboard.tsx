@@ -9,8 +9,11 @@ import WeekSoldChart from '../components/atoms/charts/WeekSoldChart';
 import { AuctionsChartData } from '../interfaces/dashboard/auctionsChartData';
 import { useStatisticsService } from '../hooks/statistics/useStatisticsService';
 import { ProductStatistics } from '../interfaces/dashboard/mostPopularProductsChartData';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Dashboard() {
+  TabTitle("productline. Dashboard")
+
   const actualDate = new Date();
   const date = actualDate.toLocaleString('default', {
     day: 'numeric',

@@ -9,9 +9,13 @@ import { ChangePasswordForm } from '../interfaces/settings/changePasswordForm';
 import { ChangePasswordRequest } from '../interfaces/user/changePasswordRequest';
 import UpdateAvatarResponse from '../interfaces/user/updateAvatarResponse';
 import { log } from 'console';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Settings() {
-  const [image, setImage] = useState<File | null>(null);
+
+  TabTitle("productline. Ustawienia")
+
+  const [image, setImage] = useState<File | undefined>();
   const { user } = useAuth();
   const { platforms } = usePlatforms();
   const { userService } = useUserService();
@@ -27,11 +31,12 @@ export default function Settings() {
     fetchData();
   }, [reloadPage]);
 
-  const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /*const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     setImage(e.target.files[0]);
   };
+  */
 
   const handleDisconnect = async (platformId: string) => {
     try {
@@ -60,16 +65,22 @@ export default function Settings() {
     }
   };
 
-  const handleAvatarChange = async () => {
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData();
+
+    if (!e.target.files) return;
+
     try {
-      const requestData = {
-        url: '',
-        name: showImage.name,
-      };
 
-      console.log('wybrane zdjecie' + showImage);
+      formData.append('avatar', e.target.files[0])
 
-      const response = await userService.updateAvatar(requestData);
+      //console.log("handleAvatarChange - zdjecie " + e.target.files[0]);
+      //console.log("handleAvatarChange - " + e.target.files[0]);
+
+      const response = await userService.updateAvatar(formData);
+
+      setImage(e.target.files[0]);
+
       toast.success('Zmieniono zdjecie profilowe');
     } catch {
       toast.error('Błąd przy zmianie zdjecia');
@@ -80,14 +91,13 @@ export default function Settings() {
     <SettingsTemplate
       platformsAuthUrl={platforms}
       image={image}
-      showImage={showImage}
       UserImage={user?.avatar}
       onDisconnect={handleDisconnect}
       userConnections={platformConnections}
       onPasswordChange={handlePasswordChange}
       UserName={user?.name as string}
       UserEmail={user?.email as string}
-      changeAatar={handleAvatarChange}
+      changeAvatar={handleAvatarChange}
     />
   );
 }

@@ -65,7 +65,7 @@ tbody tr:nth-child(odd) {
 .AuctionsTableRow .productName .productImage {
   height: 32px;
   width: 32px;
-  background-color: aqua;
+  /*background-color: aqua;*/
   border-radius: 8px;
 }
 

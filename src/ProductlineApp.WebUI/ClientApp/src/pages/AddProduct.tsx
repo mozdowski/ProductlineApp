@@ -6,6 +6,7 @@ import { useProductsService } from '../hooks/products/useProductsService';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
 import { toast } from 'react-toastify';
+import { TabTitle } from '../helpers/changePageTitle';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -24,6 +25,9 @@ const productSchema = Yup.object().shape({
 });
 
 export default function AddProduct() {
+
+  TabTitle("productline. Dodaj Produkt")
+
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const [productForm, setProductForm] = useState<ProductForm>({
@@ -157,15 +161,16 @@ export default function AddProduct() {
   };
 
   return (
-    <AddProductTemplate
-      uploadProductPhotos={selectImages}
-      photos={productForm.photos.map((x) => x.url)}
-      onSubmit={handleSubmit}
-      productForm={productForm}
-      onChange={handleChange}
-      errors={errors}
-      onPhotoMove={handleMovePhoto}
-      onPhotoDelete={handleDeletePhoto}
-    />
+    <>
+      <title>Dodaj Produkt</title>
+      <AddProductTemplate
+        uploadProductPhotos={selectImages}
+        photos={productForm.photos.map((x) => x.url)}
+        onSubmit={handleSubmit}
+        productForm={productForm}
+        onChange={handleChange}
+        errors={errors}
+        onPhotoMove={handleMovePhoto}
+        onPhotoDelete={handleDeletePhoto} /></>
   );
 }

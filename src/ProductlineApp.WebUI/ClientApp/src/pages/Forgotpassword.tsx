@@ -2,8 +2,11 @@ import { Link } from 'react-router-dom';
 import '../pages/css/Forgotpassword.css';
 import BackButtonImage from '../assets/icons/back_icon.png';
 import ResetPasswordButton from '../components/atoms/buttons/resetPasswordButton/ResetPasswordButton';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Forgotpassword() {
+  TabTitle("productline. Zapomniałeś hasła")
+
   return (
     <>
       <div className="forgotPasswordBackground">

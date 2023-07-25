@@ -4,27 +4,24 @@ import './css/profileDetails.css';
 
 export const ProfileDetails = ({
   image,
-  showImage,
   UserImage,
   UserName,
   UserEmail,
-  changeAatar,
+  changeAvatar,
 }: {
   image: any;
-  showImage: any;
   UserImage: any;
   UserName: string;
   UserEmail: string;
-  changeAatar: () => any;
+  changeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) => {
   return (
     <div className="profileDetails grid-col-span-2">
       <h1>Szczegóły Profilu</h1>
       <ChangeProfilePhotoSection
         image={image}
-        showImage={showImage}
         UserImage={UserImage}
-        changeAatar={changeAatar}
+        changeAvatar={changeAvatar}
       />
       <ChangePersonalDataSection UserName={UserName} UserEmail={UserEmail} />
     </div>

@@ -1,11 +1,9 @@
 import './css/changeProfilePhotoButton.css';
 
 function ChangeProfilePhotoButton({
-  showImage,
-  changeAatar,
+  changeAvatar,
 }: {
-  showImage: any;
-  changeAatar: () => void;
+  changeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <div className="changeProfilePhotoButton">
@@ -15,8 +13,7 @@ function ChangeProfilePhotoButton({
         id="profilePhoto"
         name="profilePhoto"
         className="profilePhoto"
-        onChange={showImage}
-        onClick={changeAatar}
+        onChange={changeAvatar}
       />
       <p>Zmień zdjęcie profilowe</p>
     </div>
