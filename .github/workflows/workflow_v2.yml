@@ -1,0 +1,55 @@
+name: Build and deploy .NET Core with React app to Azure Web App
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+env:
+  AZURE_WEBAPP_NAME: productline-app
+  AZURE_WEBAPP_PACKAGE_PATH: 'src/ProductlineApp.WebUI' 
+  DOTNET_VERSION: '6.0'
+  NODE_VERSION: '16'
+  YARN_VERSION: '1.22.17'
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ env.DOTNET_VERSION }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install Yarn
+        run: npm install -g yarn@${{ env.YARN_VERSION }}
+
+      - name: Build Backend
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}
+        run: dotnet publish -c Release -o backend
+
+      - name: Build Frontend
+        working-directory: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/ClientApp
+        run: |
+          yarn install
+          yarn build
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.AZURE_WEBAPP_NAME }}
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/backend
