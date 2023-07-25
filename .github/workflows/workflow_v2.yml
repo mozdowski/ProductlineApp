@@ -12,6 +12,7 @@ env:
   DOTNET_VERSION: '6.0'
   NODE_VERSION: '16'
   YARN_VERSION: '1.22.17'
+  REACT_APP_API_SERVER_URL: 'https://productline-backend.azurewebsites.net/api/'
 
 permissions:
   contents: read
@@ -46,6 +47,7 @@ jobs:
         run: |
           yarn install
           yarn build
+          echo "REACT_APP_API_SERVER_URL=${{ env.REACT_APP_API_SERVER_URL }}" > .env.production
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
