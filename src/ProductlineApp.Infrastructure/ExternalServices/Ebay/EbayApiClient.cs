@@ -5,6 +5,7 @@ using ProductlineApp.Shared.Models.Ebay;
 using RestSharp;
 using RestSharp.Authenticators;
 using System.Net;
+using System.Web;
 using Newtonsoft.Json;
 using ProductlineApp.Application.Common.Platforms.Ebay.DTO;
 
@@ -32,7 +33,7 @@ public class EbayApiClient : IEbayApiClient
             { "client_id", this._ebayConfiguration.ClientId },
             { "response_type", "code" },
             { "redirect_uri", $"{this._ebayConfiguration.RedirectUri}/{platformId}" },
-            { "scope", this._ebayConfiguration.Scopes },
+            { "scope", HttpUtility.UrlEncode(this._ebayConfiguration.Scopes) },
         };
 
         string queryString = string.Join("&", queryParams.Select(x => $"{x.Key}={x.Value}"));
