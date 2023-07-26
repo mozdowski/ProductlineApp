@@ -8,6 +8,7 @@ import { useAuth } from '../hooks/auth/useAuth';
 import * as Yup from 'yup';
 import FormInput from '../components/atoms/common/formInput/formInput';
 import { toast } from 'react-toastify';
+import { TabTitle } from '../helpers/changePageTitle';
 
 const loginSchema = Yup.object().shape({
   email: Yup.string().email('Podaj poprawny adres email').required('Email jest wymagany'),
@@ -20,6 +21,8 @@ interface LoginForm {
 }
 
 export default function Login() {
+  TabTitle('productline. Zaloguj się');
+
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [loginForm, setLoginForm] = useState<LoginForm>({
     email: '',

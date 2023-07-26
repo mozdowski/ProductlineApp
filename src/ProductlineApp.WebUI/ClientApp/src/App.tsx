@@ -8,7 +8,6 @@ import { PlatformsProvider } from './providers/platformsProvider';
 import { PopupProvider } from './providers/popupProvider';
 
 function App() {
-  console.log(process.env);
   return (
     <AuthProvider>
       <PlatformsProvider>

@@ -10,7 +10,7 @@ export default function AddProductPageHeader() {
           <h1>Dodaj Produkt</h1>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton/>*/}
           <UserAccountButton />
         </div>
       </div>

@@ -71,8 +71,7 @@ function WeekSoldChart({ weeklySellsChartData }: { weeklySellsChartData: number[
 
   return (
     <div className="chart4">
-      <h1>Sprzedaz Tygodnia</h1>
-
+      <h1>Sprzedaż Tygodnia</h1>
       <ReactEcharts option={option} style={{ height: '340px' }} />
     </div>
   );

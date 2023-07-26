@@ -8,8 +8,12 @@ const ImageChipStyle = {
   border: 'none',
   position: 'relative',
   '& .MuiChip-deleteIcon': {
-    margin: '-12px -12px auto auto',
+    margin: '-12px -13px auto auto',
+    width: '22px',
+    height: '22px',
     zIndex: 1,
+    color: '#aab1c6',
+    '&:hover': { color: '#FF4A4A' },
   },
   '& .MuiChip-avatar': {
     width: '100%',
@@ -17,7 +21,7 @@ const ImageChipStyle = {
     borderRadius: '8px',
     margin: 0,
     position: 'absolute',
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#FFFFFF',
   },
 };
 
@@ -25,6 +29,7 @@ interface ImageChipProps {
   onDelete: () => void;
   imageUrl: string;
   id: string;
+
   moveChip: (dragIndex: number, hoverIndex: number) => void;
   index: number;
 }
@@ -51,11 +56,11 @@ const ImageChip: React.FC<ImageChipProps> = ({ imageUrl, id, onDelete, moveChip,
   return (
     <div ref={(node) => drag(drop(node))} style={{ opacity: isDragging ? 0 : 1 }}>
       <Chip
-        variant="outlined"
+        variant="filled"
         onDelete={onDelete}
         avatar={
           <Avatar>
-            <img src={imageUrl} key={id} className="productImage" alt="Product" />
+            <img src={imageUrl} key={id} className="productImagePreviev" alt="Product" />
           </Avatar>
         }
         sx={ImageChipStyle}

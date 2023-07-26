@@ -72,11 +72,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     localStorage.removeItem('user');
   };
 
+  const updateUserData = (newUserData: User) => {
+    setUser(newUserData);
+    localStorage.setItem('user', JSON.stringify(newUserData));
+  };
+
   const authContextValue: AuthContextProps = {
     user,
     register,
     login,
     logout,
+    updateUserData,
   };
 
   return <AuthContext.Provider value={authContextValue}>{children}</AuthContext.Provider>;

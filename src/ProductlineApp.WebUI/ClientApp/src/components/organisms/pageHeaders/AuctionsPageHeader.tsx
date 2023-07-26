@@ -12,7 +12,7 @@ export default function AuctionsPageHeader() {
           <p>Lista twoich produktów wystawionych na aukcje</p>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton/>*/}
           <AddProductButton />
           <UserAccountButton />
         </div>

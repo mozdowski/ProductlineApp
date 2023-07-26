@@ -12,6 +12,7 @@ import { RegisterRequest } from '../interfaces/auth/registerRequest';
 import * as Yup from 'yup';
 import FormInput from '../components/atoms/common/formInput/formInput';
 import { toast } from 'react-toastify';
+import { TabTitle } from '../helpers/changePageTitle';
 
 interface SigninForm {
   username: string;
@@ -32,6 +33,8 @@ const signinSchema = Yup.object().shape({
 });
 
 export default function Signin() {
+  TabTitle('productline. Zarejestruj się');
+
   const [isPasswordVisible, setPasswordVisible] = useState(false);
   const [signinForm, setSigninForm] = useState<SigninForm>({
     username: '',
@@ -114,7 +117,7 @@ export default function Signin() {
         <div className="signin">
           <div className="signinSection">
             <Link to="/login" className="backToLoginPageLink" id="link">
-              <img className="backButton" src={BackButtonImage} />
+              <img className="backToLoginButton" src={BackButtonImage} />
             </Link>
 
             <h1>Zarejestruj się</h1>

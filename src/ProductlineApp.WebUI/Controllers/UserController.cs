@@ -25,7 +25,7 @@ public class UserController : ControllerBase
         this._currentUser = currentUser;
     }
 
-    [HttpPut("updateAvatar")]
+    [HttpPost("updateAvatar")]
     public async Task<IActionResult> UpdateAvatar([FromForm] IFormFile avatar)
     {
         var command = new UpdateAvatarCommand.Command(this._currentUser.UserId.GetValueOrDefault(), avatar);

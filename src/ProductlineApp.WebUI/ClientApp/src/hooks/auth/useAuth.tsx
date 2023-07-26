@@ -10,7 +10,7 @@ export const useAuth = () => {
     throw new Error('useAuth must be used within an AuthProvider');
   }
 
-  const { user, register, login, logout } = authContext;
+  const { user, register, login, logout, updateUserData } = authContext;
 
   const isAuthenticated = () => {
     const userFromLocalStorage = localStorage.getItem('user');
@@ -55,7 +55,18 @@ export const useAuth = () => {
     }
   };
 
-  return { user, register, login, logout, isAuthenticated };
+  const updateAvatar = (newAvatarUrl: string) => {
+    if (!isAuthenticated()) return;
+
+    const newUserData: User = {
+      ...(user as User),
+      avatar: newAvatarUrl,
+    };
+
+    updateUserData(newUserData);
+  };
+
+  return { user, register, login, logout, isAuthenticated, updateAvatar };
 };
 
 export {};

@@ -163,7 +163,10 @@ export const AuctionsTableRow = ({
                       </BasicTooltip>
                     )}
                     {isWithdrawLoading && (
-                      <CircularProgress size={22} sx={{ marginRight: '8px' }} />
+                      <CircularProgress
+                        size={22}
+                        sx={{ marginRight: '8px', color: 'var(--first-color)' }}
+                      />
                     )}
                   </>
                 ) : (
@@ -181,7 +184,10 @@ export const AuctionsTableRow = ({
                       </BasicTooltip>
                     )}
                     {isReactivateLoading && (
-                      <CircularProgress size={22} sx={{ marginRight: '8px' }} />
+                      <CircularProgress
+                        size={22}
+                        sx={{ marginRight: '8px', color: 'var(--first-color)' }}
+                      />
                     )}
                     {/* <img className="deleteAuctionIcon" src={DeleteAuctionIcon} alt="Delete Icon" onClick={handleClickAllowDelete} /> */}
                   </>

@@ -88,7 +88,6 @@ tbody tr:nth-child(odd) {
   cursor: pointer;
   width: 27px;
   height: 25px;
-  margin-right: 8px;
   background-size: cover;
 }
 
@@ -120,4 +119,16 @@ tbody tr:nth-child(odd) {
 
 .assignedOrderButton:hover .assignTableIcon {
   background-image: url('../../../../../assets/icons/assignTable_icon_hover.svg');
+}
+
+@media only screen and (max-width: 1420px) {
+  .OrdersTableRow td {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .OrdersTableRow td {
+    font-size: 12px;
+  }
 }

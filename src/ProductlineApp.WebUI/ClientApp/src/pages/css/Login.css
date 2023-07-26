@@ -9,7 +9,7 @@
 .loginBackground .login {
   background-color: #ffffff;
   width: 680px;
-  height: 577px;
+  /*height: 577px;*/
   border-radius: 8px;
   margin-left: auto;
   margin-right: auto;
@@ -42,7 +42,10 @@
 
 .loginBackground .login .loginSection .passwordField .imageEye {
   position: relative;
-  left: 325px;
+  /* left: -14px; */
+  margin-right: 14px;
+  float: right;
+  /* margin-bottom: 35px; */
   bottom: 30px;
   height: 16px;
   width: 16px;

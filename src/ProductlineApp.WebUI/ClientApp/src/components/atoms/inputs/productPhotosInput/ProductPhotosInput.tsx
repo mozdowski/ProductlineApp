@@ -20,7 +20,7 @@ function ProductPhotosInput({
       <label htmlFor="uploadPhotos" className="uploadPhotosLabel">
         Zdjęcia
       </label>
-      <p>! Pierwsze zdjecie jest zdjeciem głównym</p>
+      <p>Pierwsze zdjecie jest zdjeciem głównym</p>
       <div className="productPhotos">
         {photos.map((url, index) => (
           <ImageChip

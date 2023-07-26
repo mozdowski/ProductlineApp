@@ -10,27 +10,37 @@ import { ChangePasswordForm } from '../../interfaces/settings/changePasswordForm
 
 export default function SettingsTemplate({
   image,
-  showImage,
   UserImage,
+  UserName,
+  UserEmail,
   platformsAuthUrl,
   onDisconnect,
   userConnections,
   onPasswordChange,
+  changeAvatar,
 }: {
   image: any;
-  showImage: any;
   UserImage: any;
+  UserName: string;
+  UserEmail: string;
   platformsAuthUrl: PlatformAuthUrl[];
   onDisconnect: (platformId: string) => void;
   userConnections: string[];
   onPasswordChange: (data: ChangePasswordForm) => void;
+  changeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
       <SettingsPageHeader />
       <div className="content">
         <div className="settings">
-          <ProfileDetails image={image} showImage={showImage} UserImage={UserImage} />
+          <ProfileDetails
+            image={image}
+            UserImage={UserImage}
+            UserName={UserName}
+            UserEmail={UserEmail}
+            changeAvatar={changeAvatar}
+          />
           {platformsAuthUrl.length > 0 && (
             <ConnectAccountToPortals
               platformsAuthUrl={platformsAuthUrl}

@@ -3,21 +3,21 @@ import './css/changeProfilePhotoSection.css';
 
 function ChangeProfilePhotoSection({
   image,
-  showImage,
   UserImage,
+  changeAvatar,
 }: {
   image: any;
-  showImage: any;
   UserImage: any;
+  changeAvatar: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }) {
   return (
     <>
       <div className="changeProfilePhotoSection">
         <img
           className="uploadedImage"
-          src={image === null ? UserImage : URL.createObjectURL(image)}
+          src={image === undefined ? UserImage : URL.createObjectURL(image)}
         ></img>
-        <ChangeProfilePhotoButton showImage={showImage} />
+        <ChangeProfilePhotoButton changeAvatar={changeAvatar} />
       </div>
     </>
   );

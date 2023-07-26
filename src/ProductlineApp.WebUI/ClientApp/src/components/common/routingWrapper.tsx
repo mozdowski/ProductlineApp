@@ -22,9 +22,11 @@ import { AddAuctionProvider } from '../../providers/addAuctionProvider';
 import { StatisticsProvider } from '../../providers/statisticsProvider';
 import EditProduct from '../../pages/EditProduct';
 import DndProviderWrapper from '../../providers/dndProviderWrapper';
+import { TabTitle } from '../../helpers/changePageTitle';
 
 const RoutingWrapper = () => {
   const { isAuthenticated } = useAuth();
+  TabTitle('productline.');
 
   return (
     <Routes>

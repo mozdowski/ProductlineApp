@@ -1,3 +1,4 @@
+import AddProductButton from '../../atoms/buttons/addProductButtons/AddProductButton';
 import ChangeDarkModeButtton from '../../atoms/buttons/changeDarkModeButton/ChangeDarkModeButtton';
 import UserAccountButton from '../../atoms/buttons/userAccountButton/UserAccountButton';
 import './css/PageHeader.css';
@@ -10,7 +11,8 @@ export default function EditProductPageHeader() {
           <h1>Edytuj Produkt</h1>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton/>*/}
+          <AddProductButton />
           <UserAccountButton />
         </div>
       </div>

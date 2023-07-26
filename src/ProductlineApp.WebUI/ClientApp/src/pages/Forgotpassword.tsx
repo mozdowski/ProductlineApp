@@ -2,15 +2,18 @@ import { Link } from 'react-router-dom';
 import '../pages/css/Forgotpassword.css';
 import BackButtonImage from '../assets/icons/back_icon.png';
 import ResetPasswordButton from '../components/atoms/buttons/resetPasswordButton/ResetPasswordButton';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Forgotpassword() {
+  TabTitle('productline. Zapomniałeś hasła');
+
   return (
     <>
       <div className="forgotPasswordBackground">
         <div className="forgotPassword">
           <div className="forgotPasswordSection">
             <Link to="/login" className="backToLoginPageLink" id="link">
-              <img className="backButton" src={BackButtonImage} />
+              <img className="backToLoginButton" src={BackButtonImage} />
             </Link>
 
             <h1>Reset hasła</h1>
@@ -25,7 +28,6 @@ export default function Forgotpassword() {
                 placeholder="Podaj email"
                 className="emailInput"
               ></input>
-
               <ResetPasswordButton />
             </form>
           </div>

@@ -5,13 +5,20 @@ import ButtonsSection from '../../../molecules/settingsSections/buttonsSection/B
 import FormInput from '../../../atoms/common/formInput/formInput';
 import * as Yup from 'yup';
 import { ChangePersonalDetailsForm } from '../../../../interfaces/settings/changePersonalDetailsForm';
+import { useAuth } from '../../../../hooks/auth/useAuth';
 
 const changePersonalDetailsSchema = Yup.object().shape({
   username: Yup.string().required('Nazwa użytkownika jest wymagana'),
   email: Yup.string().email('Nieprawidłowy adres email').required('Email jest wymagany'),
 });
 
-function ChangePersonalDataSection() {
+function ChangePersonalDataSection({
+  UserName,
+  UserEmail,
+}: {
+  UserName: string;
+  UserEmail: string;
+}) {
   const [disableEdit, setDisableEdit] = useState(true);
   const [errors, setErrors] = useState<Partial<ChangePersonalDetailsForm>>({});
 
@@ -20,6 +27,8 @@ function ChangePersonalDataSection() {
   };
 
   const handleConfirm = () => {};
+
+  const { user } = useAuth();
 
   return (
     <>
@@ -36,7 +45,7 @@ function ChangePersonalDataSection() {
               placeholder="Nazwa uzytkownika"
               className="changeUsernameInput"
               disabled={disableEdit}
-              value={''}
+              value={UserName}
               onChange={() => {}}
               error={errors.username}
             />
@@ -52,7 +61,7 @@ function ChangePersonalDataSection() {
               placeholder="Email"
               className="changeEmailInput"
               disabled={disableEdit}
-              value={''}
+              value={UserEmail}
               onChange={() => {}}
               error={errors.email}
             />

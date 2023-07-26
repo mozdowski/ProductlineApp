@@ -51,7 +51,8 @@
   margin-right: 10px;
   font-family: var(--body-font);
   font-size: 12px;
-  font-weight: 300;
+  font-weight: 400;
+  color: var(--letter-color);
 }
 
 .paginationTable .emptyObject {

@@ -11,7 +11,7 @@ export default function ProductsPageHeader() {
           <p>Lista twoich produktów</p>
         </div>
         <div className="pageUserActions">
-          <ChangeDarkModeButtton />
+          {/*<ChangeDarkModeButtton />*/}
           <UserAccountButton />
         </div>
       </div>

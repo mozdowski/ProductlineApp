@@ -11,12 +11,15 @@ import { useSelectedProduct } from '../hooks/auctions/useSelectedProduct';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 import { PlatformEnum } from '../enums/platform.enum';
+import { TabTitle } from '../helpers/changePageTitle';
 
 const validationSchema = Yup.object().shape({
   product: Yup.string().required('Produkt jest wymagany'),
 });
 
 export default function AddAuction() {
+  TabTitle('productline. Dodaj Aukcje');
+
   const navigate = useNavigate();
   const { selectedProduct, setSelectedProduct } = useSelectedProduct();
   const { auctionsService } = useAuctionsService();

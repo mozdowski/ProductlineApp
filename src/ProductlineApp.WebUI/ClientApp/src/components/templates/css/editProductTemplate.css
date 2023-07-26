@@ -4,6 +4,7 @@
   margin-right: 60px;
   margin-bottom: 60px;
   background-color: var(--white-color);
+  /*height: calc(100vh - 247px);*/
   border-radius: 8px;
   position: relative;
   padding: 35px;

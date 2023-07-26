@@ -5,8 +5,11 @@ import { ProductsRecord } from '../interfaces/products/ProductsPageInteface';
 import { mapProductConditionToString } from '../helpers/mappers';
 import { Outlet } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Products(this: any) {
+  TabTitle('productline. Produkty');
+
   const ref = useRef<HTMLInputElement>(null);
   const { productsService } = useProductsService();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

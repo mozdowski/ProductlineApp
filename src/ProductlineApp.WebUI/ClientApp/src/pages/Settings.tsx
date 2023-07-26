@@ -7,10 +7,14 @@ import { DisconnectPlatformRequest } from '../interfaces/user/disconnectPlatform
 import { toast } from 'react-toastify';
 import { ChangePasswordForm } from '../interfaces/settings/changePasswordForm';
 import { ChangePasswordRequest } from '../interfaces/user/changePasswordRequest';
+import { log } from 'console';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Settings() {
-  const [image, setImage] = useState<File | null>(null);
-  const { user } = useAuth();
+  TabTitle('productline. Ustawienia');
+
+  const [image, setImage] = useState<File | undefined>();
+  const { user, updateAvatar } = useAuth();
   const { platforms } = usePlatforms();
   const { userService } = useUserService();
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
@@ -25,11 +29,12 @@ export default function Settings() {
     fetchData();
   }, [reloadPage]);
 
-  const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  /*const showImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
 
     setImage(e.target.files[0]);
   };
+  */
 
   const handleDisconnect = async (platformId: string) => {
     try {
@@ -60,15 +65,36 @@ export default function Settings() {
     }
   };
 
+  const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.item(0);
+    if (!file) return;
+
+    try {
+      const formData = new FormData();
+      formData.append('avatar', file);
+
+      const response = await userService.updateAvatar(formData);
+
+      setImage(file);
+      updateAvatar(response.url);
+
+      toast.success('Zmieniono zdjecie profilowe');
+    } catch {
+      toast.error('Błąd przy zmianie zdjecia');
+    }
+  };
+
   return (
     <SettingsTemplate
       platformsAuthUrl={platforms}
       image={image}
-      showImage={showImage}
       UserImage={user?.avatar}
       onDisconnect={handleDisconnect}
       userConnections={platformConnections}
       onPasswordChange={handlePasswordChange}
+      UserName={user?.name as string}
+      UserEmail={user?.email as string}
+      changeAvatar={handleAvatarChange}
     />
   );
 }

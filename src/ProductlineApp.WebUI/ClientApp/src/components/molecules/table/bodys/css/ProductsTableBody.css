@@ -17,11 +17,17 @@ tbody tr:nth-child(odd) {
 
 .ProductsTableRow td:nth-child(2),
 .ProductsTableRow td:nth-child(3),
-.ProductsTableRow td:nth-child(4),
 .ProductsTableRow td:nth-child(5),
-.ProductsTableRow td:nth-child(6),
 .ProductsTableRow td:nth-child(8) {
   max-width: 80px;
+}
+
+.ProductsTableRow td:nth-child(6) {
+  max-width: 40px;
+}
+
+.ProductsTableRow td:nth-child(4) {
+  max-width: 100px;
 }
 
 .ProductsTableRow td:nth-child(7) {
@@ -38,17 +44,21 @@ tbody tr:nth-child(odd) {
 .ProductsTableRow .productName {
   align-items: center;
   display: inline-flex;
+  text-align: left;
+  margin-left: 30px;
 }
 
 .ProductsTableRow .productName .productImage {
   height: 32px;
   width: 32px;
-  background-color: aqua;
+  /*background-color: aqua;*/
   border-radius: 8px;
 }
 
 .ProductsTableRow .productName p {
   margin-left: 8px;
+  width: 300px;
+  float: left;
 }
 
 /* product status */
@@ -123,4 +133,27 @@ tbody tr:nth-child(odd) {
 
 .acceptDeleteProductButton:hover .assignTableIcon {
   background-image: url('../../../../../assets/icons/assignTable_icon_hover.svg');
+}
+
+@media only screen and (max-width: 1715px) {
+  .ProductsTableRow .productName p {
+    max-width: 200px;
+  }
+}
+
+@media only screen and (max-width: 1420px) {
+  .ProductsTableRow .productName p {
+    max-width: 100px;
+    font-size: 12px;
+  }
+
+  .ProductsTableRow td {
+    font-size: 12px;
+  }
+}
+
+@media only screen and (max-width: 1024px) {
+  .ProductsTableRow td {
+    font-size: 12px;
+  }
 }

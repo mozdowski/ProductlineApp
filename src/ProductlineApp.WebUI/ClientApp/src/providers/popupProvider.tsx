@@ -8,6 +8,7 @@ import {
 import ConfirmationPopup from '../components/common/confirmationPopup/confirmationPopup';
 import { IconButton } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
+import './css/popupProvider.css';
 
 interface PopupProviderProps {
   children: ReactNode;
@@ -63,16 +64,9 @@ export const PopupProvider: React.FC<PopupProviderProps> = ({ children }) => {
           <div className="overlayPopup">
             <div className="popup">
               <div className="closeButton">
-                <IconButton
-                  onClick={hidePopup}
-                  sx={{
-                    float: 'right',
-                    marginRight: '-20px',
-                    marginTop: '-20px',
-                  }}
-                >
-                  <CloseIcon />
-                </IconButton>
+                <div className="closePopupButton" onClick={hidePopup}>
+                  <span className="closePopupIcon closeIcon"></span>
+                </div>
               </div>
               {popupContent}
             </div>

@@ -1,6 +1,7 @@
 import { GainAccessTokenRequest } from '../../interfaces/platforms/gainAccessTokenRequest';
 import { ChangePasswordRequest } from '../../interfaces/user/changePasswordRequest';
 import { DisconnectPlatformRequest } from '../../interfaces/user/disconnectPlatformRequest';
+import { UpdateAvatarResponse } from '../../interfaces/user/updateAvatarResponse';
 import HttpService from '../common/http.service';
 
 export class UserService {
@@ -24,6 +25,10 @@ export class UserService {
 
   public async changePassword(data: ChangePasswordRequest): Promise<void> {
     return this.httpService.post<void>('/user/changePassword', data);
+  }
+
+  public async updateAvatar(data: FormData): Promise<UpdateAvatarResponse> {
+    return this.httpService.post<UpdateAvatarResponse>('/user/updateAvatar', data);
   }
 }
 

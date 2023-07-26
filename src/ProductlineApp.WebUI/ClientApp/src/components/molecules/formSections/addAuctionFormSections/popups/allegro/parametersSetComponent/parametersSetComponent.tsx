@@ -318,7 +318,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
     <div className="allegroPopupBody">
       {isLoading && (
         <div className="loadingCircle">
-          <CircularProgress />
+          <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)' }} />
         </div>
       )}
       {commonParameters && commonParameters.length > 0 && !isLoading && (

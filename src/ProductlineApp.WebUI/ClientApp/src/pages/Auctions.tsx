@@ -17,8 +17,11 @@ import EbayFormPopup from '../components/molecules/formSections/addAuctionFormSe
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
 import { bool } from 'prop-types';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Auctions() {
+  TabTitle('productline. Aukcje');
+
   const { platforms, getPlatformByName } = usePlatforms();
   const [selectedAuctionPortal, setSelectedAuctionPortal] = useState<PlatformAuthUrl | undefined>();
   const [editAuctionValues, setEditAuctionValues] = useState<any>(undefined);

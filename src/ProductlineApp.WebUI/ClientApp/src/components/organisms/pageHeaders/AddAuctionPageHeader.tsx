@@ -11,8 +11,8 @@ export default function AddAuctionPageHeader() {
           <h1>Dodaj Ogłoszenie</h1>
         </div>
         <div className="pageUserActions">
+          {/*<ChangeDarkModeButtton />*/}
           <AddProductButton />
-          <ChangeDarkModeButtton />
           <UserAccountButton />
         </div>
       </div>

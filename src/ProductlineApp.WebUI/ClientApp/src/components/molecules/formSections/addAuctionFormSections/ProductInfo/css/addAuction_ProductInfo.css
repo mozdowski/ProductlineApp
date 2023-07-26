@@ -1,6 +1,7 @@
 .productInfo {
   width: 50%;
   margin-right: 70px;
+  margin-bottom: 40px;
 }
 
 .productInfo .sectionLabel {
@@ -49,4 +50,10 @@
 .productInfo .addAuctionInputs .textAreaProductDescription {
   margin-top: 40px;
   margin-left: 54px;
+}
+
+@media only screen and (max-height: 1192px) {
+  .productInfo .addAuctionInputs .textAreaProductDescription .productDescriptionTextarea {
+    height: 200px;
+  }
 }

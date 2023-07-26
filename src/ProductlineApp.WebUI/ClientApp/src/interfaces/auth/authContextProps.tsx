@@ -6,6 +6,7 @@ export interface AuthContextProps {
   register: (data: RegisterRequest) => Promise<any>;
   login: (email: string, password: string) => Promise<any>;
   logout: () => void;
+  updateUserData: (newUserData: User) => void;
 }
 
 export {};

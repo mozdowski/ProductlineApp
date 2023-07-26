@@ -2,8 +2,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  /* position: absolute; */
+  /*position: absolute;*/
   float: right;
   right: 35px;
   bottom: 35px;
+  margin-top: 40px;
 }

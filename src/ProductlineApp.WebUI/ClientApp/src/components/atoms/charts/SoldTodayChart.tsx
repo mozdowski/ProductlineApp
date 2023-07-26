@@ -16,13 +16,14 @@ function SoldTodayChart({
     tooltip: {
       trigger: 'item',
     },
-    legend: {
-      bottom: '1%',
+    /*legend: {
+      bottom: '5%',
+      top: '10%',
       left: 'center',
-    },
+    },*/
     series: [
       {
-        color: ['pink', 'purple', 'magenta', 'red', 'blue'],
+        color: ['#5F47F1', '#FF825C', '#FFC24C', '#E816C2', '#F9F871'],
         type: 'pie',
         radius: ['35%', '65%'],
         avoidLabelOverlap: false,
@@ -38,7 +39,7 @@ function SoldTodayChart({
         emphasis: {
           label: {
             show: true,
-            fontSize: 16,
+            fontSize: 10,
             fontWeight: 'bold',
             fontFamiy: 'Poppins, sans-serif',
           },

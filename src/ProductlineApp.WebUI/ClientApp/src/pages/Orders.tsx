@@ -10,8 +10,11 @@ import DropFileInput from '../components/atoms/inputs/dropFileInput/DropFileInpu
 import { OrderDocument } from '../interfaces/orders/orderDocumentsResponse';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
+import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Orders() {
+  TabTitle('productline. Zamówienia');
+
   const [showCompletedOrders, setShowCompletedOrders] = useState<boolean>(false);
   const [searchValue, setSearchValue] = useState('');
   const [orders, setOrders] = useState<OrdersRecord[] | undefined>(undefined);

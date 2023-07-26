@@ -8,6 +8,7 @@ import EditProductTemplate from '../components/templates/EditProductTemplate';
 import { ProductEditForm } from '../interfaces/products/productEditForm';
 import { Photo } from '@mui/icons-material';
 import { EditProductRequest } from '../interfaces/products/editProductRequest';
+import { TabTitle } from '../helpers/changePageTitle';
 
 const productSchema = Yup.object().shape({
   sku: Yup.string().required('SKU jest wymagane'),
@@ -37,6 +38,8 @@ export enum PhotoSource {
 }
 
 export default function EditProduct() {
+  TabTitle('productline. Edytuj Produkt');
+
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const { productId } = useParams<string>();

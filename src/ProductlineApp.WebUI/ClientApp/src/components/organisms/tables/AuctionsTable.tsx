@@ -78,7 +78,9 @@ export default function AuctionsTable({
           />
         )}
       </table>
-      {(!auctionRecords || !isDataLoaded) && <CircularProgress sx={{ alignSelf: 'center' }} />}
+      {(!auctionRecords || !isDataLoaded) && (
+        <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)' }} />
+      )}
       <TableFooter
         totalPages={totalPages}
         currentPage={page + 1}
