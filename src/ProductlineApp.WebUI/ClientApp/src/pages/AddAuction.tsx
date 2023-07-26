@@ -40,8 +40,8 @@ export default function AddAuction() {
     const confirmationText =
       allegroListingForm || ebayListingForm
         ? `Czy na pewno chcesz dodać aukcje na ${allegroListingForm ? 'Allegro' : ''} ${
-            ebayListingForm ? 'oraz Ebay' : ''
-          }?`
+          ebayListingForm ? 'oraz Ebay' : ''
+        }?`
         : 'Brak zadeklarowanych ofert na platformy - utworzony zostanie jedynie szablon. Czy chcesz kontynuować?';
     showConfirmation(confirmationText, handleConfirmAction);
   };

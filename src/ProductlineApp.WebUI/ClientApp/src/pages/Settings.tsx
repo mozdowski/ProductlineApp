@@ -14,7 +14,7 @@ export default function Settings() {
   TabTitle('productline. Ustawienia');
 
   const [image, setImage] = useState<File | undefined>();
-  const { user } = useAuth();
+  const { user, updateAvatar } = useAuth();
   const { platforms } = usePlatforms();
   const { userService } = useUserService();
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
@@ -66,19 +66,17 @@ export default function Settings() {
   };
 
   const handleAvatarChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const formData = new FormData();
-
-    if (!e.target.files) return;
+    const file = e.target.files?.item(0);
+    if (!file) return;
 
     try {
-      formData.append('avatar', e.target.files[0] as File);
-
-      //console.log("handleAvatarChange - zdjecie " + e.target.files[0]);
-      //console.log("handleAvatarChange - " + e.target.files[0]);
+      const formData = new FormData();
+      formData.append('avatar', file);
 
       const response = await userService.updateAvatar(formData);
 
-      setImage(e.target.files[0]);
+      setImage(file);
+      updateAvatar(response.url);
 
       toast.success('Zmieniono zdjecie profilowe');
     } catch {

@@ -72,16 +72,16 @@ export default function Orders() {
 
   const searchOrders = orders
     ? orders.filter((order) => {
-        return (
-          order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
+      return (
+        order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
           order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
           order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
           order.client.toLowerCase().indexOf(searchValue) >= 0 ||
           order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           order.statusText.indexOf(searchValue) >= 0
-        );
-      })
+      );
+    })
     : undefined;
 
   const handleOpenOrderFilesPopup = async (orderId: string) => {
