@@ -139,6 +139,13 @@ public class AllegroService : IAllegroService
             mappedOffer.ProductImageUrl = product.Image.Url.ToString();
             mappedOffer.Sku = product.Sku;
             mappedOffer.Brand = product.Brand.Name;
+
+            if (listing is null)
+            {
+                result.Add(mappedOffer);
+                continue;
+            }
+
             mappedOffer.ListingId = listing.ListingId.Value;
             mappedOffer.ListingInstanceId = listing.Id.Value;
 

@@ -144,12 +144,12 @@ public class ListingRepository : IListingRepository
         .ToListAsync();
     }
 
-    public async Task<ListingInstance> GetByPlatformListingId(string platformListingId)
+    public async Task<ListingInstance?> GetByPlatformListingId(string platformListingId)
     {
         return await this._dbContext.Listings
             .AsNoTracking()
             .SelectMany(x => x.Instances)
-            .FirstAsync(x => x.PlatformListingId == platformListingId);
+            .FirstOrDefaultAsync(x => x.PlatformListingId == platformListingId);
     }
 
     public async Task<ListingInstance> GetListingInstanceById(ListingInstanceId listingInstanceId)

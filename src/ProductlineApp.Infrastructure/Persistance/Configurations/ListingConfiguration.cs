@@ -57,6 +57,9 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
                 .HasConversion(
                     v => v.Value.ToUniversalTime(),
                     v => v.ToUniversalTime());
+
+            builder.HasIndex(e => e.OwnerId);
+            builder.HasIndex(e => e.ProductId);
     }
 
     private void ConfigureListingInstanceTable(EntityTypeBuilder<Listing> builder)
@@ -103,6 +106,10 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
                 .HasConversion(
                     v => v.Value.ToUniversalTime(),
                     v => v.ToUniversalTime());
+
+            ba.HasIndex(e => e.ListingId);
+            ba.HasIndex(e => e.PlatformId);
+            ba.HasIndex(e => e.PlatformListingId);
         });
     }
 }

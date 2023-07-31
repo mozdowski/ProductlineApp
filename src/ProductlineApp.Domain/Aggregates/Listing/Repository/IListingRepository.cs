@@ -21,7 +21,7 @@ public interface IListingRepository : IRepository<Listing, ListingId>
 
     Task<IEnumerable<PlatformId>> GetPlatformsUserHasListingsOn(UserId userId);
 
-    Task<ListingInstance> GetByPlatformListingId(string platformListingId);
+    Task<ListingInstance?> GetByPlatformListingId(string platformListingId);
 
     Task<IEnumerable<ListingInstance>> GetByPlatformId(UserId userId, PlatformId platformId);
 

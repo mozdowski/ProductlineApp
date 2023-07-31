@@ -116,6 +116,11 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
                 .HasConversion(
                     v => v.Value.ToUniversalTime(),
                     v => v.ToUniversalTime());
+
+            builder.HasIndex(e => e.OwnerId);
+            builder.HasIndex(e => e.PlatformId);
+            builder.HasIndex(e => e.PlacedAt);
+            builder.HasIndex(e => e.PlatformOrderId);
     }
 
     private void ConfigureOrderLineTable(EntityTypeBuilder<Order> builder)
@@ -124,8 +129,6 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
         {
             ol.ToTable("OrderLines");
 
-            // ol.WithOwner().HasForeignKey(li => li.OrderId);
-            //
             ol.Property(li => li.Id)
                 .HasConversion(
                     v => v.Value,
@@ -151,6 +154,8 @@ public class OrderConfigurations : IEntityTypeConfiguration<Order>
                 .HasConversion(
                     v => v.Value.ToUniversalTime(),
                     v => v.ToUniversalTime());
+
+            ol.HasIndex(li => li.Sku);
         });
     }
 }
