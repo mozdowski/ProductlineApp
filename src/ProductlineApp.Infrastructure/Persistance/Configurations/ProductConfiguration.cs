@@ -89,5 +89,8 @@ public class ProductConfiguration : IEntityTypeConfiguration<Product>
             .HasConversion(
                 v => DateTime.UtcNow,
                 v => v.ToUniversalTime());
+
+        builder.HasIndex(e => e.OwnerId);
+        builder.HasIndex(e => e.Sku);
     }
 }

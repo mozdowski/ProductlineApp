@@ -51,6 +51,8 @@ public class UserConfigurations : IEntityTypeConfiguration<User>
                 .HasConversion(
                     v => DateTime.UtcNow,
                     v => v.ToUniversalTime());
+
+            builder.HasIndex(e => e.Email);
     }
 
     private void ConfigurePlatformConnectionsTable(EntityTypeBuilder<User> builder)
