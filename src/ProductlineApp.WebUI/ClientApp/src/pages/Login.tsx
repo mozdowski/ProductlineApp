@@ -68,20 +68,19 @@ export default function Login() {
       return;
     }
 
-    login(loginForm.email, loginForm.password)
-      .then(() => {
-        navigate('/dashboard');
-        toast.success('Zalogowano pomyślnie', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-      })
-      .catch((error) => {
-        toast.error('Błąd logowania', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        console.error('Wystąpił błąd podczas logowania:', error);
-      });
+    try {
+      await toast.promise(
+        login(loginForm.email, loginForm.password),
+        {
+          success: 'Zalogowano pomyślnie',
+          error: 'Błąd logowania',
+          pending: 'Trwa logowanie...',
+        }
+      );
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Wystąpił błąd podczas logowania:', error);
+    }
   };
 
   return (
