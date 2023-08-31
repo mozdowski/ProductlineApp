@@ -138,8 +138,6 @@ export default function EditProduct() {
 
     const uploadedFiles = Object.values(uploadedPhotos);
 
-    console.log(editProductRequestData);
-
     try {
       const productResponse = await toast.promise(
         Promise.all([
@@ -213,7 +211,6 @@ export default function EditProduct() {
         })),
       };
       setProductForm(productEditForm);
-      console.log(res);
     });
   }, []);
 
