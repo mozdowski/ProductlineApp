@@ -113,3 +113,8 @@
   height: 20px;
   visibility: hidden;
 }
+
+.button-processing {
+  background-color: var(--purple-button-hover) !important;
+  cursor: progress !important;
+}

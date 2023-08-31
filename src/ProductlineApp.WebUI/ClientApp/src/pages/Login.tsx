@@ -24,6 +24,7 @@ export default function Login() {
   TabTitle('productline. Zaloguj się');
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isLoginButtonEnabled, setIsLoginButtonEnabled] = useState(true);
   const [loginForm, setLoginForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -68,6 +69,8 @@ export default function Login() {
       return;
     }
 
+    setIsLoginButtonEnabled(false);
+
     try {
       await toast.promise(
         login(loginForm.email, loginForm.password),
@@ -79,6 +82,7 @@ export default function Login() {
       );
       navigate('/dashboard');
     } catch (error) {
+      setIsLoginButtonEnabled(true);
       console.error('Wystąpił błąd podczas logowania:', error);
     }
   };
@@ -128,7 +132,7 @@ export default function Login() {
                 <p>Zapomniałeś hasła?</p>
               </Link>
 
-              <LoginButton />
+              <LoginButton disabled={!isLoginButtonEnabled}/>
 
               <h2>
                 Jeśli nie masz jeszcze konta{' '}

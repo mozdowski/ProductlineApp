@@ -43,6 +43,7 @@ export default function EditProduct() {
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const { productId } = useParams<string>();
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
 
   const [uploadedPhotos, setUploadedPhotos] = useState<Record<number, File>>({});
 
@@ -138,6 +139,8 @@ export default function EditProduct() {
 
     const uploadedFiles = Object.values(uploadedPhotos);
 
+    setIsConfirmDisabled(true);
+
     try {
       const productResponse = await toast.promise(
         Promise.all([
@@ -161,6 +164,7 @@ export default function EditProduct() {
       navigate('/products');
     } catch (err: any) {
       toast.error('Wystąpił błąd przy edycji produktu');
+      setIsConfirmDisabled(false);
     }
   };
 
@@ -224,6 +228,7 @@ export default function EditProduct() {
       errors={errors}
       onPhotoMove={handleMovePhoto}
       onPhotoDelete={handleDeletePhoto}
+      confirmDisabled={isConfirmDisabled}
     />
   );
 }

@@ -68,6 +68,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
   });
   const [errors, setErrors] = useState<Partial<EbayListingDetailsFormData>>({});
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
   const [userPolicies, setUserPolicies] = useState<EbayUserPoliciesResponse>({
     fulfillmentPolicies: [],
     paymentPolicies: [],
@@ -168,7 +169,12 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
       locationKey: formData.locationKey,
     };
 
+    setIsConfirmDisabled(true);
+
     onConfirm(ebayOfferDetails);
+
+    setIsConfirmDisabled(false);
+
   };
 
   const handleChange = (name: string, value: any) => {
@@ -329,7 +335,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
           </div>
           <div className="addAuctionEbayButtons">
             <CancelButton pathTo={''} onClick={onCancel} />
-            <ConfrimButton />
+            <ConfrimButton disabled={isConfirmDisabled}/>
           </div>
         </div>
       </form>

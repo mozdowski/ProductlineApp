@@ -1,7 +1,11 @@
 import './css/SigninButton.css';
 
-function SigninButton() {
-  return <input type="submit" className="signinButton" value={'Zarejestruj'} />;
+function SigninButton({
+  disabled
+} : {
+  disabled: boolean;
+}) {
+  return <input type="submit" className={`signinButton ${disabled ? 'button-processing' : ''}`} value={'Zarejestruj'} disabled={disabled}/>;
 }
 
 export default SigninButton;

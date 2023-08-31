@@ -15,6 +15,7 @@ export default function EditProductForm({
   errors,
   onPhotoDelete,
   onPhotoMove,
+  confirmDisabled
 }: {
   uploadProductPhotos: any;
   photos: Photo[];
@@ -24,6 +25,7 @@ export default function EditProductForm({
   errors: Partial<ProductForm>;
   onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
   onPhotoDelete: (index: number) => void;
+  confirmDisabled: boolean;
 }) {
   return (
     <>
@@ -42,7 +44,7 @@ export default function EditProductForm({
             />
           </div>
         </div>
-        <ButtonsSection />
+        <ButtonsSection confirmDisabled={confirmDisabled} />
       </form>
     </>
   );

@@ -36,6 +36,7 @@ export default function Signin() {
   TabTitle('productline. Zarejestruj się');
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isSignInButtonEnabled, setIsSignInButtonEnabled] = useState(true);
   const [signinForm, setSigninForm] = useState<SigninForm>({
     username: '',
     email: '',
@@ -96,19 +97,22 @@ export default function Signin() {
       avatar: image,
     };
 
-    register(data)
-      .then(() => {
-        toast.success('Zarejestrowano pomyślnie', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        navigate('/dashboard');
-      })
-      .catch((error) => {
-        toast.error('Błąd rejestracji', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        console.error('Wystąpił błąd podczas rejestracji:', error);
-      });
+    setIsSignInButtonEnabled(false);
+
+    try {
+      await toast.promise(
+        register(data),
+        {
+          success: 'Zarejestrowano pomyślnie',
+          error: 'Błąd rejestracji',
+          pending: 'Trwa rejestracja...'
+        }
+      );
+      navigate('/dashboard');
+    } catch (error) {
+      console.error('Wystąpił błąd podczas rejestracji:', error);
+      setIsSignInButtonEnabled(true);
+    }
   };
 
   return (
@@ -208,7 +212,7 @@ export default function Signin() {
                 />
               </div>
 
-              <SigninButton />
+              <SigninButton disabled={!isSignInButtonEnabled}/>
             </form>
           </div>
         </div>

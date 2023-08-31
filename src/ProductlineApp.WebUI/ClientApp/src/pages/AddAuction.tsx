@@ -29,6 +29,7 @@ export default function AddAuction() {
   const [errors, setErrors] = useState<any>({});
   const [platformConnections, setPlatformConnections] = useState<string[]>([]);
   const [assignedPortals, setAssignedPortals] = useState<PlatformEnum[]>([]);
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
 
   const { showConfirmation } = useConfirmationPopup();
 
@@ -134,6 +135,8 @@ export default function AddAuction() {
       quantity: selectedProduct.quantity,
     };
 
+    setIsConfirmDisabled(true);
+
     try {
       const createListingTemplateResponse = await toast.promise(
         auctionsService.createListingTemplate(listingTemplateBody),
@@ -146,6 +149,7 @@ export default function AddAuction() {
       listingId = createListingTemplateResponse.listingId;
     } catch {
       toast.error('Błąd podczas dodawania szablonu aukcji');
+      setIsConfirmDisabled(false);
       return;
     }
 
@@ -180,6 +184,7 @@ export default function AddAuction() {
       await Promise.all(promises);
     } catch {
       toast.error('Wystąpił błąd podczas dodawania aukcji');
+      setIsConfirmDisabled(false);
     }
 
     navigate('/auctions');
@@ -214,6 +219,7 @@ export default function AddAuction() {
           platformConnections={platformConnections}
           onEbayFormSubmit={handleEbayForm}
           assignedPortals={assignedPortals}
+          confirmDisabled={isConfirmDisabled}
         />
       )}
     </>

@@ -13,6 +13,7 @@ export default function EditProductTemplate({
   errors,
   onPhotoDelete,
   onPhotoMove,
+  confirmDisabled
 }: {
   uploadProductPhotos: any;
   photos: Photo[];
@@ -22,6 +23,7 @@ export default function EditProductTemplate({
   errors: any;
   onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
   onPhotoDelete: (index: number) => void;
+  confirmDisabled: boolean;
 }) {
   return (
     <>
@@ -37,6 +39,7 @@ export default function EditProductTemplate({
             errors={errors}
             onPhotoDelete={onPhotoDelete}
             onPhotoMove={onPhotoMove}
+            confirmDisabled={confirmDisabled}
           />
         </div>
       </div>
