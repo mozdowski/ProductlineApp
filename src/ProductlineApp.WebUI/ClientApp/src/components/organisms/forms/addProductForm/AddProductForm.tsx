@@ -13,6 +13,7 @@ export default function AddProductForm({
   errors,
   onPhotoMove,
   onPhotoDelete,
+  confirmDisabled
 }: {
   uploadProductPhotos: any;
   photos: string[];
@@ -22,6 +23,7 @@ export default function AddProductForm({
   errors: Partial<ProductForm>;
   onPhotoMove: (dragIndex: number, hoverIndex: number) => void;
   onPhotoDelete: (index: number) => void;
+  confirmDisabled: boolean;
 }) {
   return (
     <>
@@ -40,7 +42,7 @@ export default function AddProductForm({
             />
           </div>
         </div>
-        <ButtonsSection />
+        <ButtonsSection confirmDisabled={confirmDisabled} />
       </form>
     </>
   );

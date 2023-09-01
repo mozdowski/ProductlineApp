@@ -1,7 +1,11 @@
 import './css/confirmButton.css';
 
-function ConfrimButton() {
-  return <input type="submit" className="confrimButton" value="Zatwierdz"></input>;
+function ConfrimButton({
+  disabled
+}: {
+  disabled: boolean
+}) {
+  return <input type="submit" className={`confrimButton ${disabled ? 'button-processing' : ''}`} value="Zatwierdz" disabled={disabled}></input>;
 }
 
 export default ConfrimButton;

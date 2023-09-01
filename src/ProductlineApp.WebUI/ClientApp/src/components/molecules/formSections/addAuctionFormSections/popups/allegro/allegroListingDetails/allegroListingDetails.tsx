@@ -119,6 +119,8 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
     shippingRates: [],
   });
 
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
+
   const { auctionsService } = useAuctionsService();
 
   const durations = Object.values(AllegroDurationPeriods).filter(
@@ -198,7 +200,11 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
     const isValid = await validateForm();
     if (!isValid) return;
 
+    setIsConfirmDisabled(true);
+
     onConfirm(formData);
+
+    setIsConfirmDisabled(false);
   };
 
   const handleChange = (name: string, value: any) => {
@@ -454,7 +460,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
           </div>
           <div className="addauctionAllegroButtons">
             <CancelButton pathTo={''} onClick={onCancel} />
-            <ConfrimButton />
+            <ConfrimButton disabled={isConfirmDisabled}/>
           </div>
         </div>
       </form>

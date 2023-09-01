@@ -16,6 +16,7 @@ export default function AddAuctionTemplate({
   errors,
   platformConnections,
   assignedPortals,
+  confirmDisabled
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -26,6 +27,7 @@ export default function AddAuctionTemplate({
   errors: any;
   platformConnections: string[];
   assignedPortals: PlatformEnum[];
+  confirmDisabled: boolean;
 }) {
   return (
     <>
@@ -42,6 +44,7 @@ export default function AddAuctionTemplate({
             errors={errors}
             platformConnections={platformConnections}
             assignedPortals={assignedPortals}
+            confirmDisabled={confirmDisabled}
           />
         </div>
       </div>

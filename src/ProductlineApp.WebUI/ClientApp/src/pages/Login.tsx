@@ -24,6 +24,7 @@ export default function Login() {
   TabTitle('productline. Zaloguj się');
 
   const [isPasswordVisible, setPasswordVisible] = useState(false);
+  const [isLoginButtonEnabled, setIsLoginButtonEnabled] = useState(true);
   const [loginForm, setLoginForm] = useState<LoginForm>({
     email: '',
     password: '',
@@ -68,20 +69,22 @@ export default function Login() {
       return;
     }
 
-    login(loginForm.email, loginForm.password)
-      .then(() => {
-        navigate('/dashboard');
-        toast.success('Zalogowano pomyślnie', {
-          position: toast.POSITION.TOP_RIGHT,
-          autoClose: 1000,
-        });
-      })
-      .catch((error) => {
-        toast.error('Błąd logowania', {
-          position: toast.POSITION.TOP_RIGHT,
-        });
-        console.error('Wystąpił błąd podczas logowania:', error);
-      });
+    setIsLoginButtonEnabled(false);
+
+    try {
+      await toast.promise(
+        login(loginForm.email, loginForm.password),
+        {
+          success: 'Zalogowano pomyślnie',
+          error: 'Błąd logowania',
+          pending: 'Trwa logowanie...',
+        }
+      );
+      navigate('/dashboard');
+    } catch (error) {
+      setIsLoginButtonEnabled(true);
+      console.error('Wystąpił błąd podczas logowania:', error);
+    }
   };
 
   return (
@@ -129,7 +132,7 @@ export default function Login() {
                 <p>Zapomniałeś hasła?</p>
               </Link>
 
-              <LoginButton />
+              <LoginButton disabled={!isLoginButtonEnabled}/>
 
               <h2>
                 Jeśli nie masz jeszcze konta{' '}

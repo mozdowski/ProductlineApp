@@ -2,12 +2,16 @@ import CancelButton from '../../../../atoms/buttons/cancelButton/CancelButton';
 import ConfrimButton from '../../../../atoms/buttons/confirmButton/ConfirmButton';
 import './css/addProductButtonsSection.css';
 
-function ButtonsSection() {
+function ButtonsSection({
+  confirmDisabled
+}: {
+  confirmDisabled: boolean
+}) {
   return (
     <>
       <div className="addProductButtonsSection">
         <CancelButton pathTo={'/products'} />
-        <ConfrimButton />
+        <ConfrimButton disabled={confirmDisabled}/>
       </div>
     </>
   );

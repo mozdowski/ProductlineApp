@@ -27,6 +27,7 @@ const productSchema = Yup.object().shape({
 export default function AddProduct() {
   TabTitle('productline. Dodaj Produkt');
 
+  const [isConfirmDisabled, setIsConfirmDisabled] = useState<boolean>(false);
   const { productsService } = useProductsService();
   const navigate = useNavigate();
   const [productForm, setProductForm] = useState<ProductForm>({
@@ -103,32 +104,34 @@ export default function AddProduct() {
       image: photos[0].file,
     };
 
+    setIsConfirmDisabled(true);
+
     try {
-      const productResponse = await productsService.addProduct(newProductRequestData);
+      const productResponse = await toast.promise(
+        async () => {
+          const productResponse = await productsService.addProduct(newProductRequestData);
 
-      const addImageRequestPool: Promise<void>[] = [];
+          const addImageRequestPool = photos.slice(1).map(async (photo) => {
+            const addImageToGalleryFormData = new FormData();
+            addImageToGalleryFormData.append('image', photo.file);
+            await productsService.addImageToGallery(
+              productResponse.productId,
+              addImageToGalleryFormData
+            );
+          });
 
-      for (let i = 0; i < photos.length; i++) {
-        const photo = photos[i];
-        const addImageToGalleryFormData: FormData = new FormData();
-        addImageToGalleryFormData.append('image', photo.file);
-        const request = productsService.addImageToGallery(
-          productResponse.productId,
-          addImageToGalleryFormData,
-        );
-        addImageRequestPool.push(request);
-      }
-
-      await Promise.all(addImageRequestPool);
-
-      toast.success('Pomyślnie dodano produkt', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+          await Promise.all(addImageRequestPool);
+        },
+        {
+          success: 'Pomyślnie dodano produkt',
+          error: 'Wystąpił błąd przy dodawaniu produktu',
+          pending: 'Dodawanie produktu...',
+        }
+      );
       navigate('/products');
-    } catch (err: any) {
-      toast.error('Wystąpił błąd przy dodawaniu produktu', {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+    } catch (error) {
+      console.error('Wystąpił błąd:', error);
+      setIsConfirmDisabled(false);
     }
   };
 
@@ -171,6 +174,7 @@ export default function AddProduct() {
         errors={errors}
         onPhotoMove={handleMovePhoto}
         onPhotoDelete={handleDeletePhoto}
+        confirmDisabled={isConfirmDisabled}
       />
     </>
   );
