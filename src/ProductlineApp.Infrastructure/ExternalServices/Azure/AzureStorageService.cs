@@ -1,4 +1,3 @@
-using Azure;
 using Azure.Storage;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
@@ -30,7 +29,9 @@ public class AzureStorageService : IUploadFileService
 
     public async Task<IFile> UploadFileAsync(IFormFile fileData, FileType fileType)
     {
-        var fileName = Guid.NewGuid() + "-" + fileData.FileName;
+        var fileName = fileType == FileType.IMAGE ?
+            Guid.NewGuid().ToString() :
+            Guid.NewGuid() + "-" + fileData.FileName.Replace(" ", "_").Normalize();
         var blobClient = this._containerClient.GetBlobClient(fileName);
 
         await using var stream = fileData.OpenReadStream();
