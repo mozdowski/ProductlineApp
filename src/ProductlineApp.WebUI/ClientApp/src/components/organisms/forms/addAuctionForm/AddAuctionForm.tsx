@@ -20,7 +20,7 @@ export default function AddAuctionForm({
   errors,
   platformConnections,
   assignedPortals,
-  confirmDisabled
+  confirmDisabled,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;
@@ -54,7 +54,7 @@ export default function AddAuctionForm({
           {showFormSteps != ' ' && selectedProduct && selectedProduct?.id !== '' && (
             <ProductInfo selectedProduct={selectedProduct} onChange={() => {}} />
           )}
-          <ButtonsSection confirmDisabled={confirmDisabled}/>
+          <ButtonsSection confirmDisabled={confirmDisabled} />
         </form>
         {showFormSteps != ' ' && selectedProduct && selectedProduct?.id !== '' && (
           <div className="addAuctionSecondSection">

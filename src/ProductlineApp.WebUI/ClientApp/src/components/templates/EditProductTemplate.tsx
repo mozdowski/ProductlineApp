@@ -13,7 +13,7 @@ export default function EditProductTemplate({
   errors,
   onPhotoDelete,
   onPhotoMove,
-  confirmDisabled
+  confirmDisabled,
 }: {
   uploadProductPhotos: any;
   photos: Photo[];

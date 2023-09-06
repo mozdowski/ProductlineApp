@@ -71,7 +71,17 @@ const ActionAreaCard: React.FC<ActionAreaCardProps> = ({
           >
             {title}
           </Typography>
-          <Typography variant="body2" color="#757575" component="div" sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '12px', marginLeft: '-25px', fontWeight: '400' }}>
+          <Typography
+            variant="body2"
+            color="#757575"
+            component="div"
+            sx={{
+              fontFamily: 'Poppins, sans-serif',
+              fontSize: '12px',
+              marginLeft: '-25px',
+              fontWeight: '400',
+            }}
+          >
             <ul>
               {parameters.slice(0, 4).map((param, index) => (
                 <li key={index}>
