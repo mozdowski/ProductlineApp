@@ -164,7 +164,7 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       .nullable(),
     locationCity: Yup.string().required('Pole wymagane'),
     locationCountryCode: Yup.string().required('Pole wymagane'),
-    locationPostCode: Yup.string().required('Pole wymagane'),
+    locationPostCode: Yup.string().required('Pole wymagane').matches(/^\d{2}-\d{3}$/, 'Niepoprawny format kodu pocztowego (np. 12-345)'),
     locationProvince: Yup.string().required('Pole wymagane'),
     duration: Yup.string().required('Pole wymagane'),
     republish: Yup.string().required('Pole wymagane'),
@@ -199,6 +199,12 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
 
     const isValid = await validateForm();
     if (!isValid) return;
+
+    setFormData((prev) => ({
+      ...prev,
+      locationCity: formData.locationCity.toLocaleUpperCase(),
+      locationProvince: formData.locationProvince.toLocaleUpperCase(),
+    }));
 
     setIsConfirmDisabled(true);
 

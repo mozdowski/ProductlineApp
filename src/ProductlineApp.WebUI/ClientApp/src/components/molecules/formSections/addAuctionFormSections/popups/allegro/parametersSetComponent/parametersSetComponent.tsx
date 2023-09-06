@@ -272,9 +272,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         const value =
           formFields[name] !== undefined
             ? formFields[name]
-            : isMultiselect
-              ? parameter?.valuesLabels
-              : parameter?.valuesIds[0];
+            : parameter?.valuesIds[0];
         return value;
       }
       default: {
