@@ -11,6 +11,7 @@ import { OrderDocument } from '../interfaces/orders/orderDocumentsResponse';
 import JSZip from 'jszip';
 import { saveAs } from 'file-saver';
 import { TabTitle } from '../helpers/changePageTitle';
+import { OrderStatus } from '../enums/orderStatus.enum';
 
 export default function Orders() {
   TabTitle('productline. Zamówienia');
@@ -81,7 +82,7 @@ export default function Orders() {
           order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           order.statusText.indexOf(searchValue) >= 0
       );
-    })
+    }).filter((order) => showCompletedOrders === (order.status === OrderStatus.COMPLETED))
     : undefined;
 
   const handleOpenOrderFilesPopup = async (orderId: string) => {

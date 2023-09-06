@@ -6,6 +6,8 @@ using ProductlineApp.Application.Common.Platforms;
 using ProductlineApp.Application.Order.Commands;
 using ProductlineApp.Application.Order.DTO;
 using ProductlineApp.Application.Order.Queries;
+using ProductlineApp.Domain.Aggregates.Products.Repository;
+using ProductlineApp.Domain.Aggregates.Products.ValueObjects;
 
 namespace ProductlineApp.WebUI.Controllers;
 
@@ -17,15 +19,18 @@ public class OrdersController : ControllerBase
     private readonly IPlatformServiceDispatcher _platformServiceDispatcher;
     private readonly ICurrentUserContext _currentUser;
     private readonly IMediator _mediator;
+    private readonly IProductRepository _productRepository;
 
     public OrdersController(
         IPlatformServiceDispatcher platformServiceDispatcher,
         ICurrentUserContext currentUser,
-        IMediator mediator)
+        IMediator mediator,
+        IProductRepository productRepository)
     {
         this._platformServiceDispatcher = platformServiceDispatcher;
         this._currentUser = currentUser;
         this._mediator = mediator;
+        this._productRepository = productRepository;
     }
 
     [HttpGet]
@@ -80,6 +85,23 @@ public class OrdersController : ControllerBase
 
                 platformOrder.OrderId = orderId;
                 response.Orders.Add(platformOrder);
+            }
+        }
+
+        foreach (var order in response.Orders)
+        {
+            foreach (var item in order.Items)
+            {
+                if (Guid.TryParse(item.Sku, out var productGuid))
+                {
+                    var product = await this._productRepository.GetByIdAsync(ProductId.Create(productGuid));
+                    item.Sku = product.Sku;
+                    item.ImageUrl = product.Image.Url.ToString();
+                }
+                else
+                {
+                    item.Sku = string.Empty;
+                }
             }
         }
 

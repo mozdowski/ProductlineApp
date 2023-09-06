@@ -16,7 +16,6 @@ import {
 import EbayFormPopup from '../components/molecules/formSections/addAuctionFormSections/popups/ebay/ebayFormPopup';
 import { CreateEbayAuctionRequest } from '../interfaces/auctions/createEbayAuctionRequest';
 import { useConfirmationPopup } from '../hooks/popups/useConfirmationPopup';
-import { bool } from 'prop-types';
 import { TabTitle } from '../helpers/changePageTitle';
 
 export default function Auctions() {
@@ -46,6 +45,7 @@ export default function Auctions() {
 
   const handleAuctionStateClick = (showActive: boolean) => {
     setShowActiveAuctions(showActive);
+    
   };
 
   const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
@@ -62,7 +62,7 @@ export default function Auctions() {
       auction.price.toString().indexOf(searchValue) >= 0 ||
       auction.quantity.toString().indexOf(searchValue) >= 0
     );
-  });
+  }).filter(x => x.isActive == showActiveAuctions);
 
   useEffect(() => {
     if (selectedAuctionPortal) return;
