@@ -18,3 +18,7 @@
 .confirmAllegroPopupButton:hover {
   background-color: var(--purple-button-hover);
 }
+
+.allegroProductParameter:nth-child(odd) {
+  margin-right: 0px;
+}

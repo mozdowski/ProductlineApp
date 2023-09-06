@@ -5,7 +5,7 @@ import { ChevronRight, ExpandMore } from '@mui/icons-material';
 import { TreeSelectOption } from '../../../interfaces/common/treeSelectOption';
 
 const TreeSelectStyle = {
-  width: '316px',
+  width: '500px',
   height: '44px',
   color: '#757575',
   fontFamily: 'Poppins, sans-serif',

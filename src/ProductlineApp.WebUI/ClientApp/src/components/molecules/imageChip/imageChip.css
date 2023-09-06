@@ -4,5 +4,5 @@
   width: auto;
   height: auto;
   border-radius: 8px;
-  object-fit: contain;
+  object-fit: cover;
 }

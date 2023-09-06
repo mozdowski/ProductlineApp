@@ -36,10 +36,10 @@ const ActionAreaCard: React.FC<ActionAreaCardProps> = ({
   return (
     <Card
       sx={{
-        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.2)',
+        boxShadow: 'rgba(0, 0, 0, 0.1) 0px 4px 12px;',
         border: 'solid',
-        borderWidth: '2px',
-        borderColor: isSelected ? '#12121236' : 'transparent',
+        borderWidth: '1px',
+        borderColor: isSelected ? '#5f47f1' : 'transparent',
         transition: 'border-color 0.3s ease-in-out',
       }}
       id={id}
@@ -60,18 +60,18 @@ const ActionAreaCard: React.FC<ActionAreaCardProps> = ({
           width="100%"
           image={image}
           alt="allegro product img"
-          sx={{ padding: '10px', maxWidth: '25%' }}
+          sx={{ padding: '10px 0px 10px 20px', maxWidth: '25%' }}
         />
         <CardContent className="card-content">
           <Typography
             gutterBottom
             variant="h5"
             component="div"
-            sx={{ fontFamily: 'Poppins, sans-serif' }}
+            sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '20px', fontWeight: '500' }}
           >
             {title}
           </Typography>
-          <Typography variant="body2" color="text.secondary" component="div">
+          <Typography variant="body2" color="#757575" component="div" sx={{ fontFamily: 'Poppins, sans-serif', fontSize: '12px', marginLeft: '-25px', fontWeight: '400' }}>
             <ul>
               {parameters.slice(0, 4).map((param, index) => (
                 <li key={index}>

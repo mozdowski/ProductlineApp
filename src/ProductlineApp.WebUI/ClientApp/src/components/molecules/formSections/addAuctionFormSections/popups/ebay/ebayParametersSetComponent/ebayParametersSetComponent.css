@@ -1,5 +1,5 @@
 .ebayParameterField {
-  margin-right: 40px;
+  margin-right: 49px;
   width: 78%;
   height: 90px;
 }
@@ -36,4 +36,14 @@
 .ebayProductParameter {
   width: auto;
   margin-top: 18px;
+}
+
+.ebayProductParameter:nth-child(odd) {
+  margin-right: 40px;
+}
+
+.addAuctionAllEbayButtons .addAuctionEbayBackButton .backToPreviousAllegroPopupButton {
+  cursor: pointer;
+  width: 25px;
+  height: 25px;
 }

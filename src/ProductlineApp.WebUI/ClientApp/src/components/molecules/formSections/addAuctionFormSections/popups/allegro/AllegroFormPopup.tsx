@@ -147,9 +147,9 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
       >
         <div className="allegroPopupSectionLabel">
           <img src={AllegroLogo} className="allegroBrandIcon" />
-          {currentPage === PopupPages.ProductSelect && <p>Wybierz produkt z katalogu Allegro</p>}
-          {currentPage === PopupPages.ParametersSet && <p>Dostosuj parametry produktu</p>}
-          {currentPage === PopupPages.ListingDetails && <p>Dostosuj parametry oferty</p>}
+          {currentPage === PopupPages.ProductSelect && <p className="allegroPopUpInfoText">Wybierz produkt z katalogu Allegro</p>}
+          {currentPage === PopupPages.ParametersSet && <p className="allegroPopUpInfoText">Dostosuj parametry produktu</p>}
+          {currentPage === PopupPages.ListingDetails && <p className="allegroPopUpInfoText">Dostosuj parametry oferty</p>}
         </div>
         <div className="allegroPopupBody">
           {currentPage === PopupPages.ProductSelect && (
@@ -162,24 +162,24 @@ const AllegroFormPopup: React.FC<AllegroFormPopupProps> = ({
           {currentPage === PopupPages.ParametersSet &&
             selelectedCategoryId &&
             selectedAllegroProductId && (
-            <ParametersSetComponent
-              categoryId={initialFormValues ? initialFormValues.categoryId : selelectedCategoryId}
-              productId={
-                initialFormValues ? initialFormValues.allegroProductId : selectedAllegroProductId
-              }
-              onPrevPage={handlePrevPage}
-              onNextPage={handleNextPage}
-              onCancel={handleCancel}
-              initValues={
-                initialFormValues
-                  ? [
-                    ...initialFormValues.productParameters,
-                    ...initialFormValues.listingParameters,
-                  ]
-                  : undefined
-              }
-            />
-          )}
+              <ParametersSetComponent
+                categoryId={initialFormValues ? initialFormValues.categoryId : selelectedCategoryId}
+                productId={
+                  initialFormValues ? initialFormValues.allegroProductId : selectedAllegroProductId
+                }
+                onPrevPage={handlePrevPage}
+                onNextPage={handleNextPage}
+                onCancel={handleCancel}
+                initValues={
+                  initialFormValues
+                    ? [
+                      ...initialFormValues.productParameters,
+                      ...initialFormValues.listingParameters,
+                    ]
+                    : undefined
+                }
+              />
+            )}
           {currentPage === PopupPages.ListingDetails && (
             <AllegroListingDetails
               onConfirm={handleConfirm}

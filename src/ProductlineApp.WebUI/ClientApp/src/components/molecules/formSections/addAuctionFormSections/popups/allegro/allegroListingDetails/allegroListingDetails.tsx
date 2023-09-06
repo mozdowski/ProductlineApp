@@ -13,6 +13,7 @@ import ConfrimButton from '../../../../../../atoms/buttons/confirmButton/Confirm
 import { useSelectedProduct } from '../../../../../../../hooks/auctions/useSelectedProduct';
 import { AllegroOfferProductDetailsResponse } from '../../../../../../../interfaces/auctions/allegroOfferProductDetailsResponse';
 import { FormTextarea } from '../../../../../../atoms/common/formTextArea/formTextArea';
+import BackButtonImage from '../../../../../../../assets/icons/back_icon.png';
 
 export interface AllegroListingDetailsFormData {
   name: string;
@@ -462,11 +463,11 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
 
         <div className="addAuctionAllAllegroButtons">
           <div className="addAuctionAllegroBackButton">
-            <BackButton onClick={onPrevPage} />
+            <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />
           </div>
           <div className="addauctionAllegroButtons">
             <CancelButton pathTo={''} onClick={onCancel} />
-            <ConfrimButton disabled={isConfirmDisabled}/>
+            <ConfrimButton disabled={isConfirmDisabled} />
           </div>
         </div>
       </form>

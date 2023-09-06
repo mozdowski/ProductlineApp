@@ -40,7 +40,7 @@ export const CollapseOrderDetails = ({
       <td></td>
       <td colSpan={3}>
         <div className="orderShipingAddress">
-          <h1 className="orderShipingAddressSectionLabel">Dane zamawiającego:</h1>
+          <h1 className="orderShipingAddressSectionLabel">Dane Zamawiającego:</h1>
           <ul className="orderShipingAddressData">
             <li>
               <h1>Imię i Nazwisko:</h1>

@@ -17,9 +17,6 @@ function ProductPhotosInput({
 }) {
   return (
     <div className="uploadPhotosField">
-      <label htmlFor="uploadPhotos" className="uploadPhotosLabel">
-        Zdjęcia
-      </label>
       <p>Pierwsze zdjecie jest zdjeciem głównym</p>
       <div className="productPhotos">
         {photos.map((url, index) => (

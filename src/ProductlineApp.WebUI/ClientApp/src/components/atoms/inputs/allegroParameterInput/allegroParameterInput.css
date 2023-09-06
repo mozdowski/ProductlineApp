@@ -37,3 +37,7 @@
   width: auto;
   margin-top: 18px;
 }
+
+.allegroProductParameter:nth-child(odd) {
+  margin-right: 0px;
+}

@@ -19,6 +19,7 @@ import CancelButton from '../../../../../../atoms/buttons/cancelButton/CancelBut
 import NextButton from '../../../../../../atoms/buttons/nextButton/nextButton';
 import { ParameterResponseModel } from '../AllegroFormPopup';
 import { AllegroBasicParameter } from '../../../../../../../interfaces/auctions/createAllegroAuction';
+import BackButtonImage from '../../../../../../../assets/icons/back_icon.png';
 
 interface ParametersSetComponentProps {
   productId: string;
@@ -344,7 +345,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
       <div className="addAuctionAllAllegroButtons">
         <div className="addAuctionAllegroBackButton">
-          {!initValues && <BackButton onClick={onPrevPage} />}
+          {!initValues && <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />}
         </div>
         <div className="addauctionAllegroButtons">
           <CancelButton pathTo={''} onClick={onCancel} />

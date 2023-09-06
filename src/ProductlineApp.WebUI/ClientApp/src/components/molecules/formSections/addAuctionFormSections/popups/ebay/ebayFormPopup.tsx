@@ -83,9 +83,9 @@ const EbayFormPopup: React.FC<EbayFormPopupProps> = ({
       >
         <div className="ebayPopupSectionLabel">
           <img src={EbayLogo} className="ebayBrandIcon" />
-          {currentPage === PopupPages.Category && <p>Wybierz kategorie z katalogu Ebay</p>}
-          {currentPage === PopupPages.ParametersSet && <p>Dostosuj parametry produktu</p>}
-          {currentPage === PopupPages.ListingDetails && <p>Dostosuj parametry oferty</p>}
+          {currentPage === PopupPages.Category && <p className="ebayPopUpInfoText">Wybierz kategorie z katalogu Ebay</p>}
+          {currentPage === PopupPages.ParametersSet && <p className="ebayPopUpInfoText">Dostosuj parametry produktu</p>}
+          {currentPage === PopupPages.ListingDetails && <p className="ebayPopUpInfoText">Dostosuj parametry oferty</p>}
         </div>
         {currentPage === PopupPages.Category && (
           <EbayCategorySelect onNext={handleCategorySelect} onCancel={handleCancel} />

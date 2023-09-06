@@ -112,7 +112,7 @@ const AllegroCatalogueComponent: React.FC<AllegroCatalogueComponentProps> = ({
         </div>
 
         {isLoading && (
-          <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)' }} />
+          <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)', marginTop: '30px', marginBottom: '15px' }} />
         )}
 
         {productCatalogue.length > 0 && !isLoading && (
@@ -131,9 +131,7 @@ const AllegroCatalogueComponent: React.FC<AllegroCatalogueComponentProps> = ({
             ))}
           </div>
         )}
-        <div className="error">
-          {errors.selectedProductId && <span className="error">{errors.selectedProductId}</span>}
-        </div>
+        {errors.selectedProductId && <span className="error">{errors.selectedProductId}</span>}
       </div>
       <div className="addAuctionAllAllegroButtons">
         <div className="addAuctionAllegroBackButton"></div>

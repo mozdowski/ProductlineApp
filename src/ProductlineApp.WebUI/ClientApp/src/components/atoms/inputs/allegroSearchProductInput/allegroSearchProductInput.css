@@ -1,7 +1,3 @@
-.allegroSearchField {
-  margin-right: 41px;
-}
-
 .allegroSearchLabel,
 .allegroSearchInput {
   display: block;
@@ -19,7 +15,7 @@
 }
 
 .allegroSearchInput {
-  width: 310px;
+  width: 428px;
   height: 40px;
   color: #757575;
   font-family: var(--body-font);
@@ -29,6 +25,7 @@
   border: 1px solid #d8d8d8;
   border-radius: 8px;
   text-indent: 12px;
+  margin-bottom: 10px;
 }
 
 .allegroSearchInputRow {
