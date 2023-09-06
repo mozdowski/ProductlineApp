@@ -16,7 +16,7 @@ export default function AddAuctionTemplate({
   errors,
   platformConnections,
   assignedPortals,
-  confirmDisabled
+  confirmDisabled,
 }: {
   products: ProductAuctionData[];
   selectedProduct: ProductAuctionData | null;

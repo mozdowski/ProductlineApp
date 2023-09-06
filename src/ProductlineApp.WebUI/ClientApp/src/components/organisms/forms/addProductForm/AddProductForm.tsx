@@ -13,7 +13,7 @@ export default function AddProductForm({
   errors,
   onPhotoMove,
   onPhotoDelete,
-  confirmDisabled
+  confirmDisabled,
 }: {
   uploadProductPhotos: any;
   photos: string[];

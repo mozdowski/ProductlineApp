@@ -100,14 +100,11 @@ export default function Signin() {
     setIsSignInButtonEnabled(false);
 
     try {
-      await toast.promise(
-        register(data),
-        {
-          success: 'Zarejestrowano pomyślnie',
-          error: 'Błąd rejestracji',
-          pending: 'Trwa rejestracja...'
-        }
-      );
+      await toast.promise(register(data), {
+        success: 'Zarejestrowano pomyślnie',
+        error: 'Błąd rejestracji',
+        pending: 'Trwa rejestracja...',
+      });
       navigate('/dashboard');
     } catch (error) {
       console.error('Wystąpił błąd podczas rejestracji:', error);
@@ -212,7 +209,7 @@ export default function Signin() {
                 />
               </div>
 
-              <SigninButton disabled={!isSignInButtonEnabled}/>
+              <SigninButton disabled={!isSignInButtonEnabled} />
             </form>
           </div>
         </div>

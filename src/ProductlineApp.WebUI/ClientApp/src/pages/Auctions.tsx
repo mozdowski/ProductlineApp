@@ -45,24 +45,25 @@ export default function Auctions() {
 
   const handleAuctionStateClick = (showActive: boolean) => {
     setShowActiveAuctions(showActive);
-    
   };
 
   const searchTableAuctions = (e: { target: { value: React.SetStateAction<string> } }) => {
     setSearchValue(e.target.value);
   };
 
-  const searchAuctions = auctions?.filter((auction) => {
-    return (
-      auction.auctionID.toLowerCase().indexOf(searchValue) >= 0 ||
-      auction.sku.toLowerCase().indexOf(searchValue) >= 0 ||
-      auction.brand.toLowerCase().indexOf(searchValue) >= 0 ||
-      auction.productName.toLowerCase().indexOf(searchValue) >= 0 ||
-      auction.category.toLowerCase().indexOf(searchValue) >= 0 ||
-      auction.price.toString().indexOf(searchValue) >= 0 ||
-      auction.quantity.toString().indexOf(searchValue) >= 0
-    );
-  }).filter(x => x.isActive == showActiveAuctions);
+  const searchAuctions = auctions
+    ?.filter((auction) => {
+      return (
+        auction.auctionID.toLowerCase().indexOf(searchValue) >= 0 ||
+        auction.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+        auction.brand.toLowerCase().indexOf(searchValue) >= 0 ||
+        auction.productName.toLowerCase().indexOf(searchValue) >= 0 ||
+        auction.category.toLowerCase().indexOf(searchValue) >= 0 ||
+        auction.price.toString().indexOf(searchValue) >= 0 ||
+        auction.quantity.toString().indexOf(searchValue) >= 0
+      );
+    })
+    .filter((x) => x.isActive == showActiveAuctions);
 
   useEffect(() => {
     if (selectedAuctionPortal) return;

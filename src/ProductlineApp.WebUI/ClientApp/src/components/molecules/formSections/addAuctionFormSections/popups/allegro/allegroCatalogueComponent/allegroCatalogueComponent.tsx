@@ -112,7 +112,14 @@ const AllegroCatalogueComponent: React.FC<AllegroCatalogueComponentProps> = ({
         </div>
 
         {isLoading && (
-          <CircularProgress sx={{ alignSelf: 'center', color: 'var(--first-color)', marginTop: '30px', marginBottom: '15px' }} />
+          <CircularProgress
+            sx={{
+              alignSelf: 'center',
+              color: 'var(--first-color)',
+              marginTop: '30px',
+              marginBottom: '15px',
+            }}
+          />
         )}
 
         {productCatalogue.length > 0 && !isLoading && (

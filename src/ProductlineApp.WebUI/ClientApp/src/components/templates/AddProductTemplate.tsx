@@ -12,7 +12,7 @@ export default function AddProductTemplate({
   errors,
   onPhotoMove,
   onPhotoDelete,
-  confirmDisabled
+  confirmDisabled,
 }: {
   uploadProductPhotos: any;
   photos: string[];

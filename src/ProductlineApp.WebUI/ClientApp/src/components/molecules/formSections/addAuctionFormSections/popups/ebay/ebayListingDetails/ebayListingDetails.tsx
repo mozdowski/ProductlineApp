@@ -175,7 +175,6 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
     onConfirm(ebayOfferDetails);
 
     setIsConfirmDisabled(false);
-
   };
 
   const handleChange = (name: string, value: any) => {
@@ -332,7 +331,11 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
 
         <div className="addAuctionAllEbayButtons">
           <div className="addAuctionEbayBackButton">
-            <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />
+            <img
+              className="backToPreviousAllegroPopupButton"
+              src={BackButtonImage}
+              onClick={onPrevPage}
+            />
           </div>
           <div className="addAuctionEbayButtons">
             <CancelButton pathTo={''} onClick={onCancel} />

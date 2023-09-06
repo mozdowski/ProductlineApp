@@ -72,14 +72,11 @@ export default function Login() {
     setIsLoginButtonEnabled(false);
 
     try {
-      await toast.promise(
-        login(loginForm.email, loginForm.password),
-        {
-          success: 'Zalogowano pomyślnie',
-          error: 'Błąd logowania',
-          pending: 'Trwa logowanie...',
-        }
-      );
+      await toast.promise(login(loginForm.email, loginForm.password), {
+        success: 'Zalogowano pomyślnie',
+        error: 'Błąd logowania',
+        pending: 'Trwa logowanie...',
+      });
       navigate('/dashboard');
     } catch (error) {
       setIsLoginButtonEnabled(true);
@@ -132,7 +129,7 @@ export default function Login() {
                 <p>Zapomniałeś hasła?</p>
               </Link>
 
-              <LoginButton disabled={!isLoginButtonEnabled}/>
+              <LoginButton disabled={!isLoginButtonEnabled} />
 
               <h2>
                 Jeśli nie masz jeszcze konta{' '}

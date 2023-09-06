@@ -116,7 +116,7 @@ export default function AddProduct() {
             addImageToGalleryFormData.append('image', photo.file);
             await productsService.addImageToGallery(
               productResponse.productId,
-              addImageToGalleryFormData
+              addImageToGalleryFormData,
             );
           });
 
@@ -126,7 +126,7 @@ export default function AddProduct() {
           success: 'Pomyślnie dodano produkt',
           error: 'Wystąpił błąd przy dodawaniu produktu',
           pending: 'Dodawanie produktu...',
-        }
+        },
       );
       navigate('/products');
     } catch (error) {

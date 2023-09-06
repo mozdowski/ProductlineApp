@@ -198,7 +198,13 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
       )}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton">
-          {!initAspects && <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrev} />}
+          {!initAspects && (
+            <img
+              className="backToPreviousAllegroPopupButton"
+              src={BackButtonImage}
+              onClick={onPrev}
+            />
+          )}
         </div>
         <div className="addAuctionEbayButtons">
           <CancelButton onClick={onCancel} />

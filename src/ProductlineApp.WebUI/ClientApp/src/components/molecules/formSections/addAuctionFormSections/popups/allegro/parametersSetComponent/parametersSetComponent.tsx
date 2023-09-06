@@ -270,10 +270,7 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         if (!parameter && dict && dict.length > 0) {
           return dict[0].id;
         }
-        const value =
-          formFields[name] !== undefined
-            ? formFields[name]
-            : parameter?.valuesIds[0];
+        const value = formFields[name] !== undefined ? formFields[name] : parameter?.valuesIds[0];
         return value;
       }
       default: {
@@ -345,7 +342,13 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
 
       <div className="addAuctionAllAllegroButtons">
         <div className="addAuctionAllegroBackButton">
-          {!initValues && <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />}
+          {!initValues && (
+            <img
+              className="backToPreviousAllegroPopupButton"
+              src={BackButtonImage}
+              onClick={onPrevPage}
+            />
+          )}
         </div>
         <div className="addauctionAllegroButtons">
           <CancelButton pathTo={''} onClick={onCancel} />

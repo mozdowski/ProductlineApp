@@ -15,7 +15,7 @@ export default function EditProductForm({
   errors,
   onPhotoDelete,
   onPhotoMove,
-  confirmDisabled
+  confirmDisabled,
 }: {
   uploadProductPhotos: any;
   photos: Photo[];

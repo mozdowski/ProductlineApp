@@ -165,7 +165,9 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
       .nullable(),
     locationCity: Yup.string().required('Pole wymagane'),
     locationCountryCode: Yup.string().required('Pole wymagane'),
-    locationPostCode: Yup.string().required('Pole wymagane').matches(/^\d{2}-\d{3}$/, 'Niepoprawny format kodu pocztowego (np. 12-345)'),
+    locationPostCode: Yup.string()
+      .required('Pole wymagane')
+      .matches(/^\d{2}-\d{3}$/, 'Niepoprawny format kodu pocztowego (np. 12-345)'),
     locationProvince: Yup.string().required('Pole wymagane'),
     duration: Yup.string().required('Pole wymagane'),
     republish: Yup.string().required('Pole wymagane'),
@@ -463,7 +465,11 @@ const AllegroListingDetails: React.FC<AllegroListingDetailsProps> = ({
 
         <div className="addAuctionAllAllegroButtons">
           <div className="addAuctionAllegroBackButton">
-            <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />
+            <img
+              className="backToPreviousAllegroPopupButton"
+              src={BackButtonImage}
+              onClick={onPrevPage}
+            />
           </div>
           <div className="addauctionAllegroButtons">
             <CancelButton pathTo={''} onClick={onCancel} />
