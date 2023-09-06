@@ -31,6 +31,14 @@
   bottom: 35px;
 }
 
+.overlayAllegroPopup .allegroPopup .allegroPopupSectionLabel .allegroPopUpInfoText {
+  margin-bottom: 19.5px;
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .allegroBrandIcon {
   width: 100px;
   height: 45px;
@@ -39,9 +47,7 @@
 .allegroAuctionParameters {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
   align-items: flex-end;
-
   overflow: scroll;
   overflow-x: hidden;
   max-height: 450px;

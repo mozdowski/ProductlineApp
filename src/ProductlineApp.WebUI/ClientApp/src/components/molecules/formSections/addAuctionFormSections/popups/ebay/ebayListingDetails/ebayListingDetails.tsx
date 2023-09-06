@@ -12,6 +12,7 @@ import { useSelectedProduct } from '../../../../../../../hooks/auctions/useSelec
 import { FormTextarea } from '../../../../../../atoms/common/formTextArea/formTextArea';
 import { EbayUserPoliciesResponse } from '../../../../../../../interfaces/auctions/ebayUserPoliciesResponse';
 import { EbayOfferDetails } from '../../../../../../../interfaces/auctions/createEbayAuctionRequest';
+import BackButtonImage from '../../../../../../../assets/icons/back_icon.png';
 
 export interface EbayListingDetailsFormData {
   description: string;
@@ -194,7 +195,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
         )}
         {!isLoading && (
           <div className="ebayAuctionParameters">
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'price'} className="ebayParameterLabel">
                   Cena
@@ -211,7 +212,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'quantity'} className="ebayParameterLabel">
                   Ilość
@@ -228,7 +229,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'quantityLimitPerBuyer'} className="ebayParameterLabel">
                   Ilość na kupującego
@@ -245,7 +246,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'returnPolicyId'} className="ebayParameterLabel">
                   Warunki reklamacji
@@ -262,7 +263,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'fulfillmentPolicyId'} className="ebayParameterLabel">
                   Polityka realizacji
@@ -279,7 +280,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'paymentPolicyId'} className="ebayParameterLabel">
                   Polityka płatności
@@ -296,7 +297,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'locationKey'} className="ebayParameterLabel">
                   Klucz lokalizacji
@@ -313,7 +314,7 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
                 />
               </div>
             </div>
-            <div className="ebayProductParameter">
+            <div className="ebayProductListningParameter">
               <div className="ebayParameterField">
                 <label htmlFor={'description'} className="ebayParameterLabel">
                   Opis
@@ -331,11 +332,11 @@ const EbayListingDetails: React.FC<EbayListingDetailsProps> = ({
 
         <div className="addAuctionAllEbayButtons">
           <div className="addAuctionEbayBackButton">
-            <BackButton onClick={onPrevPage} />
+            <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrevPage} />
           </div>
           <div className="addAuctionEbayButtons">
             <CancelButton pathTo={''} onClick={onCancel} />
-            <ConfrimButton disabled={isConfirmDisabled}/>
+            <ConfrimButton disabled={isConfirmDisabled} />
           </div>
         </div>
       </form>

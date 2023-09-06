@@ -10,6 +10,7 @@ import { CircularProgress } from '@mui/material';
 import BackButton from '../../../../../../atoms/buttons/backButton/backButton';
 import AutocompleteComboBox from '../../../../../../atoms/common/autocomplete/autocomplete';
 import MultipleSelectCheckmarks from '../../../../../../atoms/common/multiselect/multiselect';
+import BackButtonImage from '../../../../../../../assets/icons/back_icon.png';
 
 interface EbayParametersSetComponentProps {
   categoryId: string;
@@ -197,7 +198,7 @@ const EbayParametersSetComponent: React.FC<EbayParametersSetComponentProps> = ({
       )}
       <div className="addAuctionAllEbayButtons">
         <div className="addAuctionEbayBackButton">
-          {!initAspects && <BackButton onClick={onPrev} />}
+          {!initAspects && <img className="backToPreviousAllegroPopupButton" src={BackButtonImage} onClick={onPrev} />}
         </div>
         <div className="addAuctionEbayButtons">
           <CancelButton onClick={onCancel} />

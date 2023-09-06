@@ -18,3 +18,7 @@
 .confirmEbayPopupButton:hover {
   background-color: var(--purple-button-hover);
 }
+
+.ebayProductListningParameter:nth-child(odd) {
+  margin-right: -9px;
+}

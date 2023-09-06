@@ -18,6 +18,14 @@
   padding: 35px 35px 35px 35px;
 }
 
+.overlayEbayPopup .ebayPopup .ebayPopupSectionLabel .ebayPopUpInfoText {
+  margin-bottom: 19.5px;
+  color: var(--grey-color);
+  font-family: var(--body-font);
+  font-size: 14px;
+  font-weight: 500;
+}
+
 .ebayPopup .ebayPopupBody .ebayAuctionInputsRow {
   display: flex;
 }
@@ -39,9 +47,8 @@
 .ebayAuctionParameters {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
+  /*justify-content: space-between;*/
   align-items: flex-end;
-
   overflow: scroll;
   overflow-x: hidden;
   max-height: 450px;

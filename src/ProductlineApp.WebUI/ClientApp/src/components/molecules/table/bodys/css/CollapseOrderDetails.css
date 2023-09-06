@@ -1,4 +1,4 @@
-tr > td.details.open {
+tr>td.details.open {
   background-color: #fff;
   width: 100%;
   max-height: 100px;
@@ -19,6 +19,10 @@ tr > td.details.open {
 
 .orderDetailsWrapper td:nth-child(2) {
   max-width: 43px;
+  vertical-align: top;
+}
+
+.orderDetailsWrapper td:nth-child(6) {
   vertical-align: top;
 }
 
