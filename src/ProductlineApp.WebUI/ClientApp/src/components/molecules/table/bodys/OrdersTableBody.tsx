@@ -29,8 +29,7 @@ export const OrdersTableBody = ({
             .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
             .map(
               (order, key) =>
-                order &&
-                showCompletedOrders === (order.status === OrderStatus.COMPLETED) && (
+                order && (
                   <OrdersTableRow
                     key={key}
                     order={order}

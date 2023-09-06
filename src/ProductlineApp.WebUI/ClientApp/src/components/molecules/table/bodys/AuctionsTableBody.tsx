@@ -45,8 +45,7 @@ export const AuctionsTableBody = ({
           .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
           .map(
             (auction, key) =>
-              auction &&
-              auction.isActive == showActiveAuctions && (
+              auction && (
                 <AuctionsTableRow
                   key={key}
                   auction={auction}
