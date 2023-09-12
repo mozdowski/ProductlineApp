@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddProductButton from '../components/atoms/buttons/addProductButtons/AddProductButton';
-import ChangeDarkModeButtton from '../components/atoms/buttons/changeDarkModeButton/ChangeDarkModeButtton';
 import CountAuctionsChart from '../components/atoms/charts/CountAuctionsChart';
 import MostPopularProductsChart from '../components/atoms/charts/MostPopularProductsChart';
 import SoldTodayChart from '../components/atoms/charts/SoldTodayChart';
@@ -10,6 +9,8 @@ import { AuctionsChartData } from '../interfaces/dashboard/auctionsChartData';
 import { useStatisticsService } from '../hooks/statistics/useStatisticsService';
 import { ProductStatistics } from '../interfaces/dashboard/mostPopularProductsChartData';
 import { TabTitle } from '../helpers/changePageTitle';
+import { toast } from 'react-toastify';
+import { retrieveColumnLayout } from 'echarts/types/src/layout/barGrid';
 
 export default function Dashboard() {
   TabTitle('productline. Dashboard');
@@ -32,22 +33,40 @@ export default function Dashboard() {
     [],
   );
   const [weeklySellsChartData, setWeeklySellsChartData] = useState<number[]>([]);
+  const [isDataLoaded, setIsDataLoaded] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchData = async () => {
-      const orders = await statisticsService.refreshOrders();
-      const [auctionsCountData, mostPopularProductsData, soldTodayProductsData, weeklySellsData] =
-        await Promise.all([
-          statisticsService.getAuctionsChartData(),
-          statisticsService.getMostPopularProductsChartData(),
-          statisticsService.getSoldTodayProductsChartData(),
-          statisticsService.getWeeklySellingStatsChartData(),
-        ]);
+    if (isDataLoaded) return;
 
-      setAuctionsChartData(auctionsCountData);
-      setPopularProductsChartData(mostPopularProductsData.productsStatistics);
-      setSoldTodayProductsChartData(soldTodayProductsData.productsStatistics);
-      setWeeklySellsChartData(weeklySellsData.weeklySellingCount);
+    const fetchData = async () => {
+      try {
+        await toast.promise(statisticsService.refreshOrders(), {
+          pending: 'Aktualizowanie statystyk...',
+          error: 'Błąd podczas aktualizowania statystyk',
+        });
+
+        const [auctionsCountData, mostPopularProductsData, soldTodayProductsData, weeklySellsData] =
+          await toast.promise(
+            Promise.all([
+              statisticsService.getAuctionsChartData(),
+              statisticsService.getMostPopularProductsChartData(),
+              statisticsService.getSoldTodayProductsChartData(),
+              statisticsService.getWeeklySellingStatsChartData(),
+            ]),
+            {
+              pending: 'Pobieranie statystyk...',
+              error: 'Błąd podczas pobierania statystyk',
+            },
+          );
+
+        setAuctionsChartData(auctionsCountData);
+        setPopularProductsChartData(mostPopularProductsData.productsStatistics);
+        setSoldTodayProductsChartData(soldTodayProductsData.productsStatistics);
+        setWeeklySellsChartData(weeklySellsData.weeklySellingCount);
+        setIsDataLoaded(true);
+      } catch (error) {
+        console.error('Błąd podczas pobierania statystyk', error);
+      }
     };
 
     fetchData();

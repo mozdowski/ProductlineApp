@@ -31,7 +31,9 @@ export default function Orders() {
         orderID: order.orderId,
         orderDate: new Date(order.creationDate),
         shipToDate: new Date(order.maxDeliveryDate as Date),
-        client: order.billingAddress.firstName + ' ' + order.billingAddress.lastName,
+        client: order.billingAddress.lastName
+          ? order.billingAddress.firstName + ' ' + order.billingAddress.lastName
+          : '-',
         price: order.totalPrice,
         quantity: order.quantity,
         statusText: mapOrderStatusToString(order.status),
@@ -73,18 +75,18 @@ export default function Orders() {
 
   const searchOrders = orders
     ? orders
-      .filter((order) => {
-        return (
-          order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
+        .filter((order) => {
+          return (
+            order.orderID.toLowerCase().indexOf(searchValue) >= 0 ||
             order.orderDate.getDate().toString().indexOf(searchValue) >= 0 ||
             order.shipToDate.getDate().toString().indexOf(searchValue) >= 0 ||
             order.client.toLowerCase().indexOf(searchValue) >= 0 ||
             order.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
             order.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
             order.statusText.indexOf(searchValue) >= 0
-        );
-      })
-      .filter((order) => showCompletedOrders === (order.status === OrderStatus.COMPLETED))
+          );
+        })
+        .filter((order) => showCompletedOrders === (order.status === OrderStatus.COMPLETED))
     : undefined;
 
   const handleOpenOrderFilesPopup = async (orderId: string) => {
