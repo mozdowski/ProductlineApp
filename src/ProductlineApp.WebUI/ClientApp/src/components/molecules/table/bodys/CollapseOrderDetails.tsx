@@ -44,7 +44,11 @@ export const CollapseOrderDetails = ({
           <ul className="orderShipingAddressData">
             <li>
               <h1>Imię i Nazwisko:</h1>
-              <h2>{shippingAddress.firstName + ' ' + shippingAddress.lastName}</h2>
+              <h2>
+                {shippingAddress.lastName
+                  ? shippingAddress.firstName + ' ' + shippingAddress.lastName
+                  : '-'}
+              </h2>
             </li>
             <li>
               {shippingAddress.phoneNumber !== null ? (

@@ -31,7 +31,7 @@ public class CreateOrderCommand
         {
             this.RuleFor(x => x.UserId).NotEmpty().NotEqual(Guid.Empty);
             this.RuleFor(x => x.OrderLines).NotEmpty();
-            this.RuleFor(x => x.ShippingAddress).NotEmpty();
+            // this.RuleFor(x => x.ShippingAddress).NotEmpty();
             this.RuleFor(x => x.BillingAddress).NotEmpty();
             this.RuleFor(x => x.PlatformId).NotEmpty().NotEqual(Guid.Empty);
             this.RuleFor(x => x.PlatformOrderId).NotEmpty();
@@ -74,7 +74,14 @@ public class CreateOrderCommand
             var order = Domain.Aggregates.Order.Order.Create(
                 userId,
                 orderLines,
-                request.ShippingAddress,
+                request.ShippingAddress is not null ? request.ShippingAddress : new ShippingAddress()
+                {
+                    Address = request.BillingAddress.Address,
+                    CompanyName = null,
+                    FirstName = request.BillingAddress.FirstName ?? string.Empty,
+                    LastName = request.BillingAddress.LastName ?? string.Empty,
+                    PhoneNumber = request.BillingAddress.PhoneNumber,
+                },
                 request.BillingAddress,
                 platformId,
                 request.PlatformOrderId,
