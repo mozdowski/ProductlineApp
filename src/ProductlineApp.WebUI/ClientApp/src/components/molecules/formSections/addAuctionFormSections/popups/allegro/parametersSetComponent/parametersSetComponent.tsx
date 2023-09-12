@@ -229,8 +229,8 @@ const ParametersSetComponent: React.FC<ParametersSetComponentProps> = ({
         const value = param.valuesIds
           ? param.valuesIds
           : param.values && param.values.length > 0
-          ? param.values[0]
-          : '';
+            ? param.values[0]
+            : '';
         setFormFields((prevData) => ({
           ...prevData,
           [name]: value,

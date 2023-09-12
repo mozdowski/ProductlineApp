@@ -24,16 +24,16 @@ export default function Products(this: any) {
 
   const searchProducts = products
     ? products.filter((product) => {
-        return (
-          product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
+      return (
+        product.sku.toLowerCase().indexOf(searchValue) >= 0 ||
           product.brand.toLowerCase().indexOf(searchValue) >= 0 ||
           product.productName.toLowerCase().indexOf(searchValue) >= 0 ||
           product.category.toLowerCase().indexOf(searchValue) >= 0 ||
           product.price.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           product.quantity.toString().toLowerCase().indexOf(searchValue) >= 0 ||
           product.listingStatus.toString().indexOf(searchValue) >= 0
-        );
-      })
+      );
+    })
     : undefined;
 
   useEffect(() => {
