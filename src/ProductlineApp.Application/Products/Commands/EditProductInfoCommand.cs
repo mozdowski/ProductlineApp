@@ -82,17 +82,15 @@ public class EditProductInfoCommand
 
             if (product.Gallery.Any())
             {
-                foreach (var image in product.Gallery)
-                {
-                    await this._uploadFileService.DeleteFileAsync(image.Name);
-                }
-
                 product.ClearGallery();
             }
 
             if (request.Gallery is not null && request.Gallery.Any())
             {
-                request.Gallery.ForEach(x => product.AddImageToGallery(Image.Create(x)));
+                request.Gallery.ForEach(x =>
+                {
+                    product.AddImageToGallery(Image.Create(x));
+                });
             }
 
             await this._productRepository.UpdateAsync(product);
