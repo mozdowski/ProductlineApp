@@ -7,7 +7,7 @@ import AllegroLink from '../../atoms/links/AllegroLink';
 function ProductAuctionLinksSection({ platformsListedOn }: { platformsListedOn: PlatformEnum[] }) {
   return (
     <div className="productExposedOnSection">
-      {platformsListedOn.map((item, key) => (
+      {Array.from(new Set(platformsListedOn)).map((item, key) => (
         <>
           {item === PlatformEnum.EBAY && <EbayLink />}
           {item === PlatformEnum.ALLEGRO && <AllegroLink />}
